@@ -90,7 +90,7 @@ all:
 	cp $(SRCDS)/bin/libtier0.so libtier0.so;
 	$(MAKE) -f Makefile extension
 
-extension: check $(OBJ_LINUX)
+extension: $(OBJ_LINUX)
 	$(CPP) $(INCLUDE) $(OBJ_LINUX) $(LINK) -o $(BIN_DIR)/$(BINARY)
 
 debug:
