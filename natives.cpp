@@ -501,14 +501,41 @@ cell_t L4D_ToggleGhostsInFinale(IPluginContext *pContext, const cell_t *params)
 	return 1;
 }
 
+cell_t L4D_GetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *params)
+{
+	/* Get the CTerrorGameRules pointer */
+	if (g_pGameRules == NULL)
+	{
+		return pContext->ThrowNativeError("GameRules unsupported or not available; file a bug report");
+	}
+
+	void *gamerules = *g_pGameRules;
+
+	if (gamerules == NULL)
+	{
+		return pContext->ThrowNativeError("GameRules not available before map is loaded");
+	}
+	
+	int offset;
+	if (!g_pGameConf->GetOffset("VersusMaxCompletionScore", &offset) || !offset)
+	{
+		return pContext->ThrowNativeError("Could not read 'VersusMaxCompletionScore' offset from GameConf");
+	}
+
+	L4D_DEBUG_LOG("Reading Versus MaxDistance");
+	
+	return *(unsigned int *)((unsigned char *)gamerules + offset);
+}
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
-	{"L4D_GetTeamScore",			L4D_GetTeamScore},
-	{"L4D_GetCampaignScores",		L4D_GetCampaignScores},
-	{"L4D_RestartScenarioFromVote",	L4D_RestartScenarioFromVote},
-	{"L4D_LobbyUnreserve",			L4D_LobbyUnreserve},
-	{"L4D_LobbyIsReserved",			L4D_LobbyIsReserved},
+	{"L4D_GetTeamScore",				L4D_GetTeamScore},
+	{"L4D_GetCampaignScores",			L4D_GetCampaignScores},
+	{"L4D_RestartScenarioFromVote",		L4D_RestartScenarioFromVote},
+	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
+	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
 	{"L4D_ScavengeBeginRoundSetupTime", L4D_ScavengeBeginRoundSetupTime},
-	{"L4D_ToggleGhostsInFinale",	L4D_ToggleGhostsInFinale},
+	{"L4D_ToggleGhostsInFinale",		L4D_ToggleGhostsInFinale},
+	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
 	{NULL,							NULL}
 };

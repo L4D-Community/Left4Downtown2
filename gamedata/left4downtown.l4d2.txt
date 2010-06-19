@@ -26,6 +26,13 @@
 				"windows"	"31"  /* cmp eax, [esi+180h] -> cmp eax, imm32 */ 
 				"linux"		"42"  /* cmp edx, [ebp+180h] -> cmp edx, imm32 */
 			}
+			
+			/* Offset into g_pGameRules */
+			"VersusMaxCompletionScore"
+			{
+				"windows"	"1148"
+				"linux"		"1148"
+			}
 		}
 		
 		"Signatures"

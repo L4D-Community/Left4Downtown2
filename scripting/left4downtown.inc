@@ -184,6 +184,15 @@ native L4D_LobbyUnreserve();
  */
 native bool:L4D_LobbyIsReserved();
 
+/**
+ * @brief Gets the max versus completion score for the map
+ * @remarks Requires GameRules to be initialized--map must be loaded
+ *
+ *
+ * @return     The map's max completion distance (map distance score)
+ */
+native L4D_GetVersusMaxCompletionScore();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
