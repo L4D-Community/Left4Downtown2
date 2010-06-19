@@ -527,6 +527,36 @@ cell_t L4D_GetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *p
 	return *(unsigned int *)((unsigned char *)gamerules + offset);
 }
 
+cell_t L4D_SetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *params)
+{
+	/* Get the CTerrorGameRules pointer */
+	if (g_pGameRules == NULL)
+	{
+		return pContext->ThrowNativeError("GameRules unsupported or not available; file a bug report");
+	}
+
+	void *gamerules = *g_pGameRules;
+
+	if (gamerules == NULL)
+	{
+		return pContext->ThrowNativeError("GameRules not available before map is loaded");
+	}
+	
+	int offset;
+	if (!g_pGameConf->GetOffset("VersusMaxCompletionScore", &offset) || !offset)
+	{
+		return pContext->ThrowNativeError("Could not read 'VersusMaxCompletionScore' offset from GameConf");
+	}
+
+	L4D_DEBUG_LOG("Reading Versus MaxDistance");
+	
+	unsigned int * pVersusMaxCompletionScore = (unsigned int *)((unsigned char *)gamerules + offset);
+
+	*pVersusMaxCompletionScore = params[1];
+
+	return 1;
+}
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -537,5 +567,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_ScavengeBeginRoundSetupTime", L4D_ScavengeBeginRoundSetupTime},
 	{"L4D_ToggleGhostsInFinale",		L4D_ToggleGhostsInFinale},
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
+	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
 	{NULL,							NULL}
 };
