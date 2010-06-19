@@ -197,7 +197,7 @@ native L4D_GetVersusMaxCompletionScore();
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
 */
-public Extension:__ext_geoip = 
+public Extension:__ext_left4downtown = 
 {
 	name = "Left 4 Downtown",
 	file = "left4downtown.ext",
