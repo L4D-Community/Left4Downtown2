@@ -187,11 +187,21 @@ native bool:L4D_LobbyIsReserved();
 /**
  * @brief Gets the max versus completion score for the map
  * @remarks Requires GameRules to be initialized--map must be loaded
+ * 		Seems to be updated before OnMapStart
  *
  *
  * @return     The map's max completion distance (map distance score)
  */
 native L4D_GetVersusMaxCompletionScore();
+
+/**
+ * @brief Sets the max versus completion score for the map
+ * @remarks Requires GameRules to be initialized--map must be loaded
+ * 		Seems to be updated before OnMapStart and checked on round_start
+ *
+ * @param	score	The versus max completion score to set for the round
+ */
+native L4D_SetVersusMaxCompletionScore(score);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
