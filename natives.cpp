@@ -527,39 +527,6 @@ cell_t L4D_GetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *p
 	return *(unsigned int *)((unsigned char *)gamerules + offset);
 }
 
-/**
- * Ugly Hackish crap added because Sourcepawn doesn't have features we want
- */
-struct ConVarInfo
-{
-	Handle_t handle;					/**< Handle to self */
-	bool sourceMod;						/**< Determines whether or not convar was created by a SourceMod plugin */
-	IChangeableForward *pChangeForward;	/**< Forward associated with convar */
-	ConVar *pVar;						/**< The actual convar */
-	void * padding; // Was a List<>
-};
-
-static cell_t sm_GetConVarDefault(IPluginContext *pContext, const cell_t *params)
-{
-    Handle_t hndl = static_cast<Handle_t>(params[1]);
-    HandleError err;
-	ConVarInfo *pInfo;
-    ConVar *pConVar;
-
-    if ((err=handlesys->ReadHandle(hndl, 0, NULL, (void **)&pInfo))
-        != HandleError_None)
-    {
-        return pContext->ThrowNativeError("Invalid convar handle %x (error %d)", hndl, err);
-    }
-	
-	pConVar = pInfo->pVar;
-
-    pContext->StringToLocalUTF8(params[2], params[3], pConVar->GetDefault(), NULL);
-
-    return 1;
-}
-
-
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -570,6 +537,5 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_ScavengeBeginRoundSetupTime", L4D_ScavengeBeginRoundSetupTime},
 	{"L4D_ToggleGhostsInFinale",		L4D_ToggleGhostsInFinale},
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
-	{"GetConVarDefault",				sm_GetConVarDefault},
 	{NULL,							NULL}
 };
