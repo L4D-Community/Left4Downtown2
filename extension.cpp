@@ -54,11 +54,7 @@
 #include "detours/try_offering_tank_bot.h"
 #include "detours/mob_rush_start.h"
 
-#if TARGET_L4D
-#define GAMECONFIG_FILE "left4downtown.l4d"
-#else
 #define GAMECONFIG_FILE "left4downtown.l4d2"
-#endif
 
 Left4Downtown g_Left4DowntownTools;		/**< Global singleton for extension's main interface */
 IGameConfig *g_pGameConf = NULL;
@@ -94,22 +90,12 @@ PatchManager g_PatchManager;
 
 bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 {
-
-#if TARGET_L4D
-	//only load extension for l4d
-	if (strcmp(g_pSM->GetGameFolderName(), "left4dead") != 0)
-	{
-		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D1");
-		return false;
-	}
-#elif TARGET_L4D2
 	//only load extension for l4d2
 	if (strcmp(g_pSM->GetGameFolderName(), "left4dead2") != 0)
 	{
 		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D2");
 		return false;
 	}
-#endif
 
 
 	//load sigscans and offsets, etc from our gamedata file
@@ -209,7 +195,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::ClearTeamScores>());
 	g_PatchManager.Register(new AutoPatch<Detours::SetCampaignScores>());
 
-#if TARGET_L4D2
 	g_PatchManager.Register(new AutoPatch<Detours::FirstSurvivorLeftSafeArea>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueInt>());
 	g_PatchManager.Register(new AutoPatch<Detours::TryOfferingTankBot>());
@@ -218,7 +203,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
 	g_PatchManager.Register(new AutoPatch<Detours::OnEnterGhostState>());
-#endif
 	g_PatchManager.Register(new AutoPatch<Detours::ServerPlayerCounts>());
 }
 
@@ -239,12 +223,10 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnClearTeamScores);
 	forwards->ReleaseForward(g_pFwdOnSetCampaignScores);
 
-#if TARGET_L4D2
 	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeArea);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
 	forwards->ReleaseForward(g_pFwdOnTryOfferingTankBot);
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
-#endif
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

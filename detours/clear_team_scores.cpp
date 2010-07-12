@@ -39,11 +39,7 @@ namespace Detours
 
 	void ClearTeamScores::OnClearTeamScores(CLEAR_TEAM_SCORES_ARG)
 	{
-#if TARGET_L4D1
-		bool b = false;
-#else
 		bool b = newCampaign;
-#endif
 
 		L4D_DEBUG_LOG("CTerrorGameRules::ClearTeamScores has been called, bool=%d", b);
 

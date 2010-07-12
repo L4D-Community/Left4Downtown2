@@ -38,9 +38,6 @@
 #define L4D_DEBUG_LOG(...)
 #endif
 
-//Makefile and .vcproj defines these respectively according to the build
-//#define TARGET_L4D2 1
-//#define TARGET_L4D 0
 
 /**
  * @file extension.h

@@ -34,11 +34,7 @@
 
 #include "detour_template.h"
 
-#if TARGET_L4D1
-#define CLEAR_TEAM_SCORES_ARG
-#else
 #define CLEAR_TEAM_SCORES_ARG bool newCampaign
-#endif
 
 namespace Detours {
 

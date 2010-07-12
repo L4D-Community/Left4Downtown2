@@ -166,67 +166,10 @@ cell_t L4D_RestartScenarioFromVote(IPluginContext *pContext, const cell_t *param
 	return 1;
 }
 
-//DEPRECATED ON L4D2
+//DEPRECATED
 // native L4D_GetCampaignScores(&scoreA, &scoreB)
 cell_t L4D_GetCampaignScores(IPluginContext *pContext, const cell_t *params)
 {
-#if TARGET_L4D
-	const char *baseSignatureName;
-
-#ifdef PLATFORM_WINDOWS
-	baseSignatureName = "OnServerShutdown";
-#else
-	baseSignatureName = "ClearTeamScores_Director";
-#endif
-	if (!g_pGameConf->GetMemSig(baseSignatureName, (void **)&baseSignatureName) || !baseSignatureName)
-	{
-		return pContext->ThrowNativeError( "Could not read signature %s from GameConf", baseSignatureName);
-	}
-
-	/* Get the code offsets to calculate offsets into Director */
-	int offsetA;
-	if (!g_pGameConf->GetOffset("ClearTeamScore_A", &offsetA) || !offsetA)
-	{
-		return pContext->ThrowNativeError("Could not get offset for ClearTeamScore_A");
-	}
-
-	int offsetB;
-	if (!g_pGameConf->GetOffset("ClearTeamScore_B", &offsetB) || !offsetB)
-	{
-		return pContext->ThrowNativeError("Could not get offset for ClearTeamScore_B");
-	}
-	/* Turn the code offsets into direct offsets */
-	int campaignScoreA = *(int *)(baseSignatureName + offsetA);
-	L4D_DEBUG_LOG("GetCampaignScores offset for score A is %x", campaignScoreA);
-	int campaignScoreB = *(int *)(baseSignatureName + offsetB);
-	L4D_DEBUG_LOG("GetCampaignScores offset for score B is %x", campaignScoreB);
-
-	/* Get the Director pointer */
-	if (g_pDirector == NULL)
-	{
-		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
-	}
-
-	unsigned char *director = (unsigned char*) *g_pDirector;
-
-	if (director == NULL)
-	{
-		return pContext->ThrowNativeError("Director not available before map is loaded");
-	}
-
-	/* Read in the campaign scores from the director */
-	int scoreA = *(int*)(director + campaignScoreA);
-	int scoreB = *(int*)(director + campaignScoreB);
-
-	cell_t *addr;
-	pContext->LocalToPhysAddr(params[1], &addr);
-	*addr = static_cast<cell_t>(scoreA);
-
-	pContext->LocalToPhysAddr(params[2], &addr);
-	*addr = static_cast<cell_t>(scoreB);
-
-	L4D_DEBUG_LOG("L4D_GetCampaignScores(A=%d, B=%d) returned", scoreA, scoreB);
-#else
 	/*
 	 Support for this going forward is deprecated in L4D2
 	Users can use OnClearTeamScores detour and check for 'true' when campaign scores are reset
@@ -240,8 +183,6 @@ cell_t L4D_GetCampaignScores(IPluginContext *pContext, const cell_t *params)
 	*addr = static_cast<cell_t>(-1);
 
 	g_pSM->LogError(myself, "L4D_OnGetCampaignScores(a,b) has been called. It is deprecated in L4D2, consider updating the plugin using this native.");
-
-#endif
 
 	return 1;
 }
@@ -325,106 +266,14 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 // native bool:L4D_LobbyIsReserved()
 cell_t L4D_LobbyIsReserved(IPluginContext *pContext, const cell_t *params)
 {
-#if TARGET_L4D2
 	g_pSM->LogError(myself, "L4D_LobbyIsReserved() has been called. It is deprecated in L4D2, consider updating the plugin using this native.");
 
 	return 0;
-#elif !defined PLATFORM_WINDOWS
-	g_pSM->LogError(myself, "L4D_LobbyIsReserved() has been called. It is deprecated in Linux, consider updating the plugin using this native.");
-
-	return 0;
-#endif
-
-	void *thisptr;
-	char *thisClassName;
-
-	/*
-	on Windows we use CBaseServer::IsReserved()
-		that function doesn't exist on Linux as it's inlined,
-		but it does the same thing.. so yay
-
-	on Linux we use IVEngineServer::IsReserved() 
-		which is actually virtual but calling statically is safer :)
-	*/
-#if defined PLATFORM_WINDOWS
-	if(g_pServer == NULL)
-	{
-		return pContext->ThrowNativeError("CBaseServer not available");
-	}
-
-	thisptr = g_pServer;
-	thisClassName = "CBaseServer";
-#else
-	return pContext->ThrowNativeError("LobbyIsReserved not available on Linux");
-
-	if(g_pEngine == NULL)
-	{
-		return pContext->ThrowNativeError("IVEngineServer not available");
-	}
-
-	thisptr = g_pEngine;
-	thisClassName = (char *)"IVEngineServer";
-#endif
-
-	L4D_DEBUG_LOG("In native L4D_LobbyIsReserved, server=%p, engine=%p/%p", g_pServer, g_pEngine, engine);
-
-	static ICallWrapper *pWrapper = NULL;
-
-	/* bool IVEngineServer::IsReserved()
-			virtual call
-	*/
-	if (!pWrapper)
-	{
-		PassInfo retInfo; 
-		retInfo.flags = PASSFLAG_BYVAL; 
-#if defined PLATFORM_WINDOWS
-		retInfo.size = sizeof(int);  //ret value in al on linux, eax on windows
-#else
-		retInfo.size = sizeof(bool); //ret value in al on linux, eax on windows
-#endif
-		retInfo.type = PassType_Basic; 
-
-		//vcall way too brittle, offset is too high and breaks too often IMHO
-#if 0
-		int vtableIndex;
-		if(!g_pGameConf->GetOffset("IsReserved", &vtableIndex))
-		{
-			return pContext->ThrowNativeError("Failed to locate offset %s", "IsReserved"); 
-		}
-
-		pWrapper = g_pBinTools->CreateVCall(vtableIndex, /*vtableOffset*/0, /*thisOffset*/0,
-							/*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0);
-#endif
-		REGISTER_NATIVE_ADDR("IsReserved", 
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, \
-							/*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
-
-		L4D_DEBUG_LOG("Built call wrapper for %s::IsReserved", thisClassName);
-	}
-
-	/* Build the vcall argument stack */
-	unsigned char vstk[sizeof(void *)];
-	unsigned char *vptr = vstk;
-
-	int retbuffer = 0;
-
-	*(void **)vptr = thisptr;
-
-	L4D_DEBUG_LOG("Will execute %s::IsReserved", thisClassName);
-	pWrapper->Execute(vstk, &retbuffer);
-
-	L4D_DEBUG_LOG("Invoked %s::IsReserved, got back = %d", thisClassName, retbuffer);
-
-	return retbuffer;
 }
 
 // native L4D_ScavengeBeginRoundSetupTime()
 cell_t L4D_ScavengeBeginRoundSetupTime(IPluginContext *pContext, const cell_t *params)
 {
-#if TARGET_L4D
-	return pContext->ThrowNativeError("L4D_ScavengeBeginRoundSetupTime() does not exist in L4D");
-#endif
-
 	static ICallWrapper *pWrapper = NULL;
 
 	// Director::RestartScenario()
