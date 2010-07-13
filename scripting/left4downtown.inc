@@ -203,6 +203,13 @@ native L4D_GetVersusMaxCompletionScore();
  */
 native L4D_SetVersusMaxCompletionScore(score);
 
+/**
+ * @brief Tells if the Mission (map) is the final map of the campaign
+ *
+ * @return		true if the map is the last map of the campaign (finale)
+ */
+native bool:L4D_IsMissionFinalMap();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

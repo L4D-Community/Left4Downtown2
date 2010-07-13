@@ -406,6 +406,38 @@ cell_t L4D_SetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *p
 	return 1;
 }
 
+cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+	
+	if(!pWrapper)
+	{
+		PassInfo retInfo; 
+		retInfo.flags = PASSFLAG_BYVAL; 
+#if defined PLATFORM_WINDOWS
+		retInfo.size = sizeof(bool);  //ret value in al on windows, eax on linux
+#else
+		retInfo.size = sizeof(int); //ret value in al on windows, eax on linux
+#endif
+		retInfo.type = PassType_Basic;
+		REGISTER_NATIVE_ADDR("IsMissionFinalMap", 
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, \
+							/*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::IsMissionFinalMap");
+	}
+	
+	cell_t retbuffer;
+	
+	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::IsMissionFinalMap");
+	pWrapper->Execute(NULL, &retbuffer);
+	
+	L4D_DEBUG_LOG("Invoked CTerrorGameRules::IsMissionFinalMap, got back = %d", retbuffer);
+	
+	return retbuffer;
+}
+
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -417,5 +449,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_ToggleGhostsInFinale",		L4D_ToggleGhostsInFinale},
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
 	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
+	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
 	{NULL,							NULL}
 };
