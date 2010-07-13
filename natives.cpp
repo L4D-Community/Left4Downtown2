@@ -421,7 +421,7 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 #endif
 		retInfo.type = PassType_Basic;
 		REGISTER_NATIVE_ADDR("IsMissionFinalMap", 
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, \
 							/*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
 
 		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::IsMissionFinalMap");
