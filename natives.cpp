@@ -427,7 +427,7 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::IsMissionFinalMap");
 	}
 	
-	cell_t retbuffer;
+	cell_t retbuffer = 0;
 	
 	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::IsMissionFinalMap");
 	pWrapper->Execute(NULL, &retbuffer);
