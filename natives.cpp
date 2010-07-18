@@ -438,6 +438,42 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 }
 
 
+// CDirector::ResetMobTimer()
+// native L4D_ResetMobTimer()
+cell_t L4D_ResetMobTimer(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CDirector::ResetMobTimer()
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("ResetMobTimer", 
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
+	}
+	
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+
+	void *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+	
+	/* Build the vcall argument stack */
+	unsigned char vstk[sizeof(void *)];
+	unsigned char *vptr = vstk;
+
+	*(void **)vptr = director;
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	
+	return 0;
+}
+
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -450,5 +486,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
 	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
 	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
+	{"L4D_ResetMobTimer",				L4D_ResetMobTimer},
 	{NULL,							NULL}
 };

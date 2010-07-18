@@ -210,6 +210,14 @@ native L4D_SetVersusMaxCompletionScore(score);
  */
 native bool:L4D_IsMissionFinalMap();
 
+/**
+ * @brief Resets the natural mob (horde) timer
+ * @remarks	Requires the Director to be available--map must be started
+ *
+ * @noreturn
+ */
+native bool:L4D_ResetMobTimer();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

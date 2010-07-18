@@ -417,6 +417,19 @@
 				"windows"	"\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x04\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x04\xB0" 
 							/* 8B 0D ? ? ? ? 8B 01 8B 50 28 56 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 B0 */
 			}
+			/* CDirector::ResetMobTimer()
+				Resets the Director's natural horde timer. Normally this
+				is called when a horde is spawned naturally or by boomer.
+				Small function, nearly hits another segment in the file.
+				The offset 0x1CC is the unique portion.
+				*/
+			"ResetMobTimer"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
+				"windows"	"\xD9\xEE\x51\x81\xC1\xCC\x01\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
+							/* D9 EE 51 81 C1 CC 01 00 00 D9 1C 24 E8 ? ? ? ? C3*/
+			}
 		}
 	}
 }
