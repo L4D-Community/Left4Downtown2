@@ -430,6 +430,18 @@
 				"windows"	"\xD9\xEE\x51\x81\xC1\xCC\x01\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
 							/* D9 EE 51 81 C1 CC 01 00 00 D9 1C 24 E8 ? ? ? ? C3*/
 			}
+			/* CGameRulesProxy::NotifyNetworkStateChanged()
+				This function is called before changing a variety of 
+				pieces of networked data (data which is reflected in network
+				game states).
+				*/
+			"NotifyNetworkStateChanged"
+			{
+				"library"	"server"
+				"linux"		"_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
+				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x42"
+							/* A1 ? ? ? ? 85 C0 74 42 */
+			}
 		}
 	}
 }

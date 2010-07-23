@@ -473,6 +473,24 @@ cell_t L4D_ResetMobTimer(IPluginContext *pContext, const cell_t *params)
 	return 0;
 }
 
+//  CGameRulesProxy::NotifyNetworkStateChanged()
+// native L4D_NotifyNetworkStateChanged()
+cell_t L4D_NotifyNetworkStateChanged(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CGameRulesProxy::NotifyNetworkStateChanged()
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("NotifyNetworkStateChanged", 
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
+	}
+	
+	pWrapper->Execute(NULL, /*retbuffer*/NULL);
+	
+	return 0;
+}
+
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
@@ -487,5 +505,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
 	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
 	{"L4D_ResetMobTimer",				L4D_ResetMobTimer},
+	{"L4D_NotifyNetworkStateChanged",	L4D_NotifyNetworkStateChanged},
 	{NULL,							NULL}
 };
