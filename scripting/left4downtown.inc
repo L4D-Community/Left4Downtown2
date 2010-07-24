@@ -218,6 +218,15 @@ native bool:L4D_IsMissionFinalMap();
  */
 native bool:L4D_ResetMobTimer();
 
+/**
+ * @brief Notifies the CGameRulesProxy that the game state has been changed
+ * @remarks Use this function before changing networked members of GameRules,
+ * 		like with L4D_SetVersusMaxCompletionScore()
+ *
+ * @noreturn
+ */
+native L4D_NotifyNetworkStateChanged();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
