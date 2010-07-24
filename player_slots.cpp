@@ -62,7 +62,7 @@
 #define MODRM_MOD_DIRECT ((char)(3 << 6))
 #define MODRM_RM_EDX '\x02'
 
-static void *humanLimitSig = NULL;
+//static void *humanLimitSig = NULL;
 static void *lobbyConnectSig = NULL;
 static int serverFullOffset = -1;
 
@@ -80,12 +80,20 @@ int PlayerSlots::MaxPlayers = -1;
 
 void PlayerSlots::Patch()
 {
-	bool firstTime = !(humanLimitSig && lobbyConnectSig);
+	bool firstTime = !(lobbyConnectSig);
+	//bool firstTime = !(humanLimitSig && lobbyConnectSig);
 	L4D_DEBUG_LOG("PlayerSlots - Patching ...");
 
 	/*
 	Server patch
+	** REMOVED THIS PATCH -- HumanPlayerLimitReached is only triggered when 
+	**		GetMaxHumanPlayers' value is exceeded. This patch was removing the 
+	**		check completely, letting players join through console even when 
+	**		maxplayers was reached.
 	*/
+	
+	
+	/*
 	if(firstTime)
 	{
 		if (!g_pGameConf->GetMemSig("HumanPlayerLimitReached", &humanLimitSig) || !humanLimitSig) 
@@ -94,7 +102,7 @@ void PlayerSlots::Patch()
 			return;
 		}
 	}
-
+	*/
 	//code pages can't be written to by default, so ApplyPatch changes that ;)
 
 	/*
@@ -105,7 +113,7 @@ void PlayerSlots::Patch()
 
 	we never check if the human player limit has been reached
 	*/
-
+	/*
 	patch_t humanLimitPatch;
 
 #if defined PLATFORM_WINDOWS
@@ -115,9 +123,12 @@ void PlayerSlots::Patch()
 	humanLimitPatch.bytes = OP_JLE_REL8_SIZE;
 	fill_nop(humanLimitPatch.patch, humanLimitPatch.bytes);
 #endif
-	ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitPatch, firstTime ? &humanLimitRestore : NULL);
+	*/
+	
+	
+	//ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitPatch, firstTime ? &humanLimitRestore : NULL);
 
-	L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) patched to jmp");
+	//L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) patched to jmp"); 
 	
 
 	/*
@@ -362,12 +373,13 @@ void PlayerSlots::Unpatch()
 	L4D_DEBUG_LOG("PlayersSlots - Unpatching ...");
 
 	//jl around the string "Human player limit reached (%d/%d)"
+	// Deprecated
 
-	if(humanLimitSig)
-	{
-		ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitRestore, /*restore*/NULL);
-		L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) restored");
-	}
+	//if(humanLimitSig)
+	//{
+		//ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitRestore, /*restore*/NULL);
+		//L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) restored");
+	//} 
 
 	//jz around the string "#Valve_Reject_Server_Full"
 
