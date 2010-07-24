@@ -39,9 +39,9 @@
 
 /* Basic information exposed publicly */
 #define SMEXT_CONF_NAME			"Left 4 Downtown Extension"
-#define SMEXT_CONF_DESCRIPTION		"Downtown1's extension to call do useful L4D1/L4D2 calls"
+#define SMEXT_CONF_DESCRIPTION		"Downtown1's extension to perform useful L4D1/L4D2 calls"
 #define SMEXT_CONF_VERSION		"0.4.7.0"
-#define SMEXT_CONF_AUTHOR		"Igor \"Downtown1\" Smirnov / Andrew \"XBetaAlpha\" Burrows / AtomicStryker"
+#define SMEXT_CONF_AUTHOR		"Igor \"Downtown1\" Smirnov / Andrew \"XBetaAlpha\" Burrows / AtomicStryker / Michael \"ProdigySim\" Busby"
 #define SMEXT_CONF_URL			"http://forums.alliedmods.net/showthread.php?t=91132"
 #define SMEXT_CONF_LOGTAG		"LEFT4DOWNTOWN"
 #define SMEXT_CONF_LICENSE		"GPLv3"
