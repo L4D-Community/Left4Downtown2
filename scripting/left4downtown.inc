@@ -216,7 +216,7 @@ native bool:L4D_IsMissionFinalMap();
  *
  * @noreturn
  */
-native bool:L4D_ResetMobTimer();
+native L4D_ResetMobTimer();
 
 /**
  * @brief Notifies the CGameRulesProxy that the game state has been changed
