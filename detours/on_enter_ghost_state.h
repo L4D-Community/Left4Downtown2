@@ -34,8 +34,6 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
 // customize these
 #define CLASS_NAME         OnEnterGhostState
 #define L4D_CLASS          CTerrorPlayer
@@ -50,8 +48,11 @@ namespace Detours {
 #define FUNCTION_FULL_NAME TO_STR(L4D_CLASS) "::" TO_STR(CLASS_NAME)
 #define SIGNATURE_NAME     TO_STR(L4D_CLASS) "_" TO_STR(CLASS_NAME)
 	
-class CLASS_NAME;
 class CTerrorPlayer;
+
+namespace Detours {
+
+class CLASS_NAME;
 
 typedef void (CLASS_NAME::*FUNC_TYPE)();
 
