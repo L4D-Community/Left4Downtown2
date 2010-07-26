@@ -122,6 +122,18 @@ forward Action:L4D_OnTryOfferingTankBot();
 forward Action:L4D_OnMobRushStart();
 
 /**
+ * @brief Called whenever CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer, Vector&) is invoked
+ * @remarks L4D2 only uses this on Special Infected
+ *
+ * @param client	the client that did the shoving
+ * @param victim	the client that was shoved (CAUTION: retrieved from function pointer, dont meddle with it)
+ * @param vector	Vector Angle of Shoveforce
+ *
+ * @return 		Pl_Handled to block melee effect (staggering), Pl_Continue otherwise.
+ */
+forward Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3]);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

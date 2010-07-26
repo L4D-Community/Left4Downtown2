@@ -347,6 +347,18 @@ public Action:L4D_OnMobRushStart()
 	return Plugin_Continue;
 }
 
+public Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3])
+{
+	DebugPrintToAll("L4D_OnShovedBySurvivor() fired, victim %N", victim);
+	
+	if (client)
+	{
+		DebugPrintToAll("Shoving client: %N", client);
+	}
+	// return Plugin_Handled to completely stop melee effects on SI
+	return Plugin_Continue;
+}
+
 
 public OnMapStart()
 {

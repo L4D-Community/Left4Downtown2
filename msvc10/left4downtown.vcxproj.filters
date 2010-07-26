@@ -84,6 +84,9 @@
     <ClCompile Include="..\codepatch\patchmanager.cpp">
       <Filter>codepatch</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\shoved_by_survivor.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="..\codepatch\patchmanager.h">
       <Filter>codepatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\shoved_by_survivor.h">
+      <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

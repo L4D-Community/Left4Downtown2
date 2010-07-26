@@ -517,6 +517,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\detours\shoved_by_survivor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\detours\shoved_by_survivor.h"
+				>
+			</File>
+			<File
 				RelativePath="..\detours\spawn_tank.cpp"
 				>
 			</File>
