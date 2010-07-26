@@ -58,8 +58,7 @@
  */
 class Left4Downtown :
 	public SDKExtension,
-	public IClientListener,
-	public ICommandTargetProcessor
+	public IClientListener
 {
 public:
 	/**
@@ -134,8 +133,6 @@ public:
 	 * @brief Called when the server is activated.
 	 */
 	virtual void OnServerActivated(int max_clients);
-public: //ICommandTargetProcessor
-	bool ProcessCommandTarget(cmd_target_info_t *info);
 };
 
 extern IForward *g_pFwdOnSpawnTank;
