@@ -32,6 +32,7 @@
 #include <string.h>
 
 #include "extension.h"
+#include "iplayerinfo.h"
 #include "vglobals.h"
 #include "util.h"
 #include "player_slots.h"
@@ -130,6 +131,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
+	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	Detour::Init(g_pSM->GetScriptingEngine(), g_pGameConf);
 
@@ -216,6 +218,7 @@ void Left4Downtown::SDK_OnUnload()
 	gameconfs->CloseGameConfigFile(g_pGameConfSDKTools);
 
 	playerhelpers->RemoveClientListener(&g_Left4DowntownTools);
+	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	//go back to normal old asm 
 	PlayerSlots::Unpatch();
@@ -305,4 +308,99 @@ void Left4Downtown::OnServerActivated(int max_clients)
 		}
 	}
 #endif
+}
+
+bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
+{
+	int max_clients;
+	IPlayerInfo *pInfo;
+	unsigned int team_index = 0;
+	IGamePlayer *pPlayer, *pAdmin;
+
+	if ((info->flags & COMMAND_FILTER_NO_MULTI) == COMMAND_FILTER_NO_MULTI)
+	{
+		return false;
+	}
+
+	if (info->admin)
+	{
+		if ((pAdmin = playerhelpers->GetGamePlayer(info->admin)) == NULL)
+		{
+			return false;
+		}
+		if (!pAdmin->IsInGame())
+		{
+			return false;
+		}
+	}
+	else
+	{
+		pAdmin = NULL;
+	}
+
+	if (strcmp(info->pattern, "@survivors") == 0 )
+	{
+		team_index = 2;
+	}
+	else if (strcmp(info->pattern, "@infected") == 0)
+	{
+		team_index = 3;
+	}
+	else
+	{
+		return false;
+	}
+
+	info->num_targets = 0;
+
+	max_clients = playerhelpers->GetMaxClients();
+	for (int i = 1; 
+		 i <= max_clients && (cell_t)info->num_targets < info->max_targets; 
+		 i++)
+	{
+		if ((pPlayer = playerhelpers->GetGamePlayer(i)) == NULL)
+		{
+			continue;
+		}
+		if (!pPlayer->IsInGame())
+		{
+			continue;
+		}
+		if ((pInfo = pPlayer->GetPlayerInfo()) == NULL)
+		{
+			continue;
+		}
+		if (pInfo->GetTeamIndex() != (int)team_index)
+		{
+			continue;
+		}
+		if (playerhelpers->FilterCommandTarget(pAdmin, pPlayer, info->flags) 
+			!= COMMAND_TARGET_VALID)
+		{
+			continue;
+		}
+		info->targets[info->num_targets] = i;
+		info->num_targets++;
+	}
+
+	if (info->num_targets == 0)
+	{
+		info->reason = COMMAND_TARGET_EMPTY_FILTER;
+	}
+	else
+	{
+		info->reason = COMMAND_TARGET_VALID;
+	}
+
+	info->target_name_style = COMMAND_TARGETNAME_RAW;
+	if (team_index == 2)
+	{
+		UTIL_Format(info->target_name, info->target_name_maxlength, "Survivors");
+	}
+	else if (team_index == 3)
+	{
+		UTIL_Format(info->target_name, info->target_name_maxlength, "Infected");
+	}
+
+	return true;
 }
