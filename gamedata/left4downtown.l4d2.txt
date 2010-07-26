@@ -401,11 +401,13 @@
 			{
 				"library"	"server"
 				"linux"		"\x7E\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A"
-				/* 7E ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? */
+				
 
 				"windows" "\x7C\x2A\x8B\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x50\x57\x68\x2A\x2A\x2A\x2A\x51\x52\xE8\x2A\x2A\x2A\x2A\x83\xC4\x2A\x5F\x5E\x32\xC0\x5B"
-				          /* 7C ?  8B ?  ?  ?  8B  ? ?  ?  50 57 68 ?  ?  ?  ? 51 52 E8 ? ?  ? ? 83 C4 ? 5F 5E 32 C0 5B */			
+				          
 			} */
+			/* linux: 7E ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? */
+			/* windows: 7C ?  8B ?  ?  ?  8B  ? ?  ?  50 57 68 ?  ?  ?  ? 51 52 E8 ? ?  ? ? 83 C4 ? 5F 5E 32 C0 5B */			
 			
 /*********************************************************************
 ****************** MISC USEFUL NATIVES *******************************
