@@ -239,6 +239,17 @@ native L4D_ResetMobTimer();
  */
 native L4D_NotifyNetworkStateChanged();
 
+/**
+ * @brief Trigger's a target player's stagger behavior 
+ * @remarks Works on any CTerrorPlayer--survivor or infected.
+ * 
+ * @param target 		Player to stagger
+ * @param source_ent	Source of the stagger (another player, etc)
+ * @param source_vector Source location of the stagger. If NULL_VECTOR, origins of source_ent is used.
+ * @noreturn 				
+ */
+native L4D_StaggerPlayer(target, source_ent, Float:source_vector[3]);
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
