@@ -12,7 +12,7 @@ MMSOURCE17 = ../mmsource
 PROJECT = left4downtown
 ENGINE = left4dead2
 
-OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp util.cpp asm/asm.c player_slots.cpp detours/detour.cpp detours/spawn_tank.cpp detours/spawn_witch.cpp detours/clear_team_scores.cpp detours/set_campaign_scores.cpp detours/server_player_counts.cpp detours/first_survivor_left_safe_area.cpp detours/mob_rush_start.cpp detours/try_offering_tank_bot.cpp detours/get_script_value_int.cpp detours/shoved_by_survivors.cpp codepatch/patchmanager.cpp
+OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp util.cpp asm/asm.c player_slots.cpp detours/detour.cpp detours/spawn_tank.cpp detours/spawn_witch.cpp detours/clear_team_scores.cpp detours/set_campaign_scores.cpp detours/server_player_counts.cpp detours/first_survivor_left_safe_area.cpp detours/mob_rush_start.cpp detours/try_offering_tank_bot.cpp detours/get_script_value_int.cpp detours/shoved_by_survivor.cpp codepatch/patchmanager.cpp
 
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
