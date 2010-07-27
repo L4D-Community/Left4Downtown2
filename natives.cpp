@@ -491,6 +491,69 @@ cell_t L4D_NotifyNetworkStateChanged(IPluginContext *pContext, const cell_t *par
 	return 0;
 }
 
+// CTerrorPlayer::OnStaggered(CBaseEntity*, Vector*);
+// native L4D_StaggerPlayer(target, source_ent, Float:source_vector[3])
+cell_t L4D_StaggerPlayer(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CBasePlayer::OnStaggered(CBaseEntity*, Vector*);
+	if (!pWrapper)
+	{
+
+		REGISTER_NATIVE_ADDR("CTerrorPlayer_OnStaggered", 
+			PassInfo pass[2]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(CBaseEntity *); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(Vector *); \
+			pass[1].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, pass, /*numparams*/2));
+	}
+	
+	int target = params[1];
+	CBaseEntity * pTarget = UTIL_GetCBaseEntity(target, true);
+	if(pTarget == NULL) 
+	{
+		return pContext->ThrowNativeError("Invalid Stagger target entity");		
+	}
+	
+	int source_ent = params[2];
+	CBaseEntity * pSource = UTIL_GetCBaseEntity(source_ent, false);
+	if(pSource == NULL) 
+	{
+		return pContext->ThrowNativeError("Invalid Stagger source entity");
+	}
+	
+	cell_t * source_vector;
+	pContext->LocalToPhysAddr(params[3], &source_vector);
+	
+	Vector vSourceVector;
+	Vector *pSourceVector = NULL;
+	
+	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		vSourceVector[0] = sp_ctof(source_vector[0]);
+		vSourceVector[1] = sp_ctof(source_vector[1]);
+		vSourceVector[2] = sp_ctof(source_vector[2]);
+		pSourceVector = &vSourceVector;
+	}
+	
+	unsigned char vstk[sizeof(CBaseEntity *) + sizeof(CBaseEntity *) + sizeof(Vector *)];
+	unsigned char *vptr = vstk;
+
+	*(CBaseEntity **)vptr = pTarget;
+	vptr += sizeof(CBaseEntity *);
+	*(CBaseEntity **)vptr = pSource;
+	vptr += sizeof(CBaseEntity *);
+	*(Vector **)vptr = pSourceVector;
+
+	pWrapper->Execute(vstk, NULL);
+	
+	return 0;
+}
+
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
@@ -506,5 +569,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
 	{"L4D_ResetMobTimer",				L4D_ResetMobTimer},
 	{"L4D_NotifyNetworkStateChanged",	L4D_NotifyNetworkStateChanged},
+	{"L4D_StaggerPlayer",				L4D_StaggerPlayer},
 	{NULL,							NULL}
 };
