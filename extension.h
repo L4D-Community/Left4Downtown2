@@ -146,6 +146,7 @@ extern IForward *g_pFwdOnFirstSurvivorLeftSafeArea;
 extern IForward *g_pFwdOnGetScriptValueInt;
 extern IForward *g_pFwdOnTryOfferingTankBot;
 extern IForward *g_pFwdOnMobRushStart;
+extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnShovedBySurvivor;
 
 extern IBinTools *g_pBinTools;

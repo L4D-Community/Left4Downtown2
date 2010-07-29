@@ -54,6 +54,7 @@
 #include "detours/on_enter_ghost_state.h"
 #include "detours/try_offering_tank_bot.h"
 #include "detours/mob_rush_start.h"
+#include "detours/spawn_it_mob.h"
 #include "detours/shoved_by_survivor.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -75,6 +76,7 @@ IForward *g_pFwdOnFirstSurvivorLeftSafeArea = NULL;
 IForward *g_pFwdOnGetScriptValueInt = NULL;
 IForward *g_pFwdOnTryOfferingTankBot = NULL;
 IForward *g_pFwdOnMobRushStart = NULL;
+IForward *g_pFwdOnSpawnITMob = NULL;
 IForward *g_pFwdOnShovedBySurvivor = NULL;
 
 ICvar *icvar = NULL;
@@ -128,6 +130,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
 	g_pFwdOnTryOfferingTankBot = forwards->CreateForward("L4D_OnTryOfferingTankBot", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
+	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
@@ -204,6 +207,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueInt>());
 	g_PatchManager.Register(new AutoPatch<Detours::TryOfferingTankBot>());
 	g_PatchManager.Register(new AutoPatch<Detours::MobRushStart>());
+	g_PatchManager.Register(new AutoPatch<Detours::SpawnITMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedBySurvivor>());
 
 	//new style detours that create/destroy the forwards themselves
@@ -234,6 +238,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
 	forwards->ReleaseForward(g_pFwdOnTryOfferingTankBot);
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
+	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
 }
 

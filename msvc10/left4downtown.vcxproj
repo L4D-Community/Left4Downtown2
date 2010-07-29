@@ -104,6 +104,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\detours\shoved_by_survivor.cpp" />
+    <ClCompile Include="..\detours\spawn_it_mob.cpp" />
     <ClCompile Include="..\extension.cpp" />
     <ClCompile Include="..\natives.cpp" />
     <ClCompile Include="..\player_slots.cpp" />
@@ -126,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="..\convar_public.h" />
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
+    <ClInclude Include="..\detours\spawn_it_mob.h" />
     <ClInclude Include="..\extension.h" />
     <ClInclude Include="..\player_slots.h" />
     <ClInclude Include="..\util.h" />

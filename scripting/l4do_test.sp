@@ -151,6 +151,10 @@ public OnPluginStart()
 	
 	SearchForFunction("TryOfferingTankBot");
 	SearchForFunction("OnMobRushStart");
+	SearchForFunction("Zombiemanager_SpawnITMob");
+	
+	SearchForFunction("CTerrorPlayer_OnStaggered");
+	SearchForFunction("CTerrorPlayer_OnShovedBySurvivor");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -344,6 +348,12 @@ public Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis)
 public Action:L4D_OnMobRushStart()
 {
 	DebugPrintToAll("L4D_OnMobRushStart() fired");
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnSpawnITMob(&amount)
+{
+	DebugPrintToAll("L4D_OnSpawnITMob(%d) fired", amount);
 	return Plugin_Continue;
 }
 

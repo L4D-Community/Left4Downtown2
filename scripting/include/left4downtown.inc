@@ -114,12 +114,22 @@ forward Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis);
 
 /**
  * @brief Called whenever CDirector::OnMobRushStart(void) is invoked
- * @remarks called on random hordes, mini- and finale hordes, and boomer hordes
+ * @remarks called on random hordes, mini- and finale hordes, and boomer hordes, causes Zombies to attack
  * @remarks not called on "z_spawn mob", hook the console command and check arguments to catch plugin mobs
  * 
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action:L4D_OnMobRushStart();
+
+/**
+ * @brief Called whenever ZombieManager::SpawnITMob(int) is invoked
+ * @remarks called on boomer hordes, increases Zombie Spawn Queue
+ * 
+ * @param amount	Amount of Zombies to add to Queue
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D_OnSpawnITMob(&amount);
 
 /**
  * @brief Called whenever CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer, Vector&) is invoked

@@ -497,6 +497,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\detours\spawn_it_mob.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\detours\spawn_it_mob.h"
+				>
+			</File>
+			<File
 				RelativePath="..\detours\on_enter_ghost_state.h"
 				>
 			</File>
