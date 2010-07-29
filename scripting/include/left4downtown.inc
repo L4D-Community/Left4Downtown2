@@ -110,7 +110,7 @@ forward L4D_OnEnterGhostState(client);
  * 
  * @return 		Pl_Handled to block window from showing and to keep Tank Bot, Pl_Continue otherwise
  */
-forward Action:L4D_OnTryOfferingTankBot();
+forward Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis);
 
 /**
  * @brief Called whenever CDirector::OnMobRushStart(void) is invoked

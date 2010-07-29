@@ -294,9 +294,9 @@
 			"TryOfferingTankBot"
 			{
 				"library"	"server"
-				"linux"	"@_ZN9CDirector18TryOfferingTankBotEv"
-				"windows" "\x51\xD9\xEE\x55\x8B\xE9\xD8\x9D\x2A\x2A\x2A\x2A\xDF\xE0\xF6\xC4\x05\x0F\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A"
-				/* 51 D9 EE 55 8B E9 D8 9D ? ? ? ? DF E0 F6 C4 05 0F ? ? ? ? ? A1 ? ? ? ? */
+				"linux"	"@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
+				"windows" "\x51\x83\x7C\x24\x08\x00\x55\x8B\xE9\x0F\x84"
+				/* 51 83 7C 24 08 00 55 8B E9 0F 84  - No addresses-fairly unique call*/
 			}
 			
 			/*

@@ -37,13 +37,13 @@
 namespace Detours {
 
 class TryOfferingTankBot;
-typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)();
+typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)(CBaseEntity*, bool);
 
 class TryOfferingTankBot : public DetourTemplate<TryOfferingTankBotFunc, TryOfferingTankBot>
 {
 private: //note: implementation of DetourTemplate abstracts
 
-	void OnTryOfferingTankBot();
+	void OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis);
 
 	// get the signature name (i.e. "TryOfferingTankBot") from the game conf
 	virtual const char *GetSignatureName()

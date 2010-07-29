@@ -34,15 +34,22 @@
 
 namespace Detours
 {
-	void TryOfferingTankBot::OnTryOfferingTankBot()
+	void TryOfferingTankBot::OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis)
 	{
 		L4D_DEBUG_LOG("CTerrorPlayer::TryOfferingTankBot has been called");
 
 		cell_t result = Pl_Continue;
 		if(g_pFwdOnTryOfferingTankBot)
 		{
+			cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(tank))) : 0;
+			cell_t cellEnterStasis = (cell_t)enterStasis;
+			
+			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot(tank %d, enterStasis %d) forward has been sent out", tank, enterStasis);
+			g_pFwdOnShovedBySurvivor->PushCell(tankindex);
+			g_pFwdOnShovedBySurvivor->PushCellByRef(&cellEnterStasis);
 			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot() forward has been sent out");
 			g_pFwdOnTryOfferingTankBot->Execute(&result);
+			enterStasis = cellEnterStasis != 0;
 		}
 
 		if(result == Pl_Handled)
@@ -52,7 +59,8 @@ namespace Detours
 		}
 		else
 		{
-			(this->*(GetTrampoline()))();
+			L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with enterStasis=%d", enterStasis);
+			(this->*(GetTrampoline()))(tank, enterStasis);
 			return;
 		}
 	}

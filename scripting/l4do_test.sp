@@ -335,9 +335,9 @@ public L4D_OnEnterGhostState(client)
 	DebugPrintToAll("L4D_OnEnterGhostState(client=%N)", client); 
 }
 
-public Action:L4D_OnTryOfferingTankBot()
+public Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis)
 {
-	DebugPrintToAll("L4D_OnTryOfferingTankBot() fired");
+	DebugPrintToAll("L4D_OnTryOfferingTankBot() fired with tank %d and enterstasis %d", tank_index, enterStasis);
 	return Plugin_Continue;
 }
 
