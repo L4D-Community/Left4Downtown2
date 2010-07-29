@@ -41,12 +41,12 @@ namespace Detours
 		cell_t result = Pl_Continue;
 		if(g_pFwdOnTryOfferingTankBot)
 		{
-			cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(tank))) : 0;
-			cell_t cellEnterStasis = (cell_t)enterStasis;
+			cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(tank)) : 0;
+			cell_t cellEnterStasis = static_cast<bool>(enterStasis);
 			
 			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot(tank %d, enterStasis %d) forward has been sent out", tank, enterStasis);
-			g_pFwdOnShovedBySurvivor->PushCell(tankindex);
-			g_pFwdOnShovedBySurvivor->PushCellByRef(&cellEnterStasis);
+			g_pFwdOnTryOfferingTankBot->PushCell(tankindex);
+			g_pFwdOnTryOfferingTankBot->PushCellByRef(&cellEnterStasis);
 			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot() forward has been sent out");
 			g_pFwdOnTryOfferingTankBot->Execute(&result);
 			enterStasis = cellEnterStasis != 0;
