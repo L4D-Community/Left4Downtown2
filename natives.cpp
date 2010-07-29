@@ -33,7 +33,6 @@
 #include "vglobals.h"
 #include "util.h"
 
-// DEPRECATED ON ALL PLATFORMS/TARGETS
 // native L4D_GetTeamScore(logical_team, campaign_score=false)
 cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 {
@@ -99,8 +98,6 @@ cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 
 	cell_t retbuffer;
 	pWrapper->Execute(vstk, &retbuffer);
-
-	g_pSM->LogMessage(myself, "L4D_GetTeamScore is deprecated. You should be using SDKTools to invoke it instead.");
 
 	return retbuffer;
 }
@@ -181,8 +178,6 @@ cell_t L4D_GetCampaignScores(IPluginContext *pContext, const cell_t *params)
 
 	pContext->LocalToPhysAddr(params[2], &addr);
 	*addr = static_cast<cell_t>(-1);
-
-	g_pSM->LogError(myself, "L4D_OnGetCampaignScores(a,b) has been called. It is deprecated in L4D2, consider updating the plugin using this native.");
 
 	return 1;
 }

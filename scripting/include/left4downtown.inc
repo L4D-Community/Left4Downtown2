@@ -144,6 +144,7 @@ forward Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3]);
  * @param scoreB  score of logical team B
  * @return 		1 always
  */
+#pragma deprecated Use GetTeamScore and OnClearTeamScores instead
 native L4D_GetCampaignScores(&scoreA, &scoreB);
 
 /**
@@ -194,6 +195,7 @@ native L4D_LobbyUnreserve();
  *
  * @return     true if reserved, false if not reserved
  */
+#pragma deprecated This will always return false on L4D2 or on Linux.
 native bool:L4D_LobbyIsReserved();
 
 /**
