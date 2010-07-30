@@ -77,7 +77,7 @@ forward Action:L4D_OnSetCampaignScores(&scoreA, &scoreB);
 /**
  * @brief Called whenever CDirector::OnFirstSurvivorLeftSafeArea is invoked
  * @remarks A versus round is started when survivors leave the safe room, or force started
- *          after 90 seconds regardless.
+ *           after 90 seconds regardless.
  * 
  * @param client  the survivor that left the safe area first
  * 
@@ -115,8 +115,8 @@ forward Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis);
 /**
  * @brief Called whenever CDirector::OnMobRushStart(void) is invoked
  * @remarks called on random hordes, mini- and finale hordes, and boomer hordes, causes Zombies to attack
- * @remarks not called on "z_spawn mob", hook the console command and check arguments to catch plugin mobs
- * @remarks This function is used to reset the Director's natural horde timer
+ *           Not called on "z_spawn mob", hook the console command and check arguments to catch plugin mobs
+ *           This function is used to reset the Director's natural horde timer
  * 
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
@@ -135,8 +135,8 @@ forward Action:L4D_OnSpawnITMob(&amount);
 /**
  * @brief Called whenever ZombieManager::SpawnMob(int) is invoked
  * @remarks called on natural hordes & z_spawn mob, increases Zombie Spawn 
- *		Queue, triggers player OnMobSpawned (vocalizations), sets horde
- *		direction, and plays horde music.
+ *           Queue, triggers player OnMobSpawned (vocalizations), sets horde
+ *           direction, and plays horde music.
  * 
  * @param amount	Amount of Zombies to add to Queue
  * 
@@ -224,7 +224,7 @@ native bool:L4D_LobbyIsReserved();
 /**
  * @brief Gets the max versus completion score for the map
  * @remarks Requires GameRules to be initialized--map must be loaded
- * 		Seems to be updated before OnMapStart
+ *           Seems to be updated before OnMapStart
  *
  *
  * @return     The map's max completion distance (map distance score)
@@ -234,7 +234,7 @@ native L4D_GetVersusMaxCompletionScore();
 /**
  * @brief Sets the max versus completion score for the map
  * @remarks Requires GameRules to be initialized--map must be loaded
- * 		Seems to be updated before OnMapStart and checked on round_start
+ *           Seems to be updated before OnMapStart and checked on round_start
  *
  * @param	score	The versus max completion score to set for the round
  */
@@ -258,7 +258,7 @@ native L4D_ResetMobTimer();
 /**
  * @brief Notifies the CGameRulesProxy that the game state has been changed
  * @remarks Use this function before changing networked members of GameRules,
- * 		like with L4D_SetVersusMaxCompletionScore()
+ *           like with L4D_SetVersusMaxCompletionScore()
  *
  * @noreturn
  */
