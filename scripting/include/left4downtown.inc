@@ -116,6 +116,7 @@ forward Action:L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis);
  * @brief Called whenever CDirector::OnMobRushStart(void) is invoked
  * @remarks called on random hordes, mini- and finale hordes, and boomer hordes, causes Zombies to attack
  * @remarks not called on "z_spawn mob", hook the console command and check arguments to catch plugin mobs
+ * @remarks This function is used to reset the Director's natural horde timer
  * 
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
@@ -130,6 +131,18 @@ forward Action:L4D_OnMobRushStart();
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action:L4D_OnSpawnITMob(&amount);
+
+/**
+ * @brief Called whenever ZombieManager::SpawnMob(int) is invoked
+ * @remarks called on natural hordes & z_spawn mob, increases Zombie Spawn 
+ *		Queue, triggers player OnMobSpawned (vocalizations), sets horde
+ *		direction, and plays horde music.
+ * 
+ * @param amount	Amount of Zombies to add to Queue
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D_OnSpawnMob(&amount);
 
 /**
  * @brief Called whenever CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer, Vector&) is invoked

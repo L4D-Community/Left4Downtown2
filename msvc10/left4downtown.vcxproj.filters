@@ -90,6 +90,9 @@
     <ClCompile Include="..\detours\spawn_it_mob.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\spawn_mob.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -174,6 +177,9 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\spawn_it_mob.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\spawn_mob.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

@@ -152,6 +152,7 @@ public OnPluginStart()
 	SearchForFunction("TryOfferingTankBot");
 	SearchForFunction("OnMobRushStart");
 	SearchForFunction("Zombiemanager_SpawnITMob");
+	SearchForFunction("Zombiemanager_SpawnMob");
 	
 	SearchForFunction("CTerrorPlayer_OnStaggered");
 	SearchForFunction("CTerrorPlayer_OnShovedBySurvivor");
@@ -354,6 +355,12 @@ public Action:L4D_OnMobRushStart()
 public Action:L4D_OnSpawnITMob(&amount)
 {
 	DebugPrintToAll("L4D_OnSpawnITMob(%d) fired", amount);
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnSpawnMob(&amount)
+{
+	DebugPrintToAll("L4D_OnSpawnMob(%d) fired", amount);
 	return Plugin_Continue;
 }
 
