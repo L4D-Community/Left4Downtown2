@@ -62,7 +62,9 @@
 #define MODRM_MOD_DIRECT ((char)(3 << 6))
 #define MODRM_RM_EDX '\x02'
 
-//static void *humanLimitSig = NULL;
+#if defined PLATFORM_WINDOWS
+static void *humanLimitSig = NULL;
+#endif
 static void *lobbyConnectSig = NULL;
 static int serverFullOffset = -1;
 
@@ -86,14 +88,10 @@ void PlayerSlots::Patch()
 
 	/*
 	Server patch
-	** REMOVED THIS PATCH -- HumanPlayerLimitReached is only triggered when 
-	**		GetMaxHumanPlayers' value is exceeded. This patch was removing the 
-	**		check completely, letting players join through console even when 
-	**		maxplayers was reached.
+	** Needed on windows only. On Linux, this called GetMaxHumanPlayers
 	*/
 	
-	
-	/*
+#if defined PLATFORM_WINDOWS
 	if(firstTime)
 	{
 		if (!g_pGameConf->GetMemSig("HumanPlayerLimitReached", &humanLimitSig) || !humanLimitSig) 
@@ -102,7 +100,6 @@ void PlayerSlots::Patch()
 			return;
 		}
 	}
-	*/
 	//code pages can't be written to by default, so ApplyPatch changes that ;)
 
 	/*
@@ -113,23 +110,21 @@ void PlayerSlots::Patch()
 
 	we never check if the human player limit has been reached
 	*/
-	/*
 	patch_t humanLimitPatch;
 
-#if defined PLATFORM_WINDOWS
+//#if defined PLATFORM_WINDOWS
 	humanLimitPatch.bytes = 1;
 	humanLimitPatch.patch[0] = OP_JMP_REL8;
-#else //PLATFORM_LINUX
-	humanLimitPatch.bytes = OP_JLE_REL8_SIZE;
-	fill_nop(humanLimitPatch.patch, humanLimitPatch.bytes);
-#endif
-	*/
+//#else //PLATFORM_LINUX
+//	humanLimitPatch.bytes = OP_JLE_REL8_SIZE;
+//	fill_nop(humanLimitPatch.patch, humanLimitPatch.bytes);
+//#endif
 	
 	
-	//ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitPatch, firstTime ? &humanLimitRestore : NULL);
+	ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitPatch, firstTime ? &humanLimitRestore : NULL);
 
-	//L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) patched to jmp"); 
-	
+	L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) patched to jmp"); 
+#endif
 
 	/*
 	Engine patch
