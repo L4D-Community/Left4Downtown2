@@ -508,7 +508,7 @@
 			"NotifyNetworkStateChanged"
 			{
 				"library"	"server"
-				"linux"		"_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
+				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
 				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x42"
 							/* A1 ? ? ? ? 85 C0 74 42 */
 			}
