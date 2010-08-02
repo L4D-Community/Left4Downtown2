@@ -544,7 +544,9 @@ cell_t L4D_StaggerPlayer(IPluginContext *pContext, const cell_t *params)
 	vptr += sizeof(CBaseEntity *);
 	*(Vector **)vptr = pSourceVector;
 
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::OnStaggered");
 	pWrapper->Execute(vstk, NULL);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::OnStaggered");
 	
 	return 0;
 }
