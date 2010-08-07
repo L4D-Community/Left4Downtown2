@@ -370,11 +370,13 @@ void PlayerSlots::Unpatch()
 	//jl around the string "Human player limit reached (%d/%d)"
 	// Deprecated
 
-	//if(humanLimitSig)
-	//{
-		//ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitRestore, /*restore*/NULL);
-		//L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) restored");
-	//} 
+#if defined PLATFORM_WINDOWS
+	if(humanLimitSig)
+	{
+		ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitRestore, /*restore*/NULL);
+		L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) restored");
+	} 
+#endif
 
 	//jz around the string "#Valve_Reject_Server_Full"
 
