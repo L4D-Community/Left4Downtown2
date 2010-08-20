@@ -82,8 +82,11 @@ int PlayerSlots::MaxPlayers = -1;
 
 void PlayerSlots::Patch()
 {
+#if defined PLATFORM_WINDOWS
+	bool firstTime = !(humanLimitSig && lobbyConnectSig);
+#else
 	bool firstTime = !(lobbyConnectSig);
-	//bool firstTime = !(humanLimitSig && lobbyConnectSig);
+#endif
 	L4D_DEBUG_LOG("PlayerSlots - Patching ...");
 
 	/*
@@ -368,7 +371,7 @@ void PlayerSlots::Unpatch()
 	L4D_DEBUG_LOG("PlayersSlots - Unpatching ...");
 
 	//jl around the string "Human player limit reached (%d/%d)"
-	// Deprecated
+	// Windows only
 
 #if defined PLATFORM_WINDOWS
 	if(humanLimitSig)
