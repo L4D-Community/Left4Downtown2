@@ -30,8 +30,8 @@
 			/* Offset into g_pGameRules */
 			"VersusMaxCompletionScore"
 			{
-				"windows"	"1164"
-				"linux"		"1156"
+				"windows"	"1168"
+				"linux"		"1160"
 			}
 		}
 		
