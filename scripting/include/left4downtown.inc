@@ -275,6 +275,14 @@ native L4D_NotifyNetworkStateChanged();
  */
 native L4D_StaggerPlayer(target, source_ent, Float:source_vector[3]);
 
+/**
+ * @brief Get the time remaining before the next director horde. 
+ * @remarks This timer is used for scripted event hordes and natural timed hordes
+ * 
+ * @return 	Time remaining before next director horde
+ */
+native Float:L4D_GetMobSpawnTimerRemaining();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

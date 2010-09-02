@@ -182,5 +182,8 @@
     <ClInclude Include="..\detours\spawn_mob.h">
       <Filter>detours</Filter>
     </ClInclude>
+    <ClInclude Include="..\director.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

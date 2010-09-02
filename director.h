@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009 Igor "Downtown1" Smirnov.
+ * Copyright (C) 2010 Michael "ProdigySim" Busby
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,17 +29,27 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
-#define _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
-#include "director.h"
+#ifndef _INCLUDE_DIRECTOR_H_
+#define _INCLUDE_DIRECTOR_H_
 
-//#define THEDIRECTOR_SETNEXTMISSION_OFFSET 2
 
-extern void **g_pGameRules;		/* CTerrorGameRules */
-extern void **g_pEngine;		/* IVEngineServer */
-extern CDirector **g_pDirector;		/* Director */
-extern void **g_pZombieManager;	/* ZombieManager */
+// Win32: 1444 bytes
+// Lin: 1464 bytes
 
-void InitializeValveGlobals();
+typedef struct _CDirector {
+	char unknown[256];
+	int tankCount; // 0x100
+	char unknown2[204];
+	void *MobSpawnTimer; // 0x1d0, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
+	float MobSpawntimer_m_duration; // 0x1d4 Countdowntimer duration
+	float MobSpawnTimer_m_timestamp; // 0x1d8 Countdowntimer timestamp (end time)
+	char unknown3[232];
+	float MobSpawnSize; // 0x2c4
+	char unknown4[712];	
+#ifdef PLATFORM_LINUX
+	char unknown_linonly[20];
+#endif
+} CDirector;
 
-#endif // _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
+#endif //_INCLUDE_DIRECTOR_H_
+

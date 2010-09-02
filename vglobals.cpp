@@ -35,7 +35,7 @@
 
 void **g_pGameRules = NULL;
 void **g_pEngine = NULL;
-void **g_pDirector = NULL;
+CDirector **g_pDirector = NULL;
 void **g_pZombieManager = NULL;
 
 #ifdef PLATFORM_WINDOWS
@@ -65,7 +65,7 @@ void InitializeValveGlobals()
 	{
 		return;
 	}
-	g_pDirector = *reinterpret_cast<void ***>(addr + offset);
+	g_pDirector = *reinterpret_cast<CDirector ***>(addr + offset);
 
 	/* g_pZombieManager */
 	//TODO
@@ -87,7 +87,7 @@ void InitializeValveGlobals()
 	{
 		return;
 	}
-	g_pDirector = reinterpret_cast<void **>(addr);
+	g_pDirector = reinterpret_cast<CDirector **>(addr);
 
 	/* g_pZombieManager */
 	if (!g_pGameConf->GetMemSig("TheZombieManager", (void **)&addr) || !addr)

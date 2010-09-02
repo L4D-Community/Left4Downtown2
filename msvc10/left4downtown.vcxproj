@@ -130,6 +130,7 @@
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
     <ClInclude Include="..\detours\spawn_mob.h" />
     <ClInclude Include="..\detours\spawn_it_mob.h" />
+    <ClInclude Include="..\director.h" />
     <ClInclude Include="..\extension.h" />
     <ClInclude Include="..\player_slots.h" />
     <ClInclude Include="..\util.h" />
