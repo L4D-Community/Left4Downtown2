@@ -96,6 +96,12 @@
     <ClCompile Include="..\detours\get_walk_top_speed.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\get_crouch_top_speed.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\detours\get_run_top_speed.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -189,6 +195,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\get_walk_top_speed.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\get_crouch_top_speed.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\get_run_top_speed.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

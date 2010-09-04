@@ -156,6 +156,8 @@ public OnPluginStart()
 	
 	SearchForFunction("CTerrorPlayer_OnStaggered");
 	SearchForFunction("CTerrorPlayer_OnShovedBySurvivor");
+	SearchForFunction("CTerrorPlayer_GetCrouchTopSpeed");
+	SearchForFunction("CTerrorPlayer_GetRunTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
 	
 	/*
@@ -378,9 +380,21 @@ public Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3])
 	return Plugin_Continue;
 }
 
+// caution, those 3 are super spammy
+public Action:L4D_OnGetCrouchTopSpeed(target, &Float:retVal)
+{
+	// DebugPrintToAll("OnOnGetCrouchTopSpeed(target=%N, retVal=%f)", target, retVal);
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnGetRunTopSpeed(target, &Float:retVal)
+{
+	// DebugPrintToAll("OnOnGetRunTopSpeed(target=%N, retVal=%f)", target, retVal);
+	return Plugin_Continue;
+}
+
 public Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal)
 {
-	// caution, super spammy
 	// DebugPrintToAll("OnOnGetWalkTopSpeed(target=%N, retVal=%f)", target, retVal);
 	return Plugin_Continue;
 }

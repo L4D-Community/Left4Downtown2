@@ -157,15 +157,34 @@ forward Action:L4D_OnSpawnMob(&amount);
 forward Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3]);
 
 /**
- * @brief Called whenever CTerrorPlayer::GetWalkTopSpeed() is invoked
- * @remarks also handles Running and Crouching
+ * @brief Called whenever CTerrorPlayer::GetCrouchTopSpeed() is invoked
  *
  * @param target	the client that its being called on (not changible)
  * @param retVal  what to override the return value with
  * 
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
-forward Action:L4D_OnGetWalkTopSpeed(target, Float:&retVal);
+forward Action:L4D_OnGetCrouchTopSpeed(target, &Float:retVal);
+
+/**
+ * @brief Called whenever CTerrorPlayer::GetRunTopSpeed() is invoked
+ *
+ * @param target	the client that its being called on (not changible)
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetRunTopSpeed(target, &Float:retVal);
+
+/**
+ * @brief Called whenever CTerrorPlayer::GetWalkTopSpeed() is invoked
+ *
+ * @param target	the client that its being called on (not changible)
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal);
 
 /**
  * @brief Get the current campaign scores stored in the Director

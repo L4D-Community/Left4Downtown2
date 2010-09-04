@@ -57,6 +57,8 @@
 #include "detours/spawn_it_mob.h"
 #include "detours/spawn_mob.h"
 #include "detours/shoved_by_survivor.h"
+#include "detours/get_crouch_top_speed.h"
+#include "detours/get_run_top_speed.h"
 #include "detours/get_walk_top_speed.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -81,6 +83,8 @@ IForward *g_pFwdOnMobRushStart = NULL;
 IForward *g_pFwdOnSpawnITMob = NULL;
 IForward *g_pFwdOnSpawnMob = NULL;
 IForward *g_pFwdOnShovedBySurvivor = NULL;
+IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
+IForward *g_pFwdOnGetRunTopSpeed = NULL;
 IForward *g_pFwdOnGetWalkTopSpeed = NULL;
 
 ICvar *icvar = NULL;
@@ -137,6 +141,8 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
+	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
@@ -216,6 +222,8 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnITMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedBySurvivor>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetCrouchTopSpeed>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetRunTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetWalkTopSpeed>());
 
 	//new style detours that create/destroy the forwards themselves
@@ -249,6 +257,8 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
+	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
+	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
 }
 

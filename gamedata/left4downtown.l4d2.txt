@@ -376,7 +376,7 @@
 			}
 			
 			/*
-			 *   CTerrorPlayer::GetWalkTopSpeed(void)const - also covers Crouch- and RunSpeed
+			 *   CTerrorPlayer::GetWalkTopSpeed(void)const
 			 */
 			"CTerrorPlayer_GetWalkTopSpeed"
 			{
@@ -385,6 +385,29 @@
 				"windows" "\x56\x8B\xF1\x80\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x5E\xE9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x50\xE8"
 				/* 56 8B F1 80 ? ? ? ? ? ? 74 ? 5E E9 ? ? ? ? E8 ? ? ? ? 50 E8 */
 			}
+			
+			/*
+			 *   CTerrorPlayer::GetRunTopSpeed(void)const
+			 */
+			"CTerrorPlayer_GetRunTopSpeed"
+			{
+				"library"	"server"
+				"linux"	"@_ZNK13CTerrorPlayer14GetRunTopSpeedEv"
+				"windows" "\x83\xEC\x2A\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x84\xC0\x74\x2A\xA1\x9C"
+				/* 83 EC ? 56 8B F1 8B 06 8B 90 ? ? ? ? FF D2 84 C0 74 ? A1 9C */
+			}
+			
+			/*
+			 *   CTerrorPlayer::GetCrouchTopSpeed(void)const
+			 */
+			"CTerrorPlayer_GetCrouchTopSpeed"
+			{
+				"library"	"server"
+				"linux"	"@_ZNK13CTerrorPlayer17GetCrouchTopSpeedEv"
+				"windows" "\x56\x8B\xF1\x80\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x5E\xE9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x83\xF8"
+				/* 56 8B F1 80 ? ? ? ? ? ? 74 ? 5E E9 ? ? ? ? E8 ? ? ? ? 83 F8 */
+			}
+
 
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************
