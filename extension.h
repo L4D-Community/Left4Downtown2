@@ -149,6 +149,7 @@ extern IForward *g_pFwdOnMobRushStart;
 extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnSpawnMob;
 extern IForward *g_pFwdOnShovedBySurvivor;
+extern IForward *g_pFwdOnGetWalkTopSpeed;
 
 extern IBinTools *g_pBinTools;
 extern IServer *g_pServer; //pointer to CBaseServer

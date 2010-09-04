@@ -477,6 +477,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\detours\get_walk_top_speed.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\detours\get_walk_top_speed.h"
+				>
+			</File>
+			<File
 				RelativePath="..\detours\get_script_value_int.cpp"
 				>
 			</File>

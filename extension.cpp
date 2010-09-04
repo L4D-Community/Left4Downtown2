@@ -57,6 +57,7 @@
 #include "detours/spawn_it_mob.h"
 #include "detours/spawn_mob.h"
 #include "detours/shoved_by_survivor.h"
+#include "detours/get_walk_top_speed.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -80,6 +81,7 @@ IForward *g_pFwdOnMobRushStart = NULL;
 IForward *g_pFwdOnSpawnITMob = NULL;
 IForward *g_pFwdOnSpawnMob = NULL;
 IForward *g_pFwdOnShovedBySurvivor = NULL;
+IForward *g_pFwdOnGetWalkTopSpeed = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -135,6 +137,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -213,6 +216,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnITMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedBySurvivor>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetWalkTopSpeed>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -245,6 +249,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
+	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

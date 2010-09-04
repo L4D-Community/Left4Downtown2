@@ -156,6 +156,7 @@ public OnPluginStart()
 	
 	SearchForFunction("CTerrorPlayer_OnStaggered");
 	SearchForFunction("CTerrorPlayer_OnShovedBySurvivor");
+	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -377,6 +378,12 @@ public Action:L4D_OnShovedBySurvivor(client, victim, const Float:vector[3])
 	return Plugin_Continue;
 }
 
+public Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal)
+{
+	// caution, super spammy
+	// DebugPrintToAll("OnOnGetWalkTopSpeed(target=%N, retVal=%f)", target, retVal);
+	return Plugin_Continue;
+}
 
 public OnMapStart()
 {

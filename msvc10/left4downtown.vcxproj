@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\detours\get_walk_top_speed.cpp" />
     <ClCompile Include="..\detours\shoved_by_survivor.cpp" />
     <ClCompile Include="..\detours\spawn_mob.cpp" />
     <ClCompile Include="..\detours\spawn_it_mob.cpp" />
@@ -127,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h" />
+    <ClInclude Include="..\detours\get_walk_top_speed.h" />
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
     <ClInclude Include="..\detours\spawn_mob.h" />
     <ClInclude Include="..\detours\spawn_it_mob.h" />
