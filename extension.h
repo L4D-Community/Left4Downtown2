@@ -152,6 +152,7 @@ extern IForward *g_pFwdOnShovedBySurvivor;
 extern IForward *g_pFwdOnGetCrouchTopSpeed;
 extern IForward *g_pFwdOnGetRunTopSpeed;
 extern IForward *g_pFwdOnGetWalkTopSpeed;
+extern IForward *g_pFwdOnGetDifficulty;
 
 extern IBinTools *g_pBinTools;
 extern IServer *g_pServer; //pointer to CBaseServer

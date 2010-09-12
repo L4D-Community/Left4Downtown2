@@ -17,7 +17,7 @@ OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp util.cpp asm/
 			detours/set_campaign_scores.cpp detours/server_player_counts.cpp detours/first_survivor_left_safe_area.cpp \
 			detours/mob_rush_start.cpp detours/spawn_it_mob.cpp detours/spawn_mob.cpp detours/try_offering_tank_bot.cpp \
 			detours/get_script_value_int.cpp detours/shoved_by_survivor.cpp detours/get_crouch_top_speed.cpp \
-			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp codepatch/patchmanager.cpp
+			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp detours/get_difficulty.cpp codepatch/patchmanager.cpp
 
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###

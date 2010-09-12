@@ -407,6 +407,17 @@
 				"windows" "\x56\x8B\xF1\x80\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x5E\xE9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x83\xF8"
 				/* 56 8B F1 80 ? ? ? ? ? ? 74 ? 5E E9 ? ? ? ? E8 ? ? ? ? 83 F8 */
 			}
+			
+			/*
+			 *   GetDifficulty(void)
+			 */
+			"GetDifficulty"
+			{
+				"library"	"server"
+				"linux"	"@_Z13GetDifficultyv"
+				"windows" "\xA1\xF4\x2A\x2A\x2A\xC3"
+				/* A1 F4 ? ? ? C3 */
+			}
 
 
 /*********************************************************************

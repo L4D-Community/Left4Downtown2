@@ -159,6 +159,7 @@ public OnPluginStart()
 	SearchForFunction("CTerrorPlayer_GetCrouchTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetRunTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
+	SearchForFunction("GetDifficulty");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -396,6 +397,18 @@ public Action:L4D_OnGetRunTopSpeed(target, &Float:retVal)
 public Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal)
 {
 	// DebugPrintToAll("OnOnGetWalkTopSpeed(target=%N, retVal=%f)", target, retVal);
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnGetDifficulty(&retVal)
+{
+	// 0 is easy, 1 is normal (versus default), 2 is hard, 3 is expert
+
+	//DebugPrintToAll("OnGetDifficulty(retVal=%i)", retVal);
+	
+	//retVal = 3;
+	//return Plugin_Handled;
+	
 	return Plugin_Continue;
 }
 

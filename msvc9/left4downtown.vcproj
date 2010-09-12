@@ -485,6 +485,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\detours\get_difficulty.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\detours\get_difficulty.h"
+				>
+			</File>
+			<File
 				RelativePath="..\detours\get_run_top_speed.cpp"
 				>
 			</File>

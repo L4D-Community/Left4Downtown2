@@ -187,6 +187,16 @@ forward Action:L4D_OnGetRunTopSpeed(target, &Float:retVal);
 forward Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal);
 
 /**
+ * @brief Called whenever GetDifficulty() is invoked
+ * @remarks used to determine Infected Damage and such
+ *
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetDifficulty(&retVal);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

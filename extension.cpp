@@ -60,6 +60,7 @@
 #include "detours/get_crouch_top_speed.h"
 #include "detours/get_run_top_speed.h"
 #include "detours/get_walk_top_speed.h"
+#include "detours/get_difficulty.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -86,6 +87,7 @@ IForward *g_pFwdOnShovedBySurvivor = NULL;
 IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward *g_pFwdOnGetRunTopSpeed = NULL;
 IForward *g_pFwdOnGetWalkTopSpeed = NULL;
+IForward *g_pFwdOnGetDifficulty = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -144,6 +146,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
+	g_pFwdOnGetDifficulty = forwards->CreateForward("L4D_OnGetDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -225,6 +228,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetCrouchTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetRunTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetWalkTopSpeed>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetDifficulty>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -260,6 +264,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
+	forwards->ReleaseForward(g_pFwdOnGetDifficulty);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor
