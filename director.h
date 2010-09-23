@@ -41,7 +41,7 @@ typedef struct _CDirector {
 	int tankCount; // 0x100
 	char unknown2[204];
 	void *MobSpawnTimer; // 0x1d0, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
-	float MobSpawntimer_m_duration; // 0x1d4 Countdowntimer duration
+	float MobSpawnTimer_m_duration; // 0x1d4 Countdowntimer duration
 	float MobSpawnTimer_m_timestamp; // 0x1d8 Countdowntimer timestamp (end time)
 	char unknown3[232];
 	float MobSpawnSize; // 0x2c4
