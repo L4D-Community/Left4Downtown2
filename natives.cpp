@@ -568,7 +568,22 @@ cell_t L4D_GetMobSpawnTimerRemaining(IPluginContext *pContext, const cell_t *par
 	return sp_ftoc(director->MobSpawnTimer_m_timestamp - gpGlobals->curtime);
 }
 
+cell_t L4D_GetMobSpawnTimerDuration(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
 
+	CDirector *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+	L4D_DEBUG_LOG("Reading director mobspawntimer duration");
+	return sp_ftoc(director->MobSpawnTimer_m_duration);
+}
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
@@ -586,5 +601,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_NotifyNetworkStateChanged",	L4D_NotifyNetworkStateChanged},
 	{"L4D_StaggerPlayer",				L4D_StaggerPlayer},
 	{"L4D_GetMobSpawnTimerRemaining",	L4D_GetMobSpawnTimerRemaining},
+	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
 	{NULL,							NULL}
 };
