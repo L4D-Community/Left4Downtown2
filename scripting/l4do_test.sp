@@ -471,6 +471,15 @@ public Action:Command_HordeDuration(client, args)
 #endif
 }
 
+public Action:Command_SpawnTimer(client, args)
+{
+#if USE_NATIVES
+	new SpawnTimer = L4D_GetPlayerSpawnTime(client);
+	DebugPrintToAll("Spawn Timer for player %N: %d", client, SpawnTimer);
+	ReplyToCommand(client, "Remaining: %d", SpawnTimer);
+#endif
+}
+
 SearchForFunction(const String:functionName[])
 {
 	StartPrepSDKCall(SDKCall_Static);

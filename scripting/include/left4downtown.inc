@@ -331,6 +331,14 @@ native Float:L4D_GetMobSpawnTimerRemaining();
  */
 native Float:L4D_GetMobSpawnTimerDuration();
 
+/**
+ * @brief Get the remaining spawn time for an SI
+ * @remarks This is meant for Special infected in ghost mode in versus.
+ * 
+ * @return 	Time (seconds) until the SI will spawn.
+ */
+native L4D_GetPlayerSpawnTime(player);
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

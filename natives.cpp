@@ -585,6 +585,27 @@ cell_t L4D_GetMobSpawnTimerDuration(IPluginContext *pContext, const cell_t *para
 	return sp_ftoc(director->MobSpawnTimer_m_duration);
 }
 
+// L4D_GetPlayerSpawnTime(client)
+cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
+{	
+	static int offset;
+	if(!offset && (!g_pGameConf->GetOffset("SpawnTimer", &offset) || !offset))
+	{
+		return pContext->ThrowNativeError("Could not read 'VersusMaxCompletionScore' offset from GameConf");
+	}
+	
+
+	int player = params[1];
+	CBaseEntity * pPlayer = UTIL_GetCBaseEntity(player, true);
+	if(pPlayer == NULL) 
+	{
+		return pContext->ThrowNativeError("Invalid Player to retrieve spawn timer");		
+	}
+	L4D_DEBUG_LOG("Reading player %d spawn timer", params[1]);
+	return (cell_t) *(int *)((char*)pPlayer+offset);
+}
+
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -602,5 +623,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_StaggerPlayer",				L4D_StaggerPlayer},
 	{"L4D_GetMobSpawnTimerRemaining",	L4D_GetMobSpawnTimerRemaining},
 	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
+	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
 	{NULL,							NULL}
 };

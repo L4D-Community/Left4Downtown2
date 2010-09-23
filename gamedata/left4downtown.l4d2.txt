@@ -33,6 +33,12 @@
 				"windows"	"1168"
 				"linux"		"1160"
 			}
+			/* Offset into CTerrorPlayer */
+			"SpawnTimer"
+			{
+				"windows"	"11260"
+				"linux"		"11244"
+			}
 		}
 		
 		"Signatures"
