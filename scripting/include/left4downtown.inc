@@ -323,6 +323,14 @@ native L4D_StaggerPlayer(target, source_ent, Float:source_vector[3]);
  */
 native Float:L4D_GetMobSpawnTimerRemaining();
 
+/**
+ * @brief Get the duration the horde timer was set to after the last horde
+ * @remarks This timer is used for scripted event hordes and natural timed hordes
+ * 
+ * @return 	Total time from last horde to next horde.
+ */
+native Float:L4D_GetMobSpawnTimerDuration();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
