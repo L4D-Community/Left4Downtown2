@@ -180,8 +180,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_ir", Command_IsReserved);
 	RegConsoleCmd("sm_rsfv", Command_RestartScenarioFromVote);
 	RegConsoleCmd("sm_ur", Command_Unreserve);
-	RegConsoleCmd("sm_hordetime", Command_HordeTimer);
-	RegConsoleCmd("sm_hordedur", Command_HordeDuration);
+	RegConsoleCmd("sm_horde", Command_Horde);
 	
 
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -453,21 +452,13 @@ public Action:Command_Unreserve(client, args)
 	return Plugin_Handled;
 }
 
-public Action:Command_HordeTimer(client, args)
+public Action:Command_Horde(client, args)
 {
 #if USE_NATIVES
 	new Float:hordetime = L4D_GetMobSpawnTimerRemaining();
-	DebugPrintToAll("Time remaining for next horde is: %f", hordetime);
-	ReplyToCommand(client, "Remaining: %f", hordetime);
-#endif
-}
-
-public Action:Command_HordeDuration(client, args)
-{
-#if USE_NATIVES
 	new Float:hordeduration = L4D_GetMobSpawnTimerDuration();
-	DebugPrintToAll("Duration for current horde timer is: %f", hordeduration);
-	ReplyToCommand(client, "Remaining: %f", hordeduration);
+	DebugPrintToAll("Time remaining for next horde is: %f  Duration %f ", hordetime, hordeduration);
+	ReplyToCommand(client, "Remaining: %f Duration: %f", hordetime, hordeduration);
 #endif
 }
 
