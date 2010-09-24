@@ -465,8 +465,8 @@ public Action:Command_Horde(client, args)
 public Action:Command_SpawnTimer(client, args)
 {
 #if USE_NATIVES
-	new SpawnTimer = L4D_GetPlayerSpawnTime(client);
-	DebugPrintToAll("Spawn Timer for player %N: %d", client, SpawnTimer);
+	new Float:SpawnTimer = L4D_GetPlayerSpawnTime(client);
+	DebugPrintToAll("Spawn Timer for player %N: %f", client, SpawnTimer);
 	ReplyToCommand(client, "Remaining: %d", SpawnTimer);
 #endif
 }

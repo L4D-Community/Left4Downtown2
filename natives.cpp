@@ -602,7 +602,8 @@ cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 		return pContext->ThrowNativeError("Invalid Player to retrieve spawn timer");		
 	}
 	L4D_DEBUG_LOG("Reading player %d spawn timer", params[1]);
-	return (cell_t) *(int *)((char*)pPlayer+offset);
+	
+	return sp_ftoc(*(float *)((char*)pPlayer+offset) - gpGlobals->curtime);
 }
 
 

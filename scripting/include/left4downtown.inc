@@ -337,7 +337,7 @@ native Float:L4D_GetMobSpawnTimerDuration();
  * 
  * @return 	Time (seconds) until the SI will spawn.
  */
-native L4D_GetPlayerSpawnTime(player);
+native Float:L4D_GetPlayerSpawnTime(player);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
