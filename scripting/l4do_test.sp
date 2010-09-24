@@ -181,6 +181,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_rsfv", Command_RestartScenarioFromVote);
 	RegConsoleCmd("sm_ur", Command_Unreserve);
 	RegConsoleCmd("sm_horde", Command_Horde);
+	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
 	
 
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -467,7 +468,7 @@ public Action:Command_SpawnTimer(client, args)
 #if USE_NATIVES
 	new Float:SpawnTimer = L4D_GetPlayerSpawnTime(client);
 	DebugPrintToAll("Spawn Timer for player %N: %f", client, SpawnTimer);
-	ReplyToCommand(client, "Remaining: %d", SpawnTimer);
+	ReplyToCommand(client, "Remaining: %f", SpawnTimer);
 #endif
 }
 
