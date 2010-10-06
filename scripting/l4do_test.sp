@@ -12,7 +12,7 @@
 #endif
 
 #define TEST_DEBUG 1
-#define TEST_DEBUG_LOG 0
+#define TEST_DEBUG_LOG 1
 
 new Handle:gConf;
 
@@ -21,7 +21,7 @@ public Plugin:myinfo =
 	name = "L4D Downtown's Extension Test",
 	author = "Downtown1",
 	description = "Ensures functions/offsets are valid and provides some commands to call into natives directly",
-	version = "1.0.0.6",
+	version = "1.0.0.7",
 	url = "<- URL ->"
 }
 
@@ -160,6 +160,8 @@ public OnPluginStart()
 	SearchForFunction("CTerrorPlayer_GetRunTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
 	SearchForFunction("GetDifficulty");
+	SearchForFunction("GetSurvivorSet");
+	SearchForFunction("FastGetSurvivorSet");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -408,6 +410,30 @@ public Action:L4D_OnGetDifficulty(&retVal)
 	//DebugPrintToAll("OnGetDifficulty(retVal=%i)", retVal);
 	
 	//retVal = 3;
+	//return Plugin_Handled;
+	
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnGetSurvivorSet(&retVal)
+{
+	// Which set of survivors should be used. 1=L4D1, 2=L4D2
+	// Unfortunately has side effects. On L4D2 maps, Bot Character Icons and Score Names stay L4D2. Also, Zombie Skins appear bugged
+
+	//DebugPrintToAll("OnGetSurvivorSet(retVal=%i)", retVal);
+	//retVal = 1;
+	//return Plugin_Handled;
+	
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnFastGetSurvivorSet(&retVal)
+{
+	// Which set of survivors should be used. 1=L4D1, 2=L4D2
+	// Unfortunately has side effects. On L4D2 maps, Bot Character Icons and Score Names stay L4D2. Also, Zombie Skins appear bugged
+
+	//DebugPrintToAll("OnFastGetSurvivorSet(retVal=%i)", retVal);
+	//retVal = 1;
 	//return Plugin_Handled;
 	
 	return Plugin_Continue;

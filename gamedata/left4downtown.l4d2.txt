@@ -424,6 +424,28 @@
 				"windows" "\xA1\xF4\x2A\x2A\x2A\xC3"
 				/* A1 F4 ? ? ? C3 */
 			}
+			
+			/*
+			 *   CTerrorGameRules::GetSurvivorSet(void)
+			 */
+			"GetSurvivorSet"
+			{
+				"library"	"server"
+				"linux"	"@_ZN16CTerrorGameRules14GetSurvivorSetEv"
+				"windows" "\xA1\x50\x2A\x2A\x2A\x85\xC0\x75\x2A\x56\x8D"
+				/* A1 50 ? ? ? 85 C0 75 ? 56 8D */
+			}
+			
+			/*
+			 *   CTerrorGameRules::FastGetSurvivorSet(void)
+			 */
+			"FastGetSurvivorSet"
+			{
+				"library"	"server"
+				"linux"	"@_ZN16CTerrorGameRules18FastGetSurvivorSetEv"
+				"windows" "\x56\xBE\x02\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x74"
+				/* 56 BE 02 ? ? ? E8 ? ? ? ? 85 C0 74 */
+			}
 
 
 /*********************************************************************

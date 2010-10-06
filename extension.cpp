@@ -61,6 +61,8 @@
 #include "detours/get_run_top_speed.h"
 #include "detours/get_walk_top_speed.h"
 #include "detours/get_difficulty.h"
+#include "detours/get_survivor_set.h"
+#include "detours/fast_get_survivor_set.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -88,6 +90,8 @@ IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward *g_pFwdOnGetRunTopSpeed = NULL;
 IForward *g_pFwdOnGetWalkTopSpeed = NULL;
 IForward *g_pFwdOnGetDifficulty = NULL;
+IForward *g_pFwdOnGetSurvivorSet = NULL;
+IForward *g_pFwdOnFastGetSurvivorSet = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -147,6 +151,8 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetDifficulty = forwards->CreateForward("L4D_OnGetDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -229,6 +235,8 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetRunTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetWalkTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetDifficulty>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetSurvivorSet>());
+	g_PatchManager.Register(new AutoPatch<Detours::FastGetSurvivorSet>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -265,6 +273,8 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetDifficulty);
+	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
+	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

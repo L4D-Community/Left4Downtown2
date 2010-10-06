@@ -103,9 +103,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\detours\fast_get_survivor_set.cpp" />
     <ClCompile Include="..\detours\get_crouch_top_speed.cpp" />
     <ClCompile Include="..\detours\get_difficulty.cpp" />
     <ClCompile Include="..\detours\get_run_top_speed.cpp" />
+    <ClCompile Include="..\detours\get_survivor_set.cpp" />
     <ClCompile Include="..\detours\get_walk_top_speed.cpp" />
     <ClCompile Include="..\detours\shoved_by_survivor.cpp" />
     <ClCompile Include="..\detours\spawn_mob.cpp" />
@@ -131,9 +133,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h" />
+    <ClInclude Include="..\detours\fast_get_survivor_set.h" />
     <ClInclude Include="..\detours\get_crouch_top_speed.h" />
     <ClInclude Include="..\detours\get_difficulty.h" />
     <ClInclude Include="..\detours\get_run_top_speed.h" />
+    <ClInclude Include="..\detours\get_survivor_set.h" />
     <ClInclude Include="..\detours\get_walk_top_speed.h" />
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
     <ClInclude Include="..\detours\spawn_mob.h" />

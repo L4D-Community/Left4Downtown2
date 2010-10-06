@@ -197,6 +197,24 @@ forward Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal);
 forward Action:L4D_OnGetDifficulty(&retVal);
 
 /**
+ * @brief Called whenever CTerrorGameRules::GetSurvivorSet(void) is invoked
+ *
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetSurvivorSet(&retVal);
+
+/**
+ * @brief Called whenever CTerrorGameRules::FastGetSurvivorSet(void) is invoked
+ *
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnFastGetSurvivorSet(&retVal);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
