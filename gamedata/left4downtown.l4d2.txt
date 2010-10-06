@@ -30,14 +30,14 @@
 			/* Offset into g_pGameRules */
 			"VersusMaxCompletionScore"
 			{
-				"windows"	"1168"
-				"linux"		"1160"
+				"windows"	"1172"
+				"linux"		"1164"
 			}
 			/* Offset into CTerrorPlayer */
 			"SpawnTimer"
 			{
-				"windows"	"11260"
-				"linux"		"11244"
+				"windows"	"11268"
+				"linux"		"11252"
 			}
 		}
 		

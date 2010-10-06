@@ -33,19 +33,19 @@
 #define _INCLUDE_DIRECTOR_H_
 
 
-// Win32: 1444 bytes
-// Lin: 1464 bytes
+// Win32: 1460 bytes
+// Lin: 1480 bytes
 
 typedef struct _CDirector {
-	char unknown[256];
+	char unknown[256]; // 0x0
 	int tankCount; // 0x100
-	char unknown2[204];
-	void *MobSpawnTimer; // 0x1d0, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
-	float MobSpawnTimer_m_duration; // 0x1d4 Countdowntimer duration
-	float MobSpawnTimer_m_timestamp; // 0x1d8 Countdowntimer timestamp (end time)
-	char unknown3[232];
-	float MobSpawnSize; // 0x2c4
-	char unknown4[712];	
+	char unknown2[208]; // 0x104
+	void *MobSpawnTimer; // 0x1d4, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
+	float MobSpawnTimer_m_duration; // 0x1d8 Countdowntimer duration
+	float MobSpawnTimer_m_timestamp; // 0x1dc Countdowntimer timestamp (end time)
+	char unknown3[232]; // 0x1e0
+	float MobSpawnSize; // 0x2c8
+	char unknown4[744];	// 0x2cc
 #ifdef PLATFORM_LINUX
 	char unknown_linonly[20];
 #endif
