@@ -162,6 +162,7 @@ public OnPluginStart()
 	SearchForFunction("GetDifficulty");
 	SearchForFunction("GetSurvivorSet");
 	SearchForFunction("FastGetSurvivorSet");
+	SearchForFunction("GetMissionVersusBossSpawning");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -437,6 +438,12 @@ public Action:L4D_OnFastGetSurvivorSet(&retVal)
 	//return Plugin_Handled;
 	
 	return Plugin_Continue;
+}
+
+public L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance)
+{
+	DebugPrintToAll("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
+
 }
 
 public OnMapStart()

@@ -63,6 +63,7 @@
 #include "detours/get_difficulty.h"
 #include "detours/get_survivor_set.h"
 #include "detours/fast_get_survivor_set.h"
+#include "detours/get_mission_versus_boss_spawning.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -92,6 +93,7 @@ IForward *g_pFwdOnGetWalkTopSpeed = NULL;
 IForward *g_pFwdOnGetDifficulty = NULL;
 IForward *g_pFwdOnGetSurvivorSet = NULL;
 IForward *g_pFwdOnFastGetSurvivorSet = NULL;
+IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -153,6 +155,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetDifficulty = forwards->CreateForward("L4D_OnGetDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -275,6 +278,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetDifficulty);
 	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
+	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

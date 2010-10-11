@@ -111,6 +111,12 @@
     <ClCompile Include="..\detours\get_survivor_set.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\get_mission_versus_boss_spawning.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\l4d2calls.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="..\detours\get_survivor_set.h">
       <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\get_mission_versus_boss_spawning.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\l4d2calls.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

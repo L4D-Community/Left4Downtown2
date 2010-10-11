@@ -103,6 +103,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\l4d2calls.cpp" />
+    <ClCompile Include="..\detours\get_mission_versus_boss_spawning.cpp" />
     <ClCompile Include="..\detours\fast_get_survivor_set.cpp" />
     <ClCompile Include="..\detours\get_crouch_top_speed.cpp" />
     <ClCompile Include="..\detours\get_difficulty.cpp" />
@@ -132,7 +134,9 @@
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\l4d2calls.h" />
     <ClInclude Include="..\convar_public.h" />
+    <ClInclude Include="..\detours\get_mission_versus_boss_spawning.h" />
     <ClInclude Include="..\detours\fast_get_survivor_set.h" />
     <ClInclude Include="..\detours\get_crouch_top_speed.h" />
     <ClInclude Include="..\detours\get_difficulty.h" />

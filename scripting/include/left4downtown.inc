@@ -215,6 +215,19 @@ forward Action:L4D_OnGetSurvivorSet(&retVal);
 forward Action:L4D_OnFastGetSurvivorSet(&retVal);
 
 /**
+ * @brief Called whenever CDirectorVersusMode::GetMissionVersusBossSpawning() is invoked
+ * @remarks Passed values are from the map's Mission Keyvalues. If those keyvalues don't exist, they are from cvar and other globals
+ *
+ * @param spawn_pos_min		Minimum spawn position (percent of flow distance) for bosses
+ * @param spawn_pos_max		Maximum spawn position (perfect of flow distance) for bosses
+ * @param tank_chance		Chance for a tank to spawn on this map
+ * @param witch_chance		Chance for a witch to spawn on this map
+ * 
+ * @noreturn
+ */
+forward L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
