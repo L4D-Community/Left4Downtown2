@@ -41,3 +41,4 @@ KeyValues *CTerrorGameRules__GetMissionCurrentMap(KeyValues**);
 
 
 #endif // _INCLUDE_L4DOWNTOWN_L4D2CALLS_H_
+
