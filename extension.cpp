@@ -63,7 +63,6 @@
 #include "detours/get_difficulty.h"
 #include "detours/get_survivor_set.h"
 #include "detours/fast_get_survivor_set.h"
-#include "detours/key_values_get_float.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -93,7 +92,6 @@ IForward *g_pFwdOnGetWalkTopSpeed = NULL;
 IForward *g_pFwdOnGetDifficulty = NULL;
 IForward *g_pFwdOnGetSurvivorSet = NULL;
 IForward *g_pFwdOnFastGetSurvivorSet = NULL;
-IForward *g_pFwdOnKeyValuesGetFloat = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -155,7 +153,6 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetDifficulty = forwards->CreateForward("L4D_OnGetDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnKeyValuesGetFloat = forwards->CreateForward("L4D_OnKeyValuesGetFloat", ET_Event, 2, /*types*/NULL, Param_String, Param_FloatByRef);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -240,7 +237,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetDifficulty>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetSurvivorSet>());
 	g_PatchManager.Register(new AutoPatch<Detours::FastGetSurvivorSet>());
-	g_PatchManager.Register(new AutoPatch<Detours::KeyValuesGetFloat>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -279,7 +275,6 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetDifficulty);
 	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
-	forwards->ReleaseForward(g_pFwdOnKeyValuesGetFloat);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor
