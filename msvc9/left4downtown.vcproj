@@ -537,6 +537,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\detours\key_values_get_float.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\detours\key_values_get_float.h"
+				>
+			</File>
+			<File
 				RelativePath="..\detours\mob_rush_start.cpp"
 				>
 			</File>

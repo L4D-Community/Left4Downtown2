@@ -111,6 +111,9 @@
     <ClCompile Include="..\detours\get_survivor_set.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\key_values_get_float.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -219,6 +222,9 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\get_survivor_set.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\key_values_get_float.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

@@ -250,6 +250,17 @@
 			}
 			
 			/*
+			 * KeyValues::GetFloat(char  const*, float)
+			 */
+			"Keyvalues_GetFloat"
+			{
+				"library" "server"
+				"linux" "@_ZN9KeyValues8GetFloatEPKcf"
+				"windows" "\x8B\x44\x2A\x2A\x83\xEC\x2A\x6A\x2A\x50\xE8\x2A\x2A\x2A\x2A\x85\xC0\x0F"
+					 /* 8B 44 ? ? 83 EC ? 6A ? 50 E8 ? ? ? ? 85 C0 0F */
+			}
+			
+			/*
 			 * CDirector::IsFinaleEscapeInProgress(void)
 			 */
 			"CDirector_IsFinaleEscapeInProgress"

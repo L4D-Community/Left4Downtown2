@@ -162,6 +162,7 @@ public OnPluginStart()
 	SearchForFunction("GetDifficulty");
 	SearchForFunction("GetSurvivorSet");
 	SearchForFunction("FastGetSurvivorSet");
+	SearchForFunction("Keyvalues_GetFloat");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -435,6 +436,21 @@ public Action:L4D_OnFastGetSurvivorSet(&retVal)
 	//DebugPrintToAll("OnFastGetSurvivorSet(retVal=%i)", retVal);
 	//retVal = 1;
 	//return Plugin_Handled;
+	
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnKeyValuesGetFloat(const String:key[], &Float:retVal)
+{
+	//DebugPrintToAll("OnOnKeyValuesGetFloat(key=\"%s\", retVal=%f)", key, retVal);
+	
+	/*
+	if (StrEqual(key, "tank_chance"))
+	{
+		retVal = 1.0;
+		return Plugin_Handled;
+	}
+	*/
 	
 	return Plugin_Continue;
 }
