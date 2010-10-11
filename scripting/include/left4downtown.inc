@@ -215,17 +215,6 @@ forward Action:L4D_OnGetSurvivorSet(&retVal);
 forward Action:L4D_OnFastGetSurvivorSet(&retVal);
 
 /**
- * @brief Called whenever KeyValues::GetFloat(const char*, float) is invoked
- * @remarks those are map specific
- * 
- * @param key     the script's key name
- * @param Float:retVal  what to override the return value with
- * 
- * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
- */
-forward Action:L4D_OnKeyValuesGetFloat(const String:key[], &Float:retVal);
-
-/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
