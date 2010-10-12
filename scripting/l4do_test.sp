@@ -443,6 +443,9 @@ public Action:L4D_OnFastGetSurvivorSet(&retVal)
 public Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance)
 {
 	DebugPrintToAll("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
+	#if TEST_DEBUG_LOG
+	LogMessage("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
+	#endif
 	return Plugin_Continue;
 }
 
@@ -534,10 +537,6 @@ DebugPrintToAll(const String:format[], any:...)
 	#if TEST_DEBUG
 	PrintToChatAll("[TEST-L4DO] %s", buffer);
 	PrintToConsole(0, "[TEST-L4DO] %s", buffer);
-	#endif
-	
-	#if TEST_DEBUG_LOG
-	LogMessage("[TEST-L4DO] %s", buffer);
 	#endif
 	
 	LogMessage("%s", buffer);
