@@ -223,7 +223,7 @@ forward Action:L4D_OnFastGetSurvivorSet(&retVal);
  * @param tank_chance		Chance for a tank to spawn on this map
  * @param witch_chance		Chance for a witch to spawn on this map
  * 
- * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ * @return 		Pl_Handled to block reading map data, Pl_Changed to use overwritten values from plugin, Pl_Continue to continue to read from mission data.
  */
 forward Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance);
 

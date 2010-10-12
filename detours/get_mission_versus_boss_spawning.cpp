@@ -39,10 +39,8 @@ namespace Detours
 	void GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance)
 	{
 		L4D_DEBUG_LOG("CDirectorVersusMode::GetMissionVersusBossSpawning has been called, %f %f %f %f", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
-
-		(this->*(GetTrampoline()))(spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
-
-	    float ov_spawn_pos_min = spawn_pos_min;
+		
+		float ov_spawn_pos_min = spawn_pos_min;
 	    float ov_spawn_pos_max = spawn_pos_max;
 	    float ov_tank_chance = tank_chance;
 	    float ov_witch_chance = witch_chance;
@@ -57,13 +55,22 @@ namespace Detours
 			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_witch_chance);
 			g_pFwdOnGetMissionVersusBossSpawning->Execute(&result);
 		}
-		if(result == Pl_Handled)
+		switch(result)
 		{
-		    spawn_pos_min = ov_spawn_pos_min;
-		    spawn_pos_max = ov_spawn_pos_max;
-		    tank_chance = ov_tank_chance;
-		    witch_chance = ov_witch_chance;
+			case Pl_Changed:
+				spawn_pos_min = ov_spawn_pos_min;
+				spawn_pos_max = ov_spawn_pos_max;
+				tank_chance = ov_tank_chance;
+				witch_chance = ov_witch_chance;
+			break;
+			case Pl_Handled:
+			break;
+			case Pl_Continue:
+			default:
+			(this->*(GetTrampoline()))(spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
 		}
+
+	   
 		return;
 	}
 };
