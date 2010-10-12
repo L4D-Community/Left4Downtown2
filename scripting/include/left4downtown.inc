@@ -223,9 +223,9 @@ forward Action:L4D_OnFastGetSurvivorSet(&retVal);
  * @param tank_chance		Chance for a tank to spawn on this map
  * @param witch_chance		Chance for a witch to spawn on this map
  * 
- * @noreturn
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
-forward L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance);
+forward Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance);
 
 /**
  * @brief Get the current campaign scores stored in the Director
