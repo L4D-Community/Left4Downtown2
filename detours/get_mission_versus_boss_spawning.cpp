@@ -51,11 +51,11 @@ namespace Detours
 		if(g_pFwdOnGetMissionVersusBossSpawning)
 		{
 			L4D_DEBUG_LOG("L4D_OnGetMissionVersusBossSpawning forward has been sent out");
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_spawn_pos_min);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_spawn_pos_max);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_tank_chance);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_witch_chance);
-			g_pFwdOnSetCampaignScores->Execute(&result);
+			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_min);
+			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_max);
+			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_tank_chance);
+			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_witch_chance);
+			g_pFwdOnGetMissionVersusBossSpawning->Execute(&result);
 		}
 		if(result == Pl_Handled)
 		{
