@@ -240,6 +240,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetDifficulty>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetSurvivorSet>());
 	g_PatchManager.Register(new AutoPatch<Detours::FastGetSurvivorSet>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetMissionVersusBossSpawning>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
