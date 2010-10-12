@@ -446,16 +446,19 @@
 				"windows" "\x56\xBE\x02\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x74"
 				/* 56 BE 02 ? ? ? E8 ? ? ? ? 85 C0 74 */
 			}
+			
 			/*
 			 *	CDirectorVersusMode::GetMissionVersusBossSpawning(float&, float&, float&, float&)
 			 */
+			 
 			"GetMissionVersusBossSpawning"
 			{
 				"library"	"server"
-				"linux" 	"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0"			
+				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_"			
 				"windows"	"\x6A\x00\xE8\x2A\x2A\x2A\x2A\x83\xC4\x04\x85\xC0\x75\x05\x32\xC0\xC2\x10\x00"
 				/* 6A 00 E8 ? ? ? ? 83 C4 04 85 C0 75 05 32 C0 C2 10 00 */
 			}
+			
 			/*
 			 *	CTerrorGameRules::GetMissionCurrentMap(KeyValues **)
 			 */
