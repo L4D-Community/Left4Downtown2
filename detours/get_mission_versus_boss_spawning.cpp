@@ -39,28 +39,31 @@ namespace Detours
 	void GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance)
 	{
 		L4D_DEBUG_LOG("CDirectorVersusMode::GetMissionVersusBossSpawning has been called, %f %f %f %f", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
-		
-		//KeyValues *kCurMission = NULL;
-		KeyValues *kCurMission = CTerrorGameRules__GetMissionCurrentMap(NULL);
-		if(kCurMission && (kCurMission = kCurMission->FindKey("versus_boss_spawning", false)) != NULL)
-		{
-			spawn_pos_min = kCurMission->GetFloat("spawn_pos_min", spawn_pos_min);
-			spawn_pos_max = kCurMission->GetFloat("spawn_pos_max", spawn_pos_max);
-			tank_chance = kCurMission->GetFloat("tank_chance", tank_chance);
-			witch_chance = kCurMission->GetFloat("witch_chance", witch_chance);
-		}
-		
+
+		(this->*(GetTrampoline()))(spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
+
+	    float ov_spawn_pos_min = spawn_pos_min;
+	    float ov_spawn_pos_max = spawn_pos_max;
+	    float ov_tank_chance = tank_chance;
+	    float ov_witch_chance = witch_chance;
+
 		cell_t result = Pl_Continue;
 		if(g_pFwdOnGetMissionVersusBossSpawning)
 		{
 			L4D_DEBUG_LOG("L4D_OnGetMissionVersusBossSpawning forward has been sent out");
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&spawn_pos_min);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&spawn_pos_max);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&tank_chance);
-			g_pFwdOnSetCampaignScores->PushFloatByRef(&witch_chance);
+			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_spawn_pos_min);
+			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_spawn_pos_max);
+			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_tank_chance);
+			g_pFwdOnSetCampaignScores->PushFloatByRef(&ov_witch_chance);
 			g_pFwdOnSetCampaignScores->Execute(&result);
 		}
-
+		if(result == Pl_Handled)
+		{
+		    spawn_pos_min = ov_spawn_pos_min;
+		    spawn_pos_max = ov_spawn_pos_max;
+		    tank_chance = ov_tank_chance;
+		    witch_chance = ov_witch_chance;
+		}
 		return;
 	}
 };
