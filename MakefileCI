@@ -12,14 +12,14 @@ MMSOURCE17 = ../mmsource
 PROJECT = left4downtown
 ENGINE = left4dead2
 
-OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2calls.cpp util.cpp asm/asm.c player_slots.cpp \
+OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2calls.cpp util.cpp asm/asm.c player_slots.cpp \
 			detours/detour.cpp detours/spawn_tank.cpp detours/spawn_witch.cpp detours/clear_team_scores.cpp \
 			detours/set_campaign_scores.cpp detours/server_player_counts.cpp detours/first_survivor_left_safe_area.cpp \
 			detours/mob_rush_start.cpp detours/spawn_it_mob.cpp detours/spawn_mob.cpp detours/try_offering_tank_bot.cpp \
 			detours/get_script_value_int.cpp detours/shoved_by_survivor.cpp detours/get_crouch_top_speed.cpp \
 			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp detours/get_difficulty.cpp \
-			detours/get_survivor_set.cpp detours/fast_get_survivor_set.cpp detours/get_mission_versus_boss_spawning.cpp \
-			codepatch/patchmanager.cpp
+			detours/get_survivor_set.cpp detours/fast_get_survivor_set.cpp codepatch/patchmanager.cpp \
+			detours/get_mission_versus_boss_spawning.cpp l4d2sdk/l4d2timers.cpp
 			
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
@@ -92,6 +92,7 @@ all:
 	mkdir -p $(BIN_DIR)/sdk
 	mkdir -p $(BIN_DIR)/detours
 	mkdir -p $(BIN_DIR)/codepatch
+	mkdir -p $(BIN_DIR)/l4d2sdk
 	cp $(HL2LIB)/libvstdlib.so libvstdlib.so;
 	cp $(HL2LIB)/libtier0.so libtier0.so;
 	$(MAKE) -f MakefileCI extension

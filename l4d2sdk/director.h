@@ -31,6 +31,50 @@
 
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
+#include "l4d2timers.h"
+
+// 1128 bytes
+typedef struct _CDirectorItemManager {
+	char unknown[1128];
+} CDirectorItemManager;
+
+// 92 bytes
+typedef struct _CDirectorMusicBanks {
+	char unknown[92];
+} CDirectorMusicBanks;
+
+// 76 bytes
+typedef struct _CDirectorSessionManager {
+	char unknown[76];
+} CDirectorSessionManager;
+
+// 156 bytes
+typedef struct _CDirectorScriptedEventManager {
+	char unknown[156];
+} CDirectorScriptedEventManager;
+
+// 92 bytes
+typedef struct _CDirectorVersusMode {
+	char unknown[28];
+	CountdownTimer VersusStartTimer; // 0x1c Timer controlling saferoom door open, allowing PZ spawning.
+	char unknown2[40]; // 0x28
+	CountdownTimer UpdateMarkersTimer; // 0x50 Timer controlling when to check if survivors have passed markers. Normally set to 1s duration
+} CDirectorVersusMode;
+
+// 160 bytes
+typedef struct _CDirectorSurvivalMode {
+	char unknown[160];
+} CDirectorSurvivalMode;
+
+// 104 bytes
+typedef struct _CDirectorScavengeMode {
+	char unknown[104];
+} CDirectorScavengeMode;
+
+// 8 bytes
+typedef struct _CDirectorChallengeMode {
+	char unknown[8];
+} CDirectorChallengeMode;
 
 
 // Win32: 1460 bytes
@@ -40,16 +84,22 @@ typedef struct _CDirector {
 	char unknown[256]; // 0x0
 	int tankCount; // 0x100
 	char unknown2[208]; // 0x104
-	void *MobSpawnTimer; // 0x1d4, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
-	float MobSpawnTimer_m_duration; // 0x1d8 Countdowntimer duration
-	float MobSpawnTimer_m_timestamp; // 0x1dc Countdowntimer timestamp (end time)
+	CountdownTimer MobSpawnTimer; // 0x1d4, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
 	char unknown3[232]; // 0x1e0
 	float MobSpawnSize; // 0x2c8
-	char unknown4[744];	// 0x2cc
+	char unknown4[704];	// 0x2cc
 #ifdef PLATFORM_LINUX
-	char unknown_linonly[20];
+	char unknown_linonly[20]; // 0x58c
 #endif
+	char unknown5[8]; // win 0x58c lin 0x5a0
+	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
+	CDirectorMusicBanks * MusicBanksPtr; 
+	CDirectorSessionManager * SessionManagerPtr; 
+	CDirectorScriptedEventManager * ScriptedEventManagerPtr; 
+	CDirectorVersusMode * VersusModePtr; 
+	CDirectorSurvivalMode * SurvivalModePtr; 
+	CDirectorScavengeMode * ScavengeModePtr; 
+	char unknown6[12]; // win 0x5a8 lin 0x5bc
 } CDirector;
 
 #endif //_INCLUDE_DIRECTOR_H_
-

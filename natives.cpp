@@ -565,7 +565,7 @@ cell_t L4D_GetMobSpawnTimerRemaining(IPluginContext *pContext, const cell_t *par
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 	L4D_DEBUG_LOG("Reading director mobspawntimer");
-	return sp_ftoc(director->MobSpawnTimer_m_timestamp - gpGlobals->curtime);
+	return sp_ftoc(director->MobSpawnTimer.GetRemainingTime());
 }
 
 cell_t L4D_GetMobSpawnTimerDuration(IPluginContext *pContext, const cell_t *params)
@@ -582,7 +582,7 @@ cell_t L4D_GetMobSpawnTimerDuration(IPluginContext *pContext, const cell_t *para
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 	L4D_DEBUG_LOG("Reading director mobspawntimer duration");
-	return sp_ftoc(director->MobSpawnTimer_m_duration);
+	return sp_ftoc(director->MobSpawnTimer.GetCountdownDuration());
 }
 
 // L4D_GetPlayerSpawnTime(client)

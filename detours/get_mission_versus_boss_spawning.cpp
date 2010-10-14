@@ -31,8 +31,6 @@
 
 #include "get_mission_versus_boss_spawning.h"
 #include "extension.h"
-#include "l4d2calls.h"
-#include <KeyValues.h>
 
 namespace Detours
 {

@@ -51,6 +51,9 @@
     <ClCompile Include="..\asm\asm.c">
       <Filter>asm</Filter>
     </ClCompile>
+    <ClCompile Include="..\l4d2sdk\l4d2timers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\detours\clear_team_scores.cpp">
       <Filter>detours</Filter>
     </ClCompile>
@@ -114,7 +117,7 @@
     <ClCompile Include="..\detours\get_mission_versus_boss_spawning.cpp">
       <Filter>detours</Filter>
     </ClCompile>
-    <ClCompile Include="..\l4d2calls.cpp">
+    <ClCompile Include="..\l4d2sdk\l4d2calls.cpp">
       <Filter>detours</Filter>
     </ClCompile>
   </ItemGroup>
@@ -206,7 +209,10 @@
     <ClInclude Include="..\detours\spawn_mob.h">
       <Filter>detours</Filter>
     </ClInclude>
-    <ClInclude Include="..\director.h">
+    <ClInclude Include="..\l4d2sdk\director.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\l4d2sdk\l4d2timers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\get_walk_top_speed.h">
@@ -230,7 +236,7 @@
     <ClInclude Include="..\detours\get_mission_versus_boss_spawning.h">
       <Filter>detours</Filter>
     </ClInclude>
-    <ClInclude Include="..\l4d2calls.h">
+    <ClInclude Include="..\l4d2sdk\l4d2calls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

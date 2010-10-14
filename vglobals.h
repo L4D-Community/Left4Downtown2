@@ -31,7 +31,7 @@
 
 #ifndef _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
 #define _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
-#include "director.h"
+#include "l4d2sdk/director.h"
 
 //#define THEDIRECTOR_SETNEXTMISSION_OFFSET 2
 
