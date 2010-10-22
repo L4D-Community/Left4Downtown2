@@ -84,14 +84,28 @@ typedef struct _CDirector {
 	char unknown[256]; // 0x0
 	int tankCount; // 0x100
 	char unknown2[208]; // 0x104
-	CountdownTimer MobSpawnTimer; // 0x1d4, CountdownTimer pointer. See hl2sdk/game/shared/util_shared.h
-	char unknown3[232]; // 0x1e0
+	CountdownTimer MobSpawnTimer; // 0x1d4
+	char unknown3[20]; // 0x1e0
+	IntervalTimer SmokerDeathTimer; // 0x1f4
+	IntervalTimer BoomerDeathTimer;
+	IntervalTimer HunterDeathTimer;
+	IntervalTimer SpitterDeathTimer;
+	IntervalTimer JockeyDeathTimer;
+	IntervalTimer ChargerDeathTimer;
+	char unknown4[16]; // 0x224
+	CountdownTimer SmokerSpawnTimer; // 0x234
+	CountdownTimer BoomerSpawnTimer;
+	CountdownTimer HunterSpawnTimer;
+	CountdownTimer SpitterSpawnTimer;
+	CountdownTimer JockeySpawnTimer;
+	CountdownTimer ChargerSpawnTimer;
+	char unknow5[76]; // 0x27c
 	float MobSpawnSize; // 0x2c8
-	char unknown4[704];	// 0x2cc
+	char unknown6[704];	// 0x2cc
 #ifdef PLATFORM_LINUX
 	char unknown_linonly[20]; // 0x58c
 #endif
-	char unknown5[8]; // win 0x58c lin 0x5a0
+	char unknown7[8]; // win 0x58c lin 0x5a0
 	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
 	CDirectorMusicBanks * MusicBanksPtr; 
 	CDirectorSessionManager * SessionManagerPtr; 
@@ -99,7 +113,8 @@ typedef struct _CDirector {
 	CDirectorVersusMode * VersusModePtr; 
 	CDirectorSurvivalMode * SurvivalModePtr; 
 	CDirectorScavengeMode * ScavengeModePtr; 
-	char unknown6[12]; // win 0x5a8 lin 0x5bc
+	char unknown8[8]; // win 0x5a8 lin 0x5bc
+	CDirectorChallengeMode * ChallengeModePtr; // win 0x5b0 lin 0x5c4
 } CDirector;
 
 #endif //_INCLUDE_DIRECTOR_H_
