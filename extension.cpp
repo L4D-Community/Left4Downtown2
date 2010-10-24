@@ -393,6 +393,10 @@ bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 	{
 		team_index = 3;
 	}
+	else if (strcmp(info->pattern, "@spectators") == 0)
+	{
+		team_index = 1;
+	}
 	else
 	{
 		return false;
