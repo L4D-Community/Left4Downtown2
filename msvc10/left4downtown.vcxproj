@@ -116,6 +116,7 @@
     <ClCompile Include="..\detours\spawn_it_mob.cpp" />
     <ClCompile Include="..\extension.cpp" />
     <ClCompile Include="..\natives.cpp" />
+    <ClCompile Include="..\timernatives.cpp" />
     <ClCompile Include="..\player_slots.cpp" />
     <ClCompile Include="..\util.cpp" />
     <ClCompile Include="..\l4d2sdk\l4d2timers.cpp" />

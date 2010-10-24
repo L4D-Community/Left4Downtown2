@@ -19,7 +19,7 @@ OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2c
 			detours/get_script_value_int.cpp detours/shoved_by_survivor.cpp detours/get_crouch_top_speed.cpp \
 			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp detours/get_difficulty.cpp \
 			detours/get_survivor_set.cpp detours/fast_get_survivor_set.cpp codepatch/patchmanager.cpp \
-			detours/get_mission_versus_boss_spawning.cpp l4d2sdk/l4d2timers.cpp
+			detours/get_mission_versus_boss_spawning.cpp l4d2sdk/l4d2timers.cpp timernatives.cpp
 			
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###

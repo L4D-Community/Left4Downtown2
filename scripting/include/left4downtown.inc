@@ -33,7 +33,8 @@
 #endif
 #define _l4do_included
 
-#include <sourcemod>
+#include <core>
+#include <l4d2timers>
 
 /**
  * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
@@ -352,6 +353,7 @@ native L4D_StaggerPlayer(target, source_ent, Float:source_vector[3]);
  * 
  * @return 	Time remaining before next director horde
  */
+#pragma deprecated Use L4D2_CountdownTimerGetRemainingTime(L4D2CT_MobSpawnTimer)
 native Float:L4D_GetMobSpawnTimerRemaining();
 
 /**
@@ -360,6 +362,7 @@ native Float:L4D_GetMobSpawnTimerRemaining();
  * 
  * @return 	Total time from last horde to next horde.
  */
+#pragma deprecated Use L4D2_CountdownTimerGetCountdownDuration(L4D2CT_MobSpawnTimer)
 native Float:L4D_GetMobSpawnTimerDuration();
 
 /**

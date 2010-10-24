@@ -36,6 +36,9 @@
     <ClCompile Include="..\natives.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\timernatives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\player_slots.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

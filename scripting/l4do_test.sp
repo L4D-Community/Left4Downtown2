@@ -185,6 +185,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_ur", Command_Unreserve);
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
+	RegConsoleCmd("Sm_l4d2timers", Command_L4D2Timers);
 	
 
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -505,6 +506,40 @@ public Action:Command_SpawnTimer(client, args)
 	new Float:SpawnTimer = L4D_GetPlayerSpawnTime(client);
 	DebugPrintToAll("Spawn Timer for player %N: %f", client, SpawnTimer);
 	ReplyToCommand(client, "Remaining: %f", SpawnTimer);
+#endif
+}
+
+PrintL4D2CTimerJunk(client, const String:name[], L4D2CountdownTimer:timer)
+{
+	//DebugPrintToAll("%s - Remaining: %f Duration %f", name, L4D2CountdownTimerGetRemainingTime(timer), L4D2CountdownTimerGetCountdownDuration(timer));
+	ReplyToCommand(client, "%s - Remaining: %f Duration %f", name, L4D2_CTimerGetRemainingTime(timer), L4D2_CTimerGetCountdownDuration(timer));
+}
+
+PrintL4D2ITimerJunk(client, const String:name[], L4D2IntervalTimer:timer)
+{
+	//DebugPrintToAll("%s - Elapsed: %f", name, L4D2IntervalTimerGetElapsedTime(timer));
+	ReplyToCommand(client, "%s - Elapsed: %f", name, L4D2_ITimerGetElapsedTime(timer));
+}
+
+public Action:Command_L4D2Timers(client, args)
+{
+#if USE_NATIVES
+	PrintL4D2CTimerJunk(client, "MobSpawnTimer", L4D2CT_MobSpawnTimer)
+	PrintL4D2CTimerJunk(client, "SmokerSpawnTimer", L4D2CT_SmokerSpawnTimer);
+	PrintL4D2CTimerJunk(client, "BoomerSpawnTimer", L4D2CT_BoomerSpawnTimer);
+	PrintL4D2CTimerJunk(client, "HunterSpawnTimer", L4D2CT_HunterSpawnTimer);
+	PrintL4D2CTimerJunk(client, "SpitterSpawnTimer", L4D2CT_SpitterSpawnTimer);
+	PrintL4D2CTimerJunk(client, "JockeySpawnTimer", L4D2CT_JockeySpawnTimer);
+	PrintL4D2CTimerJunk(client, "ChargerSpawnTimer", L4D2CT_ChargerSpawnTimer);
+	PrintL4D2CTimerJunk(client, "VersusStartTimer", L4D2CT_VersusStartTimer);
+	PrintL4D2CTimerJunk(client, "UpdateMarkersTimer", L4D2CT_UpdateMarkersTimer);
+	PrintL4D2ITimerJunk(client, "SmokerDeathTimer", L4D2IT_SmokerDeathTimer);
+	
+	PrintL4D2ITimerJunk(client, "BoomerDeathTimer", L4D2IT_BoomerDeathTimer);
+	PrintL4D2ITimerJunk(client, "HunterDeathTimer", L4D2IT_HunterDeathTimer);
+	PrintL4D2ITimerJunk(client, "SpitterDeathTimer", L4D2IT_SpitterDeathTimer);
+	PrintL4D2ITimerJunk(client, "JockeyDeathTimer", L4D2IT_JockeyDeathTimer);
+	PrintL4D2ITimerJunk(client, "ChargerDeathTimer", L4D2IT_ChargerDeathTimer);
 #endif
 }
 
