@@ -185,7 +185,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_ur", Command_Unreserve);
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
-	RegConsoleCmd("Sm_l4d2timers", Command_L4D2Timers);
+	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
 	
 
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
