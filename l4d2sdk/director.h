@@ -83,7 +83,8 @@ typedef struct _CDirectorChallengeMode {
 typedef struct _CDirector {
 	char unknown[256]; // 0x0
 	int tankCount; // 0x100
-	char unknown2[208]; // 0x104
+	float tankFlowDistance; // 0x104
+	char unknown2[204]; // 0x108
 	CountdownTimer MobSpawnTimer; // 0x1d4
 	char unknown3[20]; // 0x1e0
 	IntervalTimer SmokerDeathTimer; // 0x1f4
