@@ -58,7 +58,7 @@ namespace Detours
 			L4D_DEBUG_LOG("L4D_OnShovedBySurvivor(client %d, victim %d) forward has been sent out", client, victim);
 			g_pFwdOnShovedBySurvivor->PushCell(client);
 			g_pFwdOnShovedBySurvivor->PushCell(victim);
-			g_pFwdOnSpawnTank->PushArray(reinterpret_cast<cell_t*>(vector), 3);
+			g_pFwdOnShovedBySurvivor->PushArray(reinterpret_cast<cell_t*>(vector), 3);
 			g_pFwdOnShovedBySurvivor->Execute(&result);
 		}
 
