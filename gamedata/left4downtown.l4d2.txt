@@ -180,19 +180,6 @@
 					/* 56 8B F1 8B 0D ? ? ? ? 85 C9 57 74 ? 6A 01 E8 ? ? ? ? 8B 0D ? ? ? ? 85 C9 */
 			}
 			
-			/* 
-			 * CDirector::Rematch() 
-			 * - unused by anything
-			 */
-			"Rematch"
-			{
-				"library"	"server"
-				"linux"		"@_ZN9CDirector7RematchEv"
-				"windows"	"\xA1\x2A\x2A\x2A\x2A\x8B\x40\x2A\x85\xC0\x56\x57\x8B\xF1\x75\x2A\xB8\x2A\x2A\x2A\x2A\x8B\x7C\x24\x0C\x85\xFF\x75\x2A\x8B\xF8"
-					/* broken on windows after a patch - but we're not using it anyhow*/
-					/* A1 ? ? ? ? 8B 40 ? 85 C0 56 57 8B F1 75 ? B8 ? ? ? ? 8B 7C 24 0C 85 FF 75 ? 8B F8 */
-			}
-			
 			/*
 			* ZombieManager::SpawnTank(Vector  const&, QAngle  const&)
 			*/
@@ -432,8 +419,8 @@
 			{
 				"library"	"server"
 				"linux"	"@_ZN16CTerrorGameRules14GetSurvivorSetEv"
-				"windows" "\xA1\x50\x2A\x2A\x2A\x85\xC0\x75\x2A\x56\x8D"
-				/* A1 50 ? ? ? 85 C0 75 ? 56 8D */
+				"windows" "\xA1\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x56\x8D"
+				/* A1 ? ? ? ? 85 C0 75 ? 56 8D */
 			}
 			
 			/*

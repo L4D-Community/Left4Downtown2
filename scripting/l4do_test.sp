@@ -137,8 +137,6 @@ public OnPluginStart()
 	SearchForFunction("TheDirector"); //fails on Windows
 	SearchForFunction("RestartScenarioFromVote");
 	
-	SearchForFunction("Rematch");
-	
 	SearchForFunction("SpawnTank");
 	SearchForFunction("SpawnWitch");
 	SearchForFunction("OnFirstSurvivorLeftSafeArea");
