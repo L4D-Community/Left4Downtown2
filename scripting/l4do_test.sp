@@ -493,8 +493,8 @@ public Action:Command_Unreserve(client, args)
 public Action:Command_Horde(client, args)
 {
 #if USE_NATIVES
-	new Float:hordetime = L4D_GetMobSpawnTimerRemaining();
-	new Float:hordeduration = L4D_GetMobSpawnTimerDuration();
+	new Float:hordetime = L4D2_CTimerGetRemainingTime(L4D2CT_MobSpawnTimer);
+	new Float:hordeduration = L4D2_CTimerGetCountdownDuration(L4D2CT_MobSpawnTimer);
 	DebugPrintToAll("Time remaining for next horde is: %f  Duration %f ", hordetime, hordeduration);
 	ReplyToCommand(client, "Remaining: %f Duration: %f", hordetime, hordeduration);
 #endif
