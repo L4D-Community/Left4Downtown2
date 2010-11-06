@@ -408,8 +408,8 @@
 			{
 				"library"	"server"
 				"linux"	"@_Z13GetDifficultyv"
-				"windows" "\xA1\xF4\x2A\x2A\x2A\xC3"
-				/* A1 F4 ? ? ? C3 */
+				"windows" "\xA1\x2A\x4B\x68\x10\xC3"
+				/* A1 ? 4B 68 10 C3 */
 			}
 			
 			/*
