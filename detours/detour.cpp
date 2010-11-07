@@ -119,7 +119,7 @@ void Detour::PatchFromAddress(void *targetFunction, unsigned char *&originalFunc
 	ApplyPatch(signature, /*offset*/0, &detourJmpPatch, restore);
 	originalFunction = trampoline;
 
-	L4D_DEBUG_LOG("Detour has been patched for function @ %p", signatureName, signature);
+	L4D_DEBUG_LOG("Detour has been patched for function @ %p", signature);
 
 	isPatched = true;
 }
