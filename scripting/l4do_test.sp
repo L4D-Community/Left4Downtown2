@@ -157,7 +157,8 @@ public OnPluginStart()
 	SearchForFunction("CTerrorPlayer_GetCrouchTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetRunTopSpeed");
 	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
-	SearchForFunction("GetDifficulty");
+	SearchForFunction("HasConfigurableDifficulty"); // fails on windows
+	SearchForFunction("DifficultyChanged");
 	SearchForFunction("GetSurvivorSet");
 	SearchForFunction("FastGetSurvivorSet");
 	SearchForFunction("GetMissionVersusBossSpawning");
@@ -403,13 +404,13 @@ public Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal)
 	return Plugin_Continue;
 }
 
-public Action:L4D_OnGetDifficulty(&retVal)
+public Action:L4D_OnHasConfigurableDifficulty(&retVal)
 {
-	// 0 is easy, 1 is normal (versus default), 2 is hard, 3 is expert
+	// 0 to disallow configuration, 1 to allow
 
 	//DebugPrintToAll("OnGetDifficulty(retVal=%i)", retVal);
 	
-	//retVal = 3;
+	//retVal = 1;
 	//return Plugin_Handled;
 	
 	return Plugin_Continue;

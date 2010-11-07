@@ -60,7 +60,7 @@
 #include "detours/get_crouch_top_speed.h"
 #include "detours/get_run_top_speed.h"
 #include "detours/get_walk_top_speed.h"
-#include "detours/get_difficulty.h"
+#include "detours/has_configurable_difficulty.h"
 #include "detours/get_survivor_set.h"
 #include "detours/fast_get_survivor_set.h"
 #include "detours/get_mission_versus_boss_spawning.h"
@@ -90,7 +90,7 @@ IForward *g_pFwdOnShovedBySurvivor = NULL;
 IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward *g_pFwdOnGetRunTopSpeed = NULL;
 IForward *g_pFwdOnGetWalkTopSpeed = NULL;
-IForward *g_pFwdOnGetDifficulty = NULL;
+IForward *g_pFwdOnHasConfigurableDifficulty = NULL;
 IForward *g_pFwdOnGetSurvivorSet = NULL;
 IForward *g_pFwdOnFastGetSurvivorSet = NULL;
 IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
@@ -154,7 +154,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
-	g_pFwdOnGetDifficulty = forwards->CreateForward("L4D_OnGetDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	g_pFwdOnHasConfigurableDifficulty = forwards->CreateForward("L4D_OnHasConfigurableDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
@@ -239,7 +239,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetCrouchTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetRunTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetWalkTopSpeed>());
-	g_PatchManager.Register(new AutoPatch<Detours::GetDifficulty>());
+	g_PatchManager.Register(new AutoPatch<Detours::HasConfigurableDifficulty>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetSurvivorSet>());
 	g_PatchManager.Register(new AutoPatch<Detours::FastGetSurvivorSet>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetMissionVersusBossSpawning>());
@@ -278,7 +278,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
-	forwards->ReleaseForward(g_pFwdOnGetDifficulty);
+	forwards->ReleaseForward(g_pFwdOnHasConfigurableDifficulty);
 	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);

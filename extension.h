@@ -152,7 +152,7 @@ extern IForward *g_pFwdOnShovedBySurvivor;
 extern IForward *g_pFwdOnGetCrouchTopSpeed;
 extern IForward *g_pFwdOnGetRunTopSpeed;
 extern IForward *g_pFwdOnGetWalkTopSpeed;
-extern IForward *g_pFwdOnGetDifficulty;
+extern IForward *g_pFwdOnHasConfigurableDifficulty;
 extern IForward *g_pFwdOnGetSurvivorSet;
 extern IForward *g_pFwdOnFastGetSurvivorSet;
 extern IForward *g_pFwdOnGetMissionVersusBossSpawning;

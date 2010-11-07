@@ -39,6 +39,11 @@
 				"windows"	"11268"
 				"linux"		"11252"
 			}
+			/* Offset into DifficultyChanged() */
+			"HasConfigurableDifficultySetting"
+			{
+				"windows"	"49"
+			}
 		}
 		
 		"Signatures"
@@ -412,6 +417,29 @@
 				/* A1 ? 4B 68 10 C3 */
 			}
 			
+			/*
+			 *	 CTerrorGameRules::HasConfigurableDifficultySetting(void)
+			 */
+			"HasConfigurableDifficulty"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules32HasConfigurableDifficultySettingEv"
+				"windows"	"\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x0C\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x03\x33\xC0\xC3\xB8\x01\x00\x00\x00\xC3"
+				/* E8 ? FC FF FF 84 C0 75 0C E8 ? FC FF FF 84 C0 75 03 33 C0 C3 B8 01 00 00 00 C3 */
+				/* Using offset for windows */
+			}
+			
+			/*
+			 *	 DifficultyChanged(ConVar *)
+			 *		Only used for windows to find HasConfigurableDifficulty
+			 */
+			"DifficultyChanged"
+			{
+				"library"	"server"
+				"linux"		"@_ZL17DifficultyChangedP7IConVarPKcf"
+				"windows"	"\x8B\x44\x24\x04\x83\xEC\x08\x53\x57\x50\x8D\x4C\x24\x0C\xE8\x2A\x2A\x2A\x2A\x8B"
+				/* 8B 44 24 04 83 EC 08 53 57 50 8D 4C 24 0C E8 ? ? ? ? 8B */
+			}
 			/*
 			 *   CTerrorGameRules::GetSurvivorSet(void)
 			 */

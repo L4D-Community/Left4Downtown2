@@ -107,7 +107,7 @@
     <ClCompile Include="..\detours\get_mission_versus_boss_spawning.cpp" />
     <ClCompile Include="..\detours\fast_get_survivor_set.cpp" />
     <ClCompile Include="..\detours\get_crouch_top_speed.cpp" />
-    <ClCompile Include="..\detours\get_difficulty.cpp" />
+    <ClCompile Include="..\detours\has_configurable_difficulty.cpp" />
     <ClCompile Include="..\detours\get_run_top_speed.cpp" />
     <ClCompile Include="..\detours\get_survivor_set.cpp" />
     <ClCompile Include="..\detours\get_walk_top_speed.cpp" />
@@ -141,7 +141,7 @@
     <ClInclude Include="..\detours\get_mission_versus_boss_spawning.h" />
     <ClInclude Include="..\detours\fast_get_survivor_set.h" />
     <ClInclude Include="..\detours\get_crouch_top_speed.h" />
-    <ClInclude Include="..\detours\get_difficulty.h" />
+    <ClInclude Include="..\detours\has_configurable_difficulty.h" />
     <ClInclude Include="..\detours\get_run_top_speed.h" />
     <ClInclude Include="..\detours\get_survivor_set.h" />
     <ClInclude Include="..\detours\get_walk_top_speed.h" />

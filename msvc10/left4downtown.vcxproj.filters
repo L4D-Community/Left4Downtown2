@@ -108,7 +108,7 @@
     <ClCompile Include="..\detours\get_run_top_speed.cpp">
       <Filter>detours</Filter>
     </ClCompile>
-    <ClCompile Include="..\detours\get_difficulty.cpp">
+    <ClCompile Include="..\detours\has_configurable_difficulty.cpp">
       <Filter>detours</Filter>
     </ClCompile>
     <ClCompile Include="..\detours\fast_get_survivor_set.cpp">
@@ -227,7 +227,7 @@
     <ClInclude Include="..\detours\get_run_top_speed.h">
       <Filter>detours</Filter>
     </ClInclude>
-    <ClInclude Include="..\detours\get_difficulty.h">
+    <ClInclude Include="..\detours\has_configurable_difficulty.h">
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\fast_get_survivor_set.h">

@@ -188,14 +188,14 @@ forward Action:L4D_OnGetRunTopSpeed(target, &Float:retVal);
 forward Action:L4D_OnGetWalkTopSpeed(target, &Float:retVal);
 
 /**
- * @brief Called whenever GetDifficulty() is invoked
- * @remarks used to determine Infected Damage and such
+ * @brief Called whenever CTerrorGameRules::HasConfigurableDifficultySetting() is invoked
+ * @remarks used to deny/allow difficulty changes in different game modes
  *
- * @param retVal  what to override the return value with
+ * @param retVal  what to override the return value with. 1 to allow difficulty configuration, 0 to deny.
  * 
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
-forward Action:L4D_OnGetDifficulty(&retVal);
+forward Action:L4D_OnHasConfigurableDifficulty(&retVal);
 
 /**
  * @brief Called whenever CTerrorGameRules::GetSurvivorSet(void) is invoked

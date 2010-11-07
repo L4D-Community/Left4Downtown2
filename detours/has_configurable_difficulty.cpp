@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009 Igor "Downtown1" Smirnov.
+ * Copyright (C) 2010 Michael "ProdigySim" Busby
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,14 +29,14 @@
  * Version: $Id$
  */
 
-#include "get_difficulty.h"
+#include "has_configurable_difficulty.h"
 #include "extension.h"
 
 namespace Detours
 {
-	int GetDifficulty::OnGetDifficulty()
+	int HasConfigurableDifficulty::OnHasConfigurableDifficulty()
 	{
-		//L4D_DEBUG_LOG("GetDifficulty() has been called");
+		//L4D_DEBUG_LOG("HasConfigurableDifficulty() has been called");
 
 		cell_t result = Pl_Continue;
 
@@ -44,16 +44,16 @@ namespace Detours
 
 		int overrideValue = actualInvocationResult;
 		
-		if(g_pFwdOnGetDifficulty)
+		if(g_pFwdOnHasConfigurableDifficulty)
 		{
-			//L4D_DEBUG_LOG("L4D_OnGetDifficulty(return %d) forward has been sent out", target);
-			g_pFwdOnGetDifficulty->PushCellByRef(&overrideValue);
-			g_pFwdOnGetDifficulty->Execute(&result);
+			//L4D_DEBUG_LOG("L4D_OnHasConfigurableDifficulty(return %d) forward has been sent out", target);
+			g_pFwdOnHasConfigurableDifficulty->PushCellByRef(&overrideValue);
+			g_pFwdOnHasConfigurableDifficulty->Execute(&result);
 		}
 
 		if(result == Pl_Handled)
 		{
-			//L4D_DEBUG_LOG("CTerrorPlayer::GetDifficulty() return value overriden with %d", overrideValue);
+			//L4D_DEBUG_LOG("CTerrorGameRules::HasConfigurableDifficulty() return value overriden with %d", overrideValue);
 			return overrideValue;
 		}
 		else
