@@ -67,7 +67,7 @@ private: //note: implementation of DetourTemplate abstracts
 		int offset;
 		if (!gameconf->GetOffset("HasConfigurableDifficultySetting", &offset) || !offset)
 		{
-			g_pSM->LogError(myself, "Detour -- Could not find HasConfigurableDifficultySetting signature");
+			g_pSM->LogError(myself, "Detour -- Could not find HasConfigurableDifficultySetting offset");
 			return NULL;
 		}
 		L4D_DEBUG_LOG("Calculated HasConfigurableDifficulty address %p + offset %d = %p", signature, offset, (int)signature + offset);
@@ -78,7 +78,7 @@ private: //note: implementation of DetourTemplate abstracts
 		// first byte should be a call
 		if(*signature != 0xE8)
 		{
-			g_pSM->LogError(myself, "Detour -- Could not find HasConfigurableDifficultySetting signature");
+			g_pSM->LogError(myself, "Byte compare failed for HasConfigurableDifficulty function at %p", signature);
 			return NULL;
 		}
 		return signature;
