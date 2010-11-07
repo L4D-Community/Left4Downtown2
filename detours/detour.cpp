@@ -62,8 +62,20 @@ void Detour::Patch()
 	}
 
 	signatureName = GetSignatureName();
-
-	PatchFromSignature(signatureName,  GetDetourRaw(), trampoline, signature);
+	if(signatureName != NULL)
+	{
+		PatchFromSignature(signatureName,  GetDetourRaw(), trampoline, signature);
+	}
+	else
+	{
+		signature=GetSignatureAddress();
+		if(signature == NULL)
+		{
+			g_pSM->LogError(myself, "Detour -- Could not find address for detour");
+			return;
+		}
+		PatchFromAddress(GetDetourRaw(), trampoline, signature);
+	}
 	SetTrampoline(trampoline);
 
 	OnPatched();
@@ -76,8 +88,14 @@ void Detour::PatchFromSignature(const char *signatureName, void *targetFunction,
 		g_pSM->LogError(myself, "Detour -- Could not find '%s' signature", signatureName);
 		return;
 	} 
-
 	L4D_DEBUG_LOG("Detour -- beginning patch routine for %s", signatureName);
+	
+	PatchFromAddress(targetFunction, originalFunction, signature);
+}
+	
+void Detour::PatchFromAddress(void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature)
+{
+	L4D_DEBUG_LOG("Detour -- beginning patch routine on address %p", signature);
 
 	//copy the original func's first few bytes into the trampoline
 	int copiedBytes = copy_bytes(/*src*/signature, /*dest*/NULL, OP_JMP_SIZE);
@@ -101,7 +119,7 @@ void Detour::PatchFromSignature(const char *signatureName, void *targetFunction,
 	ApplyPatch(signature, /*offset*/0, &detourJmpPatch, restore);
 	originalFunction = trampoline;
 
-	L4D_DEBUG_LOG("Detour has been patched for signature %s @ %p", signatureName, signature);
+	L4D_DEBUG_LOG("Detour has been patched for function @ %p", signatureName, signature);
 
 	isPatched = true;
 }

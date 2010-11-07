@@ -55,6 +55,8 @@ public:
 
 	// get the signature name (i.e. "SpawnTank") from the game conf
 	virtual const char *GetSignatureName() = 0;
+	
+	virtual unsigned char *GetSignatureAddress() { return (unsigned char *)0; }
 
 protected: //note: implemented by direct superclass
 
@@ -84,6 +86,8 @@ private:
 	static ISourcePawnEngine *spengine;
 
 	void PatchFromSignature(const char *signatureName, void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature);
+	
+	void PatchFromAddress(void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature);
 
 	//insert a specific JMP instruction at the given location, save it to the buffer
 	void InjectJmp(void *buffer, void *source, void *destination);
