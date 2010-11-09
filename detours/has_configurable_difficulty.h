@@ -50,7 +50,7 @@ private: //note: implementation of DetourTemplate abstracts
 	virtual const char * GetSignatureName()
 	{
 #ifdef PLATFORM_LINUX
-		return "HasConfigurableDifficultySetting";
+		return "HasConfigurableDifficulty";
 	}
 #elif defined PLATFORM_WINDOWS
 		return NULL;
