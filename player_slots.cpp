@@ -61,6 +61,7 @@
 #define MODRM_BYTE 1
 #define MODRM_MOD_DIRECT ((char)(3 << 6))
 #define MODRM_RM_EDX '\x02'
+#define MODRM_RM_EDI '\x07'
 
 #if defined PLATFORM_WINDOWS
 static void *humanLimitSig = NULL;
@@ -296,7 +297,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 	cmp around the string "#Valve_Reject_Server_Full"
 
 	 cmp eax, [esi+180h] -> cmp eax, IMM32(PLAYER_SLOTS_MAX)        (Windows)
-	 cmp edx, [ebp+178h] -> cmp edx, IMM32(PLAYER_SLOTS_MAX)        (Linux)
+	 cmp edi, [ebp+17Ch] -> cmp edx, IMM32(PLAYER_SLOTS_MAX)        (Linux)
 
 	we effectively change how many max players we allow
 	*/
@@ -306,7 +307,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 #if defined PLATFORM_LINUX
 	serverFullPatch.bytes  = OP_CMP_RM32_IMM32_SIZE;
 	serverFullPatch.patch[0] = OP_CMP_RM32_IMM32;
-	serverFullPatch.patch[MODRM_BYTE] = MODRM_MOD_DIRECT | OP_CMP_RM32_IMM32_MODRM_DIGIT | MODRM_RM_EDX; //0xFA
+	serverFullPatch.patch[MODRM_BYTE] = MODRM_MOD_DIRECT | OP_CMP_RM32_IMM32_MODRM_DIGIT | MODRM_RM_EDI; //0xFF
 	*(uint32_t*)(serverFullPatch.patch+MODRM_BYTE+sizeof(uint8_t)) = (uint32_t)PLAYER_SLOTS_MAX;
 
 #else //PLATFORM_WINDOWS
@@ -331,6 +332,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 		ApplyPatch(lobbyConnectSig, serverFullOffset, &serverFullPatch, /*restore*/NULL);
 	}
 	L4D_DEBUG_LOG("PlayerSlots -- 'ValveRejectServerFullFirst' patched to CMP eax, %d", PLAYER_SLOTS_MAX);
+//	L4D_DEBUG_LOG("PlayerSlots -- CBaseServer player limit: %d", *(unsigned int *)((int)g_pServer+ 0x17C));
 }
 
 void PlayerSlots::UnpatchGetMaxHumanPlayers()
@@ -410,6 +412,7 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 {
 	if(MaxClients == -1)
 	{
+	    L4D_DEBUG_LOG("MaxClients -1! Disallowing slots patch");
 		UpdateMaxSlots(-1);
 		return;
 	}
@@ -436,6 +439,7 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 
 	if(max_players >= 0 && max_slots > max_players)
 	{
+	    L4D_DEBUG_LOG("Attempt to set slots higher than set command line value (%d max: %d)", max_slots, max_players);
 		UpdateMaxSlots(MaxSlots);
 		return;
 	}
@@ -445,6 +449,7 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 
 	if(max_slots > MaxClients)
 	{
+  	    L4D_DEBUG_LOG("Attempt to set slots higher than MaxClients (%d max: %d)", max_slots, MaxClients);
 		UpdateMaxSlots(MaxSlots);
 		return;
 	}
