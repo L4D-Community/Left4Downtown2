@@ -229,6 +229,15 @@ forward Action:L4D_OnFastGetSurvivorSet(&retVal);
 forward Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance);
 
 /**
+ * @brief Called whenever CThrow::ActivateAbility(void) is invoked
+ * @remarks Called when a tank throws a rock. Blocking this call will
+ *			keep the tank from throwing a rock.
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D_OnCThrowActivate();
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

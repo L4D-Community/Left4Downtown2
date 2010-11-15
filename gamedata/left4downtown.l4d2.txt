@@ -483,6 +483,18 @@
 				"linux" 	"@_ZN16CTerrorGameRules20GetMissionCurrentMapEPP9KeyValues"
 				"windows"	"\x56\x57\x8B\x7C\x2A\x2A\x85\xFF\x74\x2A\xC7\x2A\x2A\x2A\x2A\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x2A\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x2A\x5F\x5E\xC3\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x11\x8B\x42\x2A\x57\x56\xFF\xD0\x8B"
 			}
+			
+			/*
+			 *	CThrow::ActivateAbililty()
+			 *		Start a tank rock throw
+			 */
+			"CThrowActiviate"
+			{
+				"library"	"server"
+				"linux"		"@_ZN6CThrow15ActivateAbilityEv"
+				"windows"	"\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x83\xF8\xFF\x0F\x84\xEC\x01"
+				/*  53 8B D9 8B 83 ? ? ? ? 83 F8 FF 0F 84 EC 01 */
+			}
 
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************

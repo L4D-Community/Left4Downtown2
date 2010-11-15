@@ -94,6 +94,7 @@ IForward *g_pFwdOnHasConfigurableDifficulty = NULL;
 IForward *g_pFwdOnGetSurvivorSet = NULL;
 IForward *g_pFwdOnFastGetSurvivorSet = NULL;
 IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
+IForward *g_pFwdOnCThrowActivate = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -158,6 +159,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
+	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 0, /*types*/NULL);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -282,6 +284,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
+	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

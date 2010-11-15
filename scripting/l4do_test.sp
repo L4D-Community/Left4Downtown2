@@ -31,6 +31,7 @@ new Handle:cvarSetCampaignScores = INVALID_HANDLE;
 new Handle:cvarFirstSurvivorLeftSafeArea = INVALID_HANDLE;
 new Handle:cvarProhibitBosses = INVALID_HANDLE;
 new Handle:cvarFinaleEscape;
+new Handle:cvarBlockRocks
 
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -187,6 +188,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
 	
 
+	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockWitches = CreateConVar("l4do_block_witches", "0", "Disable ZombieManager::SpawnWitch", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarSetCampaignScores = CreateConVar("l4do_set_campaign_scores", "0", "Override campaign score if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -446,6 +448,17 @@ public Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_
 	#if TEST_DEBUG_LOG
 	LogMessage("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
 	#endif
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnCThrowActivate()
+{
+	DebugPrintToAll("L4D_OnCThrowActivate() fired");
+	if(GetConVarBool(cvarBlockRocks))
+	{
+		DebugPrintToAll("Blocking!")
+		return Plugin_Handled;
+	}
 	return Plugin_Continue;
 }
 
