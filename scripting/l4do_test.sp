@@ -31,7 +31,7 @@ new Handle:cvarSetCampaignScores = INVALID_HANDLE;
 new Handle:cvarFirstSurvivorLeftSafeArea = INVALID_HANDLE;
 new Handle:cvarProhibitBosses = INVALID_HANDLE;
 new Handle:cvarFinaleEscape;
-new Handle:cvarBlockRocks
+new Handle:cvarBlockRocks;
 
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -163,6 +163,7 @@ public OnPluginStart()
 	SearchForFunction("GetSurvivorSet");
 	SearchForFunction("FastGetSurvivorSet");
 	SearchForFunction("GetMissionVersusBossSpawning");
+	SearchForFunction("CThrowActivate");
 	
 	/*
 	* These searches will fail when slots are patched

@@ -64,6 +64,7 @@
 #include "detours/get_survivor_set.h"
 #include "detours/fast_get_survivor_set.h"
 #include "detours/get_mission_versus_boss_spawning.h"
+#include "detours/cthrow_activate_ability.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 

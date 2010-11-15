@@ -488,7 +488,7 @@
 			 *	CThrow::ActivateAbililty()
 			 *		Start a tank rock throw
 			 */
-			"CThrowActiviate"
+			"CThrowActivate"
 			{
 				"library"	"server"
 				"linux"		"@_ZN6CThrow15ActivateAbilityEv"
