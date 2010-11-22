@@ -238,6 +238,23 @@ forward Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn
 forward Action:L4D_OnCThrowActivate();
 
 /**
+ * @brief Called whenever InfectedShoved::OnShoved(Infected *, CBaseEntity *) is invoked
+ * @remarks Called when common Infected are about to get shoved
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D_OnInfectedShoved(infected, entity);
+
+/**
+ * @brief Called whenever CTerrorMeleeWeapon::StartMeleeSwing(CTerrorPlayer *, bool) is invoked
+ * @remarks Called when a player uses his melee Weapons primary attack. This is before the game
+ *			reads the melee weapon data (model etc) and decides if he CAN attack at all.
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D_OnStartMeleeSwing(client, bool:boolean);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

@@ -495,6 +495,29 @@
 				"windows"	"\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x83\xF8\xFF\x0F\x84\xEC\x01"
 				/*  53 8B D9 8B 83 ? ? ? ? 83 F8 FF 0F 84 EC 01 */
 			}
+			
+			/*
+			 *	InfectedShoved::OnShoved(Infected *, CBaseEntity *)
+			 *		Common Infected gets staggered
+			 */
+			"OnInfectedShoved"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14InfectedShoved8OnShovedEP8InfectedP11CBaseEntity"
+				"windows"	"\x8B\x44\x2A\x2A\x50\xE8\x2A\x2A\x2A\x2A\x8B\x44\x2A\x2A\x33\xC9\xC7"
+				/* 8B 44 ? ? 50 E8 ? ? ? ? 8B 44 ? ? 33 C9 C7 */
+			}
+			
+			/*
+			 *	CTerrorMeleeWeapon::StartMeleeSwing(CTerrorPlayer *, bool)
+			 */
+			"StartMeleeSwing"
+			{
+				"library"	"server"
+				"linux"		"@_ZN18CTerrorMeleeWeapon15StartMeleeSwingEP13CTerrorPlayerb"
+				"windows"	"\x53\x55\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9\x80\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B\xE8\x33\xDB\x3B\xEB\x0F"
+				/* 53 55 56 8B F1 8B 86 ? ? ? ? 50 B9 80 ? ? ? E8 ? ? ? ? 8B E8 33 DB 3B EB 0F */
+			}
 
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************

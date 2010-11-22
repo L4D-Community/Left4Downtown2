@@ -103,6 +103,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\detours\infected_shoved.cpp" />
+    <ClCompile Include="..\detours\start_melee_swing.cpp" />
     <ClCompile Include="..\l4d2sdk\l4d2calls.cpp" />
     <ClCompile Include="..\detours\cthrow_activate_ability.cpp" />
     <ClCompile Include="..\detours\get_mission_versus_boss_spawning.cpp" />
@@ -137,6 +139,8 @@
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\detours\infected_shoved.h" />
+    <ClInclude Include="..\detours\start_melee_swing.h" />
     <ClInclude Include="..\l4d2sdk\l4d2calls.h" />
     <ClInclude Include="..\convar_public.h" />
     <ClInclude Include="..\detours\cthrow_activate_ability.h" />

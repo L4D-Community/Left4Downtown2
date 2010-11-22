@@ -164,6 +164,8 @@ public OnPluginStart()
 	SearchForFunction("FastGetSurvivorSet");
 	SearchForFunction("GetMissionVersusBossSpawning");
 	SearchForFunction("CThrowActivate");
+	SearchForFunction("OnInfectedShoved");
+	SearchForFunction("StartMeleeSwing");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -460,6 +462,18 @@ public Action:L4D_OnCThrowActivate()
 		DebugPrintToAll("Blocking!")
 		return Plugin_Handled;
 	}
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnInfectedShoved(infected, entity)
+{
+	DebugPrintToAll("L4D_OnInfectedShoved(infected %i, entity %i) fired", infected, entity);
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnStartMeleeSwing(client, bool:boolean)
+{
+	DebugPrintToAll("L4D_OnStartMeleeSwing(client %i, boolean %i) fired", client, boolean);
 	return Plugin_Continue;
 }
 

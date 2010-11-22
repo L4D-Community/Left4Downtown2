@@ -65,6 +65,8 @@
 #include "detours/fast_get_survivor_set.h"
 #include "detours/get_mission_versus_boss_spawning.h"
 #include "detours/cthrow_activate_ability.h"
+#include "detours/infected_shoved.h"
+#include "detours/start_melee_swing.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -96,6 +98,8 @@ IForward *g_pFwdOnGetSurvivorSet = NULL;
 IForward *g_pFwdOnFastGetSurvivorSet = NULL;
 IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
 IForward *g_pFwdOnCThrowActivate = NULL;
+IForward *g_pFwdOnInfectedShoved = NULL;
+IForward *g_pFwdOnStartMeleeSwing = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -161,7 +165,9 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
 	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 0, /*types*/NULL);
-
+	g_pFwdOnInfectedShoved = forwards->CreateForward("L4D_OnInfectedShoved", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
 
@@ -247,6 +253,8 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::FastGetSurvivorSet>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetMissionVersusBossSpawning>());
 	g_PatchManager.Register(new AutoPatch<Detours::CThrowActivate>());
+	g_PatchManager.Register(new AutoPatch<Detours::InfectedShoved>());
+	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -287,6 +295,8 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
 	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
 	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
+	forwards->ReleaseForward(g_pFwdOnInfectedShoved);
+	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor
