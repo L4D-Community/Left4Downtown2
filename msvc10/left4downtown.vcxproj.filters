@@ -126,9 +126,6 @@
     <ClCompile Include="..\l4d2sdk\l4d2calls.cpp">
       <Filter>detours</Filter>
     </ClCompile>
-    <ClCompile Include="..\detours\infected_shoved.cpp">
-      <Filter>detours</Filter>
-    </ClCompile>
     <ClCompile Include="..\detours\start_melee_swing.cpp">
       <Filter>detours</Filter>
     </ClCompile>
@@ -253,9 +250,6 @@
     </ClInclude>
     <ClInclude Include="..\l4d2sdk\l4d2calls.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\detours\infected_shoved.h">
-      <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\start_melee_swing.h">
       <Filter>detours</Filter>
