@@ -31,96 +31,8 @@
 
 #ifndef _INCLUDE_CTERRORWEAPONINFO_H_
 #define _INCLUDE_CTERRORWEAPONINFO_H_
-// Way too broken
-// #include "weapon_parse.h"  
+#include "weapon_parse.h" 
 #include "utldict.h"
-
-typedef enum {
-	EMPTY,
-	SINGLE,
-	SINGLE_NPC,
-	WPN_DOUBLE, // Can't be "DOUBLE" because windows.h uses it.
-	DOUBLE_NPC,
-	BURST,
-	RELOAD,
-	RELOAD_NPC,
-	MELEE_MISS,
-	MELEE_HIT,
-	MELEE_HIT_WORLD,
-	SPECIAL1,
-	SPECIAL2,
-	SPECIAL3,
-	TAUNT,
-
-	// Add new shoot sound types here
-
-	NUM_SHOOT_SOUND_TYPES,
-} WeaponSound_t;
-
-class FileWeaponInfo_t
-{
-public:	
-	bool					bParsedScript;
-	bool					bLoadedHudElements;
-
-// SHARED
-	char					szClassName[80];
-	char					szPrintName[80];			// Name for showing in HUD, etc.
-
-	char					szViewModel[80];			// View model of this weapon
-	char					szWorldModel[80];		// Model of this weapon seen carried by the player
-	char					szAnimationPrefix[16];	// Prefix of the animations that should be used by the player carrying this weapon
-	int						iSlot;									// inventory slot.
-	int						iPosition;								// position in the inventory slot.
-	int						iMaxClip1;								// max primary clip size (-1 if no clip)
-	int						iMaxClip2;								// max secondary clip size (-1 if no clip)
-	int						iDefaultClip1;							// amount of primary ammo in the gun when it's created
-	int						iDefaultClip2;							// amount of secondary ammo in the gun when it's created
-	int						iWeight;								// this value used to determine this weapon's importance in autoselection.
-	int						iRumbleEffect;							// Which rumble effect to use when fired? (xbox)
-	bool					bAutoSwitchTo;							// whether this weapon should be considered for autoswitching to
-	bool					bAutoSwitchFrom;						// whether this weapon can be autoswitched away from when picking up another weapon or ammo
-	int						iFlags;									// miscellaneous weapon flags
-	char					szAmmo1[16];			// "primary" ammo type
-	char					szAmmo2[16];			// "secondary" ammo type
-	char					szAIAddOn[80];			// addon that this weapon can become
-
-	// Sound blocks
-	char					aShootSounds[NUM_SHOOT_SOUND_TYPES][80];	
-
-	int						iAmmoType;
-	int						iAmmo2Type;
-	bool					m_bMeleeWeapon;		// Melee weapons can always "fire" regardless of ammo.
-
-	// This tells if the weapon was built right-handed (defaults to true).
-	// This helps cl_righthand make the decision about whether to flip the model or not.
-	bool					m_bBuiltRightHanded;
-	bool					m_bAllowFlipping;	// False to disallow flipping the model, regardless of whether
-												// it is built left or right handed.
-
-// CLIENT DLL
-	// Sprite data, read from the data file
-	int						iSpriteCount;
-	
-	typedef void CHudTexture;
-	CHudTexture						*iconActive;
-	CHudTexture	 					*iconInactive;
-	CHudTexture 					*iconAmmo;
-	CHudTexture 					*iconAmmo2;
-	CHudTexture 					*iconCrosshair;
-	CHudTexture 					*iconAutoaim;
-	CHudTexture 					*iconZoomedCrosshair;
-	CHudTexture 					*iconZoomedAutoaim;
-	CHudTexture						*iconSmall;
-	CHudTexture						*iconDual;
-	CHudTexture						*iconDualSmall;
-
-// TF2 specific
-	bool					bShowUsageHint;							// if true, then when you receive the weapon, show a hint about it
-
-// SERVER DLL
-
-};
 
 class CCSWeaponInfo : public FileWeaponInfo_t { // 866 bytes
 public:
@@ -199,8 +111,8 @@ public:
 	char m_aViewModelDual[80]; // 3192
 	char m_aPlayerModelDual[80]; // 3272
 	char m_aAddonAttachment2[80]; // 3352 Why is this duplicated from 2413
-	float m_fAddonOffest[3]; // 3432 vector
-	float m_fAddonAngles[3]; // 3444 vector
+	Vector m_vAddonOffest; // 3432 vector
+	Vector m_vAddonAngles; // 3444 vector
 	char m_aWorldModel[80]; // 3456
 }; 
 
