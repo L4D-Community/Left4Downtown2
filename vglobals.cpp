@@ -37,6 +37,7 @@ void **g_pGameRules = NULL;
 void **g_pEngine = NULL;
 CDirector **g_pDirector = NULL;
 void **g_pZombieManager = NULL;
+WeaponDatabase *g_pWeaponInfoDatabase = NULL;
 
 #ifdef PLATFORM_WINDOWS
 void InitializeValveGlobals()

@@ -154,6 +154,7 @@
     <ClInclude Include="..\detours\spawn_it_mob.h" />
     <ClInclude Include="..\l4d2sdk\director.h" />
     <ClInclude Include="..\l4d2sdk\l4d2timers.h" />
+    <ClInclude Include="..\l4d2sdk\CTerrorWeaponInfo.h" />
     <ClInclude Include="..\extension.h" />
     <ClInclude Include="..\player_slots.h" />
     <ClInclude Include="..\util.h" />

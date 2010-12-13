@@ -224,6 +224,9 @@
     <ClInclude Include="..\l4d2sdk\l4d2timers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\l4d2sdk\CTerrorWeaponInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\detours\get_walk_top_speed.h">
       <Filter>detours</Filter>
     </ClInclude>

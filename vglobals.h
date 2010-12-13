@@ -32,6 +32,7 @@
 #ifndef _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
 #define _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
 #include "l4d2sdk/director.h"
+#include "l4d2sdk/CTerrorWeaponInfo.h"
 
 //#define THEDIRECTOR_SETNEXTMISSION_OFFSET 2
 
@@ -39,6 +40,7 @@ extern void **g_pGameRules;		/* CTerrorGameRules */
 extern void **g_pEngine;		/* IVEngineServer */
 extern CDirector **g_pDirector;		/* Director */
 extern void **g_pZombieManager;	/* ZombieManager */
+extern WeaponDatabase *g_pWeaponInfoDatabase; /* WeaponInfoDatabase */
 
 void InitializeValveGlobals();
 
