@@ -70,6 +70,18 @@ void InitializeValveGlobals()
 
 	/* g_pZombieManager */
 	//TODO
+	
+	const char *weaponDatabaseConfKey = "ReadWeaponDataFromFileForSlot";
+	if (!g_pGameConf->GetMemSig(weaponDatabaseConfKey, (void **)&addr) || !addr)
+	{
+		L4D_DEBUG_LOG("Unable to find ReadWeaponDataFromFileForSlot signature");
+		return;
+	}
+	if (!g_pGameConf->GetOffset("WeaponInfoDatabase", &offset) || !offset)
+	{
+		return;
+	}
+	g_pWeaponInfoDatabase = *reinterpret_cast<WeaponDatabase **>(addr + offset);
 }
 #elif defined PLATFORM_LINUX
 void InitializeValveGlobals()
@@ -79,6 +91,7 @@ void InitializeValveGlobals()
 	/* g_pGameRules */
 	if (!g_pGameConfSDKTools->GetMemSig("g_pGameRules", (void **)&addr) || !addr)
 	{
+	    L4D_DEBUG_LOG("Couldn't find GameRules instance!");
 		return;
 	}
 	g_pGameRules = reinterpret_cast<void **>(addr);
@@ -86,16 +99,25 @@ void InitializeValveGlobals()
 	/* g_pDirector */
 	if (!g_pGameConf->GetMemSig("TheDirector", (void **)&addr) || !addr)
 	{
+	    L4D_DEBUG_LOG("Couldn't find CDirector instance!");
 		return;
 	}
 	g_pDirector = reinterpret_cast<CDirector **>(addr);
 
 	/* g_pZombieManager */
-	if (!g_pGameConf->GetMemSig("TheZombieManager", (void **)&addr) || !addr)
+/*	if (!g_pGameConf->GetMemSig("TheZombieManager", (void **)&addr) || !addr)
 	{
+	    L4D_DEBUG_LOG("Couldn't find ZombieManager instance!");
 		return;
 	}
-	g_pZombieManager = reinterpret_cast<void **>(addr);
+	g_pZombieManager = reinterpret_cast<void **>(addr); */
 
+	/* g_pWeaponInfoDatabase */
+	if (!g_pGameConf->GetMemSig("WeaponInfoDatabase", (void **)&addr) || !addr)
+	{
+	    L4D_DEBUG_LOG("WeaponInfoDatabase signature not found (%p)", addr);
+		return;
+	}
+	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(addr);
 }
 #endif

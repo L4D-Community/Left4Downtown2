@@ -606,6 +606,29 @@ cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 	return sp_ftoc(*(float *)((char*)pPlayer+offset) - gpGlobals->curtime);
 }
 
+// Float:L4D_ReadWeaponInformation(const String:weapon[])
+cell_t L4D_ReadWeaponCycleTime(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pWeaponInfoDatabase == NULL)
+	{
+		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
+	}
+
+	char * weapon = NULL;
+	pContext->LocalToString(params[1], &weapon);
+	int iIndex = g_pWeaponInfoDatabase->Find(weapon);
+
+	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex))
+	{
+	    L4D_DEBUG_LOG("L4D_ReadWeaponInformation: Weapon %s not found", weapon);
+		return sp_ftoc(-1.0);
+	}
+	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
+
+	L4D_DEBUG_LOG("WeaponInfo Cycle Time");
+	return sp_ftoc(pInfo->m_fCycleTime);
+}
+
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
@@ -625,5 +648,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetMobSpawnTimerRemaining",	L4D_GetMobSpawnTimerRemaining},
 	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
 	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
+	{"L4D_ReadWeaponCycleTime", 		L4D_ReadWeaponCycleTime},
 	{NULL,							NULL}
 };

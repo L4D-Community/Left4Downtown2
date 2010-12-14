@@ -399,6 +399,16 @@ native Float:L4D_GetMobSpawnTimerDuration();
  */
 native Float:L4D_GetPlayerSpawnTime(player);
 
+/**
+ * @brief Get the cycle time for a weapon
+ * @remarks Experimental. Reads from the global "weapon database"
+ * 
+ * @param weapon Weapon to read the cycle time for.
+ *
+ * @return 	Time between shots fired for weapon
+ */
+native Float:L4D_ReadWeaponCycleTime(const String:weapon[]);
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

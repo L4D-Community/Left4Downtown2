@@ -189,6 +189,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
 	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
+	RegConsoleCmd("sm_weaponcycle", Command_ReadCycleTime);
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -567,6 +568,17 @@ public Action:Command_L4D2Timers(client, args)
 	PrintL4D2ITimerJunk(client, "SpitterDeathTimer", L4D2IT_SpitterDeathTimer);
 	PrintL4D2ITimerJunk(client, "JockeyDeathTimer", L4D2IT_JockeyDeathTimer);
 	PrintL4D2ITimerJunk(client, "ChargerDeathTimer", L4D2IT_ChargerDeathTimer);
+#endif
+}
+
+public Action:Command_ReadCycleTime(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	
+	new Float:cycletime = L4D_ReadWeaponCycleTime(weapon);
+	ReplyToCommand(client, "Cycle time for %s: %f", weapon, cycletime);
 #endif
 }
 

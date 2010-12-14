@@ -44,6 +44,11 @@
 			{
 				"windows"	"49"
 			}
+			/* Offset into ReadWeaponDataFromFileForSlot_SubCall_01 */
+			"WeaponInfoDatabase"
+			{
+				"windows"	"12"
+			}
 		}
 		
 		"Signatures"
@@ -172,6 +177,20 @@
 			{
 				"library"	"server"
 				"linux"		"@TheDirector"
+			}
+			
+			/* Find the WeaponInfo Database dictionary */
+			"WeaponInfoDatabase"
+			{
+				"library"	"server"
+				"linux"		"@_ZL20m_WeaponInfoDatabase"
+			}
+			
+			/* We can find the WeaponInfoDatabase location in this sub on windows
+			"ReadWeaponDataFromFileForSlot"
+			{
+				"library"        "server"
+				"windows"        "\x83\xEC\x08\x85\xF6\x74\x2A\x8D\x04\x24\x50\xB9"
 			}
 			
 			/*

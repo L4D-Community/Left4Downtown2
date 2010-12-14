@@ -46,7 +46,7 @@ public:
 	bool m_bCanEquipWithShield; // 2220
 	char m_aWrongTeamMsg[32]; // 2221
 	char m_aPlayerAnimationExtension[16]; // 2253
-	char m_aShieldViewModel[80]; // 2269
+	char m_aShieldViewModel[64]; // 2269
 	char m_aAddonModel[80]; // 2333
 	char m_aAddonAttachment[80]; // 2413
 	int m_nMuzzleFlashStyle; // 2496 (not confirmed)
