@@ -186,11 +186,12 @@
 				"linux"		"@_ZL20m_WeaponInfoDatabase"
 			}
 			
-			/* We can find the WeaponInfoDatabase location in this sub on windows
+			/* We can find the WeaponInfoDatabase location in this sub on windows */
 			"ReadWeaponDataFromFileForSlot"
 			{
 				"library"        "server"
 				"windows"        "\x83\xEC\x08\x85\xF6\x74\x2A\x8D\x04\x24\x50\xB9"
+					/* 83 EC 08 85 F6 74 ? 8D 04 24 50 B9 */
 			}
 			
 			/*
