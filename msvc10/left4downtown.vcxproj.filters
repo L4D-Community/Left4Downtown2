@@ -129,6 +129,9 @@
     <ClCompile Include="..\detours\start_melee_swing.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\weaponnatives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">

@@ -189,7 +189,9 @@ public OnPluginStart()
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
 	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
-	RegConsoleCmd("sm_weaponcycle", Command_ReadCycleTime);
+	RegConsoleCmd("sm_readweaponattr", Command_ReadWeaponAttributes);
+	RegConsoleCmd("sm_setiweaponattr", Command_SetIntWeaponAttr);
+	RegConsoleCmd("sm_setfweaponattr", Command_SetFloatWeaponAttr);	
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -569,17 +571,79 @@ public Action:Command_L4D2Timers(client, args)
 	PrintL4D2ITimerJunk(client, "JockeyDeathTimer", L4D2IT_JockeyDeathTimer);
 	PrintL4D2ITimerJunk(client, "ChargerDeathTimer", L4D2IT_ChargerDeathTimer);
 #endif
+	return Plugin_Handled;
 }
 
-public Action:Command_ReadCycleTime(client, args)
+PrintL4D2IntAttributeJunk(client, const String:weapon[], const String:name[], L4D2IntWeaponAttribute:attr)
+{
+	//DebugPrintToAll("%s = %f", name, L4D2_GetIntWeaponAttribute(weapon, attr));
+	ReplyToCommand(client, "%s = %i", name, L4D2_GetIntWeaponAttribute(weapon, attr));
+}
+
+PrintL4D2FloatAttributeJunk(client, const String:weapon[], const String:name[], L4D2FloatWeaponAttribute:attr)
+{
+	//DebugPrintToAll("%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
+	ReplyToCommand(client, "%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
+}
+
+public Action:Command_ReadWeaponAttributes(client, args)
 {
 #if USE_NATIVES
 	decl String:weapon[80];
 	GetCmdArg(1, weapon, sizeof(weapon));
 	
-	new Float:cycletime = L4D_ReadWeaponCycleTime(weapon);
-	ReplyToCommand(client, "Cycle time for %s: %f", weapon, cycletime);
+	ReplyToCommand(client, "Attributes for %s:", weapon);
+	PrintL4D2IntAttributeJunk(client, weapon, "Damage", L4D2IWA_Damage);
+	PrintL4D2IntAttributeJunk(client, weapon, "Bullets", L4D2IWA_Bullets);
+	PrintL4D2IntAttributeJunk(client, weapon, "ClipSize", L4D2IWA_ClipSize);
+	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MaxSpread", L4D2FWA_MaxSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadDecay", L4D2FWA_SpreadDecay);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MinDuckingSpread", L4D2FWA_MinDuckingSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
+	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
+	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
+	PrintL4D2FloatAttributeJunk(client, weapon, "CharacterPenetrationMaxDistance", L4D2FWA_CharPenetrationMaxDist);
+	PrintL4D2FloatAttributeJunk(client, weapon, "Range", L4D2FWA_Range);
+	PrintL4D2FloatAttributeJunk(client, weapon, "RangeModifier", L4D2FWA_RangeModifier);
+	PrintL4D2FloatAttributeJunk(client, weapon, "CycleTime", L4D2FWA_CycleTime);
 #endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetIntWeaponAttr(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80], String:argbuf[32];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	GetCmdArg(2, argbuf, sizeof(argbuf));
+	new L4D2IntWeaponAttribute:attr = L4D2IntWeaponAttribute:StringToInt(argbuf);
+	GetCmdArg(3, argbuf, sizeof(argbuf));
+	new value = StringToInt(argbuf);
+	ReplyToCommand(client, "%s: Attribute %d was %d", weapon, attr, L4D2_GetIntWeaponAttribute(weapon, attr));
+	L4D2_SetIntWeaponAttribute(weapon, attr, value)
+	ReplyToCommand(client, "%s: Attribute %d is now %d", weapon, attr, L4D2_GetIntWeaponAttribute(weapon, attr));
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetFloatWeaponAttr(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80], String:argbuf[32];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	GetCmdArg(2, argbuf, sizeof(argbuf));
+	new L4D2FloatWeaponAttribute:attr = L4D2FloatWeaponAttribute:StringToInt(argbuf);
+	GetCmdArg(3, argbuf, sizeof(argbuf));
+	new Float:value = StringToFloat(argbuf);
+	ReplyToCommand(client, "%s: Attribute %d was %f", weapon, attr, L4D2_GetFloatWeaponAttribute(weapon, attr));
+	L4D2_SetFloatWeaponAttribute(weapon, attr, value);
+	ReplyToCommand(client, "%s: Attribute %d is now %f", weapon, attr, L4D2_GetFloatWeaponAttribute(weapon, attr));
+#endif
+	return Plugin_Handled;
 }
 
 SearchForFunction(const String:functionName[])

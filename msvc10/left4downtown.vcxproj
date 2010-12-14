@@ -136,6 +136,7 @@
     <ClCompile Include="..\detours\spawn_witch.cpp" />
     <ClCompile Include="..\detours\try_offering_tank_bot.cpp" />
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
+    <ClCompile Include="..\weaponnatives.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\detours\start_melee_swing.h" />

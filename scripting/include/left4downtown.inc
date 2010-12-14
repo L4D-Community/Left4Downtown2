@@ -35,6 +35,7 @@
 
 #include <core>
 #include <l4d2timers>
+#include <l4d2weapons>
 
 /**
  * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
@@ -398,16 +399,6 @@ native Float:L4D_GetMobSpawnTimerDuration();
  * @return 	Time (seconds) until the SI will spawn.
  */
 native Float:L4D_GetPlayerSpawnTime(player);
-
-/**
- * @brief Get the cycle time for a weapon
- * @remarks Experimental. Reads from the global "weapon database"
- * 
- * @param weapon Weapon to read the cycle time for.
- *
- * @return 	Time between shots fired for weapon
- */
-native Float:L4D_ReadWeaponCycleTime(const String:weapon[]);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
