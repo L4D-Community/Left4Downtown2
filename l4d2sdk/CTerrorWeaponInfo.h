@@ -37,36 +37,36 @@
 class CCSWeaponInfo : public FileWeaponInfo_t { // 866 bytes
 public:
 	float m_fMaxPlayerSpeed; // 2192
-	int m_nWeaponType;  // 2196
-	int m_nTeam; // 2200 // ANY = 0, TR = 2, CT = 3
+	int m_iWeaponType;  // 2196
+	int m_iTeam; // 2200 // ANY = 0, TR = 2, CT = 3
 	float m_fBotAudiblerange; // 2204
 	float m_fWeaponArmorRatio; // 2208
-	int m_nCrosshairMinDistance; // 2212
-	int m_nCrosshariDeltaDistance; // 2216
+	int m_iCrosshairMinDistance; // 2212
+	int m_iCrosshariDeltaDistance; // 2216
 	bool m_bCanEquipWithShield; // 2220
 	char m_aWrongTeamMsg[32]; // 2221
 	char m_aPlayerAnimationExtension[16]; // 2253
 	char m_aShieldViewModel[64]; // 2269
 	char m_aAddonModel[80]; // 2333
 	char m_aAddonAttachment[80]; // 2413
-	int m_nMuzzleFlashStyle; // 2496 (not confirmed)
+	int m_iMuzzleFlashStyle; // 2496 (not confirmed)
 	float m_fMuzzleFlashScale; // 2500
-	int m_nPenetration; // 2504
-	int m_nDamage; // 2508
+	int m_iPenetration; // 2504
+	int m_iDamage; // 2508
 	float m_fRange; // 2512
 	float m_fRangeModifier; // 2516
-	int m_nBullets; // 2520
+	int m_iBullets; // 2520
 	float m_fCycleTime; // 2524
-	int m_nAccuracyQuadratic; // 2528
+	int m_iAccuracyQuadratic; // 2528
 	float m_fAccuracyDivisor; // 2532
 	float m_fAccuracyOffset; // 2536
 	float m_fMaxInaccuracy; // 2540
 	float m_fTimeToIdle; // 2544
 	float m_fIdleInterval; // 2548
 	float m_fNoiseFactor; // 2552
-	int m_nBlackMarketPrice; // 2556
-	int m_nBlackMarketPrice2; // 2560
-	int m_nBlackMarketPreviousPrice; // 2564 (not confirmed)
+	int m_iBlackMarketPrice; // 2556
+	int m_iBlackMarketPrice2; // 2560
+	int m_iBlackMarketPreviousPrice; // 2564 (not confirmed)
 	char m_aResponseRulesName[80]; // 2568
 	char m_aMuzzleFlashEffect_1stPerson[80]; // 2648
 	char m_aMuzzleFlashEffect_3rdPerson[80]; // 2728
