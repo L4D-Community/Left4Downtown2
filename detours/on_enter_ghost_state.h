@@ -73,8 +73,6 @@ private: //note: implementation of DetourTemplate abstracts
 	{
 		CTerrorPlayer *p = reinterpret_cast<CTerrorPlayer*>(this);
 
-		g_bInsideOnEnterGhostState = true;
-
 		assert(GetAutoForward() != NULL);
 		AutoForward *autoForward = GetAutoForward();
 
@@ -109,8 +107,6 @@ private: //note: implementation of DetourTemplate abstracts
 			int exec = autoForward->GetForward()->Execute(&result);
 			//L4D_DEBUG_LOG(FORWARD_NAME "() forward result = %d (0 means no error)", exec);
 		}
-
-		g_bInsideOnEnterGhostState = false;
 	}
 
 	// get the signature name (i.e. "IsFinaleEscapeInProgress") from the game conf

@@ -334,17 +334,6 @@ cell_t L4D_ScavengeBeginRoundSetupTime(IPluginContext *pContext, const cell_t *p
 	return 1;
 }
 
-bool g_bInsideOnEnterGhostState = false;
-bool g_bEnableGhostsInFinale = false;
-// native L4D_ToggleGhostsInFinale(bool:enableGhostsInFinale)
-cell_t L4D_ToggleGhostsInFinale(IPluginContext *pContext, const cell_t *params)
-{
-	g_bEnableGhostsInFinale = params[1] ? true : false;
-	L4D_DEBUG_LOG("Enabling ghosts in finale: toggled to %d", g_bEnableGhostsInFinale);
-
-	return 1;
-}
-
 cell_t L4D_GetVersusMaxCompletionScore(IPluginContext *pContext, const cell_t *params)
 {
 	/* Get the CTerrorGameRules pointer */
@@ -615,7 +604,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
 	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
 	{"L4D_ScavengeBeginRoundSetupTime", L4D_ScavengeBeginRoundSetupTime},
-	{"L4D_ToggleGhostsInFinale",		L4D_ToggleGhostsInFinale},
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
 	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
 	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},

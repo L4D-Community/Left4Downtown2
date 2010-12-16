@@ -34,9 +34,6 @@
 
 #include "detour_template.h"
 
-extern bool g_bEnableGhostsInFinale;
-extern bool g_bInsideOnEnterGhostState;
-
 namespace Detours {
 
 // customize these
@@ -66,16 +63,6 @@ private: //note: implementation of DetourTemplate abstracts
 	bool CALLBACK_NAME()
 	{
 		bool actualInvocationResult = (this->*(GetTrampoline()))();
-
-		if(g_bEnableGhostsInFinale && g_bInsideOnEnterGhostState)
-		{
-			L4D_DEBUG_LOG(FUNCTION_FULL_NAME " has been overridden");
-			actualInvocationResult = false;
-		}
-		else
-		{
-			//L4D_DEBUG_LOG(FUNCTION_FULL_NAME " has been called (retVal=%d)", actualInvocationResult);
-		}
 
 		return actualInvocationResult;
 	}
