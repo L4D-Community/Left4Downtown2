@@ -18,11 +18,11 @@ new Handle:gConf;
 
 public Plugin:myinfo = 
 {
-	name = "L4D Downtown's Extension Test",
-	author = "Downtown1",
-	description = "Ensures functions/offsets are valid and provides some commands to call into natives directly",
-	version = "1.0.0.7",
-	url = "<- URL ->"
+	name = "L4D2 Downtown Extension Test Plugin",
+	author = "L4D2 Downtown Devs",
+	description = "Ensures functions/offsets are valid and provides commands to test-call most natives directly",
+	version = "0.5.2.3",
+	url = "http://code.google.com/p/left4downtown2"
 }
 
 new Handle:cvarBlockTanks = INVALID_HANDLE;
@@ -119,6 +119,8 @@ public OnPluginStart()
 	
 	SearchForOffset("TheDirector"); //fails on Linux
 	SearchForOffset("TheZombieManager"); //fails on Linux
+	SearchForOffset("HasConfigurableDifficultySetting"); //fails on Linux
+	SearchForOffset("WeaponInfoDatabase"); //fails on Linux
 	SearchForOffset("ValveRejectServerFullFirst");
 	
 	SearchForFunction("GetTeamScore");
@@ -164,8 +166,8 @@ public OnPluginStart()
 	SearchForFunction("FastGetSurvivorSet");
 	SearchForFunction("GetMissionVersusBossSpawning");
 	SearchForFunction("CThrowActivate");
-	SearchForFunction("OnInfectedShoved");
 	SearchForFunction("StartMeleeSwing");
+	SearchForFunction("ReadWeaponDataFromFileForSlot");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -468,12 +470,6 @@ public Action:L4D_OnCThrowActivate()
 	return Plugin_Continue;
 }
 
-public Action:L4D_OnInfectedShoved(infected, entity)
-{
-	DebugPrintToAll("L4D_OnInfectedShoved(infected %i, entity %i) fired", infected, entity);
-	return Plugin_Continue;
-}
-
 public Action:L4D_OnStartMeleeSwing(client, bool:boolean)
 {
 	DebugPrintToAll("L4D_OnStartMeleeSwing(client %i, boolean %i) fired", client, boolean);
@@ -574,13 +570,13 @@ public Action:Command_L4D2Timers(client, args)
 	return Plugin_Handled;
 }
 
-PrintL4D2IntAttributeJunk(client, const String:weapon[], const String:name[], L4D2IntWeaponAttribute:attr)
+PrintL4D2IntAttributeJunk(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)
 {
 	//DebugPrintToAll("%s = %f", name, L4D2_GetIntWeaponAttribute(weapon, attr));
 	ReplyToCommand(client, "%s = %i", name, L4D2_GetIntWeaponAttribute(weapon, attr));
 }
 
-PrintL4D2FloatAttributeJunk(client, const String:weapon[], const String:name[], L4D2FloatWeaponAttribute:attr)
+PrintL4D2FloatAttributeJunk(client, const String:weapon[], const String:name[], L4D2FloatWeaponAttributes:attr)
 {
 	//DebugPrintToAll("%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
 	ReplyToCommand(client, "%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
@@ -596,6 +592,7 @@ public Action:Command_ReadWeaponAttributes(client, args)
 	PrintL4D2IntAttributeJunk(client, weapon, "Damage", L4D2IWA_Damage);
 	PrintL4D2IntAttributeJunk(client, weapon, "Bullets", L4D2IWA_Bullets);
 	PrintL4D2IntAttributeJunk(client, weapon, "ClipSize", L4D2IWA_ClipSize);
+	PrintL4D2FloatAttributeJunk(client, weapon, "MaxPlayerSpeed", L4D2FWA_MaxPlayerSpeed);
 	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
 	PrintL4D2FloatAttributeJunk(client, weapon, "MaxSpread", L4D2FWA_MaxSpread);
 	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadDecay", L4D2FWA_SpreadDecay);
@@ -603,6 +600,7 @@ public Action:Command_ReadWeaponAttributes(client, args)
 	PrintL4D2FloatAttributeJunk(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
 	PrintL4D2FloatAttributeJunk(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
 	PrintL4D2FloatAttributeJunk(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
+	PrintL4D2FloatAttributeJunk(client, weapon, "ReloadDuration", L4D2FWA_ReloadDuration);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
@@ -620,7 +618,7 @@ public Action:Command_SetIntWeaponAttr(client, args)
 	decl String:weapon[80], String:argbuf[32];
 	GetCmdArg(1, weapon, sizeof(weapon));
 	GetCmdArg(2, argbuf, sizeof(argbuf));
-	new L4D2IntWeaponAttribute:attr = L4D2IntWeaponAttribute:StringToInt(argbuf);
+	new L4D2IntWeaponAttributes:attr = L4D2IntWeaponAttributes:StringToInt(argbuf);
 	GetCmdArg(3, argbuf, sizeof(argbuf));
 	new value = StringToInt(argbuf);
 	ReplyToCommand(client, "%s: Attribute %d was %d", weapon, attr, L4D2_GetIntWeaponAttribute(weapon, attr));
@@ -636,7 +634,7 @@ public Action:Command_SetFloatWeaponAttr(client, args)
 	decl String:weapon[80], String:argbuf[32];
 	GetCmdArg(1, weapon, sizeof(weapon));
 	GetCmdArg(2, argbuf, sizeof(argbuf));
-	new L4D2FloatWeaponAttribute:attr = L4D2FloatWeaponAttribute:StringToInt(argbuf);
+	new L4D2FloatWeaponAttributes:attr = L4D2FloatWeaponAttributes:StringToInt(argbuf);
 	GetCmdArg(3, argbuf, sizeof(argbuf));
 	new Float:value = StringToFloat(argbuf);
 	ReplyToCommand(client, "%s: Attribute %d was %f", weapon, attr, L4D2_GetFloatWeaponAttribute(weapon, attr));
