@@ -41,6 +41,7 @@ enum L4D2IntWeaponAttributes
 
 enum L4D2FloatWeaponAttributes
 {
+	L4D2FWA_MaxPlayerSpeed,
 	L4D2FWA_SpreadPerShot,
 	L4D2FWA_MaxSpread,
 	L4D2FWA_SpreadDecay,
@@ -79,6 +80,8 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 	
 	switch(id)
 	{
+		case L4D2FWA_MaxPlayerSpeed:
+			return &pInfo->m_fMaxPlayerSpeed;
 		case L4D2FWA_SpreadPerShot:
 			return &pInfo->m_fSpreadPerShot;
 		case L4D2FWA_MaxSpread:

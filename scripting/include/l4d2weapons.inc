@@ -34,15 +34,16 @@
 #endif
 #define _l4d2weapons_included
 
-enum L4D2IntWeaponAttribute
+enum L4D2IntWeaponAttributes
 {
 	L4D2IWA_Damage,
 	L4D2IWA_Bullets,
 	L4D2IWA_ClipSize
 };
 
-enum L4D2FloatWeaponAttribute
+enum L4D2FloatWeaponAttributes
 {
+	L4D2FWA_MaxPlayerSpeed,
 	L4D2FWA_SpreadPerShot,
 	L4D2FWA_MaxSpread,
 	L4D2FWA_SpreadDecay,
@@ -67,7 +68,7 @@ enum L4D2FloatWeaponAttribute
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
  */
-native L4D2_GetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr);
+native L4D2_GetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttributes:attr);
 
 /**
  * @brief Read a float-typed attribute for a given weapon from the WeaponInformationDatabase
@@ -77,7 +78,7 @@ native L4D2_GetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttrib
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
  */
-native Float:L4D2_GetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWeaponAttribute:attr);
+native Float:L4D2_GetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWeaponAttributes:attr);
 
 /**
  * @brief Set an int-typed attribute for a given weapon from the WeaponInformationDatabase to a given value
@@ -88,7 +89,7 @@ native Float:L4D2_GetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWe
  * @param value			Value to set the attribute to
  * @noreturn
  */
-native L4D2_SetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr, value);
+native L4D2_SetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttributes:attr, value);
 
 /**
  * @brief Set a float-typed attribute for a given weapon from the WeaponInformationDatabase to a given value
@@ -99,4 +100,4 @@ native L4D2_SetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttrib
  * @param value			Value to set the attribute to
  * @noreturn
  */
-native Float:L4D2_SetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWeaponAttribute:attr, Float:value);
+native Float:L4D2_SetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWeaponAttributes:attr, Float:value);
