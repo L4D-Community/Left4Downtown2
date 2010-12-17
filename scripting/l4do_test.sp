@@ -600,7 +600,6 @@ public Action:Command_ReadWeaponAttributes(client, args)
 	PrintL4D2FloatAttributeJunk(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
 	PrintL4D2FloatAttributeJunk(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
 	PrintL4D2FloatAttributeJunk(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "ReloadDuration", L4D2FWA_ReloadDuration);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
 	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
