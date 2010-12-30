@@ -95,12 +95,12 @@ public:
 
 	bool HasStarted( void ) const
 	{
-		return (m_timestamp > 0.0f);
+		return (m_timestamp >= 0.0f);
 	}
 
 	bool IsElapsed( void ) const
 	{
-		return (Now() > m_timestamp);
+		return (Now() >= m_timestamp);
 	}
 
 	float GetElapsedTime( void ) const
