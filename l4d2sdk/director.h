@@ -57,7 +57,8 @@ typedef struct _CDirectorScriptedEventManager {
 typedef struct _CDirectorVersusMode {
 	char unknown[28];
 	CountdownTimer VersusStartTimer; // 0x1c Timer controlling saferoom door open, allowing PZ spawning.
-	char unknown2[40]; // 0x28
+	float m_fTankSpawnFlowPercent[2]; // 0x28 Tank spawn flow percent for rounds 1 and 2
+	char unknown2[32]; // 0x30
 	CountdownTimer UpdateMarkersTimer; // 0x50 Timer controlling when to check if survivors have passed markers. Normally set to 1s duration
 } CDirectorVersusMode;
 
