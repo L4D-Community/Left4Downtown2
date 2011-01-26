@@ -30,8 +30,7 @@ new Handle:cvarBlockWitches = INVALID_HANDLE;
 new Handle:cvarSetCampaignScores = INVALID_HANDLE;
 new Handle:cvarFirstSurvivorLeftSafeArea = INVALID_HANDLE;
 new Handle:cvarProhibitBosses = INVALID_HANDLE;
-new Handle:cvarFinaleEscape;
-new Handle:cvarBlockRocks;
+new Handle:cvarBlockRocks = INVALID_HANDLE;
 
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -105,9 +104,6 @@ stock L4D_ResetRoundNumber()
 	SDKCall(func);
 	DebugPrintToAll("CTerrorGameRules::ResetRoundNumber()");
 }
-
-native L4D_ToggleGhostsInFinale(bool:enableGhostsInFinale);
-
 
 public OnPluginStart()
 {
@@ -203,15 +199,6 @@ public OnPluginStart()
 
 	cvarFirstSurvivorLeftSafeArea = CreateConVar("l4do_versus_round_started", "0", "Block versus round from starting if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarProhibitBosses = CreateConVar("l4do_unprohibit_bosses", "0", "Override ProhibitBosses script key if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
-	cvarFinaleEscape = CreateConVar("l4do_finale_ghosts", "0", "Override finale auto spawning if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
-
-	L4D_ToggleGhostsInFinale(GetConVarBool(cvarFinaleEscape));
-	HookConVarChange(cvarFinaleEscape, OnConVarsChanged);
-}
-
-public OnConVarsChanged(Handle:convar, const String:oldValue[], const String:newValue[])
-{
-	L4D_ToggleGhostsInFinale(GetConVarBool(cvarFinaleEscape));
 }
 
 public Action:Command_BeginRoundSetupTime(client, args)
