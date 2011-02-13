@@ -38,6 +38,7 @@ void **g_pEngine = NULL;
 CDirector **g_pDirector = NULL;
 void **g_pZombieManager = NULL;
 WeaponDatabase *g_pWeaponInfoDatabase = NULL;
+CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore = NULL;
 
 #ifdef PLATFORM_WINDOWS
 void InitializeValveGlobals()
@@ -82,6 +83,19 @@ void InitializeValveGlobals()
 		return;
 	}
 	g_pWeaponInfoDatabase = *reinterpret_cast<WeaponDatabase **>(addr + offset);
+
+	if (!g_pGameConf->GetMemSig("MeleeWeaponInfoStore_Construction", (void **)&addr) || !addr)
+	{
+		L4D_DEBUG_LOG("Unable to find MeleeWeaponInfoStore signature");
+		return;
+	}
+	if (!g_pGameConf->GetOffset("CMeleeWeaponInfoStore", &offset) || !offset)
+	{
+		return;
+	}
+	g_pMeleeWeaponInfoStore = *reinterpret_cast<CMeleeWeaponInfoStore **>(addr + offset);
+	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %p ", g_pMeleeWeaponInfoStore);
+	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %s ", g_pMeleeWeaponInfoStore->Name());
 }
 #elif defined PLATFORM_LINUX
 void InitializeValveGlobals()
@@ -119,5 +133,12 @@ void InitializeValveGlobals()
 		return;
 	}
 	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(addr);
+
+	if (!g_pGameConf->GetMemSig("CMeleeWeaponInfoStore", (void **)&addr) || !addr)
+	{
+	    L4D_DEBUG_LOG("CMeleeWeaponInfoStore signature not found (%p)", addr);
+		return;
+	}
+	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore **>(addr);
 }
 #endif

@@ -190,6 +190,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_readweaponattr", Command_ReadWeaponAttributes);
 	RegConsoleCmd("sm_setiweaponattr", Command_SetIntWeaponAttr);
 	RegConsoleCmd("sm_setfweaponattr", Command_SetFloatWeaponAttr);	
+	RegConsoleCmd("sm_gmi", Command_GetMeleeIndex);
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -199,6 +200,12 @@ public OnPluginStart()
 
 	cvarFirstSurvivorLeftSafeArea = CreateConVar("l4do_versus_round_started", "0", "Block versus round from starting if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarProhibitBosses = CreateConVar("l4do_unprohibit_bosses", "0", "Override ProhibitBosses script key if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
+}
+
+public Action:Command_GetMeleeIndex(client, args)
+{
+	ReplyToCommand(client, "Running GMI");
+	L4D2_GetMeleeWeaponIndex();
 }
 
 public Action:Command_BeginRoundSetupTime(client, args)

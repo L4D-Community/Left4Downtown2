@@ -117,6 +117,7 @@
     <ClCompile Include="..\detours\spawn_mob.cpp" />
     <ClCompile Include="..\detours\spawn_it_mob.cpp" />
     <ClCompile Include="..\extension.cpp" />
+    <ClCompile Include="..\meleeweaponnatives.cpp" />
     <ClCompile Include="..\natives.cpp" />
     <ClCompile Include="..\timernatives.cpp" />
     <ClCompile Include="..\player_slots.cpp" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\detours\start_melee_swing.h" />
+    <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h" />
     <ClInclude Include="..\l4d2sdk\l4d2calls.h" />
     <ClInclude Include="..\convar_public.h" />
     <ClInclude Include="..\detours\cthrow_activate_ability.h" />

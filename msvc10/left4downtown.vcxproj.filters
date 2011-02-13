@@ -132,6 +132,9 @@
     <ClCompile Include="..\weaponnatives.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\meleeweaponnatives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="..\detours\start_melee_swing.h">
       <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

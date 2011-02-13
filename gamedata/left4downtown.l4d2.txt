@@ -49,6 +49,11 @@
 			{
 				"windows"	"12"
 			}
+			/* Offset into MeleeWeaponInfoStore_Construction */
+			"CMeleeWeaponInfoStore"
+			{
+				"windows"	"11"
+			}
 		}
 		
 		"Signatures"
@@ -192,6 +197,22 @@
 				"library"        "server"
 				"windows"        "\x83\xEC\x08\x85\xF6\x74\x2A\x8D\x04\x24\x50\xB9"
 					/* 83 EC 08 85 F6 74 ? 8D 04 24 50 B9 */
+			}
+			
+			/* Find the Melee Weapon Info dictionary */
+			"CMeleeWeaponInfoStore"
+			{
+				"library"	"server"
+				"linux"		"@g_MeleeWeaponInfoStore"
+			}
+			
+			/* We can find the CMeleeWeaponInfo location in this sub on windows */
+			"MeleeWeaponInfoStore_Construction"
+			{
+				"library"        "server"
+				"windows"        "\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x50\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x09\xB8\x2A\x2A\x2A\x2A\x5B\xC2"
+					/* 53 8B D9 8B 83 ? ? ? ? 50 B9 ? ? ? ? E8 ? ? ? ? 85 C0 75 09 B8 ? ? ? ? 5B C2*/
+
 			}
 			
 			/*

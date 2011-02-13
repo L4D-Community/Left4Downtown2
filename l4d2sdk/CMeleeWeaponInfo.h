@@ -33,8 +33,13 @@
 #define _INCLUDE_CMELEEWEAPONINFO_H_
 #include "utlvector.h"
 #include "utlmap.h"
+// I'm sorry :(
+class CBasePlayer;
+class CUserCmd;
 
-typedef char[48] melee_anim_t;
+#include "igamesystem.h"
+
+//typedef char[48] melee_anim_t;
 
 typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	void * pVtable;
@@ -66,8 +71,8 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	char m_aActivityShove[80];
 	char SoundData[20][80]; // 1501
 	// 3101: 3 bytes should be padding 
-	CUtlVector<melee_anim_t> PrimaryAttacks; //3104
-	CUtlVector<melee_anim_t> SecondaryAttacks; //3124
+	CUtlVector<char[48]> PrimaryAttacks; //3104
+	CUtlVector<char[48]> SecondaryAttacks; //3124
 	int m_iPlayerAnimEvent; // 3144
 	float m_fWeaponIdleTime; // 3148
 	char src[80]; // 3152 name of the melee weapon
@@ -75,8 +80,9 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	
 class CMeleeWeaponInfoStore : public CAutoGameSystem // 68 bytes?!?!?
 {
+	public:
 	CUtlMap<int, CMeleeWeaponInfo *, int> weaponInfo; // 12 ?
 	CUtlVector<const char *> weaponNames; // 48
-}
+};
 
 #endif //_INCLUDE_CMELEEWEAPONINFO_H_
