@@ -60,11 +60,15 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_CycleTime
 };
 
+enum L4D2BoolMeleeWeaponAttributes
+{
+	L4D2BMWA_Decapitates
+};
+
 enum L4D2IntMeleeWeaponAttributes
 {
 	L4D2IMWA_DamageFlags,
-	L4D2IMWA_RumbleEffect,
-	L4D2IMWA_Decapitates
+	L4D2IMWA_RumbleEffect
 };
 
 enum L4D2FloatMeleeWeaponAttributes
@@ -116,46 +120,78 @@ native L4D2_SetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttrib
  */
 native Float:L4D2_SetFloatWeaponAttribute(const String:weaponName[], L4D2FloatWeaponAttributes:attr, Float:value);
 
+
+
+
+
 /**
- * @brief Read an int-typed attribute for a given weapon from the Melee Weapon Database
- * @remarks Throws an error if the weapon is not found or the attribute is incorrect
+ * @brief Retrieve the index for a given melee weapon from the Melee Weapon Database
+ * @remarks returns -1 if no match is found
  * 
- * @param weaponName 	Weapon to lookup attribute for
+ * @param weaponName 	Weapon to lookup index id for
+ * @return 				The index id
+ */
+native L4D2_GetMeleeWeaponIndex(const String:weaponName[]);
+
+/**
+ * @brief Read an int-typed attribute for a given id from the Melee Weapon Database
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
+ * 
+ * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
  */
-native L4D2_GetIntMeleeAttribute(const String:weaponName[], L4D2IntMeleeWeaponAttributes:attr);
+native L4D2_GetIntMeleeAttribute(id, L4D2IntMeleeWeaponAttributes:attr);
 
 /**
- * @brief Read a float-typed attribute for a given weapon from the Melee Weapon Database
- * @remarks Throws an error if the weapon is not found or the attribute is incorrect
+ * @brief Read a float-typed attribute for a given id from the Melee Weapon Database
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
  * 
- * @param weaponName 	Weapon to lookup attribute for
+ * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
  */
-native Float:L4D2_GetFloatMeleeAttribute(const String:weaponName[], L4D2FloatMeleeWeaponAttributes:attr);
+native Float:L4D2_GetFloatMeleeAttribute(id, L4D2FloatMeleeWeaponAttributes:attr);
 
 /**
- * @brief Set an int-typed attribute for a given weapon from the Melee Weapon Database to a given value
- * @remarks Throws an error if the weapon is not found or the attribute is incorrect
+ * @brief Read a bool-typed attribute for a given id from the Melee Weapon Database
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
  * 
- * @param weaponName 	Weapon to lookup attribute for
+ * @param id 			Melee id to lookup attribute for
+ * @param attr			Attribute to read from the weapon's info struct
+ * @return 				The value read.
+ */
+native bool:L4D2_GetBoolMeleeAttribute(id, L4D2BoolMeleeWeaponAttributes:attr);
+
+/**
+ * @brief Set an int-typed attribute for a given id from the Melee Weapon Database to a given value
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
+ * 
+ * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
  * @noreturn
  */
-native L4D2_SetIntMeleeAttribute(const String:weaponName[], L4D2IntMeleeWeaponAttributes:attr, value);
+native L4D2_SetIntMeleeAttribute(id, L4D2IntMeleeWeaponAttributes:attr, value);
 
 /**
- * @brief Set a float-typed attribute for a given weapon from the Melee Weapon Database to a given value
- * @remarks Throws an error if the weapon is not found or the attribute is incorrect
+ * @brief Set a float-typed attribute for a given id from the Melee Weapon Database to a given value
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
  * 
- * @param weaponName 	Weapon to lookup attribute for
+ * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
  * @noreturn
  */
-native Float:L4D2_SetFloatMeleeAttribute(const String:weaponName[], L4D2FloatMeleeWeaponAttributes:attr, Float:value);
+native Float:L4D2_SetFloatMeleeAttribute(id, L4D2FloatMeleeWeaponAttributes:attr, Float:value);
 
-native L4D2_GetMeleeWeaponIndex();
+/**
+ * @brief Set a bool-typed attribute for a given id from the Melee Weapon Database to a given value
+ * @remarks Throws an error if the id is not found or the attribute is incorrect
+ * 
+ * @param id 			Melee id to lookup attribute for
+ * @param attr			Attribute to alter in the weapon's info struct
+ * @param value			Value to set the attribute to
+ * @noreturn
+ */
+native Float:L4D2_SetBoolMeleeAttribute(id, L4D2BoolMeleeWeaponAttributes:attr, bool:value);

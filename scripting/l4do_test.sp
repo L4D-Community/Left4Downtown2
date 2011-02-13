@@ -187,10 +187,15 @@ public OnPluginStart()
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
 	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
+	
 	RegConsoleCmd("sm_readweaponattr", Command_ReadWeaponAttributes);
 	RegConsoleCmd("sm_setiweaponattr", Command_SetIntWeaponAttr);
-	RegConsoleCmd("sm_setfweaponattr", Command_SetFloatWeaponAttr);	
-	RegConsoleCmd("sm_gmi", Command_GetMeleeIndex);
+	RegConsoleCmd("sm_setfweaponattr", Command_SetFloatWeaponAttr);
+	
+	RegConsoleCmd("sm_readmeleeattr", Command_ReadMeleeAttributes);
+	RegConsoleCmd("sm_setimeleeattr", Command_SetIntMeleeAttr);
+	RegConsoleCmd("sm_setfmeleeattr", Command_SetFloatMeleeAttr);
+	RegConsoleCmd("sm_setbmeleeattr", Command_SetBoolMeleeAttr);
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -200,12 +205,6 @@ public OnPluginStart()
 
 	cvarFirstSurvivorLeftSafeArea = CreateConVar("l4do_versus_round_started", "0", "Block versus round from starting if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarProhibitBosses = CreateConVar("l4do_unprohibit_bosses", "0", "Override ProhibitBosses script key if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
-}
-
-public Action:Command_GetMeleeIndex(client, args)
-{
-	ReplyToCommand(client, "Running GMI");
-	L4D2_GetMeleeWeaponIndex();
 }
 
 public Action:Command_BeginRoundSetupTime(client, args)
@@ -564,13 +563,13 @@ public Action:Command_L4D2Timers(client, args)
 	return Plugin_Handled;
 }
 
-PrintL4D2IntAttributeJunk(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)
+PrintL4D2IntWeaponAttrib(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)
 {
 	//DebugPrintToAll("%s = %f", name, L4D2_GetIntWeaponAttribute(weapon, attr));
 	ReplyToCommand(client, "%s = %i", name, L4D2_GetIntWeaponAttribute(weapon, attr));
 }
 
-PrintL4D2FloatAttributeJunk(client, const String:weapon[], const String:name[], L4D2FloatWeaponAttributes:attr)
+PrintL4D2FloatWeaponAttrib(client, const String:weapon[], const String:name[], L4D2FloatWeaponAttributes:attr)
 {
 	//DebugPrintToAll("%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
 	ReplyToCommand(client, "%s = %f", name, L4D2_GetFloatWeaponAttribute(weapon, attr));
@@ -583,24 +582,24 @@ public Action:Command_ReadWeaponAttributes(client, args)
 	GetCmdArg(1, weapon, sizeof(weapon));
 	
 	ReplyToCommand(client, "Attributes for %s:", weapon);
-	PrintL4D2IntAttributeJunk(client, weapon, "Damage", L4D2IWA_Damage);
-	PrintL4D2IntAttributeJunk(client, weapon, "Bullets", L4D2IWA_Bullets);
-	PrintL4D2IntAttributeJunk(client, weapon, "ClipSize", L4D2IWA_ClipSize);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MaxPlayerSpeed", L4D2FWA_MaxPlayerSpeed);
-	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MaxSpread", L4D2FWA_MaxSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "SpreadDecay", L4D2FWA_SpreadDecay);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MinDuckingSpread", L4D2FWA_MinDuckingSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
-	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
-	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
-	PrintL4D2FloatAttributeJunk(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
-	PrintL4D2FloatAttributeJunk(client, weapon, "CharacterPenetrationMaxDistance", L4D2FWA_CharPenetrationMaxDist);
-	PrintL4D2FloatAttributeJunk(client, weapon, "Range", L4D2FWA_Range);
-	PrintL4D2FloatAttributeJunk(client, weapon, "RangeModifier", L4D2FWA_RangeModifier);
-	PrintL4D2FloatAttributeJunk(client, weapon, "CycleTime", L4D2FWA_CycleTime);
+	PrintL4D2IntWeaponAttrib(client, weapon, "Damage", L4D2IWA_Damage);
+	PrintL4D2IntWeaponAttrib(client, weapon, "Bullets", L4D2IWA_Bullets);
+	PrintL4D2IntWeaponAttrib(client, weapon, "ClipSize", L4D2IWA_ClipSize);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxPlayerSpeed", L4D2FWA_MaxPlayerSpeed);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxSpread", L4D2FWA_MaxSpread);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "SpreadDecay", L4D2FWA_SpreadDecay);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MinDuckingSpread", L4D2FWA_MinDuckingSpread);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "CharacterPenetrationMaxDistance", L4D2FWA_CharPenetrationMaxDist);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "Range", L4D2FWA_Range);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "RangeModifier", L4D2FWA_RangeModifier);
+	PrintL4D2FloatWeaponAttrib(client, weapon, "CycleTime", L4D2FWA_CycleTime);
 #endif
 	return Plugin_Handled;
 }
@@ -636,6 +635,115 @@ public Action:Command_SetFloatWeaponAttr(client, args)
 #endif
 	return Plugin_Handled;
 }
+
+
+
+PrintL4D2IntMeleeAttrib(client, id, const String:name[], L4D2IntMeleeWeaponAttributes:attr)
+{
+	ReplyToCommand(client, "%s = %i", name, L4D2_GetIntMeleeAttribute(id, attr));
+}
+
+PrintL4D2FloatMeleeAttrib(client, id, const String:name[], L4D2FloatMeleeWeaponAttributes:attr)
+{
+	ReplyToCommand(client, "%s = %f", name, L4D2_GetFloatMeleeAttribute(id, attr));
+}
+
+PrintL4D2BoolMeleeAttrib(client, id, const String:name[], L4D2BoolMeleeWeaponAttributes:attr)
+{
+	ReplyToCommand(client, "%s = %b", name, L4D2_GetBoolMeleeAttribute(id, attr));
+}
+
+public Action:Command_ReadMeleeAttributes(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	new id = L4D2_GetMeleeWeaponIndex(weapon);
+	if (id == -1)
+	{
+		ReplyToCommand(client, "%s not found in melee database", weapon);
+		return Plugin_Handled;
+	}
+	
+	ReplyToCommand(client, "Attributes for %s:", weapon);
+	
+	PrintL4D2FloatMeleeAttrib(client, id, "Damage", L4D2FMWA_Damage);
+	PrintL4D2FloatMeleeAttrib(client, id, "RefireDelay", L4D2FMWA_RefireDelay);
+	PrintL4D2FloatMeleeAttrib(client, id, "WeaponIdleTime", L4D2FMWA_WeaponIdleTime);
+	PrintL4D2IntMeleeAttrib(client, id, "DamageFlags", L4D2IMWA_DamageFlags);
+	PrintL4D2IntMeleeAttrib(client, id, "RumbleEffect", L4D2IMWA_RumbleEffect);
+	PrintL4D2BoolMeleeAttrib(client, id, "Decapitates", L4D2BMWA_Decapitates);
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetIntMeleeAttr(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80], String:argbuf[32];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	new id = L4D2_GetMeleeWeaponIndex(weapon);
+	if (id == -1)
+	{
+		ReplyToCommand(client, "%s not found in melee database", weapon);
+		return Plugin_Handled;
+	}
+	GetCmdArg(2, argbuf, sizeof(argbuf));
+	new L4D2IntMeleeWeaponAttributes:attr = L4D2IntMeleeWeaponAttributes:StringToInt(argbuf);
+	GetCmdArg(3, argbuf, sizeof(argbuf));
+	new value = StringToInt(argbuf);
+	ReplyToCommand(client, "%s: Attribute %d was %d", weapon, attr, L4D2_GetIntMeleeAttribute(id, attr));
+	L4D2_SetIntMeleeAttribute(id, attr, value)
+	ReplyToCommand(client, "%s: Attribute %d is now %d", weapon, attr, L4D2_GetIntMeleeAttribute(id, attr));
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetFloatMeleeAttr(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80], String:argbuf[32];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	new id = L4D2_GetMeleeWeaponIndex(weapon);
+	if (id == -1)
+	{
+		ReplyToCommand(client, "%s not found in melee database", weapon);
+		return Plugin_Handled;
+	}
+	GetCmdArg(2, argbuf, sizeof(argbuf));
+	new L4D2FloatMeleeWeaponAttributes:attr = L4D2FloatMeleeWeaponAttributes:StringToInt(argbuf);
+	GetCmdArg(3, argbuf, sizeof(argbuf));
+	new Float:value = StringToFloat(argbuf);
+	ReplyToCommand(client, "%s: Attribute %d was %f", weapon, attr, L4D2_GetFloatMeleeAttribute(id, attr));
+	L4D2_SetFloatMeleeAttribute(id, attr, value);
+	ReplyToCommand(client, "%s: Attribute %d is now %f", weapon, attr, L4D2_GetFloatMeleeAttribute(id, attr));
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetBoolMeleeAttr(client, args)
+{
+#if USE_NATIVES
+	decl String:weapon[80], String:argbuf[32];
+	GetCmdArg(1, weapon, sizeof(weapon));
+	new id = L4D2_GetMeleeWeaponIndex(weapon);
+	if (id == -1)
+	{
+		ReplyToCommand(client, "%s not found in melee database", weapon);
+		return Plugin_Handled;
+	}
+	GetCmdArg(2, argbuf, sizeof(argbuf));
+	new L4D2BoolMeleeWeaponAttributes:attr = L4D2BoolMeleeWeaponAttributes:StringToInt(argbuf);
+	GetCmdArg(3, argbuf, sizeof(argbuf));
+	new value = StringToInt(argbuf);
+	ReplyToCommand(client, "%s: Attribute %d was %d", weapon, attr, L4D2_GetBoolMeleeAttribute(id, attr));
+	L4D2_SetBoolMeleeAttribute(id, attr, bool:value);
+	ReplyToCommand(client, "%s: Attribute %d is now %d", weapon, attr, L4D2_GetBoolMeleeAttribute(id, attr));
+#endif
+	return Plugin_Handled;
+}
+
+
 
 SearchForFunction(const String:functionName[])
 {
