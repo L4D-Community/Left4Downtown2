@@ -94,6 +94,7 @@ void InitializeValveGlobals()
 		return;
 	}
 	g_pMeleeWeaponInfoStore = *reinterpret_cast<CMeleeWeaponInfoStore **>(addr + offset);
+	
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %p ", g_pMeleeWeaponInfoStore);
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %s ", g_pMeleeWeaponInfoStore->Name());
 }
@@ -139,6 +140,6 @@ void InitializeValveGlobals()
 	    L4D_DEBUG_LOG("CMeleeWeaponInfoStore signature not found (%p)", addr);
 		return;
 	}
-	*g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore **>(addr);
+	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore *>(addr);
 }
 #endif
