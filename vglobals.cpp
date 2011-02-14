@@ -139,6 +139,6 @@ void InitializeValveGlobals()
 	    L4D_DEBUG_LOG("CMeleeWeaponInfoStore signature not found (%p)", addr);
 		return;
 	}
-	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore **>(addr);
+	*g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore **>(addr);
 }
 #endif

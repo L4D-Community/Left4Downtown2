@@ -41,6 +41,18 @@ enum L4D2IntWeaponAttributes
 	L4D2IWA_ClipSize
 };
 
+/*
+A note regarding Clipsize: Any nonstandard value will NOT be in effect at weapon pickup, which means the client
+has to reload once to achieve the modified value. To fix this, add a weapon pickup hook in your plugin (eg "player_use")
+and use something like this with a small timer delay of 0.1 seconds or more (dont you love this engine)
+	
+	new weapon = GetPlayerWeaponSlot(client, 0);
+	if (weapon == INVALID_ENT_REFERENCE) return; 
+	decl String:class[56];
+	GetEdictClassname(weapon, class, sizeof(class));
+	SetEntProp(weapon, Prop_Send, "m_iClip1", L4D2_GetIntWeaponAttribute(class, L4D2IWA_ClipSize));
+*/
+
 enum L4D2FloatWeaponAttributes
 {
 	L4D2FWA_MaxPlayerSpeed,
