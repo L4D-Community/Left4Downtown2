@@ -90,6 +90,16 @@ enum L4D2FloatMeleeWeaponAttributes
 	L4D2FMWA_WeaponIdleTime
 };
 
+
+/**
+ * @brief Checks for a given weapon string to exist in the WeaponInformationDatabase
+ * @remarks Throws an error if Database is unavailable
+ * 
+ * @param weaponName 	Weapon to check up on
+ * @return 				True if weapon is found, false if not
+ */
+native bool:L4D2_IsValidWeapon(const String:weaponName[]);
+
 /**
  * @brief Read an int-typed attribute for a given weapon from the WeaponInformationDatabase
  * @remarks Throws an error if the weapon is not found or the attribute is incorrect

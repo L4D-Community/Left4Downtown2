@@ -118,6 +118,21 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 /*************************************
 	WeaponInfo Natives 
 	***********************************/
+// native bool:L4D2_IsValidWeapon(const String:weaponName[]);
+cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pWeaponInfoDatabase == NULL)
+	{
+		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
+	}
+	
+	char * weapon = NULL;
+	pContext->LocalToString(params[1], &weapon);
+
+	return g_pWeaponInfoDatabase->IsValidIndex(g_pWeaponInfoDatabase->Find(weapon));
+}
+
+
 // native L4D2_GetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr);
 cell_t L4D2_GetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params)
 {
@@ -223,6 +238,7 @@ cell_t L4D2_SetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *para
 
 sp_nativeinfo_t  g_L4DoWeaponNatives[] = 
 {
+	{"L4D2_IsValidWeapon",			L4D2_IsValidWeapon},
 	{"L4D2_GetIntWeaponAttribute",	L4D2_GetIntWeaponAttribute},
 	{"L4D2_GetFloatWeaponAttribute",	L4D2_GetFloatWeaponAttribute},
 	{"L4D2_SetIntWeaponAttribute",	L4D2_SetIntWeaponAttribute},
