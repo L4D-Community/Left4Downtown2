@@ -197,6 +197,10 @@ public OnPluginStart()
 	RegConsoleCmd("sm_setfmeleeattr", Command_SetFloatMeleeAttr);
 	RegConsoleCmd("sm_setbmeleeattr", Command_SetBoolMeleeAttr);
 	
+	RegConsoleCmd("sm_scores", Command_GetScores);
+	RegConsoleCmd("sm_tankcnt", Command_GetTankCount);
+	RegConsoleCmd("sm_flows", Command_GetTankFlows);
+	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -743,6 +747,33 @@ public Action:Command_SetBoolMeleeAttr(client, args)
 	return Plugin_Handled;
 }
 
+public Action:Command_GetScores(client, args)
+{
+#if USE_NATIVES
+	new scores[2];
+	L4D2_GetVersusCampaignScores(scores);
+	ReplyToCommand(client, "Score 0: %d Score 1: %d", scores[0], scores[1]);
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_GetTankFlows(client, args)
+{
+#if USE_NATIVES
+	new Float:flows[2];
+	L4D2_GetVersusTankFlowPercent(flows);
+	ReplyToCommand(client, "Flow 0: %f Flow 1: %f", flows[0], flows[1]);
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_GetTankCount(client, args)
+{
+#if USE_NATIVES
+	ReplyToCommand(client, "Tanks: %d", L4D2_GetTankCount());
+#endif
+	return Plugin_Handled;
+}
 
 
 SearchForFunction(const String:functionName[])

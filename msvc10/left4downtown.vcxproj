@@ -138,6 +138,7 @@
     <ClCompile Include="..\detours\try_offering_tank_bot.cpp" />
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
     <ClCompile Include="..\weaponnatives.cpp" />
+    <ClCompile Include="..\directornatives.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\detours\start_melee_swing.h" />

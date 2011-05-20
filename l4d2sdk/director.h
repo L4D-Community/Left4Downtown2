@@ -55,10 +55,21 @@ typedef struct _CDirectorScriptedEventManager {
 
 // 92 bytes
 typedef struct _CDirectorVersusMode {
-	char unknown[28];
+	void *vtableptr; // 0x00
+	bool m_bVersusRoundInProgress; // 0x04
+	bool m_bFirstMap; // 0x05 idk
+	bool m_bTransitioning; // 0x06 still making shit up
+	char padding; // 0x07 mite b bool
+	int m_iCampaignScores[2]; // 0x08
+	char unknown[12]; // 0x10
 	CountdownTimer VersusStartTimer; // 0x1c Timer controlling saferoom door open, allowing PZ spawning.
 	float m_fTankSpawnFlowPercent[2]; // 0x28 Tank spawn flow percent for rounds 1 and 2
-	char unknown2[32]; // 0x30
+	char unknown2[12]; // 0x30
+	float m_fFinaleTravelCompletionValue; // 0x3c 5660 in CFinaleTrigger
+	int m_iFinaleTriggerVar2; // 0x40 5656 in CFinaleTrigger
+	bool m_bInFinaleMap; // 0x44
+	int m_iNumMarkersReached; // 0x48
+	int m_iMarkersCount; // 0x4c
 	CountdownTimer UpdateMarkersTimer; // 0x50 Timer controlling when to check if survivors have passed markers. Normally set to 1s duration
 } CDirectorVersusMode;
 
