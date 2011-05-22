@@ -80,7 +80,18 @@ typedef struct _CDirectorSurvivalMode {
 
 // 104 bytes
 typedef struct _CDirectorScavengeMode {
-	char unknown[104];
+	bool m_bUnknown; 
+	char padding[3]; 
+	float m_fUnknown; // 0x04
+	bool m_bScavengeRoundInProgress; // 0x08
+	bool m_bUnk2; // 0x09
+	bool m_bAreTeamsSwapped; // 0x0a
+	bool m_bInOvertime; // 0x0b
+	bool m_bInOvertime2; // 0x0c
+	char padding[3];
+	CountdownTimer RoundSetupTimer; // 0x10 (see: scavenge_round_setup_time)
+	CountdownTimer OvertimeGraceTimer; // 0x1c (see: scavenge_overtime_grace_time)
+	char unknown[64];
 } CDirectorScavengeMode;
 
 // 8 bytes
