@@ -88,7 +88,7 @@ typedef struct _CDirectorScavengeMode {
 	bool m_bAreTeamsSwapped; // 0x0a
 	bool m_bInOvertime; // 0x0b
 	bool m_bInOvertime2; // 0x0c
-	char padding[3];
+	char padding2[3];
 	CountdownTimer RoundSetupTimer; // 0x10 (see: scavenge_round_setup_time)
 	CountdownTimer OvertimeGraceTimer; // 0x1c (see: scavenge_overtime_grace_time)
 	char unknown[64];
