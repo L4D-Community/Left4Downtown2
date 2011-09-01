@@ -476,6 +476,12 @@ public Action:L4D_OnStartMeleeSwing(client, bool:boolean)
 	return Plugin_Continue;
 }
 
+public Action:L4D2_OnSendInRescueVehicle()
+{
+	DebugPrintToAll("L4D2_OnSendInRescueVehicle() fired");
+	return Plugin_Continue;
+}
+
 public OnMapStart()
 {
 	//CreateTimer(0.1, Timer_GetCampaignScores, _);

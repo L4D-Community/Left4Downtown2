@@ -158,6 +158,7 @@ extern IForward *g_pFwdOnFastGetSurvivorSet;
 extern IForward *g_pFwdOnGetMissionVersusBossSpawning;
 extern IForward *g_pFwdOnCThrowActivate;
 extern IForward *g_pFwdOnStartMeleeSwing;
+extern IForward *g_pFwdOnSendInRescueVehicle;
 
 extern IBinTools *g_pBinTools;
 extern IServer *g_pServer; //pointer to CBaseServer

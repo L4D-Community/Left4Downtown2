@@ -138,6 +138,9 @@
     <ClCompile Include="..\directornatives.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\send_in_rescue_vehicle.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\send_in_rescue_vehicle.h">
+      <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

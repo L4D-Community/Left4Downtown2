@@ -66,6 +66,7 @@
 #include "detours/get_mission_versus_boss_spawning.h"
 #include "detours/cthrow_activate_ability.h"
 #include "detours/start_melee_swing.h"
+#include "detours/send_in_rescue_vehicle.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -98,6 +99,7 @@ IForward *g_pFwdOnFastGetSurvivorSet = NULL;
 IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
 IForward *g_pFwdOnCThrowActivate = NULL;
 IForward *g_pFwdOnStartMeleeSwing = NULL;
+IForward *g_pFwdOnSendInRescueVehicle = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -171,6 +173,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
 	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnSendInRescueVehicle = forwards->CreateForward("L4D2_OnSendInRescueVehicle", ET_Event, 0, /*types*/NULL);
 	
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -258,6 +261,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetMissionVersusBossSpawning>());
 	g_PatchManager.Register(new AutoPatch<Detours::CThrowActivate>());
 	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
+	g_PatchManager.Register(new AutoPatch<Detours::SendInRescueVehicle>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -299,6 +303,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
 	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
 	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
+	forwards->ReleaseForward(g_pFwdOnSendInRescueVehicle);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

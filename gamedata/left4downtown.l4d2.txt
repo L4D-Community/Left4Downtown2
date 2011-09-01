@@ -571,8 +571,22 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
-				"windows"	"\x83\xEC\x2A\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1\x6A"
-				/* 83 EC ? 56 68 ? ? ? ? 8B F1 6A */
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\xF1\x6A\x2A\xB9\xE8\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x68"
+				/* ? ? ? ? ? ? ? ? ? 8B F1 6A ? B9 E8 ? ? ? E8 ? ? ? ? 85 C0 75 ? 68 */
+			}
+			
+			/*
+			 *	CDirectorScriptedEventManager__ChangeFinaleStage(int, char arg, int)
+			 * or CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
+			 *
+			 *  find by String "CHANGEFINALESTAGEOVERRIDE: %s\n"
+			 */
+			"ChangeFinaleStage"
+			{
+				"library"	"server"
+				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_15FinaleStageTypeEPKc"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x8B\x9C\x2A\x2A\x2A\x2A\x2A\x57\x53\x68"
+				/* ? ? ? ? ? ? 53 8B 9C ? ? ? ? ? 57 53 68 */
 			}
 
 /*********************************************************************

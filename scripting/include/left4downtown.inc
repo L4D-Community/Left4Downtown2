@@ -257,6 +257,15 @@ forward Action:L4D_OnInfectedShoved(infected, entity);
 forward Action:L4D_OnStartMeleeSwing(client, bool:boolean);
 
 /**
+ * @brief Called whenever CDirectorScriptedEventManager::SendInRescueVehicle(void) is invoked
+ * @remarks Called when the last Finale stage is reached and the Rescue Means becomes 'available'.
+ *			Take note this forward WILL fire upon using the native of the same function.
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D2_OnSendInRescueVehicle();
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
