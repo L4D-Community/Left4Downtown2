@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\detours\change_finale_stage.cpp" />
     <ClCompile Include="..\detours\send_in_rescue_vehicle.cpp" />
     <ClCompile Include="..\detours\start_melee_swing.cpp" />
     <ClCompile Include="..\l4d2sdk\l4d2calls.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="..\directornatives.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\detours\change_finale_stage.h" />
     <ClInclude Include="..\detours\send_in_rescue_vehicle.h" />
     <ClInclude Include="..\detours\start_melee_swing.h" />
     <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h" />

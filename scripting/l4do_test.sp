@@ -165,6 +165,7 @@ public OnPluginStart()
 	SearchForFunction("StartMeleeSwing");
 	SearchForFunction("ReadWeaponDataFromFileForSlot");
 	SearchForFunction("SendInRescueVehicle");
+	SearchForFunction("ChangeFinaleStage");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -203,6 +204,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_flows", Command_GetTankFlows);
 	
 	RegConsoleCmd("sm_sendrescue", Command_SendInRescueVehicle);
+	RegConsoleCmd("sm_finalestage", Command_SetFinaleStage);
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -479,6 +481,12 @@ public Action:L4D_OnStartMeleeSwing(client, bool:boolean)
 public Action:L4D2_OnSendInRescueVehicle()
 {
 	DebugPrintToAll("L4D2_OnSendInRescueVehicle() fired");
+	return Plugin_Continue;
+}
+
+public Action:L4D2_OnChangeFinaleStage(finaleType, const String:arg[])
+{
+	DebugPrintToAll("L4D2_OnChangeFinaleStage(%d, %s) fired", finaleType, arg);
 	return Plugin_Continue;
 }
 
@@ -786,8 +794,21 @@ public Action:Command_GetTankCount(client, args)
 public Action:Command_SendInRescueVehicle(client, args)
 {
 #if USE_NATIVES
-	L4D2_SendInRescueVehicle();
 	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::SendInRescueVehicle(void)");
+	L4D2_SendInRescueVehicle();
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SetFinaleStage(client, args)
+{
+#if USE_NATIVES
+	decl String:buffer[64];
+	GetCmdArg(1, buffer, sizeof(buffer));
+	new finaleType = StringToInt(buffer);
+	GetCmdArg(2, buffer, sizeof(buffer));
+	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::ChangeFinaleStage(%i, %s)", finaleType, buffer);
+	L4D2_ChangeFinaleStage(finaleType, buffer);
 #endif
 	return Plugin_Handled;
 }

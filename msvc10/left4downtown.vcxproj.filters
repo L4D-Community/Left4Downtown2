@@ -141,6 +141,9 @@
     <ClCompile Include="..\detours\send_in_rescue_vehicle.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\change_finale_stage.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\send_in_rescue_vehicle.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\change_finale_stage.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

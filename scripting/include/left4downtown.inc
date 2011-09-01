@@ -266,6 +266,14 @@ forward Action:L4D_OnStartMeleeSwing(client, bool:boolean);
 forward Action:L4D2_OnSendInRescueVehicle();
 
 /**
+ * @brief Called whenever CDirectorScriptedEventManager::ChangeFinaleStage is invoked
+ * @remarks
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D2_OnChangeFinaleStage(finaleType, const String:arg[]);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
@@ -413,9 +421,20 @@ native Float:L4D_GetPlayerSpawnTime(player);
 /**
  * @brief Calls CDirectorScriptedEventManager::SendInRescueVehicle(void)
  *
+ * @remarks will fire the forward of the same function
+ * 
  * @noreturn
  */
 native L4D2_SendInRescueVehicle();
+
+/**
+ * @brief Calls CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
+ *
+ * @remarks will fire the forward of the same function
+ * 
+ * @noreturn
+ */
+native L4D2_ChangeFinaleStage(finaleType, const String:arg[]);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS

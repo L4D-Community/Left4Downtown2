@@ -629,6 +629,62 @@ cell_t L4D2_SendInRescueVehicle(IPluginContext *pContext, const cell_t *params)
 	return 0;
 }
 
+// CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
+// L4D2_ChangeFinaleStage(finaleType, String:input)
+cell_t L4D2_ChangeFinaleStage(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("ChangeFinaleStage", 
+			PassInfo pass[3]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(int); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(char *); \
+			pass[1].type = PassType_Basic; \
+			pass[2].flags = PASSFLAG_BYVAL; \
+			pass[2].size = sizeof(int); \
+			pass[2].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/pass, /*numparams*/3));
+	}
+	
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+
+	void *scriptedeventmanager = (*g_pDirector)->ScriptedEventManagerPtr;
+
+	if (scriptedeventmanager == NULL)
+	{
+		return pContext->ThrowNativeError("DirectorScriptedEventManager pointer is NULL");
+	}
+	
+	/* Build the vcall argument stack */
+	unsigned char vstk[sizeof(void *) + sizeof(int) + sizeof(char *)];
+	unsigned char *vptr = vstk;
+
+	*(void **)vptr = scriptedeventmanager;
+	vptr += sizeof(CDirectorScriptedEventManager *);
+	
+	*(int *)vptr = params[1];
+	vptr += sizeof(int *);
+
+	char *arg = NULL;
+	pContext->LocalToString(params[2], &arg);
+	*(char **)vptr = arg;
+	vptr += sizeof(char **);
+	
+	*(int *)vptr = params[3];
+
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	
+	return 0;
+}
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -647,5 +703,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
 	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
 	{"L4D2_SendInRescueVehicle",  		L4D2_SendInRescueVehicle},
+	{"L4D2_ChangeFinaleStage",  		L4D2_ChangeFinaleStage},
 	{NULL,							NULL}
 };
