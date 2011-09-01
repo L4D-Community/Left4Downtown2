@@ -164,6 +164,7 @@ public OnPluginStart()
 	SearchForFunction("CThrowActivate");
 	SearchForFunction("StartMeleeSwing");
 	SearchForFunction("ReadWeaponDataFromFileForSlot");
+	SearchForFunction("SendInRescueVehicle");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -200,6 +201,8 @@ public OnPluginStart()
 	RegConsoleCmd("sm_scores", Command_GetScores);
 	RegConsoleCmd("sm_tankcnt", Command_GetTankCount);
 	RegConsoleCmd("sm_flows", Command_GetTankFlows);
+	
+	RegConsoleCmd("sm_sendrescue", Command_SendInRescueVehicle);
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -641,7 +644,6 @@ public Action:Command_SetFloatWeaponAttr(client, args)
 }
 
 
-
 PrintL4D2IntMeleeAttrib(client, id, const String:name[], L4D2IntMeleeWeaponAttributes:attr)
 {
 	ReplyToCommand(client, "%s = %i", name, L4D2_GetIntMeleeAttribute(id, attr));
@@ -771,6 +773,15 @@ public Action:Command_GetTankCount(client, args)
 {
 #if USE_NATIVES
 	ReplyToCommand(client, "Tanks: %d", L4D2_GetTankCount());
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_SendInRescueVehicle(client, args)
+{
+#if USE_NATIVES
+	L4D2_SendInRescueVehicle();
+	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::SendInRescueVehicle(void)");
 #endif
 	return Plugin_Handled;
 }

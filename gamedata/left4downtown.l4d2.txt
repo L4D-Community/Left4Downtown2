@@ -561,6 +561,19 @@
 				"windows"	"\x53\x55\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B\xE8\x33\xDB\x3B\xEB\x0F"
 				/* 53 55 56 8B F1 8B 86 ? ? ? ? 50 B9 ? ? ? ? E8 ? ? ? ? 8B E8 33 DB 3B EB 0F */
 			}
+			
+			/*
+			 *	CDirectorScriptedEventManager::SendInRescueVehicle(void)
+			 *
+			 *  find by String "FinaleEscapeStarted"
+			 */
+			"SendInRescueVehicle"
+			{
+				"library"	"server"
+				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
+				"windows"	"\x83\xEC\x2A\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1\x6A"
+				/* 83 EC ? 56 68 ? ? ? ? 8B F1 6A */
+			}
 
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************

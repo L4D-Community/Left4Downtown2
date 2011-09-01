@@ -401,6 +401,13 @@ native Float:L4D_GetMobSpawnTimerDuration();
  */
 native Float:L4D_GetPlayerSpawnTime(player);
 
+/**
+ * @brief Calls CDirectorScriptedEventManager::SendInRescueVehicle(void)
+ *
+ * @noreturn
+ */
+native L4D2_SendInRescueVehicle();
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

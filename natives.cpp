@@ -595,6 +595,39 @@ cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 	return sp_ftoc(*(float *)((char*)pPlayer+offset) - gpGlobals->curtime);
 }
 
+// CDirectorScriptedEventManager::SendInRescueVehicle(void)
+// L4D2_SendInRescueVehicle()
+cell_t L4D2_SendInRescueVehicle(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("SendInRescueVehicle", 
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
+	}
+	
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+
+	void *scriptedeventmanager = (*g_pDirector)->ScriptedEventManagerPtr;
+
+	if (scriptedeventmanager == NULL)
+	{
+		return pContext->ThrowNativeError("DirectorScriptedEventManager pointer is NULL");
+	}
+	
+	/* Build the vcall argument stack */
+	unsigned char vstk[sizeof(void *)];
+	unsigned char *vptr = vstk;
+
+	*(void **)vptr = scriptedeventmanager;
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	
+	return 0;
+}
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
@@ -613,5 +646,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetMobSpawnTimerRemaining",	L4D_GetMobSpawnTimerRemaining},
 	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
 	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
+	{"L4D2_SendInRescueVehicle",  		L4D2_SendInRescueVehicle},
 	{NULL,							NULL}
 };
