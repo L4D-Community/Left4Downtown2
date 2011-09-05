@@ -638,17 +638,14 @@ cell_t L4D2_ChangeFinaleStage(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper)
 	{
 		REGISTER_NATIVE_ADDR("ChangeFinaleStage", 
-			PassInfo pass[3]; \
+			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(int); \
 			pass[0].type = PassType_Basic; \
 			pass[1].flags = PASSFLAG_BYVAL; \
 			pass[1].size = sizeof(char *); \
 			pass[1].type = PassType_Basic; \
-			pass[2].flags = PASSFLAG_BYVAL; \
-			pass[2].size = sizeof(int); \
-			pass[2].type = PassType_Basic; \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/pass, /*numparams*/3));
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/pass, /*numparams*/2));
 	}
 	
 	if (g_pDirector == NULL)
@@ -676,9 +673,6 @@ cell_t L4D2_ChangeFinaleStage(IPluginContext *pContext, const cell_t *params)
 	char *arg = NULL;
 	pContext->LocalToString(params[2], &arg);
 	*(char **)vptr = arg;
-	vptr += sizeof(char **);
-	
-	*(int *)vptr = params[3];
 
 	pWrapper->Execute(vstk, /*retbuffer*/NULL);
 	

@@ -478,16 +478,34 @@ public Action:L4D_OnStartMeleeSwing(client, bool:boolean)
 	return Plugin_Continue;
 }
 
+static bool:passOnSendInRescueVehicle = true;
+
 public Action:L4D2_OnSendInRescueVehicle()
 {
 	DebugPrintToAll("L4D2_OnSendInRescueVehicle() fired");
-	return Plugin_Continue;
+	
+	if (passOnSendInRescueVehicle)
+	{
+		//passOnSendInRescueVehicle = false;
+		return Plugin_Continue;
+	}
+	
+	return Plugin_Handled;
 }
 
-public Action:L4D2_OnChangeFinaleStage(finaleType, const String:arg[])
+static bool:passOnChangeFinaleStage = true;
+
+public Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[])
 {
-	DebugPrintToAll("L4D2_OnChangeFinaleStage(%d, %s) fired", finaleType, arg);
-	return Plugin_Continue;
+	DebugPrintToAll("L4D2_OnChangeFinaleStage(%d, [%s]) fired", finaleType, arg);
+	
+	if (passOnChangeFinaleStage)
+	{
+		//passOnChangeFinaleStage = false;
+		return Plugin_Continue;
+	}
+	
+	return Plugin_Handled;
 }
 
 public OnMapStart()
@@ -795,6 +813,7 @@ public Action:Command_SendInRescueVehicle(client, args)
 {
 #if USE_NATIVES
 	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::SendInRescueVehicle(void)");
+	passOnSendInRescueVehicle = true;
 	L4D2_SendInRescueVehicle();
 #endif
 	return Plugin_Handled;
@@ -806,8 +825,13 @@ public Action:Command_SetFinaleStage(client, args)
 	decl String:buffer[64];
 	GetCmdArg(1, buffer, sizeof(buffer));
 	new finaleType = StringToInt(buffer);
-	GetCmdArg(2, buffer, sizeof(buffer));
+	strcopy(buffer, sizeof(buffer), "");
+	if (GetCmdArgs() > 1)
+	{
+		GetCmdArg(2, buffer, sizeof(buffer));
+	}
 	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::ChangeFinaleStage(%i, %s)", finaleType, buffer);
+	passOnChangeFinaleStage = true;
 	L4D2_ChangeFinaleStage(finaleType, buffer);
 #endif
 	return Plugin_Handled;

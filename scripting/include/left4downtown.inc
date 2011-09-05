@@ -267,11 +267,14 @@ forward Action:L4D2_OnSendInRescueVehicle();
 
 /**
  * @brief Called whenever CDirectorScriptedEventManager::ChangeFinaleStage is invoked
- * @remarks
+ *
+ * @param FinaleStageType	integer value
+ * @remarks some values for FinaleStageType: 1 - Finale Started; 6 - Rescue Vehicle Ready; 7 - Zombie Hordes; 8 - Tank; 10 - Combat Respite (nothing spawns)
+ * @remarks SendInRescueVehicle does not depend on Finale Stage being 6, that only signals endless Hordes/Tanks
  * 
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
-forward Action:L4D2_OnChangeFinaleStage(finaleType, const String:arg[]);
+forward Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[]);
 
 /**
  * @brief Get the current campaign scores stored in the Director
@@ -430,8 +433,11 @@ native L4D2_SendInRescueVehicle();
 /**
  * @brief Calls CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
  *
+ * @param FinaleStageType	integer value
+ * @remarks some values for FinaleStageType: 1 - Finale Started; 6 - Rescue Vehicle Ready; 7 - Zombie Hordes; 8 - Tank; 10 - Combat Respite (nothing spawns)
+ * @remarks
  * @remarks will fire the forward of the same function
- * 
+ *
  * @noreturn
  */
 native L4D2_ChangeFinaleStage(finaleType, const String:arg[]);

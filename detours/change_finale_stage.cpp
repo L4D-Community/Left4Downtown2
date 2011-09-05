@@ -34,17 +34,24 @@
 
 namespace Detours
 {
-	void ChangeFinaleStage::OnChangeFinaleStage(int finaleType, const char *key, int intB)
+	void ChangeFinaleStage::OnChangeFinaleStage(int finaleType, const char *key)
 	{
 		cell_t result = Pl_Continue;
 
 		if(g_pFwdOnChangeFinaleStage)
 		{
-			L4D_DEBUG_LOG("L4D2_OnChangeFinaleStage(%d, %s, %d) forward has been sent out", finaleType, key, intB);
+			L4D_DEBUG_LOG("L4D2_OnChangeFinaleStage(%d, [%s]) forward has been sent out", finaleType, key);
 			g_pFwdOnChangeFinaleStage->PushCellByRef(&finaleType);
-			g_pFwdOnChangeFinaleStage->PushString(key);
+
+			if (key != NULL)
+			{
+				g_pFwdOnChangeFinaleStage->PushString(key);
+			}
+			else
+			{
+				g_pFwdOnChangeFinaleStage->PushString("");
+			}
 			g_pFwdOnChangeFinaleStage->Execute(&result);
-			L4D_DEBUG_LOG("L4D2_OnChangeFinaleStage(%d, %s, %d) forward result = %d (0 means no error)", finaleType, key, intB, exec);
 		}
 
 		if(result == Pl_Handled)
@@ -54,7 +61,7 @@ namespace Detours
 		}
 		else
 		{
-			(this->*(GetTrampoline()))(finaleType, key, intB);
+			(this->*(GetTrampoline()))(finaleType, key);
 			return;
 		}
 	}
