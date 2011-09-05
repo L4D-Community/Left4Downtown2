@@ -20,7 +20,8 @@ OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2c
 			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp detours/has_configurable_difficulty.cpp \
 			detours/get_survivor_set.cpp detours/fast_get_survivor_set.cpp codepatch/patchmanager.cpp \
 			detours/get_mission_versus_boss_spawning.cpp detours/cthrow_activate_ability.cpp l4d2sdk/l4d2timers.cpp \
-			timernatives.cpp detours/start_melee_swing.cpp weaponnatives.cpp directornatives.cpp meleeweaponnatives.cpp
+			timernatives.cpp detours/start_melee_swing.cpp weaponnatives.cpp directornatives.cpp meleeweaponnatives.cpp \
+			send_in_rescue_vehicle.cpp detours/change_finale_stage.cpp
 			
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
