@@ -100,6 +100,29 @@ forward Action:L4D_OnFirstSurvivorLeftSafeArea(client);
 forward Action:L4D_OnGetScriptValueInt(const String:key[], &retVal);
 
 /**
+ * @brief Called whenever CDirector::GetScriptValue(const char*, float) is invoked
+ * @remarks A script value is map specific
+ * 
+ * @param key     the script's key name
+ * @param retVal  what to override the return value with
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetScriptValueFloat(const String:key[], &Float:retVal);
+
+/**
+ * @brief Called whenever CDirector::GetScriptValue(const char*, const char*, char*, int) is invoked
+ * @remarks A script value is map specific
+ * 
+ * @param key     	  the script's key name
+ * @param defaultVal  default key return, usually empty
+ * @param retVal	  returned String
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnGetScriptValueString(const String:key[], const String:defaultVal[], String:retVal[128]);
+
+/**
  * @brief Called whenever CTerrorPlayer::OnEnterGhostState(CTerrorPlayer*) is invoked
  * @remarks This happens when a player enters ghost mode (or in finales auto-materialized)
  * 

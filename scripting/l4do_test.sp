@@ -140,6 +140,8 @@ public OnPluginStart()
 	SearchForFunction("SpawnWitch");
 	SearchForFunction("OnFirstSurvivorLeftSafeArea");
 	SearchForFunction("CDirector_GetScriptValueInt");
+	SearchForFunction("CDirector_GetScriptValueFloat");
+	SearchForFunction("CDirector_GetScriptValueString");
 	SearchForFunction("CDirector_IsFinaleEscapeInProgress");
 	SearchForFunction("CTerrorPlayer_CanBecomeGhost");
 	
@@ -353,6 +355,18 @@ public Action:L4D_OnGetScriptValueInt(const String:key[], &retVal)
 		return Plugin_Handled;
 	}
 	
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnGetScriptValueFloat(const String:key[], &Float:retVal)
+{
+	//DebugPrintToAll("OnGetScriptValueFloat(key=\"%s\",retVal=%f)", key, retVal); 
+	return Plugin_Continue;
+}
+
+public Action:L4D_OnGetScriptValueString(const String:key[], const String:defaultVal[], String:retVal[128])
+{
+	DebugPrintToAll("L4D_OnGetScriptValueString(key=\"%s\", retVal=\"%s\")", key, retVal); 
 	return Plugin_Continue;
 }
 
