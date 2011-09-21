@@ -1,10 +1,10 @@
 # (C)2004-2008 SourceMod Development Team
 # Makefile written by David "BAILOPAN" Anderson
 
-SMSDK = ../..
-SRCDS_BASE = ~/srcds
-HL2SDK_L4D2 = ../../../hl2sdk-l4d2
-MMSOURCE17 = ../../../mmsource-central
+SMSDK ?= ../..
+SRCDS_BASE ?= ~/srcds
+HL2SDK_L4D2 ?= ../../../hl2sdk-l4d2
+MMSOURCE ?= ../../../mmsource-central
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -12,9 +12,9 @@ MMSOURCE17 = ../../../mmsource-central
 
 PROJECT = left4downtown
 
-OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2calls.cpp util.cpp asm/asm.c player_slots.cpp \
+OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2calls.cpp util.cpp asm/asm.c \
 			detours/detour.cpp detours/spawn_tank.cpp detours/spawn_witch.cpp detours/clear_team_scores.cpp \
-			detours/set_campaign_scores.cpp detours/server_player_counts.cpp detours/first_survivor_left_safe_area.cpp \
+			detours/set_campaign_scores.cpp detours/first_survivor_left_safe_area.cpp \
 			detours/mob_rush_start.cpp detours/spawn_it_mob.cpp detours/spawn_mob.cpp detours/try_offering_tank_bot.cpp \
 			detours/get_script_value_int.cpp detours/shoved_by_survivor.cpp detours/get_crouch_top_speed.cpp \
 			detours/get_run_top_speed.cpp detours/get_walk_top_speed.cpp detours/has_configurable_difficulty.cpp \
@@ -22,7 +22,11 @@ OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2c
 			detours/get_mission_versus_boss_spawning.cpp detours/cthrow_activate_ability.cpp l4d2sdk/l4d2timers.cpp \
 			timernatives.cpp detours/start_melee_swing.cpp weaponnatives.cpp directornatives.cpp meleeweaponnatives.cpp \
 			detours/send_in_rescue_vehicle.cpp detours/change_finale_stage.cpp
-			
+
+ifeq "$(USE_PLAYERSLOTS)" "true"
+	OBJECTS += player_slots.cpp detours/server_player_counts.cpp
+endif
+
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###
 ##############################################
@@ -36,7 +40,7 @@ CPP = gcc
 HL2PUB = $(HL2SDK_L4D2)/public
 HL2LIB = $(HL2SDK_L4D2)/lib/linux
 CFLAGS += -DSOURCE_ENGINE=6
-METAMOD = $(MMSOURCE17)/core
+METAMOD = $(MMSOURCE)/core
 INCLUDE += -I$(HL2SDK_L4D2)/public/game/server -I$(HL2SDK_L4D2)/common -I$(HL2SDK_L4D2)/game/shared
 SRCDS = $(SRCDS_BASE)/left4dead2
 GAMEFIX = 2.l4d2
@@ -69,7 +73,12 @@ else
 	CFLAGS += $(C_OPT_FLAGS)
 endif
 
-BIN_DIR := $(BIN_DIR).$(ENGINE)
+PLAYERSLOTS_BIN_DIR := $(BIN_DIR).playerslots
+
+ifeq "$(USE_PLAYERSLOTS)" "true"
+	CFLAGS += -DUSE_PLAYERSLOTS_PATCHES
+	BIN_DIR := $(PLAYERSLOTS_BIN_DIR)
+endif
 
 OS := $(shell uname -s)
 ifeq "$(OS)" "Darwin"
@@ -100,15 +109,25 @@ all:
 	cp $(SRCDS)/bin/libtier0.so libtier0.so;
 	$(MAKE) -f Makefile extension
 
+playerslots:
+	mkdir -p $(PLAYERSLOTS_BIN_DIR)/sdk
+	mkdir -p $(PLAYERSLOTS_BIN_DIR)/detours
+	mkdir -p $(PLAYERSLOTS_BIN_DIR)/codepatch
+	mkdir -p $(PLAYERSLOTS_BIN_DIR)/l4d2sdk
+	cp $(SRCDS)/bin/libvstdlib.so libvstdlib.so;
+	cp $(SRCDS)/bin/libtier0.so libtier0.so;
+	$(MAKE) -f Makefile extension USE_PLAYERSLOTS=true DEBUG=$(DEBUG)
+
 extension: $(OBJ_LINUX)
 	$(CPP) $(INCLUDE) $(OBJ_LINUX) $(LINK) -o $(BIN_DIR)/$(BINARY)
 
 debug:
 	$(MAKE) -f Makefile all DEBUG=true
 
+playerslots-debug:
+	$(MAKE) -f Makefile playerslots DEBUG=true
+
 default: all
 
 clean:
-	find $(BIN_DIR) -iname *.o | xargs rm -f
-	rm -rf $(BIN_DIR)/$(BINARY)
-	rm ./*.so
+	rm -rf Debug/ Debug.playerslots/ Release/ Release.playerslots/

@@ -35,7 +35,9 @@
 #include "iplayerinfo.h"
 #include "vglobals.h"
 #include "util.h"
+#ifdef USE_PLAYERSLOTS_PATCHES
 #include "player_slots.h"
+#endif
 #include "convar_public.h"
 
 #include <ISDKTools.h>
@@ -47,7 +49,9 @@
 #include "detours/spawn_tank.h"
 #include "detours/clear_team_scores.h"
 #include "detours/set_campaign_scores.h"
+#ifdef USE_PLAYERSLOTS_PATCHES
 #include "detours/server_player_counts.h"
+#endif
 #include "detours/first_survivor_left_safe_area.h"
 #include "detours/get_script_value_int.h"
 #include "detours/is_finale.h"
@@ -113,7 +117,9 @@ extern sp_nativeinfo_t g_L4DoMeleeWeaponNatives[];
 extern sp_nativeinfo_t g_L4DoDirectorNatives[];
 
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
+#ifdef USE_PLAYERSLOTS_PATCHES
 ConVar g_MaxPlayers("l4d_maxplayers", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Overrides maxplayers with this value");
+#endif
 PatchManager g_PatchManager;
 
 /**
@@ -207,6 +213,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 
 	InitializeValveGlobals();
 
+#ifdef USE_PLAYERSLOTS_PATCHES
 	/*
 		allow more than 8 players in l4d if l4d_maxplayers is not -1
 		also if +maxplayers or -maxplayers is not the default value (8)
@@ -237,6 +244,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	end here
 	*/
 	PlayerSlots::MaxPlayers = maxplayers;
+#endif
 
 	/*
 	detour the witch/spawn spawns
@@ -270,7 +278,9 @@ void Left4Downtown::SDK_OnAllLoaded()
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
 	g_PatchManager.Register(new AutoPatch<Detours::OnEnterGhostState>());
+	#ifdef USE_PLAYERSLOTS_PATCHES
 	g_PatchManager.Register(new AutoPatch<Detours::ServerPlayerCounts>());
+	#endif
 }
 
 void Left4Downtown::SDK_OnUnload()
@@ -281,8 +291,10 @@ void Left4Downtown::SDK_OnUnload()
 	playerhelpers->RemoveClientListener(&g_Left4DowntownTools);
 	playerhelpers->UnregisterCommandTargetProcessor(&g_Left4DowntownTools);
 
+#ifdef USE_PLAYERSLOTS_PATCHES
 	//go back to normal old asm 
 	PlayerSlots::Unpatch();
+#endif
 
 	g_PatchManager.UnregisterAll();
 
@@ -334,6 +346,8 @@ bool Left4Downtown::SDK_OnMetamodLoad(SourceMM::ISmmAPI *ismm, char *error, size
 
 	return true;
 }
+
+#ifdef USE_PLAYERSLOTS_PATCHES
 	/**
 	 * @brief Called when the server is activated.
 	 */
@@ -383,6 +397,7 @@ void Left4Downtown::OnServerActivated(int max_clients)
 	}
 #endif
 }
+#endif
 
 bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 {

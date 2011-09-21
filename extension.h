@@ -129,11 +129,12 @@ public:
 	 */
 	//virtual bool SDK_OnMetamodPauseChange(bool paused, char *error, size_t maxlength);
 #endif
-
+#ifdef USE_PLAYERSLOTS_PATCHES
 	/**
 	 * @brief Called when the server is activated.
 	 */
 	virtual void OnServerActivated(int max_clients);
+#endif
 public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
 };
