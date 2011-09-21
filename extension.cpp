@@ -50,6 +50,7 @@
 #include "detours/server_player_counts.h"
 #include "detours/first_survivor_left_safe_area.h"
 #include "detours/get_script_value_int.h"
+#include "detours/get_script_value_float.h"
 #include "detours/is_finale.h"
 #include "detours/on_enter_ghost_state.h"
 #include "detours/try_offering_tank_bot.h"
@@ -86,6 +87,7 @@ IForward *g_pFwdOnClearTeamScores = NULL;
 IForward *g_pFwdOnSetCampaignScores = NULL;
 IForward *g_pFwdOnFirstSurvivorLeftSafeArea = NULL;
 IForward *g_pFwdOnGetScriptValueInt = NULL;
+IForward *g_pFwdOnGetScriptValueFloat = NULL;
 IForward *g_pFwdOnTryOfferingTankBot = NULL;
 IForward *g_pFwdOnMobRushStart = NULL;
 IForward *g_pFwdOnSpawnITMob = NULL;
@@ -161,6 +163,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnSetCampaignScores = forwards->CreateForward("L4D_OnSetCampaignScores", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_CellByRef);
 	g_pFwdOnFirstSurvivorLeftSafeArea = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
+	g_pFwdOnGetScriptValueFloat = forwards->CreateForward("L4D_OnGetScriptValueFloat", ET_Event, 2, /*types*/NULL, Param_String, Param_FloatByRef);
 	g_pFwdOnTryOfferingTankBot = forwards->CreateForward("L4D_OnTryOfferingTankBot", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
@@ -250,6 +253,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 
 	g_PatchManager.Register(new AutoPatch<Detours::FirstSurvivorLeftSafeArea>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueInt>());
+	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueFloat>());
 	g_PatchManager.Register(new AutoPatch<Detours::TryOfferingTankBot>());
 	g_PatchManager.Register(new AutoPatch<Detours::MobRushStart>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnITMob>());
@@ -293,6 +297,7 @@ void Left4Downtown::SDK_OnUnload()
 
 	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeArea);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
+	forwards->ReleaseForward(g_pFwdOnGetScriptValueFloat);
 	forwards->ReleaseForward(g_pFwdOnTryOfferingTankBot);
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
