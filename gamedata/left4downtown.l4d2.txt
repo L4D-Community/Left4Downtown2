@@ -294,6 +294,17 @@
 			}
 			
 			/*
+			 * CDirector::GetScriptValue(const char*, const char*, char*, int)
+			 */
+			"CDirector_GetScriptValueString"
+			{
+				"library" "server"
+				"linux" "@_ZN9CDirector14GetScriptValueEPKcS1_Pci"
+				"windows" "\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x2A\x83\xF8\x2A\x56\x8B\x74\x2A\x2A\x74\x2A\x8B"
+					 /* 8B 81 ? ? ? ? 83 EC ? 83 F8 ? 56 8B 74 ? ? 74 ? 8B */
+			}
+			
+			/*
 			 * CDirector::IsFinaleEscapeInProgress(void)
 			 */
 			"CDirector_IsFinaleEscapeInProgress"
