@@ -33,10 +33,9 @@
 #endif
 #define _l4do_included
 
-#include <core>
 #include <l4d2timers>
 #include <l4d2weapons>
- #include <l4d2director>
+#include <l4d2director>
 
 /**
  * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
