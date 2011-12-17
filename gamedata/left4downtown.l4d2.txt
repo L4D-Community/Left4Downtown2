@@ -476,8 +476,8 @@
 			{
 				"library"	"server"
 				"linux"	"@_Z13GetDifficultyv"
-				"windows" "\xA1\x2A\x4B\x68\x10\xC3"
-				/* A1 ? 4B 68 10 C3 */
+				"windows" "\xA1\x2A\x5C\x68\x10\xC3"
+				/* A1 ? 5C 68 10 C3 */
 			}
 			
 			/*
@@ -487,8 +487,9 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules32HasConfigurableDifficultySettingEv"
-				"windows"	"\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x0C\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x03\x33\xC0\xC3\xB8\x01\x00\x00\x00\xC3"
-				/* E8 ? FC FF FF 84 C0 75 0C E8 ? FC FF FF 84 C0 75 03 33 C0 C3 B8 01 00 00 00 C3 */
+				"windows"	"\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x0C\xE8\x2A\x2A\xFF\xFF\x84\xC0\x75\x03\x33\xC0\xC3\xB8\x01\x00\x00\x00\xC3"
+				/* E8 ? FC FF FF 84 C0 75 0C E8 ? ? FF FF 84 C0 75 03 33 C0 C3 B8 01 00 00 00 C3 */
+
 				/* Using offset for windows */
 			}
 			
@@ -730,8 +731,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
-				"windows"	"\xD9\xEE\x51\x81\xC1\xCC\x01\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
-							/* D9 EE 51 81 C1 CC 01 00 00 D9 1C 24 E8 ? ? ? ? C3*/
+				"windows"	"\xCC\xD9\xEE\x51\x81\xC1\x2A\x2A\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
+							/* CC D9 EE 51 81 C1 ? ? 00 00 D9 1C 24 E8 ? ? ? ? C3 */
 			}
 			/* CGameRulesProxy::NotifyNetworkStateChanged()
 				This function is called before changing a variety of 
