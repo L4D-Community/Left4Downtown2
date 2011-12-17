@@ -593,8 +593,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
-				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\xF1\x6A\x2A\xB9\xE8\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x68"
-				/* ? ? ? ? ? ? ? ? ? 8B F1 6A ? B9 E8 ? ? ? E8 ? ? ? ? 85 C0 75 ? 68 */
+				"windows"	"\x83\xEC\x18\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1\x6A\x00\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x68"
+                /* 83 EC 18 56 68 ? ? ? ? 8B F1 6A 00 B9 ? ? ? ? E8 ? ? ? ? 85 C0 75 ? 68 */
 			}
 			
 			/*
