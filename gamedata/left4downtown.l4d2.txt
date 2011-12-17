@@ -731,8 +731,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
-				"windows"	"\xCC\xD9\xEE\x51\x81\xC1\x2A\x2A\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
-							/* CC D9 EE 51 81 C1 ? ? 00 00 D9 1C 24 E8 ? ? ? ? C3 */
+				"windows"	"\xD9\xEE\x51\x81\xC1\xD4\x01\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
+							/* D9 EE 51 81 C1 D4 01 00 00 D9 1C 24 E8 ? ? ? ? C3 */
 			}
 			/* CGameRulesProxy::NotifyNetworkStateChanged()
 				This function is called before changing a variety of 
