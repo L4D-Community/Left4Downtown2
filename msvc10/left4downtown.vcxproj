@@ -191,6 +191,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\detours\change_finale_stage.cpp" />
+    <ClCompile Include="..\detours\end_versus_mode_round.cpp" />
     <ClCompile Include="..\detours\get_script_value_float.cpp" />
     <ClCompile Include="..\detours\get_script_value_string.cpp" />
     <ClCompile Include="..\detours\send_in_rescue_vehicle.cpp" />
@@ -235,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\detours\change_finale_stage.h" />
+    <ClInclude Include="..\detours\end_versus_mode_round.h" />
     <ClInclude Include="..\detours\get_script_value_float.h" />
     <ClInclude Include="..\detours\get_script_value_string.h" />
     <ClInclude Include="..\detours\send_in_rescue_vehicle.h" />

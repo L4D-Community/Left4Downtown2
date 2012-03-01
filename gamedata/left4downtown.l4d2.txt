@@ -612,6 +612,20 @@
 				/* ? ? ? ? ? ? 53 8B 9C ? ? ? ? ? 57 53 68 */
 			}
 
+			/*
+			 *	CDirectorVersusMode::EndVersusModeRound(bool)
+			 *  Updates scores using a bunch of CTerrorGameRules calls and triggers the fullscreen_vs_scoreboard viewport panel
+			 *
+			 *  find by String "fullscreen_vs_scoreboard", and look for a func which also creates a "scores" kv and sets values for "t1", "t2", "c1", "c2", and "tiebreak"
+			 */
+			"EndVersusModeRound"
+			{
+				"library"	"server"
+				"linux"		"@_ZN19CDirectorVersusMode18EndVersusModeRoundEb"
+				"windows"	"\x83\xEC\x10\x57\x8B\xF9\xE8"
+				/* 83 EC 10 57 8B F9 E8 */
+			}
+			
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************
 *********************************************************************/

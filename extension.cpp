@@ -74,6 +74,7 @@
 #include "detours/start_melee_swing.h"
 #include "detours/send_in_rescue_vehicle.h"
 #include "detours/change_finale_stage.h"
+#include "detours/end_versus_mode_round.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -110,6 +111,7 @@ IForward *g_pFwdOnCThrowActivate = NULL;
 IForward *g_pFwdOnStartMeleeSwing = NULL;
 IForward *g_pFwdOnSendInRescueVehicle = NULL;
 IForward *g_pFwdOnChangeFinaleStage = NULL;
+IForward *g_pFwdOnEndVersusModeRound = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -189,6 +191,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnSendInRescueVehicle = forwards->CreateForward("L4D2_OnSendInRescueVehicle", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnChangeFinaleStage = forwards->CreateForward("L4D2_OnChangeFinaleStage", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_String);
+	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
 	
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -282,6 +285,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
 	g_PatchManager.Register(new AutoPatch<Detours::SendInRescueVehicle>());
 	g_PatchManager.Register(new AutoPatch<Detours::ChangeFinaleStage>());
+	g_PatchManager.Register(new AutoPatch<Detours::EndVersusModeRound>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -331,6 +335,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
 	forwards->ReleaseForward(g_pFwdOnSendInRescueVehicle);
 	forwards->ReleaseForward(g_pFwdOnChangeFinaleStage);
+	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

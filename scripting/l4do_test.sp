@@ -168,6 +168,7 @@ public OnPluginStart()
 	SearchForFunction("ReadWeaponDataFromFileForSlot");
 	SearchForFunction("SendInRescueVehicle");
 	SearchForFunction("ChangeFinaleStage");
+	SearchForFunction("EndVersusModeRound");
 	
 	/*
 	* These searches will fail when slots are patched
@@ -234,8 +235,6 @@ public Action:Command_ResetRoundNumber(client, args)
 	
 	return Plugin_Handled;
 }
-
-
 
 public Action:Command_SetRoundEndTime(client, args)
 {
@@ -520,6 +519,12 @@ public Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[])
 	}
 	
 	return Plugin_Handled;
+}
+
+public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
+{
+	DebugPrintToAll("L4D2_OnEndVersusModeRound(%s) fired", countSurvivors ? "true" : "false");
+	return Plugin_Continue;
 }
 
 public OnMapStart()

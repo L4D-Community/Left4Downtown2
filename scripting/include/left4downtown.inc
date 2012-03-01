@@ -299,6 +299,17 @@ forward Action:L4D2_OnSendInRescueVehicle();
 forward Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[]);
 
 /**
+ * @brief Called whenever CDirectorVersusMode::EndVersusModeRound(bool) is invoked
+ *
+ * @param countSurvivors	True if the survival multiplier count needs to be nonzero. I guess.
+ * @remarks Not sure what bool does exactly yet. Just monitor it. If true, survivors will be counted for multiplier. If false, survival multiplier will be set to 0.
+ * @remarks A lot of Score calculations happen on this function, and the round-end scoreboard comes up doing this. Don't block unless you're sure you can reproduce this logic.
+ * 
+ * @return 		Pl_Handled to block, Pl_Continue otherwise
+ */
+forward Action:L4D2_OnEndVersusModeRound(bool:countSurvivors);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
