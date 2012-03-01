@@ -64,7 +64,9 @@ typedef struct _CDirectorVersusMode {
 	char unknown[12]; // 0x10
 	CountdownTimer VersusStartTimer; // 0x1c Timer controlling saferoom door open, allowing PZ spawning.
 	float m_fTankSpawnFlowPercent[2]; // 0x28 Tank spawn flow percent for rounds 1 and 2
-	char unknown2[12]; // 0x30
+	float m_fWitchSpawnFlowPercent[2]; // 0x30 Witch spawn flow percent for rounds 1 and 2
+	bool m_bTankThisRound[2]; // 0x38 One for each round!
+	bool m_bWitchThisRound[2]; // 0x3a One for each round!
 	float m_fFinaleTravelCompletionValue; // 0x3c 5660 in CFinaleTrigger
 	int m_iFinaleTriggerVar2; // 0x40 5656 in CFinaleTrigger
 	bool m_bInFinaleMap; // 0x44
@@ -130,7 +132,11 @@ typedef struct _CDirector {
 	CountdownTimer ChargerSpawnTimer;
 	char unknow5[76]; // 0x27c
 	float MobSpawnSize; // 0x2c8
-	char unknown6[704];	// 0x2cc
+	char unknown6[405];	// 0x2cc
+	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
+	bool m_bIsSecondRoundFinished; // This one too
+	bool m_bUnknownJunk; // probably related
+	char unknown7[296]; // 0x464
 #ifdef PLATFORM_LINUX
 	char unknown_linonly[20]; // 0x58c
 #endif
