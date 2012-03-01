@@ -99,6 +99,11 @@ typedef struct _CDirectorChallengeMode {
 	char unknown[8];
 } CDirectorChallengeMode;
 
+// 1 byte
+typedef struct _CDirectorTacticalServices {
+	char unknown; // does this even exist? blah.
+} CDirectorTacticalServices;
+
 
 // Win32: 1460 bytes
 // Lin: 1480 bytes
@@ -129,7 +134,8 @@ typedef struct _CDirector {
 #ifdef PLATFORM_LINUX
 	char unknown_linonly[20]; // 0x58c
 #endif
-	char unknown7[8]; // win 0x58c lin 0x5a0
+	char unknown7[4]; // win 0x58c lin 0x5a0
+	CDirectorTacticalServices * TacticalServicesPtr;
 	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
 	CDirectorMusicBanks * MusicBanksPtr; 
 	CDirectorSessionManager * SessionManagerPtr; 
