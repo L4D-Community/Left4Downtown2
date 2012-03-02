@@ -205,9 +205,11 @@ public OnPluginStart()
 	RegConsoleCmd("sm_scores", Command_GetScores);
 	RegConsoleCmd("sm_tankcnt", Command_GetTankCount);
 	RegConsoleCmd("sm_flows", Command_GetTankFlows);
+	RegConsoleCmd("sm_ddump", Command_DDump);
 	
 	RegConsoleCmd("sm_sendrescue", Command_SendInRescueVehicle);
 	RegConsoleCmd("sm_finalestage", Command_SetFinaleStage);
+	
 	
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -816,6 +818,72 @@ public Action:Command_GetTankFlows(client, args)
 	new Float:flows[2];
 	L4D2_GetVersusTankFlowPercent(flows);
 	ReplyToCommand(client, "Flow 0: %f Flow 1: %f", flows[0], flows[1]);
+#endif
+	return Plugin_Handled;
+}
+
+public Action:Command_DDump(client, args)
+{
+#if USE_NATIVES
+	new DirectorType:director = DT_CDirector;
+	if(args >= 1)
+	{
+		decl String:buf[64]
+		GetCmdArg(1, buf, sizeof(buf));
+		director= DirectorType:StringToInt(buf);
+	}
+	#define DDUMPF(%0,%1) ReplyToCommand(client, "%d.%s: %f", director,%0,L4D2_Director_GetPropFloat(director,%0,%1))
+	#define DDUMPI(%0,%1) ReplyToCommand(client, "%d.%s: %i", director,%0,L4D2_Director_GetPropInt(director,%0,%1))
+	#define DDUMPB(%0,%1) ReplyToCommand(client, "%d.%s: %s", director,%0,L4D2_Director_GetPropBool(director,%0,%1)?"true":"false")
+	
+	switch(director)
+	{
+		case DT_CDirector:
+		{
+			ReplyToCommand(client,"CDirector:");
+			DDUMPI("m_iTankCount",_);
+			DDUMPF("m_fTankFlowDistance",_);
+			DDUMPF("m_fMobSpawnSize",_);
+			DDUMPB("m_bIsFirstRoundFinished",_);
+			DDUMPB("m_bIsSecondRoundFinished",_);
+		}
+		case DT_CDirectorVersusMode:
+		{
+			ReplyToCommand(client,"CDirectorVersusMode:");
+			DDUMPB("m_bVersusRoundInProgress",_);
+			DDUMPB("m_bFirstMap",_);
+			DDUMPB("m_bTransitioning",_);
+			DDUMPI("m_iCampaignScores",0);
+			DDUMPI("m_iCampaignScores",1);
+			DDUMPF("m_fTankSpawnFlowPercent",0);
+			DDUMPF("m_fTankSpawnFlowPercent",1);
+			DDUMPF("m_fWitchSpawnFlowPercent",0);
+			DDUMPF("m_fWitchSpawnFlowPercent",1);
+			DDUMPB("m_bTankThisRound",0);
+			DDUMPB("m_bTankThisRound",1);
+			DDUMPF("m_fFinaleTravelCompletionValue",_);
+			DDUMPI("m_iFinaleTriggerVar2",_);
+			DDUMPB("m_bInFinaleMap",_);
+			DDUMPI("m_iNumMarkersReached",_);
+			DDUMPI("m_iMarkersCount",_);
+		}
+		case DT_CDirectorScavengeMode:
+		{
+			ReplyToCommand(client,"CDirectorScavengeMode:");
+			DDUMPF("m_fUnknown",_);
+			DDUMPB("m_bScavengeRoundInProgress",_);
+			DDUMPB("m_bAreTeamsSwapped",_);
+			DDUMPB("m_bInOvertime",_);
+			DDUMPB("m_bInOvertime2",_);
+		}
+		default:
+		{
+			ReplyToCommand(client, "Invalid director specified.");
+		}
+	}
+	#undef DDUMPF
+	#undef DDUMPI
+	#undef DDUMPB
 #endif
 	return Plugin_Handled;
 }
