@@ -130,7 +130,7 @@ typedef struct _CDirector {
 	CountdownTimer SpitterSpawnTimer;
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
-	char unknow5[76]; // 0x27c
+	char unknown5[76]; // 0x27c
 	float MobSpawnSize; // 0x2c8
 	char unknown6[405];	// 0x2cc
 	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
@@ -140,7 +140,7 @@ typedef struct _CDirector {
 #ifdef PLATFORM_LINUX
 	char unknown_linonly[20]; // 0x58c
 #endif
-	char unknown7[4]; // win 0x58c lin 0x5a0
+	char unknown8[4]; // win 0x58c lin 0x5a0
 	CDirectorTacticalServices * TacticalServicesPtr;
 	CDirectorItemManager * ItemManagerPtr; // win 0x594 lin 0x5a8
 	CDirectorMusicBanks * MusicBanksPtr; 
@@ -149,7 +149,7 @@ typedef struct _CDirector {
 	CDirectorVersusMode * VersusModePtr; 
 	CDirectorSurvivalMode * SurvivalModePtr; 
 	CDirectorScavengeMode * ScavengeModePtr; 
-	char unknown8[8]; // win 0x5a8 lin 0x5bc
+	char unknown9[8]; // win 0x5a8 lin 0x5bc
 	CDirectorChallengeMode * ChallengeModePtr; // win 0x5b0 lin 0x5c4
 } CDirector;
 
