@@ -76,8 +76,6 @@
 #include "detours/change_finale_stage.h"
 #include "detours/end_versus_mode_round.h"
 
-#include "directornatives.h"
-
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
 Left4Downtown g_Left4DowntownTools;		/**< Global singleton for extension's main interface */
@@ -122,6 +120,7 @@ extern sp_nativeinfo_t g_L4DoNatives[];
 extern sp_nativeinfo_t g_L4DoTimerNatives[];
 extern sp_nativeinfo_t g_L4DoWeaponNatives[];
 extern sp_nativeinfo_t g_L4DoMeleeWeaponNatives[];
+extern sp_nativeinfo_t g_L4DoDirectorNatives[];
 
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
 #ifdef USE_PLAYERSLOTS_PATCHES
@@ -199,7 +198,6 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 
 	Detour::Init(g_pSM->GetScriptingEngine(), g_pGameConf);
 
-	InitializeDirectorNatives();
 	return true;
 }
 
