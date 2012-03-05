@@ -112,8 +112,8 @@ typedef struct _CDirectorTacticalServices {
 
 typedef struct _CDirector {
 	char unknown[256]; // 0x0
-	int tankCount; // 0x100
-	float tankFlowDistance; // 0x104
+	int m_iTankCount; // 0x100
+	float m_fTankFlowDistance; // 0x104
 	char unknown2[204]; // 0x108
 	CountdownTimer MobSpawnTimer; // 0x1d4
 	char unknown3[20]; // 0x1e0
@@ -131,7 +131,7 @@ typedef struct _CDirector {
 	CountdownTimer JockeySpawnTimer;
 	CountdownTimer ChargerSpawnTimer;
 	char unknown5[76]; // 0x27c
-	float MobSpawnSize; // 0x2c8
+	float m_fMobSpawnSize; // 0x2c8
 	char unknown6[405];	// 0x2cc
 	bool m_bIsFirstRoundFinished; // 0x461 Fuck naming this var
 	bool m_bIsSecondRoundFinished; // This one too
