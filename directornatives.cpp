@@ -45,7 +45,7 @@ cell_t L4D2_GetTankCount(IPluginContext *pContext, const cell_t *params)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
-	return director->tankCount;
+	return director->m_iTankCount;
 }
 
 cell_t L4D2_GetVersusCampaignScores(IPluginContext *pContext, const cell_t *params)
