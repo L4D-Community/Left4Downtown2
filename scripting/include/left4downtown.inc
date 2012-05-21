@@ -310,14 +310,16 @@ forward Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[]);
 forward Action:L4D2_OnEndVersusModeRound(bool:countSurvivors);
 
 /**
- * @brief Called whenever CBaseAnimating::SelectWeightedSequence(ACT_TERROR_ATTACK_MOVING) is invoked
- * @brief Called when a tank uses his primary attack. Not low attack (pounding the ground)
+ * @brief Called when CBaseAnimating::SelectWeightedSequence(int Activity) is invoked with tank attack activity
+ * @remarks Called whenever a tank uses his primary attack
  *
  * @param client   the client that is playing as tank
  * @param sequence  current selected sequence for attack, option to override the return value with it
- * @remarks	sequences: 40(uppercut), 43(right hook), 45(left hook)
+ * @remarks	sequences: 40(uppercut), 43(right hook), 45(left hook), 46 and 47 (pounding the ground)
  * 
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ * @remarks	 it changes server-side animation only, from which punch effects are calculated
+ * @remarks	 use "vm_debug" in console to view some info about model animation
  */
 forward Action:L4D2_OnSelectTankAttack(client, &sequence);
 
