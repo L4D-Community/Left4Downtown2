@@ -22,7 +22,7 @@ OBJECTS = sdk/smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2c
 			detours/get_mission_versus_boss_spawning.cpp detours/cthrow_activate_ability.cpp l4d2sdk/l4d2timers.cpp \
 			timernatives.cpp detours/start_melee_swing.cpp weaponnatives.cpp meleeweaponnatives.cpp directornatives.cpp \
 			detours/send_in_rescue_vehicle.cpp detours/change_finale_stage.cpp detours/get_script_value_string.cpp \
-			detours/end_versus_mode_round.cpp
+			detours/end_versus_mode_round.cpp detours/select_weighted_sequence.cpp
 			
 ##############################################
 ### CONFIGURE ANY OTHER FLAGS/OPTIONS HERE ###

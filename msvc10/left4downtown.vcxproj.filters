@@ -153,6 +153,9 @@
     <ClCompile Include="..\detours\end_versus_mode_round.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\select_weighted_sequence.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -297,6 +300,9 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\end_versus_mode_round.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\select_weighted_sequence.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

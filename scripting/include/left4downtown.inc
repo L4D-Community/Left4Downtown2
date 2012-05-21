@@ -310,6 +310,18 @@ forward Action:L4D2_OnChangeFinaleStage(&finaleType, const String:arg[]);
 forward Action:L4D2_OnEndVersusModeRound(bool:countSurvivors);
 
 /**
+ * @brief Called whenever CBaseAnimating::SelectWeightedSequence(ACT_TERROR_ATTACK_MOVING) is invoked
+ * @brief Called when a tank uses his primary attack. Not low attack (pounding the ground)
+ *
+ * @param client   the client that is playing as tank
+ * @param sequence  current selected sequence for attack, option to override the return value with it
+ * @remarks	sequences: 40(uppercut), 43(right hook), 45(left hook)
+ * 
+ * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D2_OnSelectTankAttack(client, &sequence);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

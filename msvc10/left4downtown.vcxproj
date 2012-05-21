@@ -194,6 +194,7 @@
     <ClCompile Include="..\detours\end_versus_mode_round.cpp" />
     <ClCompile Include="..\detours\get_script_value_float.cpp" />
     <ClCompile Include="..\detours\get_script_value_string.cpp" />
+    <ClCompile Include="..\detours\select_weighted_sequence.cpp" />
     <ClCompile Include="..\detours\send_in_rescue_vehicle.cpp" />
     <ClCompile Include="..\detours\start_melee_swing.cpp" />
     <ClCompile Include="..\l4d2sdk\l4d2calls.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="..\detours\end_versus_mode_round.h" />
     <ClInclude Include="..\detours\get_script_value_float.h" />
     <ClInclude Include="..\detours\get_script_value_string.h" />
+    <ClInclude Include="..\detours\select_weighted_sequence.h" />
     <ClInclude Include="..\detours\send_in_rescue_vehicle.h" />
     <ClInclude Include="..\detours\start_melee_swing.h" />
     <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h" />

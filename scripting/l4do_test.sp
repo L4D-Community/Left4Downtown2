@@ -169,7 +169,9 @@ public OnPluginStart()
 	SearchForFunction("SendInRescueVehicle");
 	SearchForFunction("ChangeFinaleStage");
 	SearchForFunction("EndVersusModeRound");
-	
+	SearchForFunction("SelectWeightedSequence");
+
+
 	/*
 	* These searches will fail when slots are patched
 	*/
@@ -526,6 +528,13 @@ public Action:L4D2_OnEndVersusModeRound(bool:countSurvivors)
 	DebugPrintToAll("L4D2_OnEndVersusModeRound(%s) fired", countSurvivors ? "true" : "false");
 	return Plugin_Continue;
 }
+
+public Action:L4D2_OnSelectTankAttack(client, &sequence)
+{
+	DebugPrintToAll("L4D2_OnSelectTankAttack(%d, %d) fired", client, sequence);
+	return Plugin_Continue;
+}
+
 
 public OnMapStart()
 {

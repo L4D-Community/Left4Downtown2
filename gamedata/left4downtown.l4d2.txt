@@ -625,6 +625,19 @@
 				"windows"	"\x83\xEC\x10\x57\x8B\xF9\xE8"
 				/* 83 EC 10 57 8B F9 E8 */
 			}
+
+			/*
+			 *	int CBaseAnimating::SelectWeightedSequence(int Activity)
+			 *
+			 * - first called func in CMultiPlayerAnimState::AddToGestureSlot (string "CMultiPlayerAnimState::AddToGestureSlot - unknown activity %d")
+			 */
+			"SelectWeightedSequence"
+			{
+				"library"	"server"
+				"linux"		"@_ZN14CBaseAnimating22SelectWeightedSequenceE8Activity"
+				"windows"	"\x56\x8B\xF1\x83\xBE\xC0\x13\x00\x00\x00\x57\x8B\xBE\x70\x04\x00\x00\x75\x10\xE8\x28\xAA\x01\x00\x85\xC0\x74\x07\x8B\xCE\xE8\x9D"
+				/* 56 8B F1 83 BE C0 13 00 00 00 57 8B BE 70 04 00 00 75 10 E8 28 AA 01 00 85 C0 74 07 8B CE E8 9D */
+			}
 			
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************
