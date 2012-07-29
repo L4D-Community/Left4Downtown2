@@ -156,6 +156,12 @@
     <ClCompile Include="..\detours\select_weighted_sequence.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\spawn_special.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\detours\spawn_witchbride.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -303,6 +309,12 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\select_weighted_sequence.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\spawn_special.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\spawn_witchbride.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

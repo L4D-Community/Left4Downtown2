@@ -226,6 +226,8 @@
     <ClCompile Include="..\detours\set_campaign_scores.cpp" />
     <ClCompile Include="..\detours\spawn_tank.cpp" />
     <ClCompile Include="..\detours\spawn_witch.cpp" />
+    <ClCompile Include="..\detours\spawn_special.cpp" />
+    <ClCompile Include="..\detours\spawn_witchbride.cpp" />
     <ClCompile Include="..\detours\try_offering_tank_bot.cpp" />
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
     <ClCompile Include="..\weaponnatives.cpp" />
@@ -279,6 +281,8 @@
     <ClInclude Include="..\detours\set_campaign_scores.h" />
     <ClInclude Include="..\detours\spawn_tank.h" />
     <ClInclude Include="..\detours\spawn_witch.h" />
+    <ClCompile Include="..\detours\spawn_special.h" />
+    <ClCompile Include="..\detours\spawn_witchbride.h" />
     <ClInclude Include="..\detours\try_offering_tank_bot.h" />
     <ClInclude Include="..\codepatch\autopatch.h" />
     <ClInclude Include="..\codepatch\icodepatch.h" />

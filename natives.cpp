@@ -32,6 +32,7 @@
 #include "extension.h"
 #include "vglobals.h"
 #include "util.h"
+#include "l4d2sdk/constants.h"
 
 // native L4D_GetTeamScore(logical_team, campaign_score=false)
 cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
@@ -679,6 +680,276 @@ cell_t L4D2_ChangeFinaleStage(IPluginContext *pContext, const cell_t *params)
 	return 0;
 }
 
+cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pZombieManager == NULL)
+	{
+		return pContext->ThrowNativeError("ZombieManager unsupported or not available; file a bug report");
+	}
+
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		PassInfo passInfo;
+		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.size = sizeof( CBaseEntity* );
+		passInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("SpawnSpecial", 
+			PassInfo pass[3]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(ZombieClassType); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].size = sizeof(Vector*); \
+			pass[1].type = PassType_Basic; \
+			pass[2].flags = PASSFLAG_BYREF; \
+			pass[2].size = sizeof(QAngle*); \
+			pass[2].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
+	}
+
+	CBaseEntity* entity;
+	
+	unsigned char vstk[ sizeof(void*) + sizeof(ZombieClassType) + sizeof(Vector*) + sizeof(QAngle*) ];
+	unsigned char *vptr = vstk;
+	
+	cell_t* source_vector;
+	pContext->LocalToPhysAddr(params[1], &source_vector);
+
+	cell_t* source_qangle;
+	pContext->LocalToPhysAddr(params[2], &source_qangle);
+
+	Vector vector;
+	QAngle qangle;
+
+	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		vector[0] = sp_ctof(source_vector[0]);
+		vector[1] = sp_ctof(source_vector[1]);
+		vector[2] = sp_ctof(source_vector[2]);
+	}
+	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		qangle[0] = sp_ctof(source_qangle[0]);
+		qangle[1] = sp_ctof(source_qangle[1]);
+		qangle[2] = sp_ctof(source_qangle[2]);
+	}
+	
+	*(void**)vptr = *(void**) *g_pZombieManager;
+	vptr += sizeof(void*);
+	
+	*(cell_t*)vptr = *(cell_t*) &params[1];
+	vptr += sizeof(ZombieClassType);
+
+	*(Vector**)vptr = &vector;
+	vptr += sizeof(Vector*);
+
+	*(QAngle**)vptr = &qangle;
+
+	pWrapper->Execute( vstk, (void*) &entity );
+	return gamehelpers->EntityToBCompatRef( entity );
+}
+
+cell_t L4D2_SpawnTank(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pZombieManager == NULL)
+	{
+		return pContext->ThrowNativeError("ZombieManager unsupported or not available; file a bug report");
+	}
+
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		PassInfo passInfo;
+		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.size = sizeof( CBaseEntity* );
+		passInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("SpawnTank", 
+			PassInfo pass[2]; \
+			pass[0].flags = PASSFLAG_BYREF; \
+			pass[0].size = sizeof(Vector*); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].size = sizeof(QAngle*); \
+			pass[1].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
+	}
+
+	CBaseEntity* entity;
+	
+	unsigned char vstk[ sizeof(void*) + sizeof(Vector*) + sizeof(QAngle*) ];
+	unsigned char *vptr = vstk;
+	
+	cell_t* source_vector;
+	pContext->LocalToPhysAddr(params[1], &source_vector);
+
+	cell_t* source_qangle;
+	pContext->LocalToPhysAddr(params[2], &source_qangle);
+
+	Vector vector;
+	QAngle qangle;
+
+	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		vector[0] = sp_ctof(source_vector[0]);
+		vector[1] = sp_ctof(source_vector[1]);
+		vector[2] = sp_ctof(source_vector[2]);
+	}
+	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		qangle[0] = sp_ctof(source_qangle[0]);
+		qangle[1] = sp_ctof(source_qangle[1]);
+		qangle[2] = sp_ctof(source_qangle[2]);
+	}
+	
+	*(void**)vptr = *(void**) *g_pZombieManager;
+	vptr += sizeof(void*);
+
+	*(Vector**)vptr = &vector;
+	vptr += sizeof(Vector*);
+
+	*(QAngle**)vptr = &qangle;
+
+	pWrapper->Execute( vstk, (void*) &entity );
+	return gamehelpers->EntityToBCompatRef( entity );
+}
+
+cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pZombieManager == NULL)
+	{
+		return pContext->ThrowNativeError("ZombieManager unsupported or not available; file a bug report");
+	}
+
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		PassInfo passInfo;
+		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.size = sizeof( CBaseEntity* );
+		passInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("SpawnWitch", 
+			PassInfo pass[2]; \
+			pass[0].flags = PASSFLAG_BYREF; \
+			pass[0].size = sizeof(Vector); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].size = sizeof(QAngle); \
+			pass[1].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
+	}
+
+	CBaseEntity* entity;
+	
+	unsigned char vstk[ sizeof(void*) + sizeof(Vector*) + sizeof(QAngle*) ];
+	unsigned char *vptr = vstk;
+	
+	cell_t* source_vector;
+	pContext->LocalToPhysAddr(params[1], &source_vector);
+
+	cell_t* source_qangle;
+	pContext->LocalToPhysAddr(params[2], &source_qangle);
+
+	Vector vector;
+	QAngle qangle;
+
+	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		vector[0] = sp_ctof(source_vector[0]);
+		vector[1] = sp_ctof(source_vector[1]);
+		vector[2] = sp_ctof(source_vector[2]);
+	}
+	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		qangle[0] = sp_ctof(source_qangle[0]);
+		qangle[1] = sp_ctof(source_qangle[1]);
+		qangle[2] = sp_ctof(source_qangle[2]);
+	}
+	
+	*(void**)vptr = *(void**) *g_pZombieManager;
+	vptr += sizeof(void*);
+
+	*(Vector**)vptr = &vector;
+	vptr += sizeof(Vector*);
+
+	*(QAngle**)vptr = &qangle;
+
+	pWrapper->Execute( vstk, (void*) &entity );
+	return gamehelpers->EntityToBCompatRef( entity );	
+}
+
+cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pZombieManager == NULL)
+	{
+		return pContext->ThrowNativeError("ZombieManager unsupported or not available; file a bug report");
+	}
+
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper)
+	{
+		PassInfo passInfo;
+		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.size = sizeof( CBaseEntity* );
+		passInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("SpawnWitchBride", 
+			PassInfo pass[2]; \
+			pass[0].flags = PASSFLAG_BYREF; \
+			pass[0].size = sizeof(Vector); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].size = sizeof(QAngle); \
+			pass[1].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
+	}
+
+	CBaseEntity* entity;
+	
+	unsigned char vstk[ sizeof(void*) + sizeof(Vector*) + sizeof(QAngle*) ];
+	unsigned char *vptr = vstk;
+	
+	cell_t* source_vector;
+	pContext->LocalToPhysAddr(params[1], &source_vector);
+
+	cell_t* source_qangle;
+	pContext->LocalToPhysAddr(params[2], &source_qangle);
+
+	Vector vector;
+	QAngle qangle;
+
+	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		vector[0] = sp_ctof(source_vector[0]);
+		vector[1] = sp_ctof(source_vector[1]);
+		vector[2] = sp_ctof(source_vector[2]);
+	}
+	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	{
+		qangle[0] = sp_ctof(source_qangle[0]);
+		qangle[1] = sp_ctof(source_qangle[1]);
+		qangle[2] = sp_ctof(source_qangle[2]);
+	}
+	
+	*(void**)vptr = *(void**) *g_pZombieManager;
+	vptr += sizeof(void*);
+
+	*(Vector**)vptr = &vector;
+	vptr += sizeof(Vector*);
+
+	*(QAngle**)vptr = &qangle;
+
+	pWrapper->Execute( vstk, (void*) &entity );
+	return gamehelpers->EntityToBCompatRef( entity );
+}
+
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
@@ -698,5 +969,9 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
 	{"L4D2_SendInRescueVehicle",  		L4D2_SendInRescueVehicle},
 	{"L4D2_ChangeFinaleStage",  		L4D2_ChangeFinaleStage},
+	{"L4D2_SpawnSpecial",				L4D2_SpawnSpecial},
+	{"L4D2_SpawnTank",					L4D2_SpawnTank},
+	{"L4D2_SpawnWitch",					L4D2_SpawnWitch},
+	{"L4D2_SpawnWitchBride",  			L4D2_SpawnWitchBride},
 	{NULL,							NULL}
 };

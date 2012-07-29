@@ -45,7 +45,9 @@
 #include "codepatch/patchmanager.h"
 #include "codepatch/autopatch.h"
 
+#include "detours/spawn_special.h"
 #include "detours/spawn_witch.h"
+#include "detours/spawn_witchbride.h"
 #include "detours/spawn_tank.h"
 #include "detours/clear_team_scores.h"
 #include "detours/set_campaign_scores.h"
@@ -88,8 +90,10 @@ ISDKTools *g_pSDKTools = NULL;
 IServerGameEnts *gameents = NULL;
 CGlobalVars *gpGlobals;
 
+IForward *g_pFwdOnSpawnSpecial = NULL;
 IForward *g_pFwdOnSpawnTank = NULL;
 IForward *g_pFwdOnSpawnWitch = NULL;
+IForward *g_pFwdOnSpawnWitchBride = NULL;
 IForward *g_pFwdOnClearTeamScores = NULL;
 IForward *g_pFwdOnSetCampaignScores = NULL;
 IForward *g_pFwdOnFirstSurvivorLeftSafeArea = NULL;
@@ -169,9 +173,10 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	sharesys->AddNatives(myself, g_L4DoMeleeWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoDirectorNatives);
 
+	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnTank = forwards->CreateForward("L4D_OnSpawnTank", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitch = forwards->CreateForward("L4D_OnSpawnWitch", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
-	g_pFwdOnClearTeamScores = forwards->CreateForward("L4D_OnClearTeamScores", ET_Event, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnSpawnWitchBride = forwards->CreateForward("L4D_OnSpawnWitchBride", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);	g_pFwdOnClearTeamScores = forwards->CreateForward("L4D_OnClearTeamScores", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnSetCampaignScores = forwards->CreateForward("L4D_OnSetCampaignScores", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_CellByRef);
 	g_pFwdOnFirstSurvivorLeftSafeArea = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
@@ -263,8 +268,10 @@ void Left4Downtown::SDK_OnAllLoaded()
 	*/
 	//automatically will unregister/cleanup themselves when the ext is unloaded
 
+	g_PatchManager.Register(new AutoPatch<Detours::SpawnSpecial>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnTank>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnWitch>());
+	g_PatchManager.Register(new AutoPatch<Detours::SpawnWitchBride>());
 	g_PatchManager.Register(new AutoPatch<Detours::ClearTeamScores>());
 	g_PatchManager.Register(new AutoPatch<Detours::SetCampaignScores>());
 
@@ -314,8 +321,10 @@ void Left4Downtown::SDK_OnUnload()
 
 	g_PatchManager.UnregisterAll();
 
+	forwards->ReleaseForward(g_pFwdOnSpawnSpecial);
 	forwards->ReleaseForward(g_pFwdOnSpawnTank);
 	forwards->ReleaseForward(g_pFwdOnSpawnWitch);
+	forwards->ReleaseForward(g_pFwdOnSpawnWitchBride);
 	forwards->ReleaseForward(g_pFwdOnClearTeamScores);
 	forwards->ReleaseForward(g_pFwdOnSetCampaignScores);
 

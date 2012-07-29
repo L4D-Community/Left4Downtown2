@@ -139,8 +139,10 @@ public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
 };
 
+extern IForward *g_pFwdOnSpawnSpecial;
 extern IForward *g_pFwdOnSpawnTank;
 extern IForward *g_pFwdOnSpawnWitch;
+extern IForward *g_pFwdOnSpawnWitchBride;
 extern IForward *g_pFwdOnClearTeamScores;
 extern IForward *g_pFwdOnSetCampaignScores;
 extern IForward *g_pFwdOnFirstSurvivorLeftSafeArea;
