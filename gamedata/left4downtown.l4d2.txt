@@ -234,6 +234,7 @@
 				"library" "server"
 				"linux" "@_ZN13ZombieManager12SpawnSpecialE15ZombieClassTypeRK6VectorRK6QAngle"
 				"windows" "\x53\x57\x8B\x2A\x2A\x2A\x8D\x2A\x2A\x83\xF8\x05\x8B\xD9\x0F\x2A\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x2A\x8B"
+					/* 53 57 8B ? ? ? 8D ? ? 83 F8 05 8B D9 0F ? ? ? ? ? 8B ? ? ? ? ? ? 8B */
 			}
 
 			/*
@@ -254,8 +255,8 @@
 			{ 
 				"library" "server"
 				"linux" "@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
-				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\xC2"
-					/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 ? C2 */
+				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7C\x13\x8B\x0D"
+					/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 7C 13 8B 0D */
 			}
 
 			/*
@@ -265,8 +266,8 @@
 			{ 
 				"library" "server"
 				"linux" "@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
-				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7C\x13\x8B\x0D"
-				/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 7C 13 8B 0D */
+				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\xC2"
+					/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 ? C2 */
 			}
 			
 			
