@@ -260,7 +260,7 @@
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
     <ClInclude Include="..\detours\spawn_mob.h" />
     <ClInclude Include="..\detours\spawn_it_mob.h" />
-	<ClCompile Include="..\detours\on_revived.h" />
+	<ClInclude Include="..\detours\on_revived.h" />
     <ClInclude Include="..\l4d2sdk\director.h" />
     <ClInclude Include="..\l4d2sdk\l4d2timers.h" />
     <ClInclude Include="..\l4d2sdk\CTerrorWeaponInfo.h" />
