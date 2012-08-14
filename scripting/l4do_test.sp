@@ -170,6 +170,7 @@ public OnPluginStart()
 	SearchForFunction("ChangeFinaleStage");
 	SearchForFunction("EndVersusModeRound");
 	SearchForFunction("SelectWeightedSequence");
+	SearchForFunction("CTerrorPlayer_OnRevived");
 
 
 	/*
@@ -535,6 +536,11 @@ public Action:L4D2_OnSelectTankAttack(client, &sequence)
 	return Plugin_Continue;
 }
 
+public Action:L4D_OnRevived(client)
+{
+	DebugPrintToAll("L4D_OnRevived(%d) fired", client);
+	return Plugin_Continue;
+}
 
 public OnMapStart()
 {

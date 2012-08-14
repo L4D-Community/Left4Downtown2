@@ -78,6 +78,7 @@
 #include "detours/change_finale_stage.h"
 #include "detours/end_versus_mode_round.h"
 #include "detours/select_weighted_sequence.h"//for SelectTankAttack
+#include "detours/on_revived.h"
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
@@ -118,6 +119,7 @@ IForward *g_pFwdOnSendInRescueVehicle = NULL;
 IForward *g_pFwdOnChangeFinaleStage = NULL;
 IForward *g_pFwdOnEndVersusModeRound = NULL;
 IForward *g_pFwdOnSelectTankAttack = NULL;
+IForward *g_pFwdOnRevived = NULL;
 
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
@@ -200,6 +202,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnChangeFinaleStage = forwards->CreateForward("L4D2_OnChangeFinaleStage", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_String);
 	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnSelectTankAttack = forwards->CreateForward("L4D2_OnSelectTankAttack", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
+	g_pFwdOnRevived = forwards->CreateForward("L4D_OnRevived", ET_Event, 1, /*types*/NULL, Param_Cell);
 	
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -297,6 +300,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::ChangeFinaleStage>());
 	g_PatchManager.Register(new AutoPatch<Detours::EndVersusModeRound>());
 	g_PatchManager.Register(new AutoPatch<Detours::SelectWeightedSequence>());//for SelectTankAttack
+	g_PatchManager.Register(new AutoPatch<Detours::Revived>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());

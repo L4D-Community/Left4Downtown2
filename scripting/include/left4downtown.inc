@@ -324,6 +324,16 @@ forward Action:L4D2_OnEndVersusModeRound(bool:countSurvivors);
 forward Action:L4D2_OnSelectTankAttack(client, &sequence);
 
 /**
+ * @brief Called when CTerrorPlayer::OnRevived(void) is invoked
+ * @remarks Called post-revive so all data values are post-revive status.
+ *
+ * @param client   the client that has been revived
+ *
+ * @noreturn Pl_Handled to override return value, Pl_Continue otherwise.
+ */
+forward Action:L4D2_OnRevived(client);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
