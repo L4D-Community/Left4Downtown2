@@ -123,6 +123,9 @@
     <ClCompile Include="..\detours\cthrow_activate_ability.cpp">
       <Filter>detours</Filter>
     </ClCompile>
+    <ClCompile Include="..\detours\on_revived.cpp">
+      <Filter>detours</Filter>
+    </ClCompile>
     <ClCompile Include="..\l4d2sdk\l4d2calls.cpp">
       <Filter>detours</Filter>
     </ClCompile>
@@ -282,6 +285,9 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\cthrow_activate_ability.h">
+      <Filter>detours</Filter>
+    </ClInclude>
+    <ClInclude Include="..\detours\on_revived.h">
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\l4d2sdk\l4d2calls.h">
