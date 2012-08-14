@@ -354,6 +354,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnChangeFinaleStage);
 	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound);
 	forwards->ReleaseForward(g_pFwdOnSelectTankAttack);
+	forwards->ReleaseForward(g_pFwdOnRevived);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor
