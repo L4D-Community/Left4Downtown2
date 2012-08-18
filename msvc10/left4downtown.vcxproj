@@ -229,7 +229,7 @@
     <ClCompile Include="..\detours\spawn_special.cpp" />
     <ClCompile Include="..\detours\spawn_witchbride.cpp" />
     <ClCompile Include="..\detours\try_offering_tank_bot.cpp" />
-	<ClCompile Include="..\detours\on_revived.cpp" />
+    <ClCompile Include="..\detours\on_revived.cpp" />
     <ClCompile Include="..\codepatch\patchmanager.cpp" />
     <ClCompile Include="..\weaponnatives.cpp" />
     <ClCompile Include="..\directornatives.cpp" />
@@ -260,7 +260,7 @@
     <ClInclude Include="..\detours\shoved_by_survivor.h" />
     <ClInclude Include="..\detours\spawn_mob.h" />
     <ClInclude Include="..\detours\spawn_it_mob.h" />
-	<ClInclude Include="..\detours\on_revived.h" />
+    <ClInclude Include="..\detours\on_revived.h" />
     <ClInclude Include="..\l4d2sdk\director.h" />
     <ClInclude Include="..\l4d2sdk\l4d2timers.h" />
     <ClInclude Include="..\l4d2sdk\CTerrorWeaponInfo.h" />

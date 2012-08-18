@@ -256,10 +256,12 @@ forward Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn
  * @brief Called whenever CThrow::ActivateAbility(void) is invoked
  * @remarks Called when a tank throws a rock. Blocking this call will
  *			keep the tank from throwing a rock.
+ *
+ * @param ability	ability_throw entity index
  * 
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
-forward Action:L4D_OnCThrowActivate();
+forward Action:L4D_OnCThrowActivate(ability);
 
 /**
  * @brief Called whenever InfectedShoved::OnShoved(Infected *, CBaseEntity *) is invoked
@@ -311,15 +313,14 @@ forward Action:L4D2_OnEndVersusModeRound(bool:countSurvivors);
 
 /**
  * @brief Called when CBaseAnimating::SelectWeightedSequence(int Activity) is invoked with tank attack activity
- * @remarks Called whenever a tank uses his primary attack
+ * @remarks Called whenever a tank uses his primary (punch) or secondary (throw) attack
  *
  * @param client   the client that is playing as tank
  * @param sequence  current selected sequence for attack, option to override the return value with it
- * @remarks	sequences: 40(uppercut), 43(right hook), 45(left hook), 46 and 47 (pounding the ground)
+ * @remarks	sequences(punches): 40(uppercut), 43(right hook), 45(left hook), 46 and 47 (pounding the ground)
+ * @remarks	sequences(throws): 48(undercut), 49(1handed overhand), 50(throw from the hip), 51(2handed overhand)
  * 
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
- * @remarks	 it changes server-side animation only, from which punch effects are calculated
- * @remarks	 use "vm_debug" in console to view some info about model animation
  */
 forward Action:L4D2_OnSelectTankAttack(client, &sequence);
 

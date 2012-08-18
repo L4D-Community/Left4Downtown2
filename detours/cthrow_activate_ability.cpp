@@ -41,7 +41,11 @@ namespace Detours
 		cell_t result = Pl_Continue;
 		if(g_pFwdOnCThrowActivate)
 		{
-			L4D_DEBUG_LOG("L4D_OnCThrowActivate() forward has been sent out");
+			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+			int entity = IndexOfEdict(pEntity);
+			L4D_DEBUG_LOG("L4D_OnCThrowActivate(%d) forward has been sent out", entity);
+
+			g_pFwdOnCThrowActivate->PushCell(entity);
 			g_pFwdOnCThrowActivate->Execute(&result);
 		}
 
