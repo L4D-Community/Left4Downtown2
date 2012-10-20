@@ -139,8 +139,8 @@ public OnPluginStart()
 	
 	SearchForFunction("SpawnTank");
 	SearchForFunction("SpawnWitch");
-	SearchForFunction("OnSpawnSpecial");
-	SearchForFunction("OnSpawnWitchBride");
+	SearchForFunction("SpawnSpecial");
+	SearchForFunction("SpawnWitchBride");
 	SearchForFunction("OnFirstSurvivorLeftSafeArea");
 	SearchForFunction("CDirector_GetScriptValueInt");
 	SearchForFunction("CDirector_GetScriptValueFloat");
