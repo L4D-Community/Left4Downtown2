@@ -175,7 +175,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	sharesys->AddNatives(myself, g_L4DoMeleeWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoDirectorNatives);
 
-	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
+	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
 	g_pFwdOnSpawnTank = forwards->CreateForward("L4D_OnSpawnTank", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitch = forwards->CreateForward("L4D_OnSpawnWitch", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitchBride = forwards->CreateForward("L4D_OnSpawnWitchBride", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);	g_pFwdOnClearTeamScores = forwards->CreateForward("L4D_OnClearTeamScores", ET_Event, 1, /*types*/NULL, Param_Cell);
