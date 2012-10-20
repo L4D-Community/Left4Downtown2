@@ -32,6 +32,7 @@ new Handle:cvarSetCampaignScores = INVALID_HANDLE;
 new Handle:cvarFirstSurvivorLeftSafeArea = INVALID_HANDLE;
 new Handle:cvarProhibitBosses = INVALID_HANDLE;
 new Handle:cvarBlockRocks = INVALID_HANDLE;
+new Handle:cvarForceSpecials = INVALID_HANDLE;
 
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
@@ -224,6 +225,8 @@ public OnPluginStart()
 
 	cvarFirstSurvivorLeftSafeArea = CreateConVar("l4do_versus_round_started", "0", "Block versus round from starting if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarProhibitBosses = CreateConVar("l4do_unprohibit_bosses", "0", "Override ProhibitBosses script key if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
+	
+	cvarForceSpecials = CreateConVar("l4do_force_specials", "0", "Override SpawnSpecial to spawn a certain type of special if non-zero", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 }
 
 public Action:Command_BeginRoundSetupTime(client, args)
@@ -326,8 +329,14 @@ public Action:L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Floa
 		
 	if(GetConVarBool(cvarBlockSpecials))
 	{
-		DebugPrintToAll("Blocking tank spawn...");
+		DebugPrintToAll("Blocking special spawn...");
 		return Plugin_Handled;
+	}
+	else if(GetConVarInt(cvarForceSpecials) > 0)
+	{
+		zombieClass = GetConVarInt(cvarForceSpecials);
+		DebugPrintToAll("Converting to type %d...", zombieClass);
+		return Plugin_Changed;
 	}
 	else
 	{
@@ -342,7 +351,7 @@ public Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3]
 		
 	if(GetConVarBool(cvarBlockWitches))
 	{
-		DebugPrintToAll("Blocking witch spawn...");
+		DebugPrintToAll("Blocking witch bride spawn...");
 		return Plugin_Handled;
 	}
 	else
