@@ -528,7 +528,7 @@ native L4D2_ChangeFinaleStage(finaleType, const String:arg[]);
  * @param qangle	QAngle where the tank will be facing
  * @return 			Entity index of the spawned tank
  */
-native L4D_SpawnTank(const Float:vector[3], const Float:qangle[3]);
+native L4D2_SpawnTank(const Float:vector[3], const Float:qangle[3]);
 
 /**
  * @brief Calls ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&)
@@ -538,7 +538,7 @@ native L4D_SpawnTank(const Float:vector[3], const Float:qangle[3]);
  * @param qangle	QAngle where the SI will be facing
  * @return 			Entity index of the spawned SI
  */
-native L4D_SpawnSpecial(zombieClass, const Float:vector[3], const Float:qangle[3]);
+native L4D2_SpawnSpecial(zombieClass, const Float:vector[3], const Float:qangle[3]);
 
 /**
  * @brief Calls ZombieManager::SpawnWitch(Vector&,QAngle&)
@@ -547,7 +547,7 @@ native L4D_SpawnSpecial(zombieClass, const Float:vector[3], const Float:qangle[3
  * @param qangle	QAngle where the witch will be facing
  * @return 			Entity index of the spawned witch
  */
-native L4D_SpawnWitch(const Float:vector[3], const Float:qangle[3]);
+native L4D2_SpawnWitch(const Float:vector[3], const Float:qangle[3]);
 
 /**
  * @brief Calls ZombieManager::SpawnWitchBride(Vector&,QAngle&)
@@ -556,7 +556,7 @@ native L4D_SpawnWitch(const Float:vector[3], const Float:qangle[3]);
  * @param qangle	QAngle where the witch bride will be facing
  * @return 			Entity index of the spawned witch bride
  */
-native L4D_SpawnWitchBride(const Float:vector[3], const Float:qangle[3]);
+native L4D2_SpawnWitchBride(const Float:vector[3], const Float:qangle[3]);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS

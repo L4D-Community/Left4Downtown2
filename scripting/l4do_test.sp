@@ -694,7 +694,7 @@ public Action:Command_SpawnTank(client, args)
 
 	origin[2] += 160;
 
-	L4D_SpawnTank(origin, angles);
+	L4D2_SpawnTank(origin, angles);
 }
 
 public Action:Command_SpawnWitch(client, args)
@@ -705,7 +705,7 @@ public Action:Command_SpawnWitch(client, args)
 
 	origin[2] += 160;
 
-	L4D_SpawnWitch(origin, angles);
+	L4D2_SpawnWitch(origin, angles);
 }
 
 public Action:Command_SpawnWitchBride(client, args)
@@ -716,7 +716,7 @@ public Action:Command_SpawnWitchBride(client, args)
 
 	origin[2] += 160;
 
-	L4D_SpawnWitchBride(origin, angles);
+	L4D2_SpawnWitchBride(origin, angles);
 }
 
 public Action:Command_SpawnSpecial(client, args)
@@ -729,7 +729,7 @@ public Action:Command_SpawnSpecial(client, args)
 
 	origin[2] += 160;
 
-	L4D_SpawnSpecial(class, origin, angles);
+	L4D2_SpawnSpecial(class, origin, angles);
 }
 
 PrintL4D2IntWeaponAttrib(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)
