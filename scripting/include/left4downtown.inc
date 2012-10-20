@@ -67,11 +67,13 @@ forward Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3
 
 /**
  * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ * @remarks Only used for bot special spawns (not players)
  *
  * @param zombieClass	Zombie class that will be spawned.
- * @param vector		Vector coordinate where tank will be spawned
- * @param qangle		QAngle where tank will be facing
- * @return 				Pl_Handled to block witch from spawning, Pl_Continue otherwise.
+ * @param vector		Vector coordinate where special will be spawned
+ * @param qangle		QAngle where spcial will be facing
+ * @return 				Pl_Handled to block special from spawning, 
+ * 				Pl_Changed to change the zombie class type to spawn, Pl_Continue otherwise.
  */
 forward Action:L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Float:qangle[3]);
 
@@ -530,6 +532,7 @@ native L4D_SpawnTank(const Float:vector[3], const Float:qangle[3]);
 
 /**
  * @brief Calls ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&)
+ * @remarks Only used for bot special spawns (not players)
  *
  * @param vector	Vector coordinate where the SI will be spawned
  * @param qangle	QAngle where the SI will be facing
