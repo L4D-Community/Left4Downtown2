@@ -21,7 +21,7 @@ public Plugin:myinfo =
 	name = "L4D2 Downtown Extension Test Plugin",
 	author = "L4D2 Downtown Devs",
 	description = "Ensures functions/offsets are valid and provides commands to test-call most natives directly",
-	version = "0.5.2.3",
+	version = "0.5.4",
 	url = "http://code.google.com/p/left4downtown2"
 }
 
@@ -140,7 +140,7 @@ public OnPluginStart()
 	SearchForFunction("SpawnTank");
 	SearchForFunction("SpawnWitch");
 	SearchForFunction("OnSpawnSpecial");
-	SearchFocFunction("OnSpawnWitchBride");
+	SearchForFunction("OnSpawnWitchBride");
 	SearchForFunction("OnFirstSurvivorLeftSafeArea");
 	SearchForFunction("CDirector_GetScriptValueInt");
 	SearchForFunction("CDirector_GetScriptValueFloat");

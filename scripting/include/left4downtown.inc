@@ -66,7 +66,7 @@ forward Action:L4D_OnSpawnWitch(const Float:vector[3], const Float:qangle[3]);
 forward Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3]);
 
 /**
- * @brief CAlled whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
  *
  * @param zombieClass	Zombie class that will be spawned.
  * @param vector		Vector coordinate where tank will be spawned
