@@ -120,12 +120,12 @@ void InitializeValveGlobals()
 	g_pDirector = reinterpret_cast<CDirector **>(addr);
 
 	/* g_pZombieManager */
-/*	if (!g_pGameConf->GetMemSig("TheZombieManager", (void **)&addr) || !addr)
+	if (!g_pGameConf->GetMemSig("TheZombieManager", (void **)&addr) || !addr)
 	{
 	    L4D_DEBUG_LOG("Couldn't find ZombieManager instance!");
 		return;
 	}
-	g_pZombieManager = reinterpret_cast<void **>(addr); */
+	g_pZombieManager = reinterpret_cast<void **>(addr);
 
 	/* g_pWeaponInfoDatabase */
 	if (!g_pGameConf->GetMemSig("WeaponInfoDatabase", (void **)&addr) || !addr)
