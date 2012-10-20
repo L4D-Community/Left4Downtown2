@@ -716,10 +716,10 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 	unsigned char *vptr = vstk;
 	
 	cell_t* source_vector;
-	pContext->LocalToPhysAddr(params[1], &source_vector);
+	pContext->LocalToPhysAddr(params[2], &source_vector);
 
 	cell_t* source_qangle;
-	pContext->LocalToPhysAddr(params[2], &source_qangle);
+	pContext->LocalToPhysAddr(params[3], &source_qangle);
 
 	Vector vector;
 	QAngle qangle;
@@ -740,7 +740,7 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 	*(void**)vptr = *(void**) *g_pZombieManager;
 	vptr += sizeof(void*);
 	
-	*(cell_t*)vptr = *(cell_t*) &params[1];
+	*(cell_t*)vptr = params[1];
 	vptr += sizeof(ZombieClassType);
 
 	*(Vector**)vptr = &vector;

@@ -57,6 +57,25 @@ forward Action:L4D_OnSpawnTank(const Float:vector[3], const Float:qangle[3]);
 forward Action:L4D_OnSpawnWitch(const Float:vector[3], const Float:qangle[3]);
 
 /**
+ * @brief Called whenever ZombieManager::SpawnWitchBride(Vector&,QAngle&) is invoked
+ *
+ * @param vector	Vector coordinate where witch is spawned
+ * @param qangle	QAngle where witch will be facing
+ * @return 		Pl_Handled to block witch from spawning, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3]);
+
+/**
+ * @brief CAlled whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ *
+ * @param zombieClass	Zombie class that will be spawned.
+ * @param vector		Vector coordinate where tank will be spawned
+ * @param qangle		QAngle where tank will be facing
+ * @return 				Pl_Handled to block witch from spawning, Pl_Continue otherwise.
+ */
+forward Action:L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Float:qangle[3]);
+
+/**
  * @brief Called whenever CTerrorGameRules::ClearTeamScores(bool) is invoked
  * @remarks 	This resets the map score at the beginning of a map, and by checking 
  *                the campaign scores on a small timer you can see if they were reset as well.
@@ -499,6 +518,42 @@ native L4D2_SendInRescueVehicle();
  * @noreturn
  */
 native L4D2_ChangeFinaleStage(finaleType, const String:arg[]);
+
+/**
+ * @brief Calls ZombieManager::SpawnSpecial(Vector&,QAngle&)
+ *
+ * @param vector	Vector coordinate where the tank will be spawned
+ * @param qangle	QAngle where the tank will be facing
+ * @return 			Entity index of the spawned tank
+ */
+native L4D_SpawnTank(const Float:vector[3], const Float:qangle[3]);
+
+/**
+ * @brief Calls ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&)
+ *
+ * @param vector	Vector coordinate where the SI will be spawned
+ * @param qangle	QAngle where the SI will be facing
+ * @return 			Entity index of the spawned SI
+ */
+native L4D_SpawnSpecial(zombieClass, const Float:vector[3], const Float:qangle[3]);
+
+/**
+ * @brief Calls ZombieManager::SpawnWitch(Vector&,QAngle&)
+ *
+ * @param vector	Vector coordinate where the witch will be spawned
+ * @param qangle	QAngle where the witch will be facing
+ * @return 			Entity index of the spawned witch
+ */
+native L4D_SpawnWitch(const Float:vector[3], const Float:qangle[3]);
+
+/**
+ * @brief Calls ZombieManager::SpawnWitchBride(Vector&,QAngle&)
+ *
+ * @param vector	Vector coordinate where the witch bride will be spawned
+ * @param qangle	QAngle where the witch bride will be facing
+ * @return 			Entity index of the spawned witch bride
+ */
+native L4D_SpawnWitchBride(const Float:vector[3], const Float:qangle[3]);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS

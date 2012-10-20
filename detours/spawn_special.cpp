@@ -42,7 +42,7 @@ namespace Detours
 		if(g_pFwdOnSpawnSpecial)
 		{
 			L4D_DEBUG_LOG("L4D_OnSpawnSpecial forward has been sent out");
-			g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t*>(&zombieClassType), 1);
+			g_pFwdOnSpawnSpecial->PushCellByRef(reinterpret_cast<cell_t *>(&zombieClassType));
 			g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t*>(vector), 3);
 			g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t*>(qangle), 3);
 			g_pFwdOnSpawnSpecial->Execute(&result);
