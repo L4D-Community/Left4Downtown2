@@ -27,6 +27,7 @@ public Plugin:myinfo =
 
 new Handle:cvarBlockTanks = INVALID_HANDLE;
 new Handle:cvarBlockWitches = INVALID_HANDLE;
+new Handle:cvarBlockSpecials = INVALID_HANDLE;
 new Handle:cvarSetCampaignScores = INVALID_HANDLE;
 new Handle:cvarFirstSurvivorLeftSafeArea = INVALID_HANDLE;
 new Handle:cvarProhibitBosses = INVALID_HANDLE;
@@ -138,6 +139,8 @@ public OnPluginStart()
 	
 	SearchForFunction("SpawnTank");
 	SearchForFunction("SpawnWitch");
+	SearchForFunction("OnSpawnSpecial");
+	SearchFocFunction("OnSpawnWitchBride");
 	SearchForFunction("OnFirstSurvivorLeftSafeArea");
 	SearchForFunction("CDirector_GetScriptValueInt");
 	SearchForFunction("CDirector_GetScriptValueFloat");
@@ -216,6 +219,7 @@ public OnPluginStart()
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockWitches = CreateConVar("l4do_block_witches", "0", "Disable ZombieManager::SpawnWitch", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
+	cvarBlockSpecials = CreateConVar("l4do_block_specials", "0", "Disable ZombieManager::SpawnSpecial", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarSetCampaignScores = CreateConVar("l4do_set_campaign_scores", "0", "Override campaign score if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
 
 	cvarFirstSurvivorLeftSafeArea = CreateConVar("l4do_versus_round_started", "0", "Block versus round from starting if non-0", FCVAR_PLUGIN|FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -302,6 +306,38 @@ public Action:L4D_OnSpawnTank(const Float:vector[3], const Float:qangle[3])
 public Action:L4D_OnSpawnWitch(const Float:vector[3], const Float:qangle[3])
 {
 	DebugPrintToAll("OnSpawnWitch(vector[%f,%f,%f], qangle[%f,%f,%f])", 
+		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
+		
+	if(GetConVarBool(cvarBlockWitches))
+	{
+		DebugPrintToAll("Blocking witch spawn...");
+		return Plugin_Handled;
+	}
+	else
+	{
+		return Plugin_Continue;
+	}
+}
+
+public Action:L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Float:qangle[3])
+{
+	DebugPrintToAll("OnSpawnSpecial(zombieClass=%d, vector[%f,%f,%f], qangle[%f,%f,%f]", 
+		zombieClass, vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
+		
+	if(GetConVarBool(cvarBlockSpecials))
+	{
+		DebugPrintToAll("Blocking tank spawn...");
+		return Plugin_Handled;
+	}
+	else
+	{
+		return Plugin_Continue;
+	}
+}
+
+public Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3])
+{
+	DebugPrintToAll("OnSpawnWitchBride(vector[%f,%f,%f], qangle[%f,%f,%f])", 
 		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
 		
 	if(GetConVarBool(cvarBlockWitches))
