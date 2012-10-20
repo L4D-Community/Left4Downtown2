@@ -198,6 +198,11 @@ public OnPluginStart()
 	RegConsoleCmd("sm_horde", Command_Horde);
 	RegConsoleCmd("sm_spawntime", Command_SpawnTimer);
 	RegConsoleCmd("sm_l4d2timers", Command_L4D2Timers);
+
+	RegConsoleCmd("sm_spawntank", Command_SpawnTank);
+	RegConsoleCmd("sm_spawnwitch", Command_SpawnWitch);
+	RegConsoleCmd("sm_spawnwitchbrideg", Command_SpawnWitchBride);
+	RegConsoleCmd("sm_spawnspecial", Command_SpawnSpecial);
 	
 	RegConsoleCmd("sm_readweaponattr", Command_ReadWeaponAttributes);
 	RegConsoleCmd("sm_setiweaponattr", Command_SetIntWeaponAttr);
@@ -670,6 +675,52 @@ public Action:Command_L4D2Timers(client, args)
 	PrintL4D2ITimerJunk(client, "ChargerDeathTimer", L4D2IT_ChargerDeathTimer);
 #endif
 	return Plugin_Handled;
+}
+
+public Action:Command_SpawnTank(client, args)
+{
+	decl Float:origin[3], Float:angles[3];
+	GetClientAbsOrigin(client, origin);
+	GetClientAbsAngles(client, angles);
+
+	origin[2] += 160;
+
+	L4D_SpawnTank(origin, angles);
+}
+
+public Action:Command_SpawnWitch(client, args)
+{
+	decl Float:origin[3], Float:angles[3];
+	GetClientAbsOrigin(client, origin);
+	GetClientAbsAngles(client, angles);
+
+	origin[2] += 160;
+
+	L4D_SpawnWitch(origin, angles);
+}
+
+public Action:Command_SpawnWitchBride(client, args)
+{
+	decl Float:origin[3], Float:angles[3];
+	GetClientAbsOrigin(client, origin);
+	GetClientAbsAngles(client, angles);
+
+	origin[2] += 160;
+
+	L4D_SpawnWitchBride(origin, angles);
+}
+
+public Action:Command_SpawnSpecial(client, args)
+{
+	decl String:sClass[5], Float:origin[3], Float:angles[3];
+	GetCmdArg(1, sClass, sizeof(sClass));
+	new class = StringToInt(sClass);
+	GetClientAbsOrigin(client, origin);
+	GetClientAbsAngles(client, angles);
+
+	origin[2] += 160;
+
+	L4D_SpawnSpecial(class, origin, angles);
 }
 
 PrintL4D2IntWeaponAttrib(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)
