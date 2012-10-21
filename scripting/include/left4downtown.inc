@@ -522,7 +522,7 @@ native L4D2_SendInRescueVehicle();
 native L4D2_ChangeFinaleStage(finaleType, const String:arg[]);
 
 /**
- * @brief Calls ZombieManager::SpawnSpecial(Vector&,QAngle&)
+ * @brief Calls ZombieManager::SpawnTank(Vector&,QAngle&)
  *
  * @param vector	Vector coordinate where the tank will be spawned
  * @param qangle	QAngle where the tank will be facing
