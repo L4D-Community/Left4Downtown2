@@ -40,7 +40,7 @@
 extern void **g_pGameRules;		/* CTerrorGameRules */
 extern void **g_pEngine;		/* IVEngineServer */
 extern CDirector **g_pDirector;		/* Director */
-extern void **g_pZombieManager;	/* ZombieManager */
+extern void *g_pZombieManager;	/* ZombieManager */
 extern WeaponDatabase *g_pWeaponInfoDatabase; /* WeaponInfoDatabase */
 extern CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore; /* CMeleeWeaponInfo */
 

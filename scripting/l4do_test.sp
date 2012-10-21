@@ -202,7 +202,7 @@ public OnPluginStart()
 
 	RegConsoleCmd("sm_spawntank", Command_SpawnTank);
 	RegConsoleCmd("sm_spawnwitch", Command_SpawnWitch);
-	RegConsoleCmd("sm_spawnwitchbrideg", Command_SpawnWitchBride);
+	RegConsoleCmd("sm_spawnwitchbride", Command_SpawnWitchBride);
 	RegConsoleCmd("sm_spawnspecial", Command_SpawnSpecial);
 	
 	RegConsoleCmd("sm_readweaponattr", Command_ReadWeaponAttributes);
@@ -695,6 +695,7 @@ public Action:Command_SpawnTank(client, args)
 	origin[2] += 160;
 
 	L4D2_SpawnTank(origin, angles);
+	return Plugin_Handled;
 }
 
 public Action:Command_SpawnWitch(client, args)
@@ -706,6 +707,7 @@ public Action:Command_SpawnWitch(client, args)
 	origin[2] += 160;
 
 	L4D2_SpawnWitch(origin, angles);
+	return Plugin_Handled;
 }
 
 public Action:Command_SpawnWitchBride(client, args)
@@ -717,6 +719,7 @@ public Action:Command_SpawnWitchBride(client, args)
 	origin[2] += 160;
 
 	L4D2_SpawnWitchBride(origin, angles);
+	return Plugin_Handled;
 }
 
 public Action:Command_SpawnSpecial(client, args)
@@ -730,6 +733,7 @@ public Action:Command_SpawnSpecial(client, args)
 	origin[2] += 160;
 
 	L4D2_SpawnSpecial(class, origin, angles);
+	return Plugin_Handled;
 }
 
 PrintL4D2IntWeaponAttrib(client, const String:weapon[], const String:name[], L4D2IntWeaponAttributes:attr)

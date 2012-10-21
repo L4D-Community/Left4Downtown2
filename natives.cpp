@@ -692,7 +692,7 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper)
 	{
 		PassInfo passInfo;
-		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.flags = PASSFLAG_BYVAL;
 		passInfo.size = sizeof( CBaseEntity* );
 		passInfo.type = PassType_Basic;
 
@@ -701,13 +701,13 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(ZombieClassType); \
 			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].flags = PASSFLAG_BYVAL; \
 			pass[1].size = sizeof(Vector*); \
 			pass[1].type = PassType_Basic; \
-			pass[2].flags = PASSFLAG_BYREF; \
+			pass[2].flags = PASSFLAG_BYVAL; \
 			pass[2].size = sizeof(QAngle*); \
 			pass[2].type = PassType_Basic; \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 3));
 	}
 
 	CBaseEntity* entity;
@@ -737,7 +737,7 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 		qangle[2] = sp_ctof(source_qangle[2]);
 	}
 	
-	*(void**)vptr = *(void**) *g_pZombieManager;
+	*(void**)vptr = g_pZombieManager;
 	vptr += sizeof(void*);
 	
 	*(cell_t*)vptr = params[1];
@@ -764,16 +764,16 @@ cell_t L4D2_SpawnTank(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper)
 	{
 		PassInfo passInfo;
-		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.flags = PASSFLAG_BYVAL;
 		passInfo.size = sizeof( CBaseEntity* );
 		passInfo.type = PassType_Basic;
 
 		REGISTER_NATIVE_ADDR("SpawnTank", 
 			PassInfo pass[2]; \
-			pass[0].flags = PASSFLAG_BYREF; \
+			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(Vector*); \
 			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYREF; \
+			pass[1].flags = PASSFLAG_BYVAL; \
 			pass[1].size = sizeof(QAngle*); \
 			pass[1].type = PassType_Basic; \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
@@ -806,7 +806,7 @@ cell_t L4D2_SpawnTank(IPluginContext *pContext, const cell_t *params)
 		qangle[2] = sp_ctof(source_qangle[2]);
 	}
 	
-	*(void**)vptr = *(void**) *g_pZombieManager;
+	*(void**)vptr = g_pZombieManager;
 	vptr += sizeof(void*);
 
 	*(Vector**)vptr = &vector;
@@ -830,17 +830,17 @@ cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper)
 	{
 		PassInfo passInfo;
-		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.flags = PASSFLAG_BYVAL;
 		passInfo.size = sizeof( CBaseEntity* );
 		passInfo.type = PassType_Basic;
 
 		REGISTER_NATIVE_ADDR("SpawnWitch", 
 			PassInfo pass[2]; \
-			pass[0].flags = PASSFLAG_BYREF; \
-			pass[0].size = sizeof(Vector); \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(Vector*); \
 			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYREF; \
-			pass[1].size = sizeof(QAngle); \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(QAngle*); \
 			pass[1].type = PassType_Basic; \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
 	}
@@ -872,7 +872,7 @@ cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
 		qangle[2] = sp_ctof(source_qangle[2]);
 	}
 	
-	*(void**)vptr = *(void**) *g_pZombieManager;
+	*(void**)vptr = g_pZombieManager;
 	vptr += sizeof(void*);
 
 	*(Vector**)vptr = &vector;
@@ -896,17 +896,17 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper)
 	{
 		PassInfo passInfo;
-		passInfo.flags = PASSFLAG_OCTOR;
+		passInfo.flags = PASSFLAG_BYVAL;
 		passInfo.size = sizeof( CBaseEntity* );
 		passInfo.type = PassType_Basic;
 
 		REGISTER_NATIVE_ADDR("SpawnWitchBride", 
 			PassInfo pass[2]; \
-			pass[0].flags = PASSFLAG_BYREF; \
-			pass[0].size = sizeof(Vector); \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(Vector*); \
 			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYREF; \
-			pass[1].size = sizeof(QAngle); \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(QAngle*); \
 			pass[1].type = PassType_Basic; \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &passInfo, pass, 2));
 	}
@@ -938,7 +938,7 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 		qangle[2] = sp_ctof(source_qangle[2]);
 	}
 	
-	*(void**)vptr = *(void**) *g_pZombieManager;
+	*(void**)vptr = g_pZombieManager;
 	vptr += sizeof(void*);
 
 	*(Vector**)vptr = &vector;

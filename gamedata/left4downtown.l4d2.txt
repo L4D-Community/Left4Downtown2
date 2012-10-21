@@ -2,6 +2,22 @@
 {
 	"left4dead2"
 	{
+		"Addresses"
+		{
+			"ZombieManager"
+			{
+				"windows"
+				{
+					"signature"	"StartChangeLevel"
+					"read"	"245"
+				}
+				"linux"
+				{
+					"signature" "TheZombieManager"
+					"read" "0"
+				}
+			}
+		}
 		"Offsets"
 		{
 			/* Offset into CDirectorMusicBanks::OnRoundStart */
@@ -182,6 +198,12 @@
 			{
 				"library"	"server"
 				"linux"		"@TheDirector"
+			}
+			
+			"TheZombieManager"
+			{
+				"library"	"server"
+				"linux"		"@TheZombieManager"
 			}
 			
 			/* Find the WeaponInfo Database dictionary */
@@ -433,7 +455,6 @@
 				"linux" "@_ZN13ZombieManager8SpawnMobEi"
 				"windows" "\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x83\xEC\x08\x53\x56\x57"
 				/* A1 ? ? ? ? D9 40 ? 83 EC 08 53 56 57 */
-
 			}
 			
 			/*
@@ -670,6 +691,19 @@
 				"linux"		"@_ZN14CBaseAnimating22SelectWeightedSequenceE8Activity"
 				"windows"	"\x56\x8B\xF1\x83\x2A\x2A\x2A\x2A\x2A\x2A\x57\x8B\x2A\x2A\x2A\x2A\x2A\x75\x10\xE8\x2A\x2A\x2A\x2A\x85\xC0\x74\x07\x8B\xCE"
 				/* 56 8B F1 83 ? ? ? ? ? ? 57 8B ? ? ? ? ? 75 10 E8 ? ? ? ? 85 C0 74 07 8B CE */
+			}
+			
+			/*
+			 * InfoChangelevel::StartChangeLevel(Checkpoint  const*)
+			 * 
+			 * Used for finding ZombieManager on Windows
+			 */
+			"StartChangeLevel"
+			{
+				"library"	"server"
+				"linux"		"@_ZN15InfoChangelevel16StartChangeLevelEPK10Checkpoint"
+				"windows"	"\xA1\x2A\x2A\x2A\x2A\x83\x78\x30\x00\x56\x8B\xF1\x74\x12"
+				/* A1 ? ? ? ? 83 78 30 00 56 8B F1 74 12 */
 			}
 			
 /*********************************************************************

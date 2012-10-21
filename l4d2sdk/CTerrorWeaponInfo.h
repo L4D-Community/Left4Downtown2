@@ -31,7 +31,7 @@
 
 #ifndef _INCLUDE_CTERRORWEAPONINFO_H_
 #define _INCLUDE_CTERRORWEAPONINFO_H_
-#include "weapon_parse.h" 
+#include <weapon_parse.h>
 #include "utldict.h"
 
 class CCSWeaponInfo : public FileWeaponInfo_t { // 866 bytes
