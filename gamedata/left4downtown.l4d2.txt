@@ -30,7 +30,7 @@
 			"CDirectorScavengeMode"
 			{
 				"windows"	"8"   /* mov ecx, [esi+568h] */
-				"linux"		"31"  /* mov eax, [ebx+578h] */
+				"linux"		"32"  /* mov eax, [ebx+578h] */
 			}
 			
 			/* Offset from ConnectClientLobbyCheck to cmp with max players check
