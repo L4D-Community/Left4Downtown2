@@ -46,3 +46,4 @@ enum ZombieClassType
 };
 
 #endif //_INCLUDE_L4D2SDK_CONSTANTS_H_
+
