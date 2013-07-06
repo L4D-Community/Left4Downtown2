@@ -47,7 +47,7 @@
 			"VersusMaxCompletionScore"
 			{
 				"windows"	"1176"
-				"linux"		"1168"
+				"linux"		"3560"
 			}
 			/* Offset into CTerrorPlayer */
 			"SpawnTimer"
@@ -124,32 +124,34 @@
 			 */
 			"TakeOverBot"
 			{
-				"library"    "server"
+				"library"  "server"
 				"linux"    "@_ZN13CTerrorPlayer11TakeOverBotEb"
-				"windows" "\x81\x2A\x2A\x2A\x2A\x2A\x53\x55\x56\x8D\x2A\x2A\x2A\x57\x8B\xF1\x33\xDB"
-				/* 81 ? ? ? ? ? 53 55 56 8D ? ? ? 57 8B F1 33 DB */
+				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8D\x85"
+				/* 55 8B EC 81 EC ? ? ? ? ? ? ? ? ? ? ? ? ? ? 53 56 8D 85 */
 			}
 			
-			/* 
-			 * SurvivorBot::SetHumanSpectator(CTerrorPlayer*) 
+			/*
+			 * SurvivorBot::SetHumanSpectator(CTerrorPlayer*)
 			 */
 			"SetHumanSpec"
 			{
-				"library"	"server"
-				"linux"		"@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
-				"windows"	"\x53\x56\x8B\xF1\x33\xDB\x39\x2A\x2A\x2A\x2A\x2A\x7E\x2A\x5E\x32\xC0\x5B\xC2\x04\x00"
+				"library"  "server"
+				"linux"    "@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
+				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\x83\xBE\x44\x43\x00\x00\x00\x7E\x07\x32\xC0\x5E\x5D\xC2\x04"
+				/* 55 8B EC 56 8B F1 83 BE 44 43 00 00 00 7E 07 32 C0 5E 5D C2 04 */
 			}
-			
-			/* CDirectorScavengeMode::OnBeginRoundSetupTime
-		        *  used to reset the setup timer during scavenge mode
- 			*/
+
+			/*
+			 * CDirectorScavengeMode::OnBeginRoundSetupTime
+			 *  used to reset the setup timer during scavenge mode
+			 */
 			"CDirectorScavengeMode_OnBeginRoundSetupTime"
 			{
-				"library" 	"server"
-				"linux"		"@_ZN21CDirectorScavengeMode21OnBeginRoundSetupTimeEv"
-				"windows" 	"\x83\xEC\x10\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x51"
-				/* 83 EC 10 56 8B F1 E8 ? ? ? ? 84 C0 74 ? A1 ? ? ? ? D9 40 ? 51 */
+				"library"  "server"
+				"linux"    "@_ZN21CDirectorScavengeMode21OnBeginRoundSetupTimeEv"
+				"windows"  "\x55\x8B\xEC\x83\xEC\x10\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\xF3"
 			}
+
 			/* CTerrorGameRules::ResetRoundNumber
 			 *  used to reset the round number during scavenge mode
  			 */
@@ -260,25 +262,29 @@
 			}
 
 			/*
-			* ZombieManager::SpawnTank(Vector  const&, QAngle  const&)
-			*/
+			 * ZombieManager::SpawnTank(Vector  const&, QAngle  const&)
+			 *
+			 * find by Navarea variant method and "Failed to find a tank spawn position i"
+			 */
 			"SpawnTank"
 			{ 
-				"library" "server"
-				"linux" "@_ZN13ZombieManager9SpawnTankERK6VectorRK6QAngle"
-				"windows" "\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7C\x14\x8B\x0D\x2A\x2A\x2A\x2A\x39\x81\x2A\x2A\x2A\x2A\x7C\x06"
-				/* 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 7C 14 8B 0D ? ? ? ? 39 81 ? ? ? ? 7C 06 */
+				"library"  "server"
+				"linux"    "@_ZN13ZombieManager9SpawnTankERK6VectorRK6QAngle"
+				"windows"  "\x55\x8B\xEC\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39"
+				/* 55 8B EC 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 ? 8B 0D ? ? ? ? 39 */
 			}
-			
+
 			/*
-			* ZombieManager::SpawnWitch(Vector  const&, QAngle  const&)
-			*/
+			 * ZombieManager::SpawnWitch(Vector  const&, QAngle  const&)
+			 *
+			 * find by Navarea variant method and "Failed to find a witch spawn position i"
+			 */
 			"SpawnWitch"
 			{ 
-				"library" "server"
-				"linux" "@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
-				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7C\x13\x8B\x0D"
-					/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 7C 13 8B 0D */
+				"library"  "server"
+				"linux"    "@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
+				"windows"  "\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39\x81"
+				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 ? 8B 0D ? ? ? ? 39 81 */
 			}
 
 			/*
@@ -306,13 +312,15 @@
 			
 			/*
 			 * CDirector::OnFirstSurvivorLeftSafeArea(CTerrorPlayer *)
+			 *
+			 * string "Allowing spawning - %s left safe area\n"
 			 */
 			"OnFirstSurvivorLeftSafeArea"
 			{ 
-				"library" "server"
-				"linux" "@_ZN9CDirector27OnFirstSurvivorLeftSafeAreaEP13CTerrorPlayer"
-				"windows" "\x83\xEC\x10\x55\x8B\x6C\x24\x18\x56\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x55\xE8\x2A\x2A\x2A\x2A\x84\xC0"
-					/* 83 EC 10 55 8B 6C 24 18 56 8B F1 8B 8E ? ? ? ? 55 E8 ? ? ? ? 84 C0 */
+				"library"  "server"
+				"linux"    "@_ZN9CDirector27OnFirstSurvivorLeftSafeAreaEP13CTerrorPlayer"
+				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\x7D\x2A\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x57\xE8"
+				/* 55 8B EC 83 EC ? 56 57 8B 7D ? 8B F1 8B 8E ? ? ? ? 57 E8 */
 			}
 			
 			/*
@@ -513,14 +521,22 @@
 			}
 
 			/*
-			 *   CTerrorPlayer::OnRevived(void)const
-			 */
+			*  CTerrorPlayer::OnRevived(void)
+			*
+			*  ->Search for string "revive_success", then open vtables window. Should be the 5th member.
+			*  Left4Downtown2 patches this function, which will prevent Sourcemod from finding it
+			*  That is why the first six bytes are wild cards
+			*  With so many wildcards at the start, we need many more bytes to find a unique signature
+			*  The original signature remains commented out, for posterity
+			*/
 			"CTerrorPlayer_OnRevived"
 			{
 				"library"   "server"
 				"linux"     "@_ZN13CTerrorPlayer9OnRevivedEv"
-				"windows"   "\x83\xEC\x38\x53\x55\x56\x8B\xF1\x8B\x06\x8B\x90"
-				/* 83 EC 38 53 55 56 8B F1 8B 06 8B 90 */
+				"windows"   "\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xF1\x8B\x06\x8B\x90\x24\x01\x00\x00\x57\xff\xd2\x84\xc0\x0f\x84\x7C"
+				/* ? ? ? ? ? ? ? ? ? F1 8B 06 8B 90 24 01 00 00 57 ff d2 84 c0 0f 84 7C */
+				/* "windows"   "\x55\x8B\xEC\x83\xEC\x3C\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x24\x01\x00\x00\x57\xFF\xD2\x84\xC0\x0F\x84\x7C"
+				/* 55 8B EC 83 EC 3C 53 56 8B F1 8B 06 8B 90 24 01 00 00 57 ff d2 84 c0 0f 84 7C */
 			}
 			
 			/*
@@ -661,7 +677,7 @@
 			"ChangeFinaleStage"
 			{
 				"library"	"server"
-				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_15FinaleStageTypeEPKc"
+				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_18ScriptedEventStageEPKc"
 				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x8B\x9C\x2A\x2A\x2A\x2A\x2A\x57\x53\x68"
 				/* ? ? ? ? ? ? 53 8B 9C ? ? ? ? ? 57 53 68 */
 			}
