@@ -481,10 +481,10 @@
 			 */
 			"CTerrorPlayer_OnShovedBySurvivor"
 			{
-				"library"	"server"
-				"linux"	"@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
-				"windows" "\x81\xEC\x2A\x2A\x2A\x2A\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x2A\x2A\x2A\x2A\x2A\x8B\x8C\x2A\x2A\x2A\x2A\x2A\x55\x33\xED\x3B\xCD\x74"
-				/* 81 EC ? ? ? ? 56 8B F1 E8 ? ? ? ? 84 C0 0F ? ? ? ? ? 8B 8C ? ? ? ? ? 55 33 ED 3B CD 74 */
+				"library"    "server"
+				"linux"    "@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
+				"windows" "\x55\x8B\xEC\x81\xEC\xF8\x00\x00\x00\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x53\x8B"
+				/* 55 8B EC 81 EC F8 00 00 00 ? ? ? ? ? ? ? ? ? ? 53 8B */
 			}
 			
 			/*
@@ -662,10 +662,10 @@
 			 */
 			"SendInRescueVehicle"
 			{
-				"library"	"server"
-				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
-				"windows"	"\x83\xEC\x18\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1\x6A\x00\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x68"
-                /* 83 EC 18 56 68 ? ? ? ? 8B F1 6A 00 B9 ? ? ? ? E8 ? ? ? ? 85 C0 75 ? 68 */
+				"library"  "server"
+				"linux"    "@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
+				"windows"  "\x55\x8B\xEC\x83\xEC\x18\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1"
+				/* 55 8B EC 83 EC 18 56 68 ? ? ? ? 8B F1 */
 			}
 			
 			/*
