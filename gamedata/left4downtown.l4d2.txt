@@ -75,15 +75,19 @@
 		"Signatures"
 		{
 			
-			/* 
-			* CTerrorGameRules::GetTeamScore(int,bool)
-			*/
+			/*
+			 * CTerrorGameRules::GetTeamScore(int,bool)
+			 * Find "Staying on original map %s\n"
+			 * -> CDirector::Restart(void)
+			 * -> showed up near "info_window"
+			 * -> called twice along with another function called twice (CterrorGameRules::UpdateChapterScores)
+			 */
 			"GetTeamScore"
 			{
-					"library"    "server"
-					"linux"    "@_ZN16CTerrorGameRules12GetTeamScoreEib"
-				"windows" "\x8B\x2A\x2A\x2A\x85\xC0\x2A\x2A\x33\xC0\xC2" // found by psychonic
-				/* 8B ? ? ? 85 C0 ? ? 33 C0 C2 */
+				"library"  "server"
+				"linux"    "@_ZN16CTerrorGameRules12GetTeamScoreEib"
+				"windows"  "\x55\x8B\xEC\x8B\x2A\x2A\x85\xC0\x2A\x2A\x33\xC0\x5D\xC2"
+				/* 55 8B EC 8B ? ? 85 C0 ? ? 33 C0 5D C2 */
 			}
 			
 			/*
@@ -91,10 +95,10 @@
 			 */
 			"SetCampaignScores" 
 			{
-				"library"	"server"
-				"linux"		"@_ZN16CTerrorGameRules17SetCampaignScoresEii"
-				"windows" "\x56\x8D\x44\x2A\x2A\x8D\xB1\x2A\x2A\x2A\x2A\x50\x6A\x00\x8B\xCE\xE8\x2A\x2A\x2A\x2A\x8D\x4C\x2A\x2A\x51\x6A\x01\x8B\xCE\xE8\x2A\x2A\x2A\x2A\x5E\xC2\x08\x00"
-					/* 56 8D 44 ? ? 8D B1 ? ? ? ? 50 6A 00 8B CE E8 ? ? ? ? 8D 4C ? ? 51 6A 01 8B CE E8 ? ? ? ? 5E C2 08 00 */
+				"library"  "server"
+				"linux"    "@_ZN16CTerrorGameRules17SetCampaignScoresEii"
+				"windows"  "\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x8B\xF1\x39\xBE\x2A\x2A\x2A\x2A\x74\x2A\xE8\x2A\x2A\x2A\x2A\x89"
+				/* 55 8B EC 56 57 8B 7D 08  8B F1 39 BE ? ? ? ? 74 ? E8 ? ? ? ? 89 */
 			}
 			
 			/*
@@ -102,9 +106,10 @@
 			 */
 			"ClearTeamScores"
 			{
-				"library"	"server"
-				"linux"		"@_ZN16CTerrorGameRules15ClearTeamScoresEb"
-				"windows" "\x51\x53\x55\x56\x8B\xE9\x57\x33\xDB\x33\xF6**********\x50\x56"
+				"library"  "server"
+				"linux"    "@_ZN16CTerrorGameRules15ClearTeamScoresEb"
+				"windows"  "\x55\x8B\xEC\x51\x0F\x57\xC0\x53\x56\x57\x33\xDB\x8B"
+				/* 55 8B EC 51 0F 57 C0 53  56 57 33 DB 8B */
 			}
 			
 			/*
@@ -284,7 +289,7 @@
 				"library"  "server"
 				"linux"    "@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
 				"windows"  "\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39\x81"
-				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 ? 8B 0D ? ? ? ? 39 81 */
+				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 */
 			}
 
 			/*
@@ -295,9 +300,8 @@
 				"library" "server"
 				"linux" "@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
 				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\xC2"
-					/* 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 ? C2 */
+				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 */
 			}
-			
 			
 			/*
 			* CDirectorVersusMode::OnVersusRoundStarted()
@@ -307,7 +311,7 @@
 				"library" "server"
 				"linux" "@_ZN19CDirectorVersusMode20OnVersusRoundStartedEv"
 				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x11\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x51\xD9\x1C\x24"
-					/* 8B 0D ? ? ? ? 85 C9 74 11 A1 ? ? ? ? D9 40 ? 51 D9 1C 24 */
+				/* 8B 0D ? ? ? ? 85 C9 74 11 A1 ? ? ? ? D9 40 ? 51 D9 1C 24 */
 			}
 			
 			/*
