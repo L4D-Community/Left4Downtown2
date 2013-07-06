@@ -9,7 +9,7 @@
 				"windows"
 				{
 					"signature"	"StartChangeLevel"
-					"read"	"245"
+					"read"	"293"
 				}
 				"linux"
 				{
@@ -645,14 +645,14 @@
 			/*
 			 *	CTerrorMeleeWeapon::StartMeleeSwing(CTerrorPlayer *, bool)
 			 *
-			 *  find from TestMeleeSwingCollision (string "MeleeSlashSplatter") xref -> DoMeleeSwing -> xref of that
+			 *  find "melee attack failed - !IsWeaponVisible" in CTerrorWeapon::PrimaryAttack and look for a call followed by some sse xmm0 calls.
 			 */
 			"StartMeleeSwing"
 			{
 				"library"	"server"
 				"linux"		"@_ZN18CTerrorMeleeWeapon15StartMeleeSwingEP13CTerrorPlayerb"
-				"windows"	"\x53\x55\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B\xE8\x33\xDB\x3B\xEB\x0F"
-				/* 53 55 56 8B F1 8B 86 ? ? ? ? 50 B9 ? ? ? ? E8 ? ? ? ? 8B E8 33 DB 3B EB 0F */
+				"windows"	"\x55\x8B\xEC\x53\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9"
+				/* 55 8B EC 53 56 8B F1 8B 86 ? ? ? ? 50 B9 */
 			}
 			
 			/*
@@ -678,8 +678,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_18ScriptedEventStageEPKc"
-				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x8B\x9C\x2A\x2A\x2A\x2A\x2A\x57\x53\x68"
-				/* ? ? ? ? ? ? 53 8B 9C ? ? ? ? ? 57 53 68 */
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x00\x00\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x08\x56\x8B\x75\x0C\x57\x53"
+				/* 55 8B EC 81 EC ? ? 00 00 A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D 08 56 8B 75 0C 57 53 */
 			}
 
 			/*
@@ -692,34 +692,36 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN19CDirectorVersusMode18EndVersusModeRoundEb"
-				"windows"	"\x83\xEC\x10\x57\x8B\xF9\xE8"
-				/* 83 EC 10 57 8B F9 E8 */
+				"windows"	"\x55\x8B\xEC\x83\xEC\x2A\x57\x8B\xF9\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x84"
+				/* 55 8B EC 83 EC ? 57 8B F9 E8 ? ? ? ? 84 C0 0F 84 */
 			}
 
 			/*
 			 *	int CBaseAnimating::SelectWeightedSequence(int Activity)
 			 *
-			 * - first called func in CMultiPlayerAnimState::AddToGestureSlot (string "CMultiPlayerAnimState::AddToGestureSlot - unknown activity %d")
+			 * - Called at the end of CTerrorPlayer::SelectWeightedSequence()
+			 * NOTE - WARNING - This function should probably be hooked using vtable methods!!!!!!!! DEPRECATE
 			 */
 			"SelectWeightedSequence"
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CBaseAnimating22SelectWeightedSequenceE8Activity"
-				"windows"	"\x56\x8B\xF1\x83\x2A\x2A\x2A\x2A\x2A\x2A\x57\x8B\x2A\x2A\x2A\x2A\x2A\x75\x10\xE8\x2A\x2A\x2A\x2A\x85\xC0\x74\x07\x8B\xCE"
-				/* 56 8B F1 83 ? ? ? ? ? ? 57 8B ? ? ? ? ? 75 10 E8 ? ? ? ? 85 C0 74 07 8B CE */
+				"windows"	"\x55\x8B\xEC\x56\x8B\xF1\x83\xBE\x2A\x2A\x2A\x2A\x00\x57\x8B\xBE"
+				/* 55 8B EC 56 8B F1 83 BE ? ? ? ? 00 57 8B BE */
 			}
 			
 			/*
 			 * InfoChangelevel::StartChangeLevel(Checkpoint  const*)
 			 * 
 			 * Used for finding ZombieManager on Windows
+			 * - String "Would change level, but not going to!\n" is unique to this function
 			 */
 			"StartChangeLevel"
 			{
 				"library"	"server"
 				"linux"		"@_ZN15InfoChangelevel16StartChangeLevelEPK10Checkpoint"
-				"windows"	"\xA1\x2A\x2A\x2A\x2A\x83\x78\x30\x00\x56\x8B\xF1\x74\x12"
-				/* A1 ? ? ? ? 83 78 30 00 56 8B F1 74 12 */
+				"windows"	"\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\x83\x78\x30\x00\x56\x8B\xF1\x74"
+				/* 55 8B EC A1 ? ? ? ? 83 78 30 00 56 8B F1 74 */
 			}
 			
 /*********************************************************************
