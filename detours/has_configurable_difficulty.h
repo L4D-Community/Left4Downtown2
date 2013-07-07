@@ -49,41 +49,8 @@ private: //note: implementation of DetourTemplate abstracts
 	// get the signature name (i.e. "HasConfigurableDifficulty") from the game conf
 	virtual const char * GetSignatureName()
 	{
-#ifdef PLATFORM_LINUX
 		return "HasConfigurableDifficulty";
 	}
-#elif defined PLATFORM_WINDOWS
-		return NULL;
-	}
-	
-	virtual unsigned char *GetSignatureAddress()
-	{
-		unsigned char* signature;
-		if (!gameconf->GetMemSig("DifficultyChanged", (void**)&signature) || !signature) 
-		{ 
-			g_pSM->LogError(myself, "Detour -- Could not find DifficultyChanged signature");
-			return NULL;
-		}
-		int offset;
-		if (!gameconf->GetOffset("HasConfigurableDifficultySetting", &offset) || !offset)
-		{
-			g_pSM->LogError(myself, "Detour -- Could not find HasConfigurableDifficultySetting offset");
-			return NULL;
-		}
-		L4D_DEBUG_LOG("Calculated HasConfigurableDifficulty address %p + offset %d = %p", signature, offset, (int)signature + offset);
-		int functionoffset = *(int *)((int)signature + offset);
-		L4D_DEBUG_LOG("HasConfigurableDifficulty Call offset %p + %d", (int)signature + offset + 4, functionoffset);
-		signature = (unsigned char *)((int)signature + offset + 4 + functionoffset);
-		L4D_DEBUG_LOG("About to read from calculated HasConfigurableDifficulty address %p", signature);
-		// first byte should be a call
-		if(*signature != 0xE8)
-		{
-			g_pSM->LogError(myself, "Byte compare failed for HasConfigurableDifficulty function at %p", signature);
-			return NULL;
-		}
-		return signature;
-	}
-#endif
 
 	//notify our patch system which function should be used as the detour
 	virtual HasConfigurableDifficultyFunc GetDetour()
