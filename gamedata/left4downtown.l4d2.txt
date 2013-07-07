@@ -41,20 +41,27 @@
 					"signature" "CMeleeWeaponInfoStore"
 				}
 			}
+			
+			"CDirector"
+			{
+				"windows"
+				{
+					"signature" "DirectorMusicBanks_OnRoundStart"				
+					"read" "12"					
+				}
+				"linux"
+				{
+					"signature" "TheDirector"
+				}
+			}
 		}
 		"Offsets"
 		{
-			/* Offset into CDirectorMusicBanks::OnRoundStart */
-			"TheDirector"
-			{
-				"windows"	"8"
-			}
-			
 			/* Offset into CDirector::AreWanderersAllowed */
 			"CDirectorScavengeMode"
 			{
-				"windows"	"8"   /* mov ecx, [esi+568h] */
-				"linux"		"32"  /* mov eax, [ebx+578h] */
+				"windows"	"11"   /* mov ecx, [esi+offs] */
+				"linux"		"13"  /* mov eax, [ebx+offs] */
 			}
 			
 			/* Offset from ConnectClientLobbyCheck to cmp with max players check
@@ -67,22 +74,23 @@
 				"linux"		"42"  /* cmp edi, [esi+17ch] -> cmp edi, imm32 */
 			}
 			
-			/* Offset into g_pGameRules */
+			/* Member variable offset into CTerrorGameRules 
+			 *
+			 * - Look for CTerrorGameRules::GetVersusMaxCompletionScore, which is ref'd
+			 * - by CL4DGameStats::AddSurvivorStats--unique string "CharacterId"
+			 */
 			"VersusMaxCompletionScore"
 			{
-				"windows"	"1176"
+				"windows"	"3568"
 				"linux"		"3560"
 			}
-			/* Offset into CTerrorPlayer */
+			
+			/* Offset into CTerrorPlayer 
+			*/
 			"SpawnTimer"
 			{
 				"windows"	"11268"
 				"linux"		"11252"
-			}
-			/* Offset into DifficultyChanged() */
-			"HasConfigurableDifficultySetting"
-			{
-				"windows"	"49"
 			}
 		}
 		
@@ -516,13 +524,15 @@
 			
 			/*
 			 *   CTerrorPlayer::GetRunTopSpeed(void)const
+			 *
+			 * - Only references to float value 115.0 (00 00 E6 42) are in this func.
 			 */
 			"CTerrorPlayer_GetRunTopSpeed"
 			{
 				"library"	"server"
 				"linux"	"@_ZNK13CTerrorPlayer14GetRunTopSpeedEv"
-				"windows" "\x83\xEC\x2A\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x84\xC0\x74\x2A\xA1"
-				/* 83 EC ? 56 8B F1 8B 06 8B 90 ? ? ? ? FF D2 84 C0 74 ? A1 */
+				"windows" "\x55\x8B\xEC\x83\xEC\x2A\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x84\xC0\x74\x0D\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x5E"
+				/* 55 8B EC 83 EC ? 56 8B F1 8B 06 8B 90 ? ? ? ? FF D2 84 C0 74 0D A1 ? ? ? ? D9 40 ? 5E */
 			}
 			
 			/*
@@ -562,43 +572,34 @@
 			{
 				"library"	"server"
 				"linux"	"@_Z13GetDifficultyv"
-				"windows" "\xA1\x2A\x5C\x68\x10\xC3"
-				/* A1 ? 5C 68 10 C3 */
+				"windows" "\xA1\x2A\x48\x7A\x10\xC3"
+				/* A1 ? 48 7A 10 C3 */
 			}
 			
 			/*
 			 *	 CTerrorGameRules::HasConfigurableDifficultySetting(void)
+			 *
+			 * - Look for string "hasdifficulty"
 			 */
 			"HasConfigurableDifficulty"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules32HasConfigurableDifficultySettingEv"
-				"windows"	"\xE8\x2A\xFC\xFF\xFF\x84\xC0\x75\x0C\xE8\x2A\x2A\xFF\xFF\x84\xC0\x75\x03\x33\xC0\xC3\xB8\x01\x00\x00\x00\xC3"
-				/* E8 ? FC FF FF 84 C0 75 0C E8 ? ? FF FF 84 C0 75 03 33 C0 C3 B8 01 00 00 00 C3 */
-
-				/* Using offset for windows */
+				"windows"	"\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x75\x1B\xE8\x2A\x2A\x2A\x2A\x84"
+				/* 8B 0D ? ? ? ? 85 C9 75 1B E8 ? ? ? ? 84 */
 			}
 			
 			/*
-			 *	 DifficultyChanged(ConVar *)
-			 *		Only used for windows to find HasConfigurableDifficulty
-			 */
-			"DifficultyChanged"
-			{
-				"library"	"server"
-				"linux"		"@_ZL17DifficultyChangedP7IConVarPKcf"
-				"windows"	"\x8B\x44\x24\x04\x83\xEC\x08\x53\x57\x50\x8D\x4C\x24\x0C\xE8\x2A\x2A\x2A\x2A\x8B"
-				/* 8B 44 24 04 83 EC 08 53 57 50 8D 4C 24 0C E8 ? ? ? ? 8B */
-			}
-			/*
 			 *   CTerrorGameRules::GetSurvivorSet(void)
+			 *
+			 * - string "survivor_set"
 			 */
 			"GetSurvivorSet"
 			{
 				"library"	"server"
 				"linux"	"@_ZN16CTerrorGameRules14GetSurvivorSetEv"
-				"windows" "\xA1\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\x56\x8D"
-				/* A1 ? ? ? ? 85 C0 75 ? 56 8D */
+				"windows" "\x55\x8B\xEC\x51\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\x53"
+				/* 55 8B EC 51 8B 0D ? ? ? ? 8B 01 8B 50 ? 53 */
 			}
 			
 			/*
