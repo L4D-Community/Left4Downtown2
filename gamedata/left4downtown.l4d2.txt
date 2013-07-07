@@ -299,9 +299,9 @@
 			*/
 			"SpawnWitchBride"
 			{ 
-				"library" "server"
-				"linux" "@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
-				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x2A\xC2"
+				"library"  "server"
+				"linux"    "@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
+				"windows"  "\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75"
 				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 */
 			}
 			
@@ -402,8 +402,8 @@
 			{
 				"library"  "server"
 				"linux"    "@_ZNK9CDirector8IsFinaleEv"
-				"windows"  "\x8B\x81\x2A\x2A\x2A\x2A\x33\xC\x83\x38\x2A\x0F\x95\xC0\xC3"
-				/* 8B 81 ? ? ? ? 33 C  83 38 ? 0F 95 C0 C3 */
+				"windows"  "\x8B\x81\x2A\x2A\x2A\x2A\x33\xC9\x83\x38\x2A\x0F\x95\xC0\xC3"
+				/* 8B 81 ? ? ? ? 33 C9 83 38 ? 0F 95 C0 C3 */
 			}
 			
 			/*
