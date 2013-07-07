@@ -481,8 +481,8 @@
 			{
 				"library"  "server"
 				"linux"    "@_ZN13ZombieManager8SpawnMobEi"
-				"windows"  "\x55\x8B\xEC\xA1\x60\xCB\x7E\x10\xF3\x0F\x10\x40\x2A\x83\xEC\x2A\x53\x56\x57"
-				/* 55 8B EC A1 60 CB 7E 10 F3 0F 10 40 ? 83 EC ? 53 56 57 */
+				"windows"  "\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\xF3\x0F\x10\x40\x2A\x83\xEC\x2A\x53\x56\x57"
+				/* 55 8B EC A1 ? ? ? ? F3 0F 10 40 ? 83 EC ? 53 56 57 */
 			}
 			
 			/*
