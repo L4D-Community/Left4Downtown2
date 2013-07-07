@@ -591,59 +591,61 @@
 			
 			/*
 			 *   CTerrorGameRules::FastGetSurvivorSet(void)
+			 *
+			 * - Should be 2 calls after "DistToMechanic" in CTerrorPlayer::ModifyOrAppendCriteria
 			 */
 			"FastGetSurvivorSet"
 			{
 				"library"	"server"
 				"linux"	"@_ZN16CTerrorGameRules18FastGetSurvivorSetEv"
-				"windows" "\x56\xBE\x02\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x74"
-				/* 56 BE 02 ? ? ? E8 ? ? ? ? 85 C0 74 */
+				"windows" "\xA1\x2A\x2A\x2A\x2A\x85\xC0\x75\x0A\xE8"
+				/* A1 ? ? ? ? 85 C0 75 0A E8 */
 			}
 			
 			/*
 			 *	CDirectorVersusMode::GetMissionVersusBossSpawning(float&, float&, float&, float&)
+			 *
+			 * - string "versus_boss_spawning" hits in 2 functions: This short func and the much longer InitVersusBossSpawning
 			 */
 			 
 			"GetMissionVersusBossSpawning"
 			{
 				"library"	"server"
 				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_"			
-				"windows"	"\x6A\x00\xE8\x2A\x2A\x2A\x2A\x83\xC4\x04\x85\xC0\x75\x05\x32\xC0\xC2\x10\x00"
-				/* 6A 00 E8 ? ? ? ? 83 C4 04 85 C0 75 05 32 C0 C2 10 00 */
+				"windows"	"\x55\x8B\xEC\x6A\x00\xE8\x2A\x2A\x2A\x2A\x83\xC4\x04\x85"
+				/* 55 8B EC 6A 00 E8 ? ? ? ? 83 C4 04 85 */
 			}
 			
 			/*
 			 *	CTerrorGameRules::GetMissionCurrentMap(KeyValues **)
+			 *
+			 * - Look for string "chapter" (unique on windows only) in CDirector:OnMapLoaded.
+			 * - Function called right before that with 0 as arg.
+			 * NOTE/WARNING: This function is incredibly non-unique!!!! Replace with a native implementation!!
 			 */
 			"GetMissionCurrentMap"
 			{
 				"library"	"server"
 				"linux" 	"@_ZN16CTerrorGameRules20GetMissionCurrentMapEPP9KeyValues"
-				"windows"	"\x56\x57\x8B\x7C\x2A\x2A\x85\xFF\x74\x2A\xC7\x2A\x2A\x2A\x2A\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x2A\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x2A\x5F\x5E\xC3\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x11\x8B\x42\x2A\x57\x56\xFF\xD0\x8B"
+				"windows"	"\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x85\xFF\x74\x06\xC7\x07\x00\x00\x00\x00\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x04\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x04\x5F\x5E\x5D\xC3\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x11\x8B\x42\x08\x57\x56\xFF\xD0\x8B"
+				/* 
+				 * 68 byte signature. Fuck me.
+				 * 55 8B EC 56 57 8B 7D 08 85 FF 74 06 C7 07 00 00 00 00 8B 0D ? ? ? ? 8B 01 8B 50 28 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 5F 5E 5D C3 8B 0D ? ? ? ? 8B 11 8B 42 08 57 56 FF D0 8B 
+				 */
 			}
 			
 			/*
 			 *	CThrow::ActivateAbililty()
 			 *		Start a tank rock throw
+			 * 
+			 * - "HulkZombie.Throw.Fail" has 2 refs in this function. Should be easy to find.
 			 */
 			"CThrowActivate"
 			{
 				"library"	"server"
 				"linux"		"@_ZN6CThrow15ActivateAbilityEv"
-				"windows"	"\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x83\xF8\xFF\x0F\x84\xEC\x01"
-				/*  53 8B D9 8B 83 ? ? ? ? 83 F8 FF 0F 84 EC 01 */
-			}
-			
-			/*
-			 *	InfectedShoved::OnShoved(Infected *, CBaseEntity *)
-			 *		Common Infected gets staggered
-			 */
-			"OnInfectedShoved"
-			{
-				"library"	"server"
-				"linux"		"@_ZN14InfectedShoved8OnShovedEP8InfectedP11CBaseEntity"
-				"windows"	"\x8B\x44\x2A\x2A\x50\xE8\x2A\x2A\x2A\x2A\x8B\x44\x2A\x2A\x33\xC9\xC7"
-				/* 8B 44 ? ? 50 E8 ? ? ? ? 8B 44 ? ? 33 C9 C7 */
+				"windows"	"\x55\x8B\xEC\x51\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x83"
+				/* 55 8B EC 51 53 8B D9 8B 83 ? ? ? ? 83 */
 			}
 			
 			/*
@@ -841,26 +843,31 @@
 				Resets the Director's natural horde timer. Normally this
 				is called when a horde is spawned naturally or by boomer.
 				Small function, nearly hits another segment in the file.
-				The offset 0x1CC is the unique portion.
+				
+				- Find it through only xref, which is setting up ScriptDesc structures: string "Trigger a mob as soon as possible when..."
+				- If you go past the first call, you should hit unique bytes in sig making
 				*/
 			"ResetMobTimer"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
-				"windows"	"\xD9\xEE\x51\x81\xC1\xD4\x01\x00\x00\xD9\x1C\x24\xE8\x2A\x2A\x2A\x2A\xC3"
-							/* D9 EE 51 81 C1 D4 01 00 00 D9 1C 24 E8 ? ? ? ? C3 */
+				"windows"	"\x55\x8B\xEC\x51\x56\x57\x8D\xB9\x2A\x2A\x2A\x2A\x8B\xCF\xE8\x2A\x2A\x2A\x2A\xD9"
+							/* 55 8B EC 51 56 57 8D B9 ? ? ? ? 8B CF E8 ? ? ? ? D9 */
 			}
 			/* CGameRulesProxy::NotifyNetworkStateChanged()
 				This function is called before changing a variety of 
 				pieces of networked data (data which is reflected in network
 				game states).
+				
+				- Find "Going to intermission...\n" in CGameRules::GoToIntermission
+				- Last call in the func
 				*/
 			"NotifyNetworkStateChanged"
 			{
 				"library"	"server"
 				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
-				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x42"
-							/* A1 ? ? ? ? 85 C0 74 42 */
+				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x2A\x80\x78"
+							/* A1 ? ? ? ? 85 C0 74 ? 80 78 */
 			}
 		}
 	}
