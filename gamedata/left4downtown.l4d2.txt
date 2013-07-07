@@ -17,6 +17,30 @@
 					"read" "0"
 				}
 			}
+			"WeaponInfoDatabase"
+			{
+				"windows"
+				{
+					"signature" "ReadWeaponDataFromFileForSlot"
+					"read" "75"
+				}
+				"linux"
+				{
+					"signature" "WeaponInfoDatabase"
+				}
+			}
+			"MeleeWeaponInfoStore"
+			{
+				"windows"
+				{
+					"signature" "CTerrorPlayer_GiveNamedItem"
+					"read" "340"
+				}
+				"linux"
+				{
+					"signature" "CMeleeWeaponInfoStore"
+				}
+			}
 		}
 		"Offsets"
 		{
@@ -59,16 +83,6 @@
 			"HasConfigurableDifficultySetting"
 			{
 				"windows"	"49"
-			}
-			/* Offset into ReadWeaponDataFromFileForSlot_SubCall_01 */
-			"WeaponInfoDatabase"
-			{
-				"windows"	"12"
-			}
-			/* Offset into MeleeWeaponInfoStore_Construction */
-			"CMeleeWeaponInfoStore"
-			{
-				"windows"	"11"
 			}
 		}
 		
@@ -222,12 +236,15 @@
 				"linux"		"@_ZL20m_WeaponInfoDatabase"
 			}
 			
-			/* We can find the WeaponInfoDatabase location in this sub on windows */
+			/* We can find the WeaponInfoDatabase location in this sub on windows 
+			 *
+			 * - Look for "scripts/%s", should be the ref that's furthest into a func.
+			*/
 			"ReadWeaponDataFromFileForSlot"
 			{
-				"library"        "server"
-				"windows"        "\x83\xEC\x08\x85\xF6\x74\x2A\x8D\x04\x24\x50\xB9"
-					/* 83 EC 08 85 F6 74 ? 8D 04 24 50 B9 */
+				"library"	"server"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x8B\x45\x14\x53\x8B\x5D\x10"
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 8B 45 14 53 8B 5D 10 */
 			}
 			
 			/* Find the Melee Weapon Info dictionary */
@@ -237,13 +254,16 @@
 				"linux"		"@g_MeleeWeaponInfoStore"
 			}
 			
-			/* We can find the CMeleeWeaponInfo location in this sub on windows */
-			"MeleeWeaponInfoStore_Construction"
+			/* We can find the CMeleeWeaponInfo location in this sub on windows 
+			 *
+			 * - "NULL Ent '%s' in GiveNamedItem!\n" is unique in thie function
+			 * - There are at least 3 calls using the g_MeleeWeaponInfoStore here--use some brain for offset.
+			 */
+			"CTerrorPlayer_GiveNamedItem"
 			{
-				"library"        "server"
-				"windows"        "\x53\x8B\xD9\x8B\x83\x2A\x2A\x2A\x2A\x50\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75\x09\xB8\x2A\x2A\x2A\x2A\x5B\xC2"
-					/* 53 8B D9 8B 83 ? ? ? ? 50 B9 ? ? ? ? E8 ? ? ? ? 85 C0 75 09 B8 ? ? ? ? 5B C2*/
-
+				"library"	"server"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x8B\x45\x14\x53\x8B\x5D\x08"
+					/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 8B 45 14 53 8B 5D 08 */
 			}
 			
 			/*
@@ -431,19 +451,6 @@
 			}
 			
 			/*
-			 * CDirector::SpawnMobs(void) - fired every frame, useless
-			 *
-			 * is xref to OnMobRushStart
-			 */
-			"CDirector_SpawnMobs"
-			{
-				"library"	"server"
-				"linux"	"@_ZN9CDirector9SpawnMobsEv"
-				"windows" "\xA1\x2A\x2A\x2A\x2A\x83\x2A\x2A\x2A\x56\x8B\xF1\x75\x2A\x83\x2A\x2A\x2A\x2A\x2A\x2A\x75\x2A\xD9\xEE"
-				/* A1 ? ? ? ? 83 ? ? ? 56 8B F1 75 ? 83 ? ? ? ? ? ? 75 ? D9 EE */
-			}
-			
-			/*
 			 * ZombieManager::SpawnITMob(int) - used for bile hordes, increases spawn count
 			 *
 			 * has strings in it
@@ -472,13 +479,17 @@
 			
 			/*
 			 *   CTerrorPlayer::OnStaggered(CBaseEntity *, Vector  const*) - used by L4D2 on Survivors, causes staggering (e.g. Charger Impact nearby)
+			 *
+			 * - string "PlayerShoved" has 3 refs, the one furthest into a function should be this one.
 			 */
 			"CTerrorPlayer_OnStaggered"
 			{
 				"library"	"server"
 				"linux"	"@_ZN13CTerrorPlayer11OnStaggeredEP11CBaseEntityPK6Vector"
-				"windows" "\x83\xEC\x2A\x53\x55\x56\x57\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x2A\x2A\x2A\x2A\x2A\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x8B\xCE\xFF\xD2\x84\xC0\x0F"
-				/* 83 EC ? 53 55 56 57 8B F1 E8 ? ? ? ? 84 C0 0F ? ? ? ? ? 8B 06 8B 90 ? ? ? ? 8B CE FF D2 84 C0 0F */
+				"windows" "\x53\x8B\xDC\x83\xEC\x2A\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x85\x73\x08"
+				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 83 EC ? 56 57 8B F1 E8 ? ? ? ? 84 C0 0F 85 73 08 
+				 * Using a long local jump as the unique portion (last few bytes of sig)
+				 */
 			}
 			
 			/*
