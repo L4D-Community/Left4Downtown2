@@ -117,8 +117,8 @@ if AMBuild.mode == "config":
         compiler.AddToListVar("POSTLINKFLAGS", "-lm")
         compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "tier1_i486.a"))
         compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "mathlib_i486.a"))
-        compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "libvstdlib.so"))
-        compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "libtier0.so"))
+        compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "libvstdlib_srv.so"))
+        compiler.AddToListVar("POSTLINKFLAGS", os.path.join(envvars["HL2SDKL4D2"], "lib", "linux", "libtier0_srv.so"))
 
     if AMBuild.options.debug:
         compiler.AddToListVar("CDEFINES", "_DEBUG")
