@@ -103,7 +103,8 @@ if AMBuild.mode == "config":
         compiler.AddToListVar("CXXFLAGS", "-Werror")
         compiler.AddToListVar("CFLAGS", "-Wno-switch")
         compiler.AddToListVar("CFLAGS", "-Wno-unused")
-        compiler.AddToListVar("CFLAGS", "-mfpmath=sse")
+        if not isinstance(cxx, Cpp.Clang):
+            compiler.AddToListVar("CFLAGS", "-mfpmath=sse")
         compiler.AddToListVar("CFLAGS", "-msse")
         compiler.AddToListVar("CFLAGS", "-m32")
         compiler.AddToListVar("CXXFLAGS", "-Wno-non-virtual-dtor")
