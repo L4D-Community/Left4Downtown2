@@ -101,7 +101,7 @@ void InitializeValveGlobals()
 		L4D_DEBUG_LOG("WeaponInfoDatabase address not found.");
 		return;
 	}
-	g_pWeaponInfoDatabase = addr;
+	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(addr);
 	L4D_DEBUG_LOG("WeaponInfoDatabase found at: %p", g_pWeaponInfoDatabase);
 	
 	/* g_pMeleeWeaponInfoStore */
