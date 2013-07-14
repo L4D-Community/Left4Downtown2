@@ -247,6 +247,7 @@
     <ClInclude Include="..\detours\send_in_rescue_vehicle.h" />
     <ClInclude Include="..\detours\start_melee_swing.h" />
     <ClInclude Include="..\l4d2sdk\CMeleeWeaponInfo.h" />
+    <ClInclude Include="..\l4d2sdk\constants.h" />
     <ClInclude Include="..\l4d2sdk\l4d2calls.h" />
     <ClInclude Include="..\convar_public.h" />
     <ClInclude Include="..\detours\cthrow_activate_ability.h" />

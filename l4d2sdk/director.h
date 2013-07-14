@@ -32,6 +32,7 @@
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
 #include "l4d2timers.h"
+#include "constants.h"
 
 // 1128 bytes
 typedef struct _CDirectorItemManager {

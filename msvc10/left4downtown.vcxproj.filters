@@ -323,5 +323,8 @@
     <ClInclude Include="..\detours\spawn_witchbride.h">
       <Filter>detours</Filter>
     </ClInclude>
+    <ClInclude Include="..\l4d2sdk\constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
