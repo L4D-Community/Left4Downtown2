@@ -364,8 +364,8 @@
 			{
 				"library"  "server"
 				"linux"    "@_ZN9CDirector14GetScriptValueEPKci"
-				"windows"  "\x55\x8B\xEC\x0F\xB7\x51\x2A\x0F\xBF\xC2\x83\xF8\x2A\x77"
-				/* 55 8B EC 0F B7 51 ? 0F BF C2 83 F8 ? 77 */
+				"windows"  "\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x45\x2A\x8B"
+				/* 55 8B EC 8B 81 ? ? ? ? 83 EC 10 83 F8 FF ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 8B 45 ? 8B */
 			}
 			
 			/*
@@ -375,8 +375,8 @@
 			{
 				"library"  "server"
 				"linux"    "@_ZN9CDirector14GetScriptValueEPKcf"
-				"windows"  "\x55\x8B\xEC\x51\x0F\xB7\x51"
-				/* 55 8B EC 51 0F B7 51 */
+				"windows"  "\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xD9"
+				/* 55 8B EC 8B 81 ? ? ? ? 83 EC 10 83 F8 FF ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? D9 */
 			}
 			
 			/*
@@ -442,7 +442,7 @@
 				"library"  "server"
 				"linux"    "@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
 				"windows"  "\x55\x8B\xEC\x51\x83\x7D\x08\x00\x56\x8B\xF1\x89"
-				/* 55 8B EC 51 83 7D 08 00  56 8B F1 89 */
+				/* 55 8B EC 51 83 7D 08 00 56 8B F1 89 */
 			}
 			
 			/*
@@ -881,6 +881,17 @@
 				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
 				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x2A\x80\x78"
 							/* A1 ? ? ? ? 85 C0 74 ? 80 78 */
+			}
+			/*
+			*  SurvivorBot::UseHealingItems(Action<SurvivorBot> *)
+			*/
+			"UseHealingItems"
+			{
+				"library"	"server"
+				"linux"    "@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
+				"windows"  "\x55\x8B\xEC\x83\xEC\x20\x53\x56\x8B\xD9\x57\x8D\x8B"
+				/* 55 8B EC 83 EC 20 53 56 8B D9 57 8D 8B */
+				/* Search: "Trying to heal a friend" */
 			}
 		}
 	}
