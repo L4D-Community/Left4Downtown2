@@ -67,11 +67,13 @@
 			/* Offset from ConnectClientLobbyCheck to cmp with max players check
 			   
 			   string #Valve_Reject_Server_Full
+			   TODO is this offset even needed anymore?  I think this is legacy, because ConnectClientLobbyCheck sig now locates the jz directly
+			   And other code in player_slots.cpp is changing the jz to nops
 			 */
 			"ValveRejectServerFullFirst"
 			{
-				"windows"	"31"  /* cmp eax, [esi+180h] -> cmp eax, imm32 */ 
-				"linux"		"42"  /* cmp edi, [esi+17ch] -> cmp edi, imm32 */
+//				"windows"	"31"  /* cmp eax, [esi+180h] -> cmp eax, imm32 */ 
+//				"linux"		"42"  /* cmp edi, [esi+17ch] -> cmp edi, imm32 */
 			}
 			
 			/* Member variable offset into CTerrorGameRules 
@@ -86,10 +88,11 @@
 			}
 			
 			/* Offset into CTerrorPlayer 
+			*  Is this right?  How do we find it?
 			*/
 			"SpawnTimer"
 			{
-				"windows"	"11268"
+//				"windows"	"11268"
 				"linux"		"11252"
 			}
 		}
@@ -114,13 +117,19 @@
 			
 			/*
 			 * CTerrorGameRules::SetCampaignScores(int,int)
+			 * Search for unique string "singlechapter"
+			 * -> has two xref from same function, CTerrorGameRules::IsSingleChapterMode()
+			 * -> has two xref, one is CRestartGameIssue::ExecuteCommand() (exclude the other, CServerGameDLL::ServerHibernationUpdate(), which has string "FCVAR_NEVER_AS_STRING")
+			 * -> CRestartGameIssue::ExecuteCommand() calls CDirectorVersusMode::VoteRestartVersusLevel() (fourth call..?)
+			 * -> first call is CTerrorGameRules::SetCampaignScores()
+			 * make sure to double check uniqueness when done
 			 */
 			"SetCampaignScores" 
 			{
 				"library"  "server"
 				"linux"    "@_ZN16CTerrorGameRules17SetCampaignScoresEii"
-				"windows"  "\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x8B\xF1\x39\xBE\x2A\x2A\x2A\x2A\x74\x2A\xE8\x2A\x2A\x2A\x2A\x89"
-				/* 55 8B EC 56 57 8B 7D 08  8B F1 39 BE ? ? ? ? 74 ? E8 ? ? ? ? 89 */
+				"windows"  "\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x8B\xF1\x39\xBE\x2A\x2A\x2A\x2A\x74\x2A\xE8\x2A\x2A\x2A\x2A\x89\xBE\x2A\x2A\x2A\x2A\x8B"
+				/* 55 8B EC 56 57 8B 7D 08 8B F1 39 BE ? ? ? ? 74 ? E8 ? ? ? ? 89 BE ? ? ? ? 8B */
 			}
 			
 			/*
@@ -148,40 +157,51 @@
 			
 			/*
 			 * CTerrorPlayer::TakeOverBot
+			 * unique string "[TAKEOVER]: %s (%d) possessed %s"
 			 */
 			"TakeOverBot"
 			{
 				"library"  "server"
 				"linux"    "@_ZN13CTerrorPlayer11TakeOverBotEb"
-				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8D\x85"
-				/* 55 8B EC 81 EC ? ? ? ? ? ? ? ? ? ? ? ? ? ? 53 56 8D 85 */
+				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x8D\x85"
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 56 8D 85 */
 			}
 			
 			/*
 			 * SurvivorBot::SetHumanSpectator(CTerrorPlayer*)
+			 * Very similar to BossZombiePlayerBot::SetHumanSpectator()
+			 * SurvivorBot version has 5 xref (one of them is CTerrorPlayer::TakeOverBot), BossZombie has just 1 (CTerrorPlayer::TakeOverBot)
 			 */
 			"SetHumanSpec"
 			{
 				"library"  "server"
 				"linux"    "@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
-				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\x83\xBE\x44\x43\x00\x00\x00\x7E\x07\x32\xC0\x5E\x5D\xC2\x04"
-				/* 55 8B EC 56 8B F1 83 BE 44 43 00 00 00 7E 07 32 C0 5E 5D C2 04 */
+				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\x83\xBE\x2A\x2A\x2A\x2A\x00\x7E\x07\x32\xC0\x5E\x5D\xC2\x04\x00\x8B\x0D"
+				/* 55 8B EC 56 8B F1 83 BE ? ? ? ? 00 7E 07 32 C0 5E 5D C2 04 00 8B 0D */
 			}
 
 			/*
 			 * CDirectorScavengeMode::OnBeginRoundSetupTime
 			 *  used to reset the setup timer during scavenge mode
+			 * has one of five references to string "ready_countdown"
 			 */
 			"CDirectorScavengeMode_OnBeginRoundSetupTime"
 			{
 				"library"  "server"
 				"linux"    "@_ZN21CDirectorScavengeMode21OnBeginRoundSetupTimeEv"
 				"windows"  "\x55\x8B\xEC\x83\xEC\x10\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\xF3"
+				/* 55 8B EC 83 EC 10 56 8B F1 E8 ? ? ? ? 84 C0 74 ? F3 */
 			}
 
 			/* CTerrorGameRules::ResetRoundNumber
 			 *  used to reset the round number during scavenge mode
- 			 */
+ 			 * Search for unique string "singlechapter"
+			 * -> has two xref from same function, CTerrorGameRules::IsSingleChapterMode()
+			 * -> has two xref, one is CRestartGameIssue::ExecuteCommand() (exclude the other, CServerGameDLL::ServerHibernationUpdate(), which has string "FCVAR_NEVER_AS_STRING")
+			 * -> calls CTerrorGameRules::GetMissionFirstMap (TODO more detail on where this is)
+			 * -> xref from CDirector::Rematch
+			 * -> CTerrorGameRules::ResetRoundNumber is called right before CTerrorGameRules::IsVersusMode
+			 */
 			"CTerrorGameRules_ResetRoundNumber"
 			{
 				"library" 	"server"
@@ -192,6 +212,8 @@
 			
 			/* CTerrorGameRules::SetRoundEndTime(float)
 			 *  used to freeze the scavenge game clock
+			 * start with unique string "scavenge_round_halftime" in function CDirectorScavengeMode::EndScavengeRound
+			 * -> first call in CDirectorScavengeMode::EndScavengeRound
  			 */
 			"CTerrorGameRules_SetRoundEndTime"
 			{
@@ -202,8 +224,10 @@
 			}
 			
 			
-			/* Used to get offset for CDirectorScavengeMode 
-				*(director + offset) == ptr to CDirectorScavengeMode
+			/* CDirector::AreWanderersAllowed(void)
+			*  Used to get offset for CDirectorScavengeMode 
+			*	*(director + offset) == ptr to CDirectorScavengeMode
+			*  has unique string "AlwaysAllowWanderers"
  			*/
 			"CDirector_AreWanderersAllowed"
 			{
@@ -213,8 +237,10 @@
 				/* 55 8B EC 83 EC ? 56 8B  F1 8B 8E ? ? ? ? 8D 45 FF */
 			}
 			
-			/* Used solely to get the offset for TheDirector */
-			/* CDirectorMusicBanks::OnRoundStart */
+			/* Used solely to get the offset for TheDirector
+			*  CDirectorMusicBanks::OnRoundStart 
+			*  Has unique string "Event.Reveal"
+			*/
 			"DirectorMusicBanks_OnRoundStart"
 			{
 				"library"  "server"
@@ -247,6 +273,8 @@
 			/* We can find the WeaponInfoDatabase location in this sub on windows 
 			 *
 			 * - Look for "scripts/%s", should be the ref that's furthest into a func.
+			 *  OR
+			 *  Look for unique string "scripts/weapon_manifest.txt", then look in same func for almost unique string "Expecting 'file', got %s\n", should be two calls before that string
 			*/
 			"ReadWeaponDataFromFileForSlot"
 			{
@@ -276,6 +304,10 @@
 			
 			/*
 			 * CDirector::RestartScenarioFromVote(const char*)
+			 * Search for unique string "singlechapter"
+			 * -> has two xref from same function, CTerrorGameRules::IsSingleChapterMode()
+			 * -> has two xref, one is CRestartGameIssue::ExecuteCommand() (exclude the other, CServerGameDLL::ServerHibernationUpdate(), which has string "FCVAR_NEVER_AS_STRING")
+			 * -> Last call in CRestartGameIssue::ExecuteCommand
 			 */
 			"RestartScenarioFromVote"
 			{
@@ -287,19 +319,25 @@
 			
 			/*
 			* ZombieManager::SpawnSpecial(ZombieClassType, Vector  const&, QAngle  const&)
+			* Be careful, there are a few overrides for SpawnSpecial
+			* Make sure the one you have has like 11 xrefs, 6 from CCommentaryZombieSpawner::InputSpawnZombie
+			* To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
 			*/
 			"SpawnSpecial"
 			{ 
 				"library"  "server"
 				"linux"    "@_ZN13ZombieManager12SpawnSpecialE15ZombieClassTypeRK6VectorRK6QAngle"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x53\x56\x57\x8B\x7D\x0C\x8B\xD9"
-				/* 55 8B EC 83 EC ? 53 56  57 8B 7D 0C 8B D9 */
+				"windows"  "\x55\x8B\xEC\x53\x8B\x5D\x08\x8D\x43\xFF\x56"
+				/* 55 8B EC 53 8B 5D 08 8D 43 FF 56 */
 			}
 
 			/*
 			 * ZombieManager::SpawnTank(Vector  const&, QAngle  const&)
 			 *
 			 * find by Navarea variant method and "Failed to find a tank spawn position i"
+			 * OR 			
+			 * To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
+			 * SpawnTank will be called after string "tank"
 			 */
 			"SpawnTank"
 			{ 
@@ -313,6 +351,9 @@
 			 * ZombieManager::SpawnWitch(Vector  const&, QAngle  const&)
 			 *
 			 * find by Navarea variant method and "Failed to find a witch spawn position i"
+			 * OR 			
+			 * To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
+			 * SpawnWitch will be called after string "witch"
 			 */
 			"SpawnWitch"
 			{ 
@@ -324,6 +365,8 @@
 
 			/*
 			* ZombieManager::SpawnWitchBride(Vector  const&, QAngle  const&)
+			* Has three xref, one is CInfoZombieSpawn::SpawnZombie (shared with SpawnWitch above)
+			* where SpawnWitch is the third call after string "bride", and SpawnWitchBride is the second call after "bride"
 			*/
 			"SpawnWitchBride"
 			{ 
@@ -335,13 +378,16 @@
 			
 			/*
 			* CDirectorVersusMode::OnVersusRoundStarted()
+			* Unused?  Nothing in source accesses this signature
+			* Last call in CDirector::OnFirstSurvivorLeftSafeArea()
+			* Also has string "versus_round_start"
 			*/
 			"OnVersusRoundStarted"
 			{ 
 				"library" "server"
 				"linux" "@_ZN19CDirectorVersusMode20OnVersusRoundStartedEv"
-				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x11\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x51\xD9\x1C\x24"
-				/* 8B 0D ? ? ? ? 85 C9 74 11 A1 ? ? ? ? D9 40 ? 51 D9 1C 24 */
+				"windows" "\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x2A\xA1\x2A\x2A\x2A\x2A\xF3\x0F\x2A\x2A\x2A\x51\xF3\x0F\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B"
+				/* 8B 0D ? ? ? ? 85 C9 74 ? A1 ? ? ? ? F3 0F ? ? ? 51 F3 0F ? ? ? E8 ? ? ? ? 8B */
 			}
 			
 			/*
@@ -359,6 +405,8 @@
 			
 			/*
 			 * CDirector::GetScriptValue(const char*, int)
+			 * Find CTerrorPlayer::OnRevived(), then look for string SurvivorMaxIncapacitatedCount
+			 * If you look for string "No conversion from %s to int now\n" you will be one call too deep
 			 */
 			"CDirector_GetScriptValueInt"
 			{
@@ -370,6 +418,7 @@
 			
 			/*
 			 * CDirector::GetScriptValue(const char*, float)
+			 * Called in CDirector::OnMobRushStart
 			 */
 			"CDirector_GetScriptValueFloat"
 			{
@@ -381,6 +430,7 @@
 			
 			/*
 			 * CDirector::GetScriptValue(const char*, const char*, char*, int)
+			 * unique string "OnChangeFinaleMusic", call right after it
 			 */
 			"CDirector_GetScriptValueString"
 			{
@@ -392,17 +442,20 @@
 			
 			/*
 			 * CDirector::IsFinaleEscapeInProgress(void)
+			 * unique string "#L4D_idle_spectator" in CTerrorPlayer::PreThink()
+			 * CDirector::IsFinaleEscapeInProgress is a couple calls before the string, and a couple calls after CountdownTimer::Now
 			 */
 			"CDirector_IsFinaleEscapeInProgress"
 			{
 				"library" "server"
 				"linux" "@_ZNK9CDirector24IsFinaleEscapeInProgressEv"
 				"windows" "\x8B\x81\x2A\x2A\x2A\x2A\x83\x38\x2A\x75\x03\x32\xC0\xC3\x33\xC0\x83\xB9\x2A\x2A\x2A\x2A\x02\x0F\x94\xC0\xC3"
-					 /* 8B 81 ? ? ? ? 83 38 ? 75 03 32 C0 C3 33 C0 83 B9 ? ? ? ? 02 0F 94 C0 C3 */
+				/* 8B 81 ? ? ? ? 83 38 ? 75 03 32 C0 C3 33 C0 83 B9 ? ? ? ? 02 0F 94 C0 C3 */
 			}
 			
 			/*
 			 * CTerrorPlayer::CanBecomeGhost(bool areSpawnsDisabled)
+			 * unique string "ghost_spawn_time"
 			 */
 			"CTerrorPlayer_CanBecomeGhost"
 			{
@@ -414,6 +467,7 @@
 			
 			/*
 			 * CTerrorPlayer::OnEnterGhostState()
+			 * almost unique string spawnmode_bar has three refs, one ref has strings "zombieClass" and "data"
 			 */
 			"CTerrorPlayer_OnEnterGhostState"
 			{
@@ -436,6 +490,7 @@
 			
 			/*
 			 * CDirector::TryOfferingTankBot(void)
+			 * unique string "Tank offer: Starting the lottery\n"
 			 */
 			"TryOfferingTankBot"
 			{
@@ -454,14 +509,14 @@
 			{
 				"library"  "server"
 				"linux"    "@_ZN9CDirector14OnMobRushStartEv"
-				"windows"  "\xF3\x0F\x10\x2A\x2A\x2A\x2A\x10\x51\xF3\x0F\x11\x04\x24\x68\xB8"
-				/* F3 0F 10 ? ? ? ? 10 51 F3 0F 11 04 24 68 B8 */
+				"windows"  "\x55\x8B\xEC\x83\xEC\x08\xA1\x2A\x2A\x2A\x2A\xF3\x0F\x10\x40\x2A\x56\x57\x51"
+				/* 55 8B EC 83 EC 08 A1 ? ? ? ? F3 0F 10 40 ? 56 57 51 */
 			}
 			
 			/*
 			 * ZombieManager::SpawnITMob(int) - used for bile hordes, increases spawn count
 			 *
-			 * has strings in it
+			 * search for unique strings with "SpawnITMob"
 			 */
 			"Zombiemanager_SpawnITMob"
 			{
@@ -472,10 +527,10 @@
 			}
 			
 			/*
-			 * ZombieManager::SpawnITMob(int) - used for natural/z_spawn 
+			 * ZombieManager::SpawnMob(int) - used for natural/z_spawn 
 			 *		hordes, increases spawn count and calls horde music, etc
 			 *
-			 * has more strings in it
+			 * search for unique strings with "SpawnMob"
 			 */
 			"Zombiemanager_SpawnMob"
 			{
@@ -502,17 +557,19 @@
 			
 			/*
 			 *   CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer*, Vector  const&) - used by L4D2 on Special Infected (got melee'd)
+			 * unique string "jockey_ride" in CTerrorPlayer::OnLeptOnSurvivor(), look up for "JockeyZombie.Ride", look up for var_14, CTerrorPlayer::OnShovedBySurvivor is call after that
 			 */
 			"CTerrorPlayer_OnShovedBySurvivor"
 			{
 				"library"    "server"
 				"linux"    "@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
-				"windows" "\x55\x8B\xEC\x81\xEC\xF8\x00\x00\x00\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x53\x8B"
-				/* 55 8B EC 81 EC F8 00 00 00 ? ? ? ? ? ? ? ? ? ? 53 8B */
+				"windows" "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x0C\x56\x57\x8B\x7D\x08\x8B\xF1"
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D 0C 56 57 8B 7D 08 8B F1 */
 			}
 			
 			/*
 			 *   CTerrorPlayer::GetWalkTopSpeed(void)const
+			 *  an xref from GetRunTopSpeed
 			 */
 			"CTerrorPlayer_GetWalkTopSpeed"
 			{
@@ -537,6 +594,7 @@
 			
 			/*
 			 *   CTerrorPlayer::GetCrouchTopSpeed(void)const
+			 *  an xref from GetRunTopSpeed
 			 */
 			"CTerrorPlayer_GetCrouchTopSpeed"
 			{
@@ -646,7 +704,7 @@
 				 * 55 8B EC 56 57 8B 7D 08 85 FF 74 06 C7 07 00 00 00 00 8B 0D ? ? ? ? 8B 01 8B 50 28 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 5F 5E 5D C3 8B 0D ? ? ? ? 8B 11 8B 42 08 57 56 FF D0 8B 
 				 */
 			}
-			
+
 			/*
 			 *	CThrow::ActivateAbililty()
 			 *		Start a tank rock throw
@@ -664,7 +722,7 @@
 			/*
 			 *	CTerrorMeleeWeapon::StartMeleeSwing(CTerrorPlayer *, bool)
 			 *
-			 *  find "melee attack failed - !IsWeaponVisible" in CTerrorWeapon::PrimaryAttack and look for a call followed by some sse xmm0 calls.
+			 *  find "melee attack failed - !IsWeaponVisible" in CTerrorWeapon::PrimaryAttack and look for a call (being passed ptr and float) followed by some sse xmm0 calls.
 			 */
 			"StartMeleeSwing"
 			{
@@ -718,7 +776,7 @@
 			/*
 			 *	int CBaseAnimating::SelectWeightedSequence(int Activity)
 			 *
-			 * - Called at the end of CTerrorPlayer::SelectWeightedSequence()
+			 * - Called at the end of CTerrorPlayer::SelectWeightedSequence() (found via string "Hulk_RunAttack1_Gesture")
 			 * NOTE - WARNING - This function should probably be hooked using vtable methods!!!!!!!! DEPRECATE
 			 */
 			"SelectWeightedSequence"
@@ -756,12 +814,19 @@
 			*
 			* On Windows overriding it doesn't fix the server browser,
 			* but it does break scavenge mode (like the map doesn't support scavenge)
+			*
+			* Find via string "playercontrolledzombies", unique in Linux, inlined a few times in Windows
+			* look for an inline that is very short and returns either 8 or 4 as a result
+			* Commented out since the note above suggests it breaks scavenge?
+			* Since it is inlined, its signature will look a LOT like CTerrorGameRules::HasPlayerControlledZombies()
+			* this sig is probably also excessively wild carded (lots of very short local jumps that are probably safe)
 			*/
 			"GetMaxHumanPlayers"
 			{
 				"library" "server"
 				"linux" "@_ZNK16CTerrorGameRules18GetMaxHumanPlayersEv"
-				"windows" "\xF7\x05\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\xB8\x2A\x2A\x2A\x2A\xEB\x2A\xA1\x2A\x2A\x2A\x2A\x8B\x40\x2A\x85\xC0\x75\x2A\xB8\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x8B\x11\x50\x8B\x2A\x2A\xFF\xD0\x85\xC0\x74\x2A\x6A\x00\x68\x2A\x2A\x2A\x2A\x8B\xC8\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7E"
+//				"windows" "\xF7\x05\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\xB8\x2A\x2A\x2A\x2A\xEB\x2A\xA1\x2A\x2A\x2A\x2A\x8B\x40\x2A\x85\xC0\x75\x2A\xB8\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x8B\x11\x50\x8B\x2A\x2A\xFF\xD0\x85\xC0\x74\x2A\x6A\x00\x68\x2A\x2A\x2A\x2A\x8B\xC8\xE8\x2A\x2A\x2A\x2A\x85\xC0\xB8"
+				/*  F7 05 ? ? ? ? ? ? ? ? 74 ? B8 ? ? ? ? EB ? A1 ? ? ? ? 8B 40 ? 85 C0 75 ? B8 ? ? ? ? 8B ? ? ? ? ? 8B 11 50 8B ? ? FF D0 85 C0 74 ? 6A 00 68 ? ? ? ? 8B C8 E8 ? ? ? ? 85 C0 B8 */
 			}
 			
 			/*
@@ -775,13 +840,14 @@
 				}
 			*/
 			
-			/* CServerGameClients::GetPlayerLimits(int& , int&, int&) */
-			
+			/* CServerGameClients::GetPlayerLimits(int& , int&, int&)
+			*  Sig is still broken, cannot find in Windows
+			*/
 			"GetPlayerLimits"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK18CServerGameClients15GetPlayerLimitsERiS0_S0_"
-				"windows"    "\x8B\x44\x24\x04\x8B\x4C\x24\x08\xC7\x00\x2A\x2A\x2A\x2A\xC7\x01\x2A\x2A\x2A\x2A\x8B\x10"
+//				"windows"    "\x8B\x44\x24\x04\x8B\x4C\x24\x08\xC7\x00\x2A\x2A\x2A\x2A\xC7\x01\x2A\x2A\x2A\x2A\x8B\x10"
 					/* 8B 44 24 04 8B 4C 24 08 C7 00 ? ? ? ? C7 01 ? ? ? ? 8B 10 */
 			}
 			
@@ -789,17 +855,14 @@
 			* int CBaseServer::GetMasterServerPlayerCounts(int &, int &, int &)
 			* 
 			* Used to override server browser maxplayers reporting (Windows)
+			* Search for string: "increased_maxplayers", call is just before the string
 			*/
 			"GetMasterServerPlayerCounts"
 			{
 				"library" "engine"
 				"linux" "@_ZN11CBaseServer27GetMasterServerPlayerCountsERiS0_S0_"
-				"windows" "\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x8B\x4C\x24\x08\x89\x01\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x2A\x8B\x11\x8B\x42\x48"
-
-				/* 
-56 8B F1 E8 ? ? ? ? 8B 4C 24 08 89 01 8B 0D ? ? ? ? 85 C9 74 ? 8B 11 8B 42 48
-				*/
-
+				"windows"    "\x55\x8B\xEC\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x8B\x4D\x2A\x89\x01\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74"
+                /* windows: 55 8B EC 56 8B F1 E8 ? ? ? ? 8B 4D ? 89 01 8B 0D ? ? ? ? 85 C9 74 */
 			}
 			
 			/* Not an actual function,
@@ -809,20 +872,22 @@
 			   */
 			"ConnectClientLobbyCheck"
 			{
-				/* look for "#Valve_Reject_Server_Full" */
+				/* look for jz between "#Valve_Reject_Server_Full" and "#Valve_Reject_Bad_Password" in Windows
+				 * On Linux, look in CBaseServer::ConnectClient touching an offset close to the Windows offset for maxplayers
+				 * For 2.1.2.5 this offset was esi+17Ch on Linux and esi+180h on Windows */
 				"library"	"engine"
-				"linux"		"\x8B\x2A\x2A\x2A\x00\x00\x85\x2A\x74\x2C"
-                /* 8B ? ? ? 00 00 85 ? 74 2C */
+				"linux"		"\x74\x2A\x8B\x4D\x2C\x8B\x49\x0C"
+                /* 74 ? 8B 4D 2C 8B 49 0C */
 
-				"windows"	"\x74\x2A\x8B\x54\x2A\x2A\x8B\x06\x8B\x7A\x2A\x8B\x50\x2A\x8B\xCE\xFF\xD2\x2B\xF8\x8B\x06\x8B\x50\x2A\x8B\xCE\xFF\xD2\x03\xC7"
-					/* 74 ?  8B 54 ?  ?  8B 06 8B 7A ?  8B 50 ?  8B CE FF D2 2B F8 8B 06 8B 50 ?  8B CE FF D2 03 C7 */			
+				"windows"    "\x74\x2A\x8B\x55\x2A\x8B\x06\x8B\x7A\x2A\x8B\x50"
+                /* windows: 74 ? 8B 55 ? 8B 06 8B 7A ? 8B 50 */
 			}
 			
 			
 			/* Not an actual function,
 			   This rejects players when there are all full human players
 			   
-			   string "Human player limit reached (%d/%d)"
+			   jl just before string "Human player limit reached (%d/%d)"
 			   
 			   deprecated on linux: This function checks GetMaxHumanPlayers 
 					on linux, so patching this to an unconditional jump 
@@ -831,10 +896,10 @@
 			"HumanPlayerLimitReached"
 			{
 				"library"	"server"
-				"linux"		"\x7E\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A"
+//				"linux"		"\x7E\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x2A"
 				/* linux: 7E ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? 89 ? ? ? 8B ? ? */
-				"windows" "\x7C\x2A\x8B\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x50\x57\x68\x2A\x2A\x2A\x2A\x51\x52\xE8\x2A\x2A\x2A\x2A\x83\xC4\x2A\x5F\x5E\x32\xC0\x5B"
-				/* windows: 7C ?  8B ?  ?  ?  8B  ? ?  ?  50 57 68 ?  ?  ?  ? 51 52 E8 ? ?  ? ? 83 C4 ? 5F 5E 32 C0 5B */			
+				"windows" "\x7C\x2A\x8B\x4D\x2A\x8B\x55\x2A\x50\x57\x68"
+				/* windows: 7C ? 8B 4D ? 8B 55 ? 50 57 68 */			
 			}
 			
 /*********************************************************************
@@ -844,6 +909,7 @@
 			/* CTerrorGameRules::IsMissionFinalMap()
 				Uses campaign mission file to determine if the current map 
 				is a Final(e) map.
+				Called from CDirectorVersusMode::EndVersusModeRound(), look near string "versus_match_finished"
 				*/
 			"IsMissionFinalMap"
 			{
@@ -857,7 +923,7 @@
 				is called when a horde is spawned naturally or by boomer.
 				Small function, nearly hits another segment in the file.
 				
-				- Find it through only xref, which is setting up ScriptDesc structures: string "Trigger a mob as soon as possible when..."
+				- Find it through only xref, which is setting up ScriptDesc structures: string "Trigger a mob as soon as possible when"
 				- If you go past the first call, you should hit unique bytes in sig making
 				*/
 			"ResetMobTimer"
