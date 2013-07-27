@@ -356,6 +356,27 @@ forward Action:L4D2_OnSelectTankAttack(client, &sequence);
 forward Action:L4D2_OnRevived(client);
 
 /**
+ * @brief Called when SurvivorBot::UseHealingItems(Action<SurvivorBot> *) is invoked
+ * @remarks Causes bots to use or give healing items (except in safe room on non-expert)
+ *
+ * @param client	the client that will decide whether to use healing items
+ *
+ * @noreturn Pl_Handled to block, Pl_Continue otherwise.
+ */
+forward Action:L4D2_OnUseHealingItems(client);
+
+/**
+ * @brief Called after SurvivorBot::FindScavengeItem(Action<SurvivorBot> *) is invoked
+ * @remarks Indicates which item the Survivor Bot will attempt to pick up
+ *
+ * @param client	the client that will try to pick something up
+ * @param item		the item the client will try to pick up (null means no item)
+ *
+ * @noreturn Pl_Handled to block, Pl_Continue otherwise.
+ */
+forward Action:L4D2_OnFindScavengeItem(client);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

@@ -163,6 +163,8 @@ extern IForward *g_pFwdOnFastGetSurvivorSet;
 extern IForward *g_pFwdOnGetMissionVersusBossSpawning;
 extern IForward *g_pFwdOnCThrowActivate;
 extern IForward *g_pFwdOnStartMeleeSwing;
+extern IForward *g_pFwdOnUseHealingItems;
+extern IForward *g_pFwdOnFindScavengeItem;
 extern IForward *g_pFwdOnSendInRescueVehicle;
 extern IForward *g_pFwdOnChangeFinaleStage;
 extern IForward *g_pFwdOnEndVersusModeRound;

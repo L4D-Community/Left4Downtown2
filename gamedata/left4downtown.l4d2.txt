@@ -801,6 +801,33 @@
 				/* 55 8B EC A1 ? ? ? ? 83 78 30 00 56 8B F1 74 */
 			}
 			
+			/*
+			*  SurvivorBot::UseHealingItems(Action<SurvivorBot> *)
+			*  unique string "Trying to heal a friend"
+			*/
+			"UseHealingItems"
+			{
+				"library"	"server"
+				"linux"    "@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
+				"windows"  "\x55\x8B\xEC\x83\xEC\x20\x53\x56\x8B\xD9\x57\x8D\x8B"
+				/* 55 8B EC 83 EC 20 53 56 8B D9 57 8D 8B */
+			}
+			
+			/*
+			*  SurvivorBot::FindScavengeItem(float)
+			*  SurvivorBot::ScavengeNearbyItems(Action<SurvivorBot>*) has almost unique string "Scavenging something"
+			*  FindScavengeItem(float) is called with 420.0 (0x43D20000) as its argument
+			*/
+			"FindScavengeItem"
+			{
+				"library"	"server"
+				"linux"    "@_ZN11SurvivorBot19ScavengeNearbyItemsEP6ActionIS_E"
+				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x57\x8B\xF9\x8B\x97\x2A\x2A\x2A\x2A\x8D\x85"
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 56 57 8B F9 8B 97 ? ? ? ? 8D 85 */
+			}
+
+
+
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************
 *********************************************************************/
@@ -947,17 +974,6 @@
 				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
 				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x2A\x80\x78"
 							/* A1 ? ? ? ? 85 C0 74 ? 80 78 */
-			}
-			/*
-			*  SurvivorBot::UseHealingItems(Action<SurvivorBot> *)
-			*/
-			"UseHealingItems"
-			{
-				"library"	"server"
-				"linux"    "@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x20\x53\x56\x8B\xD9\x57\x8D\x8B"
-				/* 55 8B EC 83 EC 20 53 56 8B D9 57 8D 8B */
-				/* Search: "Trying to heal a friend" */
 			}
 		}
 	}
