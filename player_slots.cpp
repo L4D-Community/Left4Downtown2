@@ -41,10 +41,12 @@
 #define OP_JZ_REL8  '\x74'
 #define OP_JZ_REL8_SIZE 2
 
-#define OP_RETN     '\xC3' //this is actually a near return
+//this is actually a near return
+#define OP_RETN     '\xC3'
 #define OP_RETN_SIZE 1
 
-#define OP_CMP_EAX_IMM32 '\x3D'  //CMP EAX, imm32
+//CMP EAX, imm32
+#define OP_CMP_EAX_IMM32 '\x3D'
 #define OP_CMP_EAX_IMM32_SIZE 5
 
 #define OP_CMP_R32_RM32 '\x3B'
@@ -55,7 +57,8 @@
 #define OP_CMP_RM32_IMM32_SIZE 6
 #define OP_CMP_RM32_IMM32_MODRM_DIGIT ((char)(7 << 3))
 
-#define OP_MOV_EAX_IMM32 '\xB8'  //MOV EAX, imm32
+//MOV EAX, imm32
+#define OP_MOV_EAX_IMM32 '\xB8'
 #define OP_MOV_EAX_IMM32_SIZE 5
 
 #define MODRM_BYTE 1
