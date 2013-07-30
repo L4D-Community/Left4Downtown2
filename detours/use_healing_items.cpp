@@ -41,18 +41,6 @@ namespace Detours
 		cell_t result = Pl_Continue;
 		if(g_pFwdOnUseHealingItems)
 		{
-/*
-			int client;
-			if(pBot == NULL)
-			{
-				client = 0;
-			}
-			else
-			{
-				edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(pBot));
-				client = IndexOfEdict(pEntity);
-			}
-*/
 			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			int client = IndexOfEdict(pEntity);
 			L4D_DEBUG_LOG("L4D2_OnUseHealingItems(client %d) forward has been sent out", client);

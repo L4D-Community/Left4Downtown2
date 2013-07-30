@@ -203,8 +203,10 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
 	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+#ifdef PLATFORM_WINDOWS
 	g_pFwdOnUseHealingItems = forwards->CreateForward("L4D2_OnUseHealingItems", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnFindScavengeItem = forwards->CreateForward("L4D2_OnFindScavengeItem", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
+#endif
 	g_pFwdOnSendInRescueVehicle = forwards->CreateForward("L4D2_OnSendInRescueVehicle", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnChangeFinaleStage = forwards->CreateForward("L4D2_OnChangeFinaleStage", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_String);
 	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
@@ -303,8 +305,10 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::GetMissionVersusBossSpawning>());
 	g_PatchManager.Register(new AutoPatch<Detours::CThrowActivate>());
 	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
+#ifdef PLATFORM_WINDOWS
 	g_PatchManager.Register(new AutoPatch<Detours::UseHealingItems>());
 	g_PatchManager.Register(new AutoPatch<Detours::FindScavengeItem>());
+#endif
 	g_PatchManager.Register(new AutoPatch<Detours::SendInRescueVehicle>());
 	g_PatchManager.Register(new AutoPatch<Detours::ChangeFinaleStage>());
 	g_PatchManager.Register(new AutoPatch<Detours::EndVersusModeRound>());
@@ -359,8 +363,10 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
 	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
 	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
+#ifdef PLATFORM_WINDOWS
 	forwards->ReleaseForward(g_pFwdOnUseHealingItems);
 	forwards->ReleaseForward(g_pFwdOnFindScavengeItem);
+#endif
 	forwards->ReleaseForward(g_pFwdOnSendInRescueVehicle);
 	forwards->ReleaseForward(g_pFwdOnChangeFinaleStage);
 	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound);
