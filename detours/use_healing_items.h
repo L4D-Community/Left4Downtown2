@@ -35,18 +35,17 @@
 #include "detour_template.h"
 
 class ActionSurvivorBot;
-class SurvivorBot;
 
 namespace Detours {
 
 class UseHealingItems;
-typedef void* (UseHealingItems::*UseHealingItemsFunc)(SurvivorBot*, ActionSurvivorBot*);
+typedef void* (UseHealingItems::*UseHealingItemsFunc)(ActionSurvivorBot*);
 
 class UseHealingItems : public DetourTemplate<UseHealingItemsFunc, UseHealingItems>
 {
 private: //note: implementation of DetourTemplate abstracts
 
-	void* OnUseHealingItems(SurvivorBot*, ActionSurvivorBot*);
+	void* OnUseHealingItems(ActionSurvivorBot*);
 
 	// get the signature name (i.e. "UseHealingItems") from the game conf
 	virtual const char *GetSignatureName()

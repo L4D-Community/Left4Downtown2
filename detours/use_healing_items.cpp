@@ -34,7 +34,7 @@
 
 namespace Detours
 {
-	void* UseHealingItems::OnUseHealingItems(SurvivorBot* pBot, ActionSurvivorBot* pAction)
+	void* UseHealingItems::OnUseHealingItems(ActionSurvivorBot* pAction)
 	{
 		L4D_DEBUG_LOG("SurvivorBot::UseHealingItems has been called");
 
@@ -55,7 +55,7 @@ namespace Detours
 		}
 		else
 		{
-			return (this->*(GetTrampoline()))(pBot, pAction);
+			return (this->*(GetTrampoline()))(pAction);
 		}
 	}
 };
