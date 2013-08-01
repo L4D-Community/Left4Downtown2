@@ -34,7 +34,7 @@
 
 namespace Detours
 {
-	void* UseHealingItems::OnUseHealingItems(ActionSurvivorBot* pAction)
+	ActionStruct_t UseHealingItems::OnUseHealingItems(ActionSurvivorBot* pAction)
 	{
 		L4D_DEBUG_LOG("SurvivorBot::UseHealingItems has been called");
 
@@ -51,7 +51,9 @@ namespace Detours
 		if(result == Pl_Handled)
 		{
 			L4D_DEBUG_LOG("SurvivorBot::OnUseHealingItems will be skipped");
-			return NULL;
+			// When UseHealingItems "does nothing", it zeroes out all three members of the returned struct
+			ActionStruct_t blank = { 0, 0, 0 };
+			return blank;
 		}
 		else
 		{
