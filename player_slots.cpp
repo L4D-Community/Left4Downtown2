@@ -64,6 +64,7 @@
 #define MODRM_BYTE 1
 #define MODRM_MOD_DIRECT ((char)(3 << 6))
 #define MODRM_RM_EDX '\x02'
+#define MODRM_RM_ESI '\x06'
 #define MODRM_RM_EDI '\x07'
 
 #if defined PLATFORM_WINDOWS
@@ -96,6 +97,7 @@ void PlayerSlots::Patch()
 	/*
 	Server patch
 	** Needed on windows only. On Linux, this called GetMaxHumanPlayers
+	L4DToolZ doesn't patch this anymore?
 	*/
 	
 #if defined PLATFORM_WINDOWS
@@ -148,7 +150,7 @@ void PlayerSlots::Patch()
 
 		jz -> nop (linux or windows)
 
-	 do not skip the server is full code when sv_allow_lobby_connect is 0
+	 do not skip to the server is full code when sv_allow_lobby_connect is 0
 	*/
 	patch_t lobbyConnectPatch;
 	lobbyConnectPatch.bytes = OP_JZ_REL8_SIZE;
@@ -157,7 +159,7 @@ void PlayerSlots::Patch()
 
 	unsigned char oldValue2 = lobbyConnectRestore.patch[0];
 	L4D_DEBUG_LOG("PlayerSlots -- 'ConnectClientLobbyCheck' jz(%x) patched to 2 nops", oldValue2);
-#endif
+#endif`
 }
 
 static void *getMaxHumanPlayersSig = NULL;
@@ -300,7 +302,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 	cmp around the string "#Valve_Reject_Server_Full"
 
 	 cmp eax, [esi+180h] -> cmp eax, IMM32(PLAYER_SLOTS_MAX)        (Windows)
-	 cmp edi, [ebp+17Ch] -> cmp edx, IMM32(PLAYER_SLOTS_MAX)        (Linux)
+	 cmp esi, [ebx+17Ch] -> cmp esi, IMM32(PLAYER_SLOTS_MAX)        (Linux)
 
 	we effectively change how many max players we allow
 	*/
@@ -310,7 +312,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 #if defined PLATFORM_LINUX
 	serverFullPatch.bytes  = OP_CMP_RM32_IMM32_SIZE;
 	serverFullPatch.patch[0] = OP_CMP_RM32_IMM32;
-	serverFullPatch.patch[MODRM_BYTE] = MODRM_MOD_DIRECT | OP_CMP_RM32_IMM32_MODRM_DIGIT | MODRM_RM_EDI; //0xFF
+	serverFullPatch.patch[MODRM_BYTE] = MODRM_MOD_DIRECT | OP_CMP_RM32_IMM32_MODRM_DIGIT | MODRM_RM_ESI; //0xFF
 	*(uint32_t*)(serverFullPatch.patch+MODRM_BYTE+sizeof(uint8_t)) = (uint32_t)PLAYER_SLOTS_MAX;
 
 #else //PLATFORM_WINDOWS
