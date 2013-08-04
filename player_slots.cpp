@@ -159,7 +159,7 @@ void PlayerSlots::Patch()
 
 	unsigned char oldValue2 = lobbyConnectRestore.patch[0];
 	L4D_DEBUG_LOG("PlayerSlots -- 'ConnectClientLobbyCheck' jz(%x) patched to 2 nops", oldValue2);
-#endif`
+#endif
 }
 
 static void *getMaxHumanPlayersSig = NULL;
