@@ -90,8 +90,8 @@
 			*/
 			"SpawnTimer"
 			{
-//				"windows"	"11268"
-				"linux"		"11252"
+				"windows"	"11308"
+				"linux"		"11288"
 			}
 		}
 		
@@ -607,18 +607,14 @@
 			*
 			*  ->Search for string "revive_success", then open vtables window. Should be the 5th member.
 			*  Left4Downtown2 patches this function, which will prevent Sourcemod from finding it
-			*  That is why the first six bytes are wild cards
-			*  With so many wildcards at the start, we need many more bytes to find a unique signature
-			*  The original signature remains commented out, for posterity
+			*  That is why the first six bytes are wild cards (five bytes for detour + nop fill the remaining bytes of the instructions)
 			*/
 			"CTerrorPlayer_OnRevived"
 			{
 				"library"   "server"
 				"linux"     "@_ZN13CTerrorPlayer9OnRevivedEv"
-				"windows"   "\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xF1\x8B\x06\x8B\x90\x24\x01\x00\x00\x57\xff\xd2\x84\xc0\x0f\x84\x7C"
-				/* ? ? ? ? ? ? ? ? ? F1 8B 06 8B 90 24 01 00 00 57 ff d2 84 c0 0f 84 7C */
-				/* "windows"   "\x55\x8B\xEC\x83\xEC\x3C\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x24\x01\x00\x00\x57\xFF\xD2\x84\xC0\x0F\x84\x7C"
-				/* 55 8B EC 83 EC 3C 53 56 8B F1 8B 06 8B 90 24 01 00 00 57 ff d2 84 c0 0f 84 7C */
+				"windows"   "\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x57\xff\xd2\x84\xc0\x0f\x84\x2A\x2A\x2A\x2A\x8B\xCE"
+				/* ? ? ? ? ? ? 53 56 8B F1 8B 06 8B 90 ? ? ? ? 57 ff d2 84 c0 0f 84 ? ? ? ? 8B CE */
 			}
 			
 			/*
