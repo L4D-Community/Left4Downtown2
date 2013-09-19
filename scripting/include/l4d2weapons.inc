@@ -69,7 +69,9 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_CharPenetrationMaxDist,
 	L4D2FWA_Range,
 	L4D2FWA_RangeModifier,
-	L4D2FWA_CycleTime
+	L4D2FWA_CycleTime,
+	L4D2FWA_PelletScatterPitch,
+	L4D2FWA_PelletScatterYaw
 };
 
 enum L4D2BoolMeleeWeaponAttributes
