@@ -55,7 +55,9 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_CharPenetrationMaxDist,
 	L4D2FWA_Range,
 	L4D2FWA_RangeModifier,
-	L4D2FWA_CycleTime
+	L4D2FWA_CycleTime,
+	L4D2FWA_PelletScatterPitch,
+	L4D2FWA_PelletScatterYaw
 };
 
 int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
@@ -110,6 +112,10 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 			return &pInfo->m_fRangeModifier;
 		case L4D2FWA_CycleTime:
 			return &pInfo->m_fCycleTime;
+		case L4D2FWA_PelletScatterPitch:
+			return &pInfo->m_fPelletScatterPitch;
+		case L4D2FWA_PelletScatterYaw:
+			return &pInfo->m_fPelletScatterYaw;
 		default:
 			return NULL;
 	}

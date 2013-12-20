@@ -190,6 +190,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\detours\ActionSurvivorBotApplyResult.cpp" />
     <ClCompile Include="..\detours\change_finale_stage.cpp" />
     <ClCompile Include="..\detours\end_versus_mode_round.cpp" />
     <ClCompile Include="..\detours\find_scavenge_item.cpp" />
@@ -241,6 +242,7 @@
     <ClCompile Include="..\detours\server_player_counts.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\detours\ActionSurvivorBotApplyResult.h" />
     <ClInclude Include="..\detours\change_finale_stage.h" />
     <ClInclude Include="..\detours\end_versus_mode_round.h" />
     <ClInclude Include="..\detours\find_scavenge_item.h" />

@@ -36,7 +36,7 @@ namespace Detours
 {
 	void* FindScavengeItem::OnFindScavengeItem(float fScavengeDistance)
 	{
-		L4D_DEBUG_LOG("SurvivorBot::FindScavengeItem has been called");
+//		L4D_DEBUG_LOG("SurvivorBot::FindScavengeItem has been called");
 
 
 		cell_t result = Pl_Continue;
@@ -54,7 +54,7 @@ namespace Detours
 			edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(actualInvocationResult));
 			item = IndexOfEdict(pEntity2);
 			if (!actualInvocationResult) item = 0;
-			L4D_DEBUG_LOG("L4D2_OnFindScavengeItem(client %d, item %x) forward has been sent out", client, item);
+//			L4D_DEBUG_LOG("L4D2_OnFindScavengeItem(client %d, item %x) forward has been sent out", client, item);
 			g_pFwdOnFindScavengeItem->PushCell(client);
 			g_pFwdOnFindScavengeItem->PushCellByRef(&item);
 			g_pFwdOnFindScavengeItem->Execute(&result);
@@ -62,12 +62,12 @@ namespace Detours
 		
 		if(result == Pl_Handled)
 		{
-			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem will be skipped");
+//			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem will be skipped");
 			return NULL;
 		}
 		else if (result == Pl_Changed)
 		{
-			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem result overridden with entindex %d");
+//			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem result overridden with entindex %d");
 			edict_t *pEntity3 = PEntityOfEntIndex(item);
 			return reinterpret_cast<void*>(gameents->EdictToBaseEntity(pEntity3));
 		}

@@ -75,6 +75,7 @@
 #include "detours/cthrow_activate_ability.h"
 #include "detours/start_melee_swing.h"
 #include "detours/use_healing_items.h"
+#include "detours/ActionSurvivorBotApplyResult.h"
 #include "detours/find_scavenge_item.h"
 #include "detours/send_in_rescue_vehicle.h"
 #include "detours/change_finale_stage.h"
@@ -118,7 +119,9 @@ IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
 IForward *g_pFwdOnCThrowActivate = NULL;
 IForward *g_pFwdOnStartMeleeSwing = NULL;
 IForward *g_pFwdOnUseHealingItems = NULL;
+IForward *g_pFwdOnUseHealingItemsPost = NULL;
 IForward *g_pFwdOnFindScavengeItem = NULL;
+IForward *g_pFwdOnActionSurvivorBotApplyResult = NULL;
 IForward *g_pFwdOnSendInRescueVehicle = NULL;
 IForward *g_pFwdOnChangeFinaleStage = NULL;
 IForward *g_pFwdOnEndVersusModeRound = NULL;
@@ -204,7 +207,9 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnUseHealingItems = forwards->CreateForward("L4D2_OnUseHealingItems", ET_Event, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnUseHealingItemsPost = forwards->CreateForward("L4D2_OnUseHealingItemsPost", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_String);
 	g_pFwdOnFindScavengeItem = forwards->CreateForward("L4D2_OnFindScavengeItem", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
+	g_pFwdOnActionSurvivorBotApplyResult = forwards->CreateForward("L4D2_OnActionSurvivorBotApplyResult", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_String, Param_String);
 	g_pFwdOnSendInRescueVehicle = forwards->CreateForward("L4D2_OnSendInRescueVehicle", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnChangeFinaleStage = forwards->CreateForward("L4D2_OnChangeFinaleStage", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_String);
 	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
@@ -304,6 +309,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::CThrowActivate>());
 	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
 	g_PatchManager.Register(new AutoPatch<Detours::UseHealingItems>());
+	g_PatchManager.Register(new AutoPatch<Detours::ActionSurvivorBotApplyResult>());
 	g_PatchManager.Register(new AutoPatch<Detours::FindScavengeItem>());
 	g_PatchManager.Register(new AutoPatch<Detours::SendInRescueVehicle>());
 	g_PatchManager.Register(new AutoPatch<Detours::ChangeFinaleStage>());
@@ -360,6 +366,8 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
 	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
 	forwards->ReleaseForward(g_pFwdOnUseHealingItems);
+	forwards->ReleaseForward(g_pFwdOnUseHealingItemsPost);
+	forwards->ReleaseForward(g_pFwdOnActionSurvivorBotApplyResult);
 	forwards->ReleaseForward(g_pFwdOnFindScavengeItem);
 	forwards->ReleaseForward(g_pFwdOnSendInRescueVehicle);
 	forwards->ReleaseForward(g_pFwdOnChangeFinaleStage);

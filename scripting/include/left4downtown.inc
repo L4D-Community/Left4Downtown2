@@ -363,7 +363,7 @@ forward Action:L4D2_OnRevived(client);
  *
  * @noreturn Pl_Handled to block, Pl_Continue otherwise.
  */
-forward Action:L4D2_OnUseHealingItems(client);
+forward Action:L4D2_OnUseHealingItems(client, ActionState, Action1, Action2, const String:key[]);
 
 /**
  * @brief Called after SurvivorBot::FindScavengeItem(Action<SurvivorBot> *) is invoked
