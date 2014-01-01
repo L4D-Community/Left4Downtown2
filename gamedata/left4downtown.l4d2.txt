@@ -547,8 +547,8 @@
 			{
 				"library"	"server"
 				"linux"	"@_ZN13CTerrorPlayer11OnStaggeredEP11CBaseEntityPK6Vector"
-				"windows" "\x53\x8B\xDC\x83\xEC\x2A\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x85\x73\x08"
-				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 83 EC ? 56 57 8B F1 E8 ? ? ? ? 84 C0 0F 85 73 08 
+				"windows" "\x53\x8B\xDC\x83\xEC\x2A\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x85\x6E\x08"
+				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 83 EC ? 56 57 8B F1 E8 ? ? ? ? 84 C0 0F 85 6E 08 
 				 * Using a long local jump as the unique portion (last few bytes of sig)
 				 */
 			}
