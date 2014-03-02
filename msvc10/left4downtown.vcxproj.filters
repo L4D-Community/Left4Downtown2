@@ -165,9 +165,6 @@
     <ClCompile Include="..\detours\find_scavenge_item.cpp">
       <Filter>detours</Filter>
     </ClCompile>
-    <ClCompile Include="..\detours\ActionSurvivorBotApplyResult.cpp">
-      <Filter>detours</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\convar_public.h">
@@ -327,9 +324,6 @@
       <Filter>detours</Filter>
     </ClInclude>
     <ClInclude Include="..\detours\find_scavenge_item.h">
-      <Filter>detours</Filter>
-    </ClInclude>
-    <ClInclude Include="..\detours\ActionSurvivorBotApplyResult.h">
       <Filter>detours</Filter>
     </ClInclude>
   </ItemGroup>

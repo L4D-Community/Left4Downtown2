@@ -75,7 +75,6 @@
 #include "detours/cthrow_activate_ability.h"
 #include "detours/start_melee_swing.h"
 #include "detours/use_healing_items.h"
-#include "detours/ActionSurvivorBotApplyResult.h"
 #include "detours/find_scavenge_item.h"
 #include "detours/send_in_rescue_vehicle.h"
 #include "detours/change_finale_stage.h"
@@ -309,7 +308,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::CThrowActivate>());
 	g_PatchManager.Register(new AutoPatch<Detours::StartMeleeSwing>());
 	g_PatchManager.Register(new AutoPatch<Detours::UseHealingItems>());
-	g_PatchManager.Register(new AutoPatch<Detours::ActionSurvivorBotApplyResult>());
 	g_PatchManager.Register(new AutoPatch<Detours::FindScavengeItem>());
 	g_PatchManager.Register(new AutoPatch<Detours::SendInRescueVehicle>());
 	g_PatchManager.Register(new AutoPatch<Detours::ChangeFinaleStage>());

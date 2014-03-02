@@ -46,28 +46,27 @@ void InitializeValveGlobals()
 #ifdef PLATFORM_WINDOWS
 	int offset;
 
+	L4D_DEBUG_LOG("InitializeValveGlobals() running");
 	/* g_pGameRules */
 	if (!g_pGameConfSDKTools->GetMemSig("CreateGameRulesObject", (void **)&addr) || !addr)
 	{
+		L4D_DEBUG_LOG("CreateGameRulesObject failed, aborting");
 		return;
 	}
 	if (!g_pGameConfSDKTools->GetOffset("g_pGameRules", &offset) || !offset)
 	{
+		L4D_DEBUG_LOG("GetOffset g_pGameRules failed, aborting");
 		return;
 	}
 	g_pGameRules = *reinterpret_cast<void ***>(addr + offset);
 
 	/* g_pDirector */
-	const char *directorConfKey = "DirectorMusicBanks_OnRoundStart";
-	if (!g_pGameConf->GetMemSig(directorConfKey, (void **)&addr) || !addr)
+	if (!g_pGameConf->GetAddress("TheDirector", (void **)&addr) || !addr)
 	{
+		L4D_DEBUG_LOG("TheDirector address failed, aborting");
 		return;
 	}
-	if (!g_pGameConf->GetOffset("TheDirector", &offset) || !offset)
-	{
-		return;
-	}
-	g_pDirector = *reinterpret_cast<CDirector ***>(addr + offset);
+	g_pDirector = *reinterpret_cast<CDirector ***>(addr);
 #elif defined PLATFORM_LINUX
 
 	/* g_pGameRules */
