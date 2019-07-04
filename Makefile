@@ -2,7 +2,6 @@
 # Makefile written by David "BAILOPAN" Anderson
 
 SMSDK ?= ../sourcemod
-SRCDS_BASE ?= ../srcds
 HL2SDK_L4D2 ?= ../hl2sdk
 MMSOURCE ?= ../mmsource
 
@@ -47,14 +46,13 @@ HL2LIB = $(HL2SDK_L4D2)/lib/linux
 CFLAGS += -DSOURCE_ENGINE=9
 METAMOD = $(MMSOURCE)/core
 INCLUDE += -I$(HL2SDK_L4D2)/public/game/server -I$(HL2SDK_L4D2)/common -I$(HL2SDK_L4D2)/game/shared
-SRCDS = $(SRCDS_BASE)/left4dead2
 GAMEFIX = 2.l4d2
 
 LINK += $(HL2LIB)/tier1_i486.a $(HL2LIB)/mathlib_i486.a libvstdlib_srv.so libtier0_srv.so
 
 INCLUDE += -I. -I.. -Isdk -I$(HL2PUB) -I$(HL2PUB)/engine -I$(HL2PUB)/mathlib -I$(HL2PUB)/tier0 \
         -I$(HL2PUB)/tier1 -I$(METAMOD) -I$(METAMOD)/sourcehook -I$(SMSDK)/public -I$(SMSDK)/public/extensions \
-        -I$(SMSDK)/public/CDetour -I$(SMSDK)/public/asm -I$(SMSDK)/sourcepawn/include
+        -I$(SMSDK)/public/amtl -I$(SMSDK)/public/CDetour -I$(SMSDK)/public/asm -I$(SMSDK)/sourcepawn/include
 
 CFLAGS += -DSE_EPISODEONE=1 -DSE_DARKMESSIAH=2 -DSE_ORANGEBOX=3 -DSE_BLOODYGOODTIME=4 -DSE_EYE=5 \
 	-DSE_CSS=6 -DSE_ORANGEBOXVALVE=7 -DSE_LEFT4DEAD=8 -DSE_LEFT4DEAD2=9 -DSE_ALIENSWARM=10 \
@@ -113,8 +111,8 @@ all:
 	mkdir -p $(BIN_DIR)/detours
 	mkdir -p $(BIN_DIR)/codepatch
 	mkdir -p $(BIN_DIR)/l4d2sdk
-	ln -sf $(SRCDS)/bin/libvstdlib_srv.so libvstdlib_srv.so;
-	ln -sf $(SRCDS)/bin/libtier0_srv.so libtier0_srv.so;
+	ln -sf $(HL2SDK_L4D2)/lib/linux/libvstdlib_srv.so libvstdlib_srv.so;
+	ln -sf $(HL2SDK_L4D2)/lib/linux/libtier0_srv.so libtier0_srv.so;
 	$(MAKE) -f Makefile extension
 
 playerslots:
@@ -123,8 +121,8 @@ playerslots:
 	mkdir -p $(PLAYERSLOTS_BIN_DIR)/detours
 	mkdir -p $(PLAYERSLOTS_BIN_DIR)/codepatch
 	mkdir -p $(PLAYERSLOTS_BIN_DIR)/l4d2sdk
-	ln -sf $(SRCDS)/bin/libvstdlib_srv.so libvstdlib_srv.so;
-	ln -sf $(SRCDS)/bin/libtier0_srv.so libtier0_srv.so;
+	ln -sf $(HL2SDK_L4D2)/lib/linux/libvstdlib_srv.so libvstdlib_srv.so;
+	ln -sf $(HL2SDK_L4D2)/lib/linux/libtier0_srv.so libtier0_srv.so;
 	$(MAKE) -f Makefile extension USE_PLAYERSLOTS=true DEBUG=$(DEBUG)
 
 extension: $(OBJ_LINUX)
