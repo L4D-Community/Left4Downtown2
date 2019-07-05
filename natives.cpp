@@ -570,7 +570,7 @@ cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 	static int offset;
 	if(!offset && (!g_pGameConf->GetOffset("SpawnTimer", &offset) || !offset))
 	{
-		return pContext->ThrowNativeError("Could not read 'VersusMaxCompletionScore' offset from GameConf");
+		return pContext->ThrowNativeError("Could not read 'SpawnTimer' offset from GameConf");
 	}
 	
 
