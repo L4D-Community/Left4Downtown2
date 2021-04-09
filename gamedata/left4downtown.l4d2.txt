@@ -81,8 +81,8 @@
 			 */
 			"VersusMaxCompletionScore"
 			{
-				"windows"	"3568"
-				"linux"		"3560"
+				"windows"	"3584"
+				"linux"		"3580"
 			}
 			
 			/* Offset into CTerrorPlayer 
@@ -694,7 +694,7 @@
 			}
 			
 			/*
-			 *	CDirectorVersusMode::GetMissionVersusBossSpawning(float&, float&, float&, float&)
+			 *	CDirectorVersusMode::GetMissionVersusBossSpawning(float&, float&, float&, float&, bool&)
 			 *
 			 * - string "versus_boss_spawning" hits in 2 functions: This short func and the much longer InitVersusBossSpawning
 			 */
@@ -702,7 +702,7 @@
 			"GetMissionVersusBossSpawning"
 			{
 				"library"	"server"
-				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_"			
+				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_Rb"			
 				"windows"	"\x55\x8B\xEC\x6A\x00\xE8\x2A\x2A\x2A\x2A\x83\xC4\x04\x85"
 				/* 55 8B EC 6A 00 E8 ? ? ? ? 83 C4 04 85 */
 			}
@@ -892,7 +892,7 @@
 /*********************************************************************
 ********************* ADDONS DISABLER ********************************
 *********************************************************************/
-            /* 
+           		/* 
 			* CBaseServer::FillServerInfo(SVC_ServerInfo *)
 			*/
 			"CBaseServer__FillServerInfo"
@@ -902,14 +902,23 @@
 				"windows"	"\x55\x8B\xEC\x53\x56\x57\x68\x04\x01\x00\x00"
 			}
 
-            /* 
-			* mov esi+[19h]
+           		 /*
+			* Instruction where CBaseServer::FillServerInfo saves the result of the "Game/vanilla" check to member variable.
+			* Should be near instructions filling member variables with "L" or "W"
+			* Linux:
+			* mov     [esi+55h], al
+			* mov     dword ptr [esp], 'L' ; c
+			* Windows:
+			* MOV        byte ptr [EDI + 0x5d],BL
+        		* MOV        dword ptr [EDI + 0x8c],DAT_10678ec8
+			* MOV        dword ptr [EDI + 0x90],DAT_10678dc0
+        		* MOV        byte ptr [EDI + 0x5f],'W'
 			*/
-            "VanillaModeOffset"
+            		"VanillaModeOffset"
 			{
 				"library"	"engine"
-				"linux"		"\xC6\x46\x1B\x4C\x88\x46\x19"
-				"windows"	"\x88\x5F\x19**************\xC6\x47\x1B\x57"
+				"linux"		"\x88\x46\x55\xC7\x04\x24\x4C"
+				"windows"	"\x88\x5F\x5D\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xC6\x47\x5F\x57"
 			}
             
 /*********************************************************************
