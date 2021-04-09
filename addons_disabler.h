@@ -32,10 +32,15 @@
 #ifndef _INCLUDE_SOURCEMOD_ADDONS_DISABLER_H_
 #define _INCLUDE_SOURCEMOD_ADDONS_DISABLER_H_
 
+// thanks to ProdigySim for finding sig and these offsets https://github.com/ProdigySim/left4dhooks/pull/1
 #ifdef PLATFORM_WINDOWS
-#define vanillaModeOffset 0
+#define vanillaModeOffset         0
+#define playerSlotOffset          116
+#define disableClientAddonsOffset 93
 #else
-#define vanillaModeOffset 4
+#define vanillaModeOffset         0
+#define playerSlotOffset          108
+#define disableClientAddonsOffset 85
 #endif
 
 #include "detours/detour_template.h"
@@ -87,3 +92,4 @@ private: //note: implementation of DetourTemplate abstracts
 
 };
 #endif
+
