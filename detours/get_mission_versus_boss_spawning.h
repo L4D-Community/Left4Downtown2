@@ -37,13 +37,13 @@
 namespace Detours {
 
 class GetMissionVersusBossSpawning;
-typedef void (GetMissionVersusBossSpawning::*GetMissionVersusBossSpawningFunc)(float&, float&, float&, float&);
+typedef int (GetMissionVersusBossSpawning::*GetMissionVersusBossSpawningFunc)(float&, float&, float&, float&, bool&);
 
 class GetMissionVersusBossSpawning : public DetourTemplate<GetMissionVersusBossSpawningFunc, GetMissionVersusBossSpawning>
 {
 private: //note: implementation of DetourTemplate abstracts
 
-	void OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance);
+	int OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance, bool &allow_boss_mix);
 
 	// get the signature name from the game conf
 	virtual const char *GetSignatureName()
