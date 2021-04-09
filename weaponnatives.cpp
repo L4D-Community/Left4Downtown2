@@ -135,7 +135,14 @@ cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
 	char * weapon = NULL;
 	pContext->LocalToString(params[1], &weapon);
 
-	return g_pWeaponInfoDatabase->IsValidIndex(g_pWeaponInfoDatabase->Find(weapon));
+	char goodWName[128];
+	if (strcmp(weapon, "weapon_") > 0) {
+		g_pSM->Format(goodWName, sizeof(goodWName), "%s", weapon);
+	} else {
+		g_pSM->Format(goodWName, sizeof(goodWName), "weapon_%s", weapon);
+	}
+	
+	return g_pWeaponInfoDatabase->IsValidIndex(g_pWeaponInfoDatabase->Find(goodWName));
 }
 
 
@@ -251,3 +258,4 @@ sp_nativeinfo_t  g_L4DoWeaponNatives[] =
 	{"L4D2_SetFloatWeaponAttribute",	L4D2_SetFloatWeaponAttribute},
 	{NULL,										NULL}
 };
+
