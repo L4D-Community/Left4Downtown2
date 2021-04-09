@@ -5,6 +5,7 @@
 * Update gamedata
 * Update OnGetMissionVersusBossSpawning detour
 * Fix native L4D2_IsValidWeapon, thx Sir for show. You need to update old plugins like 'l4d2 weapon attributes.sp' and others using the native L4D2_IsValidWeapon and put an exclamation mark here https://github.com/Attano/L4D2-Competitive-Framework/blob/cf297ec4b58d1209b7d73dec4b58d1209b7d73don /l4d2_weapon_attributes.sp#L169 as it now works correctly.
+* Update makefile for Linux build (Sourcemod 1.10, Memamod 1.11)
 
 ##Changelog##
 
