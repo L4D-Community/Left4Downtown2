@@ -101,9 +101,11 @@ namespace Detours
     void CBaseServer::OnFillServerInfo(int SVC_ServerInfo)
     {
         cell_t result = Pl_Continue;
-    
-        if (g_pFwdAddonsDisabler && AddonsDisabler::AddonsEclipse > 0 && vanillaModeSig)
+		
+        if (g_pFwdAddonsDisabler && AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig)
         {
+			int RetValue = (AddonsDisabler::AddonsEclipse == 1) ? 0 : 1; //for safety
+			
             int m_nPlayerSlot = *(int *)((unsigned char *)SVC_ServerInfo + playerSlotOffset);
             IClient *pClient = g_pServer->GetClient(m_nPlayerSlot);
 
@@ -113,11 +115,10 @@ namespace Detours
             g_pFwdAddonsDisabler->Execute(&result);
             
             /* uint8_t != unsigned char in terms of type */
-            uint8_t disableAddons = result == Pl_Handled ? 0 : 1;
+            uint8_t disableAddons = result == Pl_Handled ? 0 : RetValue;
             memset((unsigned char *)SVC_ServerInfo + disableClientAddonsOffset, disableAddons, sizeof(uint8_t));
         }
 
         (this->*(GetTrampoline()))(SVC_ServerInfo);
     }
 };
-
