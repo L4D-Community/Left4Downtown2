@@ -44,6 +44,17 @@
 native int L4D2_GetTankCount();
 
 /**
+ * @brief Returns true when any tanks are on the map
+ *
+ * @return			True when any tanks are on the map. False when no tanks.
+ */
+// L4D2 only.
+stock bool L4D2_IsTankInPlay()
+{
+	return (L4D2_GetTankCount() > 0);
+}
+
+/**
  * @brief Gets the number of witches currently in play.
  * @remarks This value is tracked by the director, and should be a good 
  *		indicator that a witch is in play

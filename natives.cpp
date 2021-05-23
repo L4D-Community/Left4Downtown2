@@ -34,6 +34,102 @@
 #include "util.h"
 #include "l4d2sdk/constants.h"
 
+// native bool L4D2_AreTeamsFlipped() 
+cell_t L4D2_AreTeamsFlipped(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+	
+	//CDirector::AreTeamsFlipped(void)
+	if (!pWrapper)
+	{
+		PassInfo retInfo; 
+		retInfo.flags = PASSFLAG_BYVAL; 
+		retInfo.size = sizeof(bool);  //ret value in al on windows, eax on linux
+		retInfo.type = PassType_Basic;
+		
+		REGISTER_NATIVE_ADDR("AreTeamsFlipped", 
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, /*paramInfo*/NULL, /*numparams*/0));
+	}
+	
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+	
+	void *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+	
+	/* Build the vcall argument stack */
+	unsigned char vstk[sizeof(void *)];
+	unsigned char *vptr = vstk;
+
+	*(void **)vptr = director;
+	vptr += sizeof(void *);
+	
+	cell_t retbuffer = false;
+	L4D_DEBUG_LOG("Going to execute CDirector::AreTeamsFlipped");
+	pWrapper->Execute(vstk, &retbuffer);
+	L4D_DEBUG_LOG("Invoked CDirector::AreTeamsFlipped");
+	
+	return retbuffer;
+}
+
+// native int L4D2_GetVersusCompletionPlayer(int client)
+cell_t L4D2_GetVersusCompletionPlayer(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CTerrorGameRules::GetVersusCompletion(CTerrorPlayer *a2);
+	if (!pWrapper)
+	{
+		PassInfo retInfo; 
+		retInfo.flags = PASSFLAG_BYVAL; 
+		retInfo.size = sizeof(int); 
+		retInfo.type = PassType_Basic;
+		
+		REGISTER_NATIVE_ADDR("GetVersusCompletionPlayer", 
+			PassInfo pass[1]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(CBaseEntity *); \
+			pass[0].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, pass, /*numparams*/1));
+	}
+	
+	void *gamerules = g_pSDKTools->GetGameRules();
+
+	if (gamerules == NULL)
+	{
+		return pContext->ThrowNativeError("GameRules not available before map is loaded");
+	}
+	
+	int target = params[1];
+	CBaseEntity * pTarget = UTIL_GetCBaseEntity(target, true);
+	if(pTarget == NULL) 
+	{
+		return pContext->ThrowNativeError("Invalid Stagger target entity");		
+	}
+
+	unsigned char vstk[sizeof(void *) + sizeof(CBaseEntity *)];
+	unsigned char *vptr = vstk;
+	
+	*(void **)vptr = gamerules;
+	vptr += sizeof(void *);
+	*(CBaseEntity **)vptr = pTarget;
+	vptr += sizeof(CBaseEntity *);
+	
+	cell_t retbuffer = 0;
+	
+	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::GetVersusCompletion");
+	pWrapper->Execute(vstk, &retbuffer);
+	L4D_DEBUG_LOG("Invoked CTerrorGameRules::GetVersusCompletion");
+	
+	return retbuffer;
+}
+
 // native L4D_GetTeamScore(logical_team, campaign_score=false)
 cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 {
@@ -996,6 +1092,8 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
+	{"L4D2_AreTeamsFlipped",            L4D2_AreTeamsFlipped},
+	{"L4D2_GetVersusCompletionPlayer",  L4D2_GetVersusCompletionPlayer},
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
 	{"L4D_GetCampaignScores",			L4D_GetCampaignScores},
 	{"L4D_RestartScenarioFromVote",		L4D_RestartScenarioFromVote},

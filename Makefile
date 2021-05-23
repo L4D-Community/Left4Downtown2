@@ -5,7 +5,7 @@ SMSDK ?= ../sourcemod
 HL2SDK_L4D2 ?= ../hl2sdk-l4d2
 MMSOURCE ?= ../metamod-source
 #sourcemod default 1.10
-SOURCEMOD_BUILD ?= 1.10
+SOURCEMOD_BUILD ?= 1.9
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -26,7 +26,7 @@ OBJECTS = smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2calls
 			detours/end_versus_mode_round.cpp detours/select_weighted_sequence.cpp detours/spawn_special.cpp \
 			detours/spawn_witchbride.cpp detours/on_revived.cpp detours/use_healing_items.cpp detours/find_scavenge_item.cpp \
 			detours/water_move.cpp detours/on_stagger.cpp detours/terror_weapon_hit.cpp detours/get_mission_info.cpp \
-			detours/shoved_by_pounce_landing.cpp detours/replace_tank.cpp detours/choose_victim.cpp \
+			detours/shoved_by_pounce_landing.cpp detours/replace_tank.cpp detours/choose_victim.cpp detours/on_ledgegrabbed.cpp \
 			addons_disabler.cpp
 
 ifeq "$(USE_PLAYERSLOTS)" "true"
@@ -41,7 +41,7 @@ C_OPT_FLAGS = -DNDEBUG -O3 -funroll-loops -pipe -fno-strict-aliasing
 C_DEBUG_FLAGS = -D_DEBUG -DDEBUG -g -ggdb3
 C_GCC4_FLAGS = -fvisibility=hidden
 CPP_GCC4_FLAGS = -fvisibility-inlines-hidden
-CPP = gcc
+CPP = gcc-4.9
 
 HL2PUB = $(HL2SDK_L4D2)/public
 HL2LIB = $(HL2SDK_L4D2)/lib/linux

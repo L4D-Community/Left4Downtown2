@@ -350,6 +350,16 @@ forward Action L4D2_OnEndVersusModeRound(bool countSurvivors);
 forward void L4D2_OnEndVersusModeRound_Post();
 
 /**
+ * @brief Called whenever CTerrorPlayer::OnLedgeGrabbed(CTerrorPlayer *this, const Vector *) is invoked
+ * @remarks Called when a player is about to grab a ledge
+ *
+ * @param client	client grabbing the ledge
+ *
+ * @return			Plugin_Handled to prevent grabbing, Plugin_Continue otherwise
+ */
+forward Action L4D_OnLedgeGrabbed(int client);
+
+/**
  * @brief Called when CBaseAnimating::SelectWeightedSequence(int Activity) is invoked with tank attack activity
  * @remarks Called whenever a tank uses his primary (punch) or secondary (throw) attack
  *
@@ -459,6 +469,16 @@ forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
 
 /**
+ * @brief Retrieve a clients map flow progress percentage. Doesn't have to be Versus mode
+ *
+ * @param client			Client ID of the person to affect
+ *
+ * @return					Returns value from 0-100
+ */
+// L4D2 only.
+native int L4D2_GetVersusCompletionPlayer(int client);
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 
@@ -471,6 +491,14 @@ forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
  */
 #pragma deprecated Use GetTeamScore and OnClearTeamScores instead
 native int L4D_GetCampaignScores(int &scoreA, int &scoreB);
+
+/**
+ * @brief Returns if Versus team are flipped
+ *
+ * @return					0=Not flipped. 1=Flipped
+ */
+// L4D2 only.
+native bool L4D2_AreTeamsFlipped();
 
 /**
  * @brief Get the team scores for the current map

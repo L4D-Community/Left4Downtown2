@@ -180,6 +180,7 @@ extern IForward *g_pFwdOnTerrorWeaponHit;
 extern IForward *g_pFwdAddonsDisabler;
 extern IForward *g_pFwdOnShovedByPounceLanding;
 extern IForward *g_pFwdOnChooseVictim;
+extern IForward *g_pFwdOnLedgeGrabbed;
 
 extern bool g_bRoundEnd;
 

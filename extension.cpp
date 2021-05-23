@@ -86,6 +86,7 @@
 #include "detours/get_mission_info.h"
 #include "detours/shoved_by_pounce_landing.h"
 #include "detours/choose_victim.h"
+#include "detours/on_ledgegrabbed.h"
 
 #include "addons_disabler.h"
 
@@ -139,6 +140,7 @@ IForward *g_pFwdOnTerrorWeaponHit = NULL;
 IForward *g_pFwdAddonsDisabler = NULL;
 IForward *g_pFwdOnShovedByPounceLanding = NULL;
 IForward *g_pFwdOnChooseVictim = NULL;
+IForward *g_pFwdOnLedgeGrabbed = NULL;
 
 bool g_bRoundEnd = false;
 
@@ -237,6 +239,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdAddonsDisabler = forwards->CreateForward("L4D2_OnClientDisableAddons", ET_Event, 1, /*types*/NULL, Param_String);
 	g_pFwdOnShovedByPounceLanding = forwards->CreateForward("L4D2_OnPounceOrLeapStumble", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnChooseVictim = forwards->CreateForward("L4D2_OnChooseVictim", ET_Event, 2, /*types*/ NULL, Param_Cell, Param_CellByRef);
+	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -348,6 +351,7 @@ void Left4Downtown::SDK_OnAllLoaded()
     g_PatchManager.Register(new AutoPatch<Detours::CTerrorGameRules>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedByPounceLanding>());
 	g_PatchManager.Register(new AutoPatch<Detours::CBaseServer>());
+	g_PatchManager.Register(new AutoPatch<Detours::CLedgeGrabbed>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -414,6 +418,7 @@ void Left4Downtown::SDK_OnUnload()
     forwards->ReleaseForward(g_pFwdAddonsDisabler);
 	forwards->ReleaseForward(g_pFwdOnShovedByPounceLanding);
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
+	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

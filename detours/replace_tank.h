@@ -19,7 +19,7 @@ private: //note: implementation of DetourTemplate abstracts
     // get the signature name from the game conf
     virtual const char *GetSignatureName()
     {
-	return "ReplaceTank";
+		return "ReplaceTank";
     }
 
     //notify our patch system which function should be used as the detour
