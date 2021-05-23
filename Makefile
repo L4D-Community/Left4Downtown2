@@ -5,7 +5,7 @@ SMSDK ?= ../sourcemod
 HL2SDK_L4D2 ?= ../hl2sdk-l4d2
 MMSOURCE ?= ../metamod-source
 #sourcemod default 1.10
-SOURCEMOD_BUILD ?= 1.9
+SOURCEMOD_BUILD ?= 1.10
 
 #####################################
 ### EDIT BELOW FOR OTHER PROJECTS ###
@@ -41,7 +41,7 @@ C_OPT_FLAGS = -DNDEBUG -O3 -funroll-loops -pipe -fno-strict-aliasing
 C_DEBUG_FLAGS = -D_DEBUG -DDEBUG -g -ggdb3
 C_GCC4_FLAGS = -fvisibility=hidden
 CPP_GCC4_FLAGS = -fvisibility-inlines-hidden
-CPP = gcc-4.9
+CPP = gcc
 
 HL2PUB = $(HL2SDK_L4D2)/public
 HL2LIB = $(HL2SDK_L4D2)/lib/linux
