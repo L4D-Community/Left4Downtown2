@@ -35,25 +35,22 @@
 namespace Detours
 {
 	//return bool, char, int ?
+	//return 1 if versus, 0 otherwise
 	void *FirstSurvivorLeftSafeArea::OnFirstSurvivorLeftSafeArea(CTerrorPlayer *p)
 	{
 		L4D_DEBUG_LOG("CDirector::OnFirstSurvivorLeftSafeArea has been called");
 
 		cell_t result = Pl_Continue;
-		if (g_pFwdOnFirstSurvivorLeftSafeArea)
-		{
+		if (g_pFwdOnFirstSurvivorLeftSafeArea) {
 			int client;
-			if(p == NULL)
-			{
+			if (p == NULL) {
 				/*
 				quite possible the survivor is NULL
 				e.g. CDirectorScavengeMode::ShouldUpdateTeamReadiness
 				calls OnFirstSurvivorLeftSafeArea(NULL)
 				*/
 				client = 0;
-			}
-			else
-			{
+			} else {
 				edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p));
 				client = IndexOfEdict(pEntity);
 			}
@@ -63,17 +60,12 @@ namespace Detours
 			g_pFwdOnFirstSurvivorLeftSafeArea->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("CDirector::OnFirstSurvivorLeftSafeArea will be skipped");
 			return NULL;
 		}
-		else
-		{
-			g_bRoundEnd = false;
-			void *pParam = (this->*(GetTrampoline()))(p);
-			rootconsole->ConsolePrint("pParam: %d %08x", pParam, pParam);
-			return pParam;
-		}
+
+		g_bRoundEnd = false;
+		return (this->*(GetTrampoline()))(p);
 	}
 };

@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor, 2021 A1m
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
