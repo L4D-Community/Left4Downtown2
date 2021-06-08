@@ -3,6 +3,7 @@
 ##Changelog##
 
 ###May 24, 2021 :: 0.6.4###
+* New native L4D_GetHighestFlowSurvivor();
 * New native L4D2_AreTeamsFlipped();
 * New native L4D2_GetVersusCompletionPlayer();
 * New native L4D2_IsTankInPlay();
