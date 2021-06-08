@@ -40,19 +40,17 @@ namespace Detours
             g_pFwdInfernoSpread->Execute(&result);
         }
 
-		if (result == Pl_Handled)
-        {
+		if (result == Pl_Handled) {
             return NULL;
-        }
-        else
-        {
+        } else if (result == Pl_Changed) {
 			*(float *)((unsigned char *)vector1) = x1;
 			*(float *)((unsigned char *)vector1 + 4) = y1;
 			*(float *)((unsigned char *)vector1 + 8) = z1;
 			// *(float *)((unsigned char *)vector2) = x2;
 			// *(float *)((unsigned char *)vector2 + 4) = y2;
 			// *(float *)((unsigned char *)vector2 + 8) = z2;
-            return (this->*(GetTrampoline()))(vector1, vector2, i1, i2);
-        }
+		}
+
+		return (this->*(GetTrampoline()))(vector1, vector2, i1, i2);
     }
 };

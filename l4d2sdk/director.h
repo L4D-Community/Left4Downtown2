@@ -220,7 +220,7 @@ typedef struct _CDirector {
 	bool m_bUnknownJunk; // probably related
 	CountdownTimer TransitionTimeoutTimer; // 0x428
 	char unknown1076[308]; // 0x434
-	CDirectorTacticalServices * TacticalServicesPtr;
+	CDirectorTacticalServices * TacticalServicesPtr; //0x568
 	CDirectorItemManager * ItemManagerPtr; // 0x56c
 	CDirectorMusicBanks * MusicBanksPtr; 
 	CDirectorSessionManager * SessionManagerPtr; 

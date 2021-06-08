@@ -193,6 +193,7 @@ extern IGameConfig *g_pGameConf;
 extern IGameConfig *g_pGameConfSDKTools;
 
 /* Interfaces from engine or gamedll */
+//extern IRootConsole *rootconsole;
 extern IServerGameEnts *gameents;
 extern ICvar *icvar;
 extern IServer *iserver;

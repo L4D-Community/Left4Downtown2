@@ -34,12 +34,13 @@
 
 namespace Detours
 {
+	//return bool, char, int ?
 	void *FirstSurvivorLeftSafeArea::OnFirstSurvivorLeftSafeArea(CTerrorPlayer *p)
 	{
 		L4D_DEBUG_LOG("CDirector::OnFirstSurvivorLeftSafeArea has been called");
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnFirstSurvivorLeftSafeArea)
+		if (g_pFwdOnFirstSurvivorLeftSafeArea)
 		{
 			int client;
 			if(p == NULL)
@@ -70,7 +71,9 @@ namespace Detours
 		else
 		{
 			g_bRoundEnd = false;
-			return (this->*(GetTrampoline()))(p);
+			void *pParam = (this->*(GetTrampoline()))(p);
+			rootconsole->ConsolePrint("pParam: %d %08x", pParam, pParam);
+			return pParam;
 		}
 	}
 };

@@ -59,4 +59,5 @@ private: //note: implementation of DetourTemplate abstracts
 };
 
 };
+
 #endif

@@ -479,6 +479,13 @@ forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
 native int L4D2_GetVersusCompletionPlayer(int client);
 
 /**
+ * @brief Returns client who is furthest in flow
+ *
+ * @return					Client ID of the player furthest ahead
+ */
+native int L4D_GetHighestFlowSurvivor();
+
+/**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
  * 

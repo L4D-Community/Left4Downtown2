@@ -34,6 +34,66 @@
 #include "util.h"
 #include "l4d2sdk/constants.h"
 
+//native int L4D_GetHighestFlowSurvivor();
+cell_t L4D_GetHighestFlowSurvivor(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	if (!pWrapper) {
+		PassInfo retInfo; 
+		retInfo.flags = PASSFLAG_BYVAL; 
+		retInfo.size = sizeof(CBaseEntity *);
+		retInfo.type = PassType_Basic;
+		
+		REGISTER_NATIVE_ADDR("CDirectorTacticalServices::GetHighestFlowSurvivor", 
+			PassInfo pass[2]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(CDirectorTacticalServices *); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(int); \
+			pass[1].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, pass, 2));
+			
+		L4D_DEBUG_LOG("Built call wrapper CDirectorTacticalServices::GetHighestFlowSurvivor");
+	}
+	
+	if (g_pDirector == NULL) {
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+	
+	CDirector *pDirector = *g_pDirector;
+	
+	CDirectorTacticalServices *pDTacticalServices = (*g_pDirector)->TacticalServicesPtr;
+	
+	if (pDTacticalServices == NULL) {
+		return pContext->ThrowNativeError("CDirectorTacticalServices not available before map is loaded");
+	}
+	
+	/* Build the vcall argument stack */
+	unsigned char vstk[sizeof(CDirectorTacticalServices *) + sizeof(int)];
+	unsigned char *vptr = vstk;
+	
+	*(CDirectorTacticalServices **)vptr = pDTacticalServices;
+	vptr += sizeof(CDirectorTacticalServices *);
+	
+	*(int *)vptr = 0;
+	vptr += sizeof(int *);
+	
+	CBaseEntity* retbuffer = NULL;
+	
+	L4D_DEBUG_LOG("Going to execute CDirectorTacticalServices::GetHighestFlowSurvivor");
+	pWrapper->Execute(vstk, &retbuffer);
+
+	cell_t client = 0;
+	if (retbuffer != NULL) {
+		client = IndexOfEdict(gameents->BaseEntityToEdict(retbuffer));
+	}
+	
+	L4D_DEBUG_LOG("Invoked CDirectorTacticalServices::GetHighestFlowSurvivor, got back = client: %d, address: %08x", client, retbuffer);
+	return client;
+}
+
 // native bool L4D2_AreTeamsFlipped() 
 cell_t L4D2_AreTeamsFlipped(IPluginContext *pContext, const cell_t *params)
 {
@@ -1092,8 +1152,9 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
-	{"L4D2_AreTeamsFlipped",            L4D2_AreTeamsFlipped},
-	{"L4D2_GetVersusCompletionPlayer",  L4D2_GetVersusCompletionPlayer},
+	{"L4D_GetHighestFlowSurvivor",		L4D_GetHighestFlowSurvivor},
+	{"L4D2_AreTeamsFlipped",			L4D2_AreTeamsFlipped},
+	{"L4D2_GetVersusCompletionPlayer",	L4D2_GetVersusCompletionPlayer},
 	{"L4D_GetTeamScore",				L4D_GetTeamScore},
 	{"L4D_GetCampaignScores",			L4D_GetCampaignScores},
 	{"L4D_RestartScenarioFromVote",		L4D_RestartScenarioFromVote},

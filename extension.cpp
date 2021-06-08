@@ -256,7 +256,8 @@ void Left4Downtown::SDK_OnAllLoaded()
 
 	if (!g_pBinTools || !g_pSDKTools)
 	{
-		L4D_DEBUG_LOG("Failed to load bintools or failed to load sdktools");
+		//L4D_DEBUG_LOG("Failed to load bintools or failed to load sdktools");
+		g_pSM->LogError(myself, "Failed to load bintools or failed to load sdktools");
 		return;
 	}
 
