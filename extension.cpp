@@ -174,8 +174,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D2");
 		return false;
 	}
-
-
+	
 	//load sigscans and offsets, etc from our gamedata file
 	char conf_error[255] = "";
 	if (!gameconfs->LoadGameConfigFile(GAMECONFIG_FILE, &g_pGameConf, conf_error, sizeof(conf_error)))
@@ -192,6 +191,15 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	{
 		return false;
 	}
+
+	if (!CTerrorPlayer::OnLoad(error, maxlength)) {
+		return false;
+	}
+	
+	if (!CBaseCombatWeapon::OnLoad(error, maxlength)) {
+		return false;
+	}
+	
 	sharesys->AddDependency(myself, "bintools.ext", true, true);
 	sharesys->RegisterLibrary(myself, "left4downtown2");
 	sharesys->AddNatives(myself, g_L4DoNatives);

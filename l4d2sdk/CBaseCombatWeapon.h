@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2021 A1mDev (A1m`)
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,38 +29,22 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_SOURCEMOD_DETOUR_TERROR_WEAPON_HIT_H_
-#define _INCLUDE_SOURCEMOD_DETOUR_TERROR_WEAPON_HIT_H_
+#ifndef _INCLUDE_CBASECOMBATWEAPON_H_
+#define _INCLUDE_CBASECOMBATWEAPON_H_
 
-#include "detour_template.h"
-#include "l4d2sdk/CBaseCombatWeapon.h"
-#include "l4d2sdk/CTerrorPlayer.h"
-#include <gametrace.h>
+#include "extension.h"
 
-namespace Detours {
+class CBasePlayer;
 
-class TerrorWeaponHit;
-typedef void * (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
-
-class TerrorWeaponHit : public DetourTemplate<TerrorWeaponHitFunc, TerrorWeaponHit>
+class CBaseCombatWeapon
 {
-private: //note: implementation of DetourTemplate abstracts
+public:
 
-	void *OnTerrorWeaponHit(trace_t &, const Vector &, bool);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
-	{
-		return "CTerrorWeapon__OnHit";
-	}
-
-	//notify our patch system which function should be used as the detour
-	virtual TerrorWeaponHitFunc GetDetour()
-	{
-		return &TerrorWeaponHit::OnTerrorWeaponHit;
-	}
-};
+	static bool OnLoad(char* error, size_t maxlength);
 	
+	CBaseEntity *GetOwnerEntity();
+public:
+	static int sendprop_m_hOwner;
 };
 
-#endif //_INCLUDE_SOURCEMOD_DETOUR_TERROR_WEAPON_HIT_H_
+#endif //_INCLUDE_CBASECOMBATWEAPON_H_

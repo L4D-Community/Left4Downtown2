@@ -27,7 +27,7 @@ OBJECTS = smsdk_ext.cpp extension.cpp natives.cpp vglobals.cpp l4d2sdk/l4d2calls
 			detours/spawn_witchbride.cpp detours/on_revived.cpp detours/use_healing_items.cpp detours/find_scavenge_item.cpp \
 			detours/water_move.cpp detours/on_stagger.cpp detours/terror_weapon_hit.cpp detours/get_mission_info.cpp \
 			detours/shoved_by_pounce_landing.cpp detours/replace_tank.cpp detours/choose_victim.cpp detours/on_ledgegrabbed.cpp \
-			addons_disabler.cpp
+			addons_disabler.cpp l4d2sdk/CBaseCombatWeapon.cpp l4d2sdk/CTerrorPlayer.cpp
 
 ifeq "$(USE_PLAYERSLOTS)" "true"
 	OBJECTS += player_slots.cpp detours/server_player_counts.cpp
