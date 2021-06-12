@@ -51,7 +51,7 @@ namespace Detours
 			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_max);
 			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_tank_chance);
 			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_witch_chance);
-			//g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_allow_boss_mix);
+			//g_pFwdOnGetMissionVersusBossSpawning->PushCellByRef(&ov_allow_boss_mix);
 			g_pFwdOnGetMissionVersusBossSpawning->Execute(&result);
 		}
 		
