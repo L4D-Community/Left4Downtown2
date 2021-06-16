@@ -193,6 +193,8 @@
 			/*
 			 * CBaseServer::SetReservationCookie(uint64_t, char*, va_list)
 			 *  - clear the reservation by setting a cookie of 0
+			 * Windows: sub_1013B680
+			 * Find string: "-> Reservation cookie %llx:  reason %s\n"
 			 */
 			"SetReservationCookie" 
 			{
