@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2012 Michael "ProdigySim" Busby
+ * Copyright (C) 2012 Michael "ProdigySim" Busby, 2021 A1mDev (A1m`)
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -30,19 +30,30 @@
  */
 
 #ifndef _INCLUDE_L4D2SDK_CONSTANTS_H_
+
 #define _INCLUDE_L4D2SDK_CONSTANTS_H_
 
+// ZombieClassType from here - https://github.com/shqke/smod_stocks/blob/master/stocks/left4dead2.inc
 enum ZombieClassType
 {
-	ZombieClassType_Smoker  = 1,
-	ZombieClassType_Boomer  = 2,
-	ZombieClassType_Hunter  = 3,
-	ZombieClassType_Spitter = 4,
-	ZombieClassType_Jockey  = 5,
-	ZombieClassType_Charger = 6,
-	ZombieClassType_Witch   = 7,
-	ZombieClassType_Tank    = 8,
-	ZombieClassType_Unknown = 9
+	Zombie_Common	= 0,
+	Zombie_Smoker	= 1,
+	Zombie_Boomer	= 2,
+	Zombie_Hunter	= 3,
+	Zombie_Spitter	= 4,
+	Zombie_Jockey	= 5,
+	Zombie_Charger	= 6,
+	Zombie_Witch	= 7,
+	Zombie_Tank 	= 8,
+	Zombie_Survivor	= 9,
+};
+
+enum L4DTeam
+{
+	Team_None 		= 0,
+	Team_Spectators	= 1,
+	Team_Survivors	= 2,
+	Team_Infected	= 3
 };
 
 #endif //_INCLUDE_L4D2SDK_CONSTANTS_H_

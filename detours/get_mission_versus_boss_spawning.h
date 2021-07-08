@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class GetMissionVersusBossSpawning;
-typedef int (GetMissionVersusBossSpawning::*GetMissionVersusBossSpawningFunc)(float&, float&, float&, float&, bool&);
-
-class GetMissionVersusBossSpawning : public DetourTemplate<GetMissionVersusBossSpawningFunc, GetMissionVersusBossSpawning>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class GetMissionVersusBossSpawning;
+	typedef int (GetMissionVersusBossSpawning::*GetMissionVersusBossSpawningFunc)(float&, float&, float&, float&, bool&);
 
-	int OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance, bool &allow_boss_mix);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class GetMissionVersusBossSpawning : public DetourTemplate<GetMissionVersusBossSpawningFunc, GetMissionVersusBossSpawning>
 	{
-		return "GetMissionVersusBossSpawning";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetMissionVersusBossSpawningFunc GetDetour()
-	{
-		return &GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning;
-	}
+		int OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance, bool &allow_boss_mix);
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "GetMissionVersusBossSpawning";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetMissionVersusBossSpawningFunc GetDetour()
+		{
+			return &GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_MISSION_VERSUS_BOSS_SPAWNING_H_

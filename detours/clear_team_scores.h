@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,30 +36,30 @@
 
 #define CLEAR_TEAM_SCORES_ARG bool newCampaign
 
-namespace Detours {
-
-class ClearTeamScores;
-
-typedef void (ClearTeamScores::*ClearTeamScoresFunc)(CLEAR_TEAM_SCORES_ARG);
-
-class ClearTeamScores : public DetourTemplate<ClearTeamScoresFunc, ClearTeamScores>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class ClearTeamScores;
 
-	void OnClearTeamScores(bool);
+	typedef void (ClearTeamScores::*ClearTeamScoresFunc)(CLEAR_TEAM_SCORES_ARG);
 
-	// get the signature name (i.e. "ClearTeamScores") from the game conf
-	virtual const char *GetSignatureName()
+	class ClearTeamScores : public DetourTemplate<ClearTeamScoresFunc, ClearTeamScores>
 	{
-		return "ClearTeamScores";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual ClearTeamScoresFunc GetDetour()
-	{
-		return &ClearTeamScores::OnClearTeamScores;
-	}
+		void OnClearTeamScores(bool);
+
+		// get the signature name (i.e. "ClearTeamScores") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "ClearTeamScores";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual ClearTeamScoresFunc GetDetour()
+		{
+			return &ClearTeamScores::OnClearTeamScores;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_CLEARTEAMSCORES_H_

@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class SpawnTank;
-typedef void * (SpawnTank::*SpawnTankFunc)(void *, void*);
-
-class SpawnTank : public DetourTemplate<SpawnTankFunc, SpawnTank>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SpawnTank;
+	typedef void * (SpawnTank::*SpawnTankFunc)(void *, void*);
 
-	void *OnSpawnTank(void *vector, void *qangle);
-
-	// get the signature name (i.e. "SpawnTank") from the game conf
-	virtual const char *GetSignatureName()
+	class SpawnTank : public DetourTemplate<SpawnTankFunc, SpawnTank>
 	{
-		return "SpawnTank";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SpawnTankFunc GetDetour()
-	{
-		return &SpawnTank::OnSpawnTank;
-	}
+		void *OnSpawnTank(void *vector, void *qangle);
+
+		// get the signature name (i.e. "SpawnTank") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "SpawnTank";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SpawnTankFunc GetDetour()
+		{
+			return &SpawnTank::OnSpawnTank;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SPAWN_TANK_H_

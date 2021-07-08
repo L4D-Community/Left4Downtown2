@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,31 +38,28 @@ namespace Detours
 	{
 		//L4D_DEBUG_LOG("CTerrorPlayer::GetWalkTopSpeed() has been called");
 
-		cell_t result = Pl_Continue;
-
 		float actualInvocationResult = (this->*(GetTrampoline()))();
 
 		float overrideValue = actualInvocationResult;
 		
-		if(g_pFwdOnGetWalkTopSpeed)
-		{
-			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
-			int target = IndexOfEdict(pEntity);
+		cell_t result = Pl_Continue;
 		
+		if (g_pFwdOnGetWalkTopSpeed) {
+			int target = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
+
 			//L4D_DEBUG_LOG("L4D_OnGetWalkTopSpeed(target %d) forward has been sent out", target);
+			
 			g_pFwdOnGetWalkTopSpeed->PushCell(target);
 			g_pFwdOnGetWalkTopSpeed->PushFloatByRef(&overrideValue);
 			g_pFwdOnGetWalkTopSpeed->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			//L4D_DEBUG_LOG("CTerrorPlayer::GetWalkTopSpeed() return value overriden with %d", overrideValue);
+			
 			return overrideValue;
 		}
-		else
-		{
-			return actualInvocationResult;
-		}
+
+		return actualInvocationResult;
 	}
 };

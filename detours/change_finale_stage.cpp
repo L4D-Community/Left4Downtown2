@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -37,32 +37,21 @@ namespace Detours
 	void ChangeFinaleStage::OnChangeFinaleStage(int finaleType, const char *key)
 	{
 		cell_t result = Pl_Continue;
-
-		if(g_pFwdOnChangeFinaleStage)
-		{
+		
+		if (g_pFwdOnChangeFinaleStage) {
 			L4D_DEBUG_LOG("L4D2_OnChangeFinaleStage(%d, [%s]) forward has been sent out", finaleType, key);
+			
 			g_pFwdOnChangeFinaleStage->PushCellByRef(&finaleType);
-
-			if (key != NULL)
-			{
-				g_pFwdOnChangeFinaleStage->PushString(key);
-			}
-			else
-			{
-				g_pFwdOnChangeFinaleStage->PushString("");
-			}
+			g_pFwdOnChangeFinaleStage->PushString((key != NULL) ? key : "");
 			g_pFwdOnChangeFinaleStage->Execute(&result);
 		}
-
-		if(result == Pl_Handled)
-		{
+		
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("L4D2_OnChangeFinaleStage() will be skipped");
 			return;
 		}
-		else
-		{
-			(this->*(GetTrampoline()))(finaleType, key);
-			return;
-		}
+		
+		(this->*(GetTrampoline()))(finaleType, key);
+		return;
 	}
 };

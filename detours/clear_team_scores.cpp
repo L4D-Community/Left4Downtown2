@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,9 +34,7 @@
 
 namespace Detours
 {
-
-/* CTerrorGameRules::ClearTeamScores in L4D2 has a bool parameter -XBetaAlpha		*/
-
+	/* CTerrorGameRules::ClearTeamScores in L4D2 has a bool parameter -XBetaAlpha		*/
 	void ClearTeamScores::OnClearTeamScores(CLEAR_TEAM_SCORES_ARG)
 	{
 		bool b = newCampaign;
@@ -44,22 +42,19 @@ namespace Detours
 		L4D_DEBUG_LOG("CTerrorGameRules::ClearTeamScores has been called, bool=%d", b);
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnClearTeamScores)
-		{
+		if (g_pFwdOnClearTeamScores) {
 			L4D_DEBUG_LOG("L4D_OnClearTeamScores forward has been sent out");
+			
 			g_pFwdOnClearTeamScores->PushCell(static_cast<cell_t>(b));
 			g_pFwdOnClearTeamScores->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("CTerrorGameRules::ClearTeamScores will be skipped");
 			return;
 		}
-		else
-		{
-			(this->*(GetTrampoline()))(b);
-			return;
-		}
+
+		(this->*(GetTrampoline()))(b);
+		return;
 	}
 };

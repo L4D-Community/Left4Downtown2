@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -37,29 +37,29 @@
 class ActionSurvivorBot;
 class SurvivorBot;
 
-namespace Detours {
-
-class FindScavengeItem;
-typedef void* (FindScavengeItem::*FindScavengeItemFunc)(float);
-
-class FindScavengeItem : public DetourTemplate<FindScavengeItemFunc, FindScavengeItem>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class FindScavengeItem;
+	typedef void* (FindScavengeItem::*FindScavengeItemFunc)(float);
 
-	void* OnFindScavengeItem(float);
-
-	// get the signature name (i.e. "FindScavengeItem") from the game conf
-	virtual const char *GetSignatureName()
+	class FindScavengeItem : public DetourTemplate<FindScavengeItemFunc, FindScavengeItem>
 	{
-		return "FindScavengeItem";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual FindScavengeItemFunc GetDetour()
-	{
-		return &FindScavengeItem::OnFindScavengeItem;
-	}
+		void* OnFindScavengeItem(float);
+
+		// get the signature name (i.e. "FindScavengeItem") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "FindScavengeItem";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual FindScavengeItemFunc GetDetour()
+		{
+			return &FindScavengeItem::OnFindScavengeItem;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_FIND_SCAVENGE_ITEMS_H_

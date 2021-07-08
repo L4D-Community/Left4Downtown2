@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -56,20 +56,20 @@ Detour::~Detour()
 
 void Detour::Patch()
 {
-	if(isPatched)
+	if (isPatched)
 	{
 		return;
 	}
 
 	signatureName = GetSignatureName();
-	if(signatureName != NULL)
+	if (signatureName != NULL)
 	{
 		PatchFromSignature(signatureName,  GetDetourRaw(), trampoline, signature);
 	}
 	else
 	{
 		signature=GetSignatureAddress();
-		if(signature == NULL)
+		if (signature == NULL)
 		{
 			g_pSM->LogError(myself, "Detour -- Could not find address for detour");
 			return;
@@ -129,7 +129,7 @@ void Detour::Unpatch()
 	//NOTE: careful not to call any vfuncs here since its invoked by destructor
 
 	L4D_DEBUG_LOG("Detour::Unpatch()");
-	if(!isPatched) return;
+	if (!isPatched) return;
 
 	L4D_DEBUG_LOG("Detour::Unpatch() -- restoring %s to original state", signatureName);
 	ApplyPatch(signature, /*offset*/0, restore, /*restore*/NULL);
@@ -141,7 +141,8 @@ void Detour::Unpatch()
 }
 
 //insert a specific JMP instruction at the given location, save it to the buffer
-void Detour::InjectJmp(void *buffer, void* src, void* dest) {
+void Detour::InjectJmp(void *buffer, void* src, void* dest)
+{
 	*(unsigned char*)buffer = OP_JMP;
 	*(long*)((unsigned char*)buffer+1) = (long)((unsigned char*)dest - ((unsigned char*)src + OP_JMP_SIZE));
 }

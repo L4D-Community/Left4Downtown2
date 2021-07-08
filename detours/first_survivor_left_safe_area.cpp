@@ -42,20 +42,18 @@ namespace Detours
 
 		cell_t result = Pl_Continue;
 		if (g_pFwdOnFirstSurvivorLeftSafeArea) {
-			int client;
-			if (p == NULL) {
-				/*
+			int client = 0;
+			/*
 				quite possible the survivor is NULL
 				e.g. CDirectorScavengeMode::ShouldUpdateTeamReadiness
 				calls OnFirstSurvivorLeftSafeArea(NULL)
-				*/
-				client = 0;
-			} else {
-				edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p));
-				client = IndexOfEdict(pEntity);
+			*/
+			if (p != NULL) {
+				client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
 			}
 
 			L4D_DEBUG_LOG("L4D_OnFirstSurvivorLeftSafeArea(%d) forward has been sent out", client);
+			
 			g_pFwdOnFirstSurvivorLeftSafeArea->PushCell(client);
 			g_pFwdOnFirstSurvivorLeftSafeArea->Execute(&result);
 		}

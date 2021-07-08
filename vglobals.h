@@ -31,6 +31,8 @@
 
 #ifndef _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
 #define _INCLUDE_L4DOWNTOWN_TOOLS_VGLOBALS_H_
+
+#include "extension.h"
 #include "l4d2sdk/director.h"
 #include "l4d2sdk/CTerrorWeaponInfo.h"
 #include "l4d2sdk/CMeleeWeaponInfo.h"

@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class SpawnMob;
-typedef void (SpawnMob::*SpawnMobFunc)(int);
-
-class SpawnMob : public DetourTemplate<SpawnMobFunc, SpawnMob>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SpawnMob;
+	typedef void (SpawnMob::*SpawnMobFunc)(int);
 
-	void OnSpawnMob(int);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class SpawnMob : public DetourTemplate<SpawnMobFunc, SpawnMob>
 	{
-		return "Zombiemanager_SpawnMob";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SpawnMobFunc GetDetour()
-	{
-		return &SpawnMob::OnSpawnMob;
-	}
+		void OnSpawnMob(int);
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "Zombiemanager_SpawnMob";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SpawnMobFunc GetDetour()
+		{
+			return &SpawnMob::OnSpawnMob;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SPAWN_MOB_H_

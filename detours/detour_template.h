@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -54,11 +54,21 @@ protected: //note: virtuals should be implemented by the TParent class
 	}
 
 	//onpatched callback
-	virtual void OnPatched() { }
+	virtual void OnPatched() {}
 
 	//yes this assumes that we instantiate a Singleton
-	DetourTemplate() { GetAutoForwardPtrRef() = NULL; }
-	~DetourTemplate() { if(GetAutoForward()) { delete GetAutoForward(); SetAutoForward(NULL); } }
+	DetourTemplate()
+	{ 
+		GetAutoForwardPtrRef() = NULL; 
+	}
+	
+	~DetourTemplate()
+	{
+		if (GetAutoForward()) {
+			delete GetAutoForward();
+			SetAutoForward(NULL);
+		} 
+	}
 
 	static void SetAutoForward(AutoForward *autoForward)
 	{
@@ -111,4 +121,4 @@ private:
 
 #undef MFP_CODE_ADDRESS
 
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_TEMPLATE_H_

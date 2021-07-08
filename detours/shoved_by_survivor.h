@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -28,7 +28,6 @@
  *
  * Version: $Id$
  */
-
 #ifndef _INCLUDE_SOURCEMOD_DETOUR_SHOVED_BY_SURVIVOR_H_
 #define _INCLUDE_SOURCEMOD_DETOUR_SHOVED_BY_SURVIVOR_H_
 
@@ -36,29 +35,29 @@
 
 class CTerrorPlayer;
 
-namespace Detours {
-
-class ShovedBySurvivor;
-typedef void * (ShovedBySurvivor::*ShovedBySurvivorFunc)(CTerrorPlayer*, void *);
-
-class ShovedBySurvivor : public DetourTemplate<ShovedBySurvivorFunc, ShovedBySurvivor>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class ShovedBySurvivor;
+	typedef void * (ShovedBySurvivor::*ShovedBySurvivorFunc)(CTerrorPlayer*, void *);
 
-	void *OnShovedBySurvivor(CTerrorPlayer*, void *vector);
-
-	// get the signature name (i.e. "ShovedBySurvivor") from the game conf
-	virtual const char *GetSignatureName()
+	class ShovedBySurvivor : public DetourTemplate<ShovedBySurvivorFunc, ShovedBySurvivor>
 	{
-		return "CTerrorPlayer_OnShovedBySurvivor";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual ShovedBySurvivorFunc GetDetour()
-	{
-		return &ShovedBySurvivor::OnShovedBySurvivor;
-	}
+		void *OnShovedBySurvivor(CTerrorPlayer*, void *vector);
+
+		// get the signature name (i.e. "ShovedBySurvivor") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorPlayer_OnShovedBySurvivor";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual ShovedBySurvivorFunc GetDetour()
+		{
+			return &ShovedBySurvivor::OnShovedBySurvivor;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SHOVED_BY_SURVIVOR_H_

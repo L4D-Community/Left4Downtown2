@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class FastGetSurvivorSet;
-
-typedef int (FastGetSurvivorSet::*FastGetSurvivorSetFunc)();
-
-class FastGetSurvivorSet : public DetourTemplate<FastGetSurvivorSetFunc, FastGetSurvivorSet>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class FastGetSurvivorSet;
 
-	int OnFastGetSurvivorSet();
+	typedef int (FastGetSurvivorSet::*FastGetSurvivorSetFunc)();
 
-	// get the signature name (i.e. "FastGetSurvivorSet") from the game conf
-	virtual const char *GetSignatureName()
+	class FastGetSurvivorSet : public DetourTemplate<FastGetSurvivorSetFunc, FastGetSurvivorSet>
 	{
-		return "FastGetSurvivorSet";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual FastGetSurvivorSetFunc GetDetour()
-	{
-		return &FastGetSurvivorSet::OnFastGetSurvivorSet;
-	}
+		int OnFastGetSurvivorSet();
+
+		// get the signature name (i.e. "FastGetSurvivorSet") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "FastGetSurvivorSet";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual FastGetSurvivorSetFunc GetDetour()
+		{
+			return &FastGetSurvivorSet::OnFastGetSurvivorSet;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_FAST_GET_SURVIVOR_SET_H_

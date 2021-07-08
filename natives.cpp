@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor, 2021 A1m
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -33,6 +33,44 @@
 #include "vglobals.h"
 #include "util.h"
 #include "l4d2sdk/constants.h"
+
+//native void L4D_ReviveSurvivor(int client);
+cell_t L4D_ReviveSurvivor(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+	
+	//CTerrorPlayer::OnRevived(void)
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::OnRevived", 
+			PassInfo pass[1]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(CBaseEntity *); \
+			pass[0].type = PassType_Basic; \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, NULL, pass, /*numparams*/1));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorPlayer::OnRevived");
+	}
+	
+	int target = params[1];
+	CBaseEntity * pTarget = UTIL_GetCBaseEntity(target, true);
+	if (pTarget == NULL) 
+	{
+		return pContext->ThrowNativeError("Invalid revive player");
+	}
+
+	unsigned char vstk[sizeof(CBaseEntity *)];
+	unsigned char *vptr = vstk;
+	
+	*(CBaseEntity **)vptr = pTarget;
+	//vptr += sizeof(CBaseEntity *);
+	
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::OnRevived");
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::OnRevived");
+	
+	return 0;
+}
 
 //native int L4D_GetHighestFlowSurvivor();
 cell_t L4D_GetHighestFlowSurvivor(IPluginContext *pContext, const cell_t *params)
@@ -128,7 +166,7 @@ cell_t L4D2_AreTeamsFlipped(IPluginContext *pContext, const cell_t *params)
 	unsigned char *vptr = vstk;
 
 	*(void **)vptr = director;
-	vptr += sizeof(void *);
+	//vptr += sizeof(void *);
 	
 	cell_t retbuffer = false;
 	L4D_DEBUG_LOG("Going to execute CDirector::AreTeamsFlipped");
@@ -168,7 +206,7 @@ cell_t L4D2_GetVersusCompletionPlayer(IPluginContext *pContext, const cell_t *pa
 	
 	int target = params[1];
 	CBaseEntity * pTarget = UTIL_GetCBaseEntity(target, true);
-	if(pTarget == NULL) 
+	if (pTarget == NULL) 
 	{
 		return pContext->ThrowNativeError("Invalid Stagger target entity");		
 	}
@@ -220,12 +258,12 @@ cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 #define SCORE_TYPE_CAMPAIGN 1
 
 	//sanity check that the team index is valid
-	if(params[1] != SCORE_TEAM_A && params[1] != SCORE_TEAM_B)
+	if (params[1] != SCORE_TEAM_A && params[1] != SCORE_TEAM_B)
 	{
 		return pContext->ThrowNativeError("Logical team %d is invalid", params[1]);
 	}
 	//campaign_score is a boolean so should be 0 (use round score) or 1 only 
-	if(params[2] != SCORE_TYPE_ROUND && params[2] != SCORE_TYPE_CAMPAIGN)
+	if (params[2] != SCORE_TYPE_ROUND && params[2] != SCORE_TYPE_CAMPAIGN)
 	{
 		return pContext->ThrowNativeError("campaign_score %d is invalid, needs to be 0 or 1", params[2]);
 	}
@@ -323,7 +361,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 {
 	const int64_t cookieUnreserved = 0;
 
-	if(g_pServer == NULL)
+	if (g_pServer == NULL)
 	{
 		return pContext->ThrowNativeError("CBaseServer not available");
 	}
@@ -454,7 +492,7 @@ cell_t L4D_ScavengeBeginRoundSetupTime(IPluginContext *pContext, const cell_t *p
 	void *directorScavengeMode = *reinterpret_cast<void**>(reinterpret_cast<uint8_t*>(director) + offset);
 	L4D_DEBUG_LOG("CDirectorScavengeMode pointer is %x", directorScavengeMode);
 
-	if(directorScavengeMode == NULL)
+	if (directorScavengeMode == NULL)
 	{
 		return pContext->ThrowNativeError("CDirectorScavengeMode unsupported or not available; file a bug report");
 	}
@@ -517,7 +555,7 @@ cell_t L4D_IsFirstMapInScenario(IPluginContext *pContext, const cell_t *params)
 {
 	static ICallWrapper *pWrapper = NULL;
 	
-	if(!pWrapper)
+	if (!pWrapper)
 	{
 		PassInfo retInfo; 
 		retInfo.flags = PASSFLAG_BYVAL; 
@@ -544,7 +582,7 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 {
 	static ICallWrapper *pWrapper = NULL;
 	
-	if(!pWrapper)
+	if (!pWrapper)
 	{
 		PassInfo retInfo; 
 		retInfo.flags = PASSFLAG_BYVAL; 
@@ -644,14 +682,14 @@ cell_t L4D_StaggerPlayer(IPluginContext *pContext, const cell_t *params)
 	
 	int target = params[1];
 	CBaseEntity * pTarget = UTIL_GetCBaseEntity(target, true);
-	if(pTarget == NULL) 
+	if (pTarget == NULL) 
 	{
-		return pContext->ThrowNativeError("Invalid Stagger target entity");		
+		return pContext->ThrowNativeError("Invalid Stagger target entity");
 	}
 	
 	int source_ent = params[2];
 	CBaseEntity * pSource = UTIL_GetCBaseEntity(source_ent, false);
-	if(pSource == NULL) 
+	if (pSource == NULL) 
 	{
 		return pContext->ThrowNativeError("Invalid Stagger source entity");
 	}
@@ -662,7 +700,7 @@ cell_t L4D_StaggerPlayer(IPluginContext *pContext, const cell_t *params)
 	Vector vSourceVector;
 	Vector *pSourceVector = NULL;
 	
-	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		vSourceVector[0] = sp_ctof(source_vector[0]);
 		vSourceVector[1] = sp_ctof(source_vector[1]);
@@ -724,7 +762,7 @@ cell_t L4D_GetMobSpawnTimerDuration(IPluginContext *pContext, const cell_t *para
 cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 {	
 	static int offset;
-	if(!offset && (!g_pGameConf->GetOffset("SpawnTimer", &offset) || !offset))
+	if (!offset && (!g_pGameConf->GetOffset("SpawnTimer", &offset) || !offset))
 	{
 		return pContext->ThrowNativeError("Could not read 'SpawnTimer' offset from GameConf");
 	}
@@ -732,7 +770,7 @@ cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 
 	int player = params[1];
 	CBaseEntity * pPlayer = UTIL_GetCBaseEntity(player, true);
-	if(pPlayer == NULL) 
+	if (pPlayer == NULL) 
 	{
 		return pContext->ThrowNativeError("Invalid Player to retrieve spawn timer");		
 	}
@@ -768,14 +806,14 @@ cell_t L4D_ReplaceTank(IPluginContext *pContext, const cell_t *params)
 	
 	int tank = params[1];
 	CBaseEntity * pTank = UTIL_GetCBaseEntity(tank, true);
-	if(pTank == NULL) 
+	if (pTank == NULL) 
 	{
 		return pContext->ThrowNativeError("Invalid Tank client");		
 	}
 	
 	int newtank = params[2];
 	CBaseEntity * pNewtank = UTIL_GetCBaseEntity(newtank, true);
-	if(pNewtank == NULL) 
+	if (pNewtank == NULL) 
 	{
 		return pContext->ThrowNativeError("Invalid New Tank client");
 	}
@@ -924,13 +962,13 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 	Vector vector;
 	QAngle qangle;
 
-	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		vector[0] = sp_ctof(source_vector[0]);
 		vector[1] = sp_ctof(source_vector[1]);
 		vector[2] = sp_ctof(source_vector[2]);
 	}
-	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		qangle[0] = sp_ctof(source_qangle[0]);
 		qangle[1] = sp_ctof(source_qangle[1]);
@@ -993,13 +1031,13 @@ cell_t L4D2_SpawnTank(IPluginContext *pContext, const cell_t *params)
 	Vector vector;
 	QAngle qangle;
 
-	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		vector[0] = sp_ctof(source_vector[0]);
 		vector[1] = sp_ctof(source_vector[1]);
 		vector[2] = sp_ctof(source_vector[2]);
 	}
-	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		qangle[0] = sp_ctof(source_qangle[0]);
 		qangle[1] = sp_ctof(source_qangle[1]);
@@ -1059,13 +1097,13 @@ cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
 	Vector vector;
 	QAngle qangle;
 
-	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		vector[0] = sp_ctof(source_vector[0]);
 		vector[1] = sp_ctof(source_vector[1]);
 		vector[2] = sp_ctof(source_vector[2]);
 	}
-	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		qangle[0] = sp_ctof(source_qangle[0]);
 		qangle[1] = sp_ctof(source_qangle[1]);
@@ -1125,13 +1163,13 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 	Vector vector;
 	QAngle qangle;
 
-	if(source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		vector[0] = sp_ctof(source_vector[0]);
 		vector[1] = sp_ctof(source_vector[1]);
 		vector[2] = sp_ctof(source_vector[2]);
 	}
-	if(source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
+	if (source_qangle != pContext->GetNullRef(SP_NULL_VECTOR))
 	{
 		qangle[0] = sp_ctof(source_qangle[0]);
 		qangle[1] = sp_ctof(source_qangle[1]);
@@ -1152,6 +1190,7 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
+	{"L4D_ReviveSurvivor",				L4D_ReviveSurvivor},
 	{"L4D_GetHighestFlowSurvivor",		L4D_GetHighestFlowSurvivor},
 	{"L4D2_AreTeamsFlipped",			L4D2_AreTeamsFlipped},
 	{"L4D2_GetVersusCompletionPlayer",	L4D2_GetVersusCompletionPlayer},
@@ -1170,13 +1209,13 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_StaggerPlayer",				L4D_StaggerPlayer},
 	{"L4D_GetMobSpawnTimerRemaining",	L4D_GetMobSpawnTimerRemaining},
 	{"L4D_GetMobSpawnTimerDuration",	L4D_GetMobSpawnTimerDuration},
-	{"L4D_GetPlayerSpawnTime",  		L4D_GetPlayerSpawnTime},
-	{"L4D_ReplaceTank",  				L4D_ReplaceTank},
-	{"L4D2_SendInRescueVehicle",  		L4D2_SendInRescueVehicle},
-	{"L4D2_ChangeFinaleStage",  		L4D2_ChangeFinaleStage},
+	{"L4D_GetPlayerSpawnTime",			L4D_GetPlayerSpawnTime},
+	{"L4D_ReplaceTank",					L4D_ReplaceTank},
+	{"L4D2_SendInRescueVehicle",		L4D2_SendInRescueVehicle},
+	{"L4D2_ChangeFinaleStage",			L4D2_ChangeFinaleStage},
 	{"L4D2_SpawnSpecial",				L4D2_SpawnSpecial},
 	{"L4D2_SpawnTank",					L4D2_SpawnTank},
 	{"L4D2_SpawnWitch",					L4D2_SpawnWitch},
-	{"L4D2_SpawnWitchBride",  			L4D2_SpawnWitchBride},
+	{"L4D2_SpawnWitchBride",			L4D2_SpawnWitchBride},
 	{NULL,							NULL}
 };

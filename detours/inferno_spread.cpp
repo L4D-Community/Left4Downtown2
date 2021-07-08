@@ -1,56 +1,74 @@
+/**
+ * vim: set ts=4 :
+ * =============================================================================
+ * Left 4 Downtown SourceMod Extension
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * =============================================================================
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, version 3.0, as published by the
+ * Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * As a special exception, AlliedModders LLC gives you permission to link the
+ * code of this program (as well as its derivative works) to "Half-Life 2," the
+ * "Source Engine," the "SourcePawn JIT," and any Game MODs that run on software
+ * by the Valve Corporation.  You must obey the GNU General Public License in
+ * all respects for all other code used.  Additionally, AlliedModders LLC grants
+ * this exception to all derivative works.  AlliedModders LLC defines further
+ * exceptions, found in LICENSE.txt (as of this writing, version JULY-31-2007),
+ * or <http://www.sourcemod.net/license.php>.
+ *
+ * Version: $Id$
+ */
+
 #include "inferno_spread.h"
 #include "extension.h"
-#include "util.h"
 
 namespace Detours
 {
-    void *InfernoSpread::OnInfernoSpread(void *vector1, void *vector2, int i1, int i2)
-    {
-        CBaseHandle &infernoOwner = *(CBaseHandle *)((unsigned char *)this + 544);
-        int thrower = !infernoOwner.IsValid() ? -1 : infernoOwner.GetEntryIndex(); // spitter or other kind of fire-raiser (survivor that has thrown a molotov etc)
-		CBaseEntity *target = UTIL_GetCBaseEntity(thrower, true);
-		if (*(int *)((unsigned char *)target + 588) != 3 || *(int *)((unsigned char *)target + 11204) != 4) // not infected / not spitter
-        {
-            return (this->*(GetTrampoline()))(vector1, vector2, i1, i2);
-        }
+	void *InfernoSpread::OnInfernoSpread(/*const*/ Vector &spreadVelocity)
+	{
+		CBaseEntity *pEntity = (CBaseEntity *)this;
+		CBaseEntity *pOwner = pEntity->GetOwnerEntity(); // spitter or other kind of fire-raiser (survivor that has thrown a molotov etc)
 		
-		edict_t *pProjectile = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
-		int projectile = IndexOfEdict(pProjectile);
-		// int puddleID = *(int *)((unsigned char *)this + 2624);
+		// infected and spitter
+		//if ((CTerrorPlayer *)pOwner->GetTeamNumber() == Team_Infected && (CTerrorPlayer *)pOwner->GetZombieClass() == ZombieClassType_Spitter) {} 
 		
-		float x1 = *(float *)((unsigned char *)vector1);
-		float y1 = *(float *)((unsigned char *)vector1 + 4);
-		float z1 = *(float *)((unsigned char *)vector1 + 8);
-		// float x2 = *(float *)((unsigned char *)vector2);
-		// float y2 = *(float *)((unsigned char *)vector2 + 4);
-		// float z2 = *(float *)((unsigned char *)vector2 + 8);
+		cell_t ctSpreadVelocity[3] = {sp_ftoc(spreadVelocity.x), sp_ftoc(spreadVelocity.y), sp_ftoc(spreadVelocity.z)};
 		
 		cell_t result = Pl_Continue;
-		if (g_pFwdInfernoSpread)
-        {
+		
+		if (g_pFwdInfernoSpread) {
+			int thrower = (pOwner == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(pOwner));
+			int projectile = IndexOfEdict(gameents->BaseEntityToEdict(pEntity));
+			//int puddleID = *(int *)((unsigned char *)this + 2624);
+			
 			g_pFwdInfernoSpread->PushCell(thrower);
-            g_pFwdInfernoSpread->PushCell(projectile);
-            // g_pFwdInfernoSpread->PushCell(puddleID);
-            g_pFwdInfernoSpread->PushFloatByRef(&x1);
-            g_pFwdInfernoSpread->PushFloatByRef(&y1);
-            g_pFwdInfernoSpread->PushFloatByRef(&z1);
-            // g_pFwdInfernoSpread->PushFloatByRef(&x2);
-            // g_pFwdInfernoSpread->PushFloatByRef(&y2);
-            // g_pFwdInfernoSpread->PushFloatByRef(&z2);
-            g_pFwdInfernoSpread->Execute(&result);
-        }
-
-		if (result == Pl_Handled) {
-            return NULL;
-        } else if (result == Pl_Changed) {
-			*(float *)((unsigned char *)vector1) = x1;
-			*(float *)((unsigned char *)vector1 + 4) = y1;
-			*(float *)((unsigned char *)vector1 + 8) = z1;
-			// *(float *)((unsigned char *)vector2) = x2;
-			// *(float *)((unsigned char *)vector2 + 4) = y2;
-			// *(float *)((unsigned char *)vector2 + 8) = z2;
+			g_pFwdInfernoSpread->PushCell(projectile);
+			//g_pFwdInfernoSpread->PushCell(puddleID);
+			g_pFwdInfernoSpread->PushArray(ctSpreadVelocity, 3, SM_PARAM_COPYBACK);
+			g_pFwdInfernoSpread->Execute(&result);
+			
+			L4D_DEBUG_LOG("L4D2_OnSpitSpread(thrower: %d, projectile: %d, ctSpreadVelocity: %f %f %f)", 
+							thrower, projectile, ctSpreadVelocity.x, ctSpreadVelocity.y, ctSpreadVelocity.z);
 		}
 
-		return (this->*(GetTrampoline()))(vector1, vector2, i1, i2);
-    }
+		if (result == Pl_Changed) {
+			for (int i = 0; i < 3; i++) {
+				spreadVelocity[i] = sp_ctof(ctSpreadVelocity[i]);
+			}
+		} else if (result == Pl_Handled) {
+			return NULL;
+		}
+		
+		return (this->*(GetTrampoline()))(spreadVelocity);
+	}
 };

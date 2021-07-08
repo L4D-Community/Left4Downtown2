@@ -33,8 +33,8 @@
 #define _INCLUDE_CBASECOMBATWEAPON_H_
 
 #include "extension.h"
-
-class CBasePlayer;
+#include "l4d2sdk/CBasePlayer.h"
+//class CBasePlayer;
 
 class CBaseCombatWeapon
 {

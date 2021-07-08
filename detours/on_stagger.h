@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class PlayerStagger;
-
-typedef int (PlayerStagger::*PlayerStaggerFunc)(CBaseEntity *, void *);
-
-class PlayerStagger: public DetourTemplate<PlayerStaggerFunc, PlayerStagger>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class PlayerStagger;
 
-	int OnPlayerStagger(CBaseEntity *sourceEnt, void *sourceDir);
+	typedef int (PlayerStagger::*PlayerStaggerFunc)(CBaseEntity *, void *);
 
-	// get the signature name (i.e. "GetCrouchTopSpeed") from the game conf
-	virtual const char *GetSignatureName()
+	class PlayerStagger: public DetourTemplate<PlayerStaggerFunc, PlayerStagger>
 	{
-		return "CTerrorPlayer_OnStaggered";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual PlayerStaggerFunc GetDetour()
-	{
-		return &PlayerStagger::OnPlayerStagger;
-	}
+		int OnPlayerStagger(CBaseEntity *sourceEnt, void *sourceDir);
+
+		// get the signature name (i.e. "GetCrouchTopSpeed") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorPlayer_OnStaggered";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual PlayerStaggerFunc GetDetour()
+		{
+			return &PlayerStagger::OnPlayerStagger;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_ON_STAGGER_H_

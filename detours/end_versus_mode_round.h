@@ -1,8 +1,8 @@
 /**
  * vim: set ts=4 :
  * =============================================================================
- * Left 4 Downtown 2 SourceMod Extension
- * Copyright (C) 2012 Michael "ProdigySim" Busby
+ * Left 4 Downtown SourceMod Extension
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class EndVersusModeRound;
-typedef void (EndVersusModeRound::*EndVersusModeRoundFunc)(bool);
-
-class EndVersusModeRound : public DetourTemplate<EndVersusModeRoundFunc, EndVersusModeRound>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class EndVersusModeRound;
+	typedef void (EndVersusModeRound::*EndVersusModeRoundFunc)(bool);
 
-	void OnEndVersusModeRound(bool countSurvivors);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class EndVersusModeRound : public DetourTemplate<EndVersusModeRoundFunc, EndVersusModeRound>
 	{
-		return "EndVersusModeRound";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual EndVersusModeRoundFunc GetDetour()
-	{
-		return &EndVersusModeRound::OnEndVersusModeRound;
-	}
+		void OnEndVersusModeRound(bool countSurvivors);
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "EndVersusModeRound";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual EndVersusModeRoundFunc GetDetour()
+		{
+			return &EndVersusModeRound::OnEndVersusModeRound;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_END_VERSUS_MODE_ROUND_H_

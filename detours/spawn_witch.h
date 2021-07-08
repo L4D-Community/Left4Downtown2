@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class SpawnWitch;
-typedef void * (SpawnWitch::*SpawnWitchFunc)(void *, void*);
-
-class SpawnWitch : public DetourTemplate<SpawnWitchFunc, SpawnWitch>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SpawnWitch;
+	typedef void * (SpawnWitch::*SpawnWitchFunc)(void *, void*);
 
-	void *OnSpawnWitch(void *vector, void *qangle);
-
-	// get the signature name (i.e. "SpawnWitch") from the game conf
-	virtual const char *GetSignatureName()
+	class SpawnWitch : public DetourTemplate<SpawnWitchFunc, SpawnWitch>
 	{
-		return "SpawnWitch";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SpawnWitchFunc GetDetour()
-	{
-		return &SpawnWitch::OnSpawnWitch;
-	}
+		void *OnSpawnWitch(void *vector, void *qangle);
+
+		// get the signature name (i.e. "SpawnWitch") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "SpawnWitch";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SpawnWitchFunc GetDetour()
+		{
+			return &SpawnWitch::OnSpawnWitch;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SPAWN_WITCH_H_

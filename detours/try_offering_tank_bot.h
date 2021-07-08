@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class TryOfferingTankBot;
-typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)(CBaseEntity*, bool);
-
-class TryOfferingTankBot : public DetourTemplate<TryOfferingTankBotFunc, TryOfferingTankBot>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class TryOfferingTankBot;
+	typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)(CBaseEntity*, bool);
 
-	void OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis);
-
-	// get the signature name (i.e. "TryOfferingTankBot") from the game conf
-	virtual const char *GetSignatureName()
+	class TryOfferingTankBot : public DetourTemplate<TryOfferingTankBotFunc, TryOfferingTankBot>
 	{
-		return "TryOfferingTankBot";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual TryOfferingTankBotFunc GetDetour()
-	{
-		return &TryOfferingTankBot::OnTryOfferingTankBot;
-	}
+		void OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis);
+
+		// get the signature name (i.e. "TryOfferingTankBot") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "TryOfferingTankBot";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual TryOfferingTankBotFunc GetDetour()
+		{
+			return &TryOfferingTankBot::OnTryOfferingTankBot;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_TRYOFFERINGTANKBOT_H_

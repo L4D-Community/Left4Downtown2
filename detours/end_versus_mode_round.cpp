@@ -1,8 +1,8 @@
 /**
  * vim: set ts=4 :
  * =============================================================================
- * Left 4 Downtown 2 SourceMod Extension
- * Copyright (C) 2012 Michael "ProdigySim" Busby
+ * Left 4 Downtown SourceMod Extension
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,27 +38,33 @@ namespace Detours
 	{
 		L4D_DEBUG_LOG("CDirectorVersusMode::EndVersusModeRound(%s) has been called", countSurvivors ? "true" : "false");
 		
-		if(g_bRoundEnd) return;
+		if (g_bRoundEnd) {
+			return;
+		}
+		
 		g_bRoundEnd = true;
 		
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnEndVersusModeRound)
-		{
+		
+		if (g_pFwdOnEndVersusModeRound) {
 			L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound forward has been sent out");
+			
 			g_pFwdOnEndVersusModeRound->PushCell(static_cast<bool>(countSurvivors));
 			g_pFwdOnEndVersusModeRound->Execute(&result);
 		}
 		
-		if(result == Pl_Handled) return;
+		if (result == Pl_Handled) {
+			return;
+		}
 		
 		(this->*(GetTrampoline()))(countSurvivors);
 
-		if(g_pFwdOnEndVersusModeRound_Post)
-		{
+		if (g_pFwdOnEndVersusModeRound_Post) {
 			L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound_Post forward has been sent out");
+			
 			g_pFwdOnEndVersusModeRound_Post->Execute(NULL);
 		}
-	   
+
 		return;
 	}
 };

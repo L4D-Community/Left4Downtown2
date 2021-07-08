@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,29 +36,29 @@
 
 class CTerrorPlayer;
 
-namespace Detours {
-
-class FirstSurvivorLeftSafeArea;
-typedef void * (FirstSurvivorLeftSafeArea::*FirstSurvivorLeftSafeAreaFunc)(CTerrorPlayer*);
-
-class FirstSurvivorLeftSafeArea : public DetourTemplate<FirstSurvivorLeftSafeAreaFunc, FirstSurvivorLeftSafeArea>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class FirstSurvivorLeftSafeArea;
+	typedef void * (FirstSurvivorLeftSafeArea::*FirstSurvivorLeftSafeAreaFunc)(CTerrorPlayer*);
 
-	void *OnFirstSurvivorLeftSafeArea(CTerrorPlayer*);
-
-	// get the signature name (i.e. "FirstSurvivorLeftSafeArea") from the game conf
-	virtual const char *GetSignatureName()
+	class FirstSurvivorLeftSafeArea : public DetourTemplate<FirstSurvivorLeftSafeAreaFunc, FirstSurvivorLeftSafeArea>
 	{
-		return "OnFirstSurvivorLeftSafeArea";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual FirstSurvivorLeftSafeAreaFunc GetDetour()
-	{
-		return &FirstSurvivorLeftSafeArea::OnFirstSurvivorLeftSafeArea;
-	}
+		void *OnFirstSurvivorLeftSafeArea(CTerrorPlayer*);
+
+		// get the signature name (i.e. "FirstSurvivorLeftSafeArea") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "OnFirstSurvivorLeftSafeArea";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual FirstSurvivorLeftSafeAreaFunc GetDetour()
+		{
+			return &FirstSurvivorLeftSafeArea::OnFirstSurvivorLeftSafeArea;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_VERSUS_ROUND_STARTED_H_

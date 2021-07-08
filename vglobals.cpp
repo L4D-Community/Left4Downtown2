@@ -30,7 +30,6 @@
  */
 
 #include "vglobals.h"
-#include "extension.h"
 #include "util.h"
 
 CDirector **g_pDirector = NULL;
@@ -52,7 +51,7 @@ void InitializeValveGlobals()
 	L4D_DEBUG_LOG("TheDirector found at: %p", g_pDirector);
 	
 	/* g_pZombieManager */
-	if(!g_pGameConf->GetAddress("ZombieManager", (void **)&addr))
+	if (!g_pGameConf->GetAddress("ZombieManager", (void **)&addr))
 	{
 		L4D_DEBUG_LOG("TheZombieManager address not found.");
 		return;
@@ -61,7 +60,7 @@ void InitializeValveGlobals()
 	L4D_DEBUG_LOG("TheZombieManager found at: %p", g_pZombieManager);
 	
 	/* g_pWeaponInfoDatabase */
-	if(!g_pGameConf->GetAddress("WeaponInfoDatabase", (void **)&addr))
+	if (!g_pGameConf->GetAddress("WeaponInfoDatabase", (void **)&addr))
 	{
 		L4D_DEBUG_LOG("WeaponInfoDatabase address not found.");
 		return;
@@ -70,7 +69,7 @@ void InitializeValveGlobals()
 	L4D_DEBUG_LOG("WeaponInfoDatabase found at: %p", g_pWeaponInfoDatabase);
 	
 	/* g_pMeleeWeaponInfoStore */
-	if(!g_pGameConf->GetAddress("MeleeWeaponInfoStore", (void **)&addr))
+	if (!g_pGameConf->GetAddress("MeleeWeaponInfoStore", (void **)&addr))
 	{
 		L4D_DEBUG_LOG("MeleeWeaponInfoStore address not found.");
 		return;

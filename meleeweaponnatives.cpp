@@ -52,7 +52,7 @@ enum L4D2FloatMeleeWeaponAttributes
 
 bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
-	if(pInfo == NULL) return NULL;
+	if (pInfo == NULL) return NULL;
 	
 	switch(id)
 	{
@@ -65,7 +65,7 @@ bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 
 int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
-	if(pInfo == NULL) return NULL;
+	if (pInfo == NULL) return NULL;
 	
 	switch(id)
 	{
@@ -80,7 +80,7 @@ int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 
 float * FloatIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
-	if(pInfo == NULL) return NULL;
+	if (pInfo == NULL) return NULL;
 	
 	switch(id)
 	{
@@ -100,7 +100,7 @@ CMeleeWeaponInfo * StringToId(const char *weapon)
 {
 	FOR_EACH_VEC((g_pMeleeWeaponInfoStore->weaponNames), i)
 	{
-		if(strcmp(weapon, g_pMeleeWeaponInfoStore->weaponNames[i]) == 0)
+		if (strcmp(weapon, g_pMeleeWeaponInfoStore->weaponNames[i]) == 0)
 		{
 			return g_pMeleeWeaponInfoStore->weaponInfo[i];
 		}
@@ -138,7 +138,7 @@ cell_t L4D2_GetMeleeWeaponIndex(IPluginContext *pContext, const cell_t *params)
 
 	FOR_EACH_VEC( (g_pMeleeWeaponInfoStore->weaponNames), i )
 	{
-		if(strcmp(weapon, g_pMeleeWeaponInfoStore->weaponNames[i]) == 0)
+		if (strcmp(weapon, g_pMeleeWeaponInfoStore->weaponNames[i]) == 0)
 		{
 			return i;
 		}
@@ -161,7 +161,7 @@ cell_t L4D2_GetIntMeleeAttribute(IPluginContext *pContext, const cell_t *params)
 	}
 
 	int * attr = IntIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -183,7 +183,7 @@ cell_t L4D2_GetFloatMeleeAttribute(IPluginContext *pContext, const cell_t *param
 	}
 
 	float * attr = FloatIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -205,7 +205,7 @@ cell_t L4D2_SetIntMeleeAttribute(IPluginContext *pContext, const cell_t *params)
 	}
 	
 	int * attr = IntIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -228,7 +228,7 @@ cell_t L4D2_SetFloatMeleeAttribute(IPluginContext *pContext, const cell_t *param
 	}
 	
 	float * attr = FloatIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -251,7 +251,7 @@ cell_t L4D2_GetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 	}
 
 	int * attr = IntIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -273,7 +273,7 @@ cell_t L4D2_SetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 	}
 	
 	bool * attr = BoolIdToAttr(pInfo, params[2]);
-	if(attr == NULL)
+	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}

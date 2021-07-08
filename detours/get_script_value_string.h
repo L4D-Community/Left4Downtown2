@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class GetScriptValueString;
-
-typedef void * (GetScriptValueString::*GetScriptValueStringFunc)(const char*, const char*, char*, int);
-
-class GetScriptValueString : public DetourTemplate<GetScriptValueStringFunc, GetScriptValueString>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class GetScriptValueString;
 
-	void *OnGetScriptValueString(const char*, const char*, char*, int);
+	typedef void * (GetScriptValueString::*GetScriptValueStringFunc)(const char*, const char*, char*, int);
 
-	// get the signature name (i.e. "GetScriptValueString") from the game conf
-	virtual const char *GetSignatureName()
+	class GetScriptValueString : public DetourTemplate<GetScriptValueStringFunc, GetScriptValueString>
 	{
-		return "CDirector_GetScriptValueString";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetScriptValueStringFunc GetDetour()
-	{
-		return &GetScriptValueString::OnGetScriptValueString;
-	}
+		void *OnGetScriptValueString(const char*, const char*, char*, int);
+
+		// get the signature name (i.e. "GetScriptValueString") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CDirector_GetScriptValueString";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetScriptValueStringFunc GetDetour()
+		{
+			return &GetScriptValueString::OnGetScriptValueString;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_SCRIPT_VALUE_STRING_H_

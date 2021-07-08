@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2010 Igor "Downtown1" Smirnov.
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -39,7 +39,7 @@ namespace Detours
 		L4D_DEBUG_LOG("SurvivorBot::UseHealingItems has been called");
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnUseHealingItems)
+		if (g_pFwdOnUseHealingItems)
 		{
 			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			int client = IndexOfEdict(pEntity);
@@ -48,16 +48,14 @@ namespace Detours
 			g_pFwdOnUseHealingItems->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
+		if (result == Pl_Handled)
 		{
 			L4D_DEBUG_LOG("SurvivorBot::OnUseHealingItems will be skipped");
 			// When UseHealingItems "does nothing", it zeroes out all three members of the returned struct
 			ActionStruct_t blank = { 0, 0, 0 };
 			return blank;
 		}
-		else
-		{
-			return (this->*(GetTrampoline()))(pAction);
-		}
+
+		return (this->*(GetTrampoline()))(pAction);
 	}
 };

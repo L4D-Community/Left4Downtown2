@@ -33,8 +33,11 @@
 #define _INCLUDE_CMELEEWEAPONINFO_H_
 #include "utlvector.h"
 #include "utlmap.h"
+#include "CBasePlayer.h"
+
 // I'm sorry :(
-class CBasePlayer;
+//class CBasePlayer;
+
 class CUserCmd;
 
 #include "igamesystem.h"
@@ -77,7 +80,7 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	float m_fWeaponIdleTime; // 3148
 	char src[80]; // 3152 name of the melee weapon
 } CMeleeWeaponInfo;
-	
+
 class CMeleeWeaponInfoStore : public CAutoGameSystem // 68 bytes?!?!?
 {
 	public:

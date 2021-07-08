@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -39,8 +39,8 @@ namespace Detours
 		L4D_DEBUG_LOG("CTerrorPlayer::TryOfferingTankBot has been called");
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnTryOfferingTankBot)
-		{
+
+		if (g_pFwdOnTryOfferingTankBot) {
 			cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(tank)) : 0;
 			cell_t cellEnterStasis = static_cast<bool>(enterStasis);
 			
@@ -52,16 +52,13 @@ namespace Detours
 			enterStasis = cellEnterStasis != 0;
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("CDirector::TryOfferingTankBot will be skipped");
 			return;
 		}
-		else
-		{
-			L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with enterStasis=%d", enterStasis);
-			(this->*(GetTrampoline()))(tank, enterStasis);
-			return;
-		}
+		
+		L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with enterStasis=%d", enterStasis);
+		(this->*(GetTrampoline()))(tank, enterStasis);
+		return;
 	}
 };

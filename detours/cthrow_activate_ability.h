@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2010 Michael "ProdigySim" Busby
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class CThrowActivate;
-typedef void (CThrowActivate::*CThrowActivateFunc)();
-
-class CThrowActivate : public DetourTemplate<CThrowActivateFunc, CThrowActivate>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class CThrowActivate;
+	typedef void (CThrowActivate::*CThrowActivateFunc)();
 
-	void OnCThrowActivate();
-
-	// get the signature name (i.e. "CThrowActivate") from the game conf
-	virtual const char *GetSignatureName()
+	class CThrowActivate : public DetourTemplate<CThrowActivateFunc, CThrowActivate>
 	{
-		return "CThrowActivate";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual CThrowActivateFunc GetDetour()
-	{
-		return &CThrowActivate::OnCThrowActivate;
-	}
+		void OnCThrowActivate();
+
+		// get the signature name (i.e. "CThrowActivate") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CThrowActivate";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual CThrowActivateFunc GetDetour()
+		{
+			return &CThrowActivate::OnCThrowActivate;
+		}
+	};
 };
 
-};
-
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_CTHROWACTIVATE_H_

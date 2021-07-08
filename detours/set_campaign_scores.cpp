@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -39,24 +39,20 @@ namespace Detours
 		L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores has been called, A=%d, B=%d", a, b);
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnSetCampaignScores)
-		{
+		if (g_pFwdOnSetCampaignScores) {
 			L4D_DEBUG_LOG("L4D_OnSetCampaignScores forward has been sent out");
 			g_pFwdOnSetCampaignScores->PushCellByRef(&a);
 			g_pFwdOnSetCampaignScores->PushCellByRef(&b);
 			g_pFwdOnSetCampaignScores->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("Director::SetCampaignScores will be skipped");
 			return;
 		}
-		else
-		{		
-			L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with A=%d, B=%d", a, b);
 
-			return (this->*(GetTrampoline()))(a, b);
-		}
+		L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with A=%d, B=%d", a, b);
+
+		return (this->*(GetTrampoline()))(a, b);
 	}
 };

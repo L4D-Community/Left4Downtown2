@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2021 A1mDev (A1m`)
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,36 +29,28 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
-#define _INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
+#ifndef _INCLUDE_CBASEABILITY_H_
+#define _INCLUDE_CBASEABILITY_H_
 
-#include "detour_template.h"
+#include "extension.h"
+#include "constants.h"
 
-class CTerrorPlayer;
-
-namespace Detours
+class CBaseEntity
 {
-	class CLedgeGrabbed;
-	typedef void (CLedgeGrabbed::*OnLedgeGrabbedFunc)(void *);
+public:
 
-	class CLedgeGrabbed : public DetourTemplate<OnLedgeGrabbedFunc, CLedgeGrabbed>
-	{
-	private: //note: implementation of DetourTemplate abstracts
+	static bool OnLoad(char* error, size_t maxlength);
+	
+	CBaseEntity	*GetOwnerEntity();
+	
+	edict_t* edict();
+	
+	bool IsPlayer();
+	
+public:
 
-		void OnLedgeGrabbed(void *position);
-
-		// get the signature name (i.e. "SpawnTank") from the game conf
-		virtual const char *GetSignatureName()
-		{
-			return "OnLedgeGrabbed";
-		}
-
-		//notify our patch system which function should be used as the detour
-		virtual OnLedgeGrabbedFunc GetDetour()
-		{
-			return &CLedgeGrabbed::OnLedgeGrabbed;
-		}
-	};
+	static int sendprop_m_hOwnerEntity;
+	
 };
 
-#endif //_INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
+#endif //_INCLUDE_CBASEABILITY_H_

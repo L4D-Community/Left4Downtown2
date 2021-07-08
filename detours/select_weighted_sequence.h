@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,30 +36,30 @@
 
 class CTerrorPlayer;
 
-namespace Detours {
-
-class SelectWeightedSequence;
-
-typedef int (SelectWeightedSequence::*SelectWeightedSequenceFunc)(int);
-
-class SelectWeightedSequence : public DetourTemplate<SelectWeightedSequenceFunc, SelectWeightedSequence>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SelectWeightedSequence;
 
-	int OnSelectWeightedSequence(int);
+	typedef int (SelectWeightedSequence::*SelectWeightedSequenceFunc)(int);
 
-	// get the signature name (i.e. "SelectWeightedSequence") from the game conf
-	virtual const char *GetSignatureName()
+	class SelectWeightedSequence : public DetourTemplate<SelectWeightedSequenceFunc, SelectWeightedSequence>
 	{
-		return "SelectWeightedSequence";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SelectWeightedSequenceFunc GetDetour()
-	{
-		return &SelectWeightedSequence::OnSelectWeightedSequence;
-	}
+		int OnSelectWeightedSequence(int);
+
+		// get the signature name (i.e. "SelectWeightedSequence") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "SelectWeightedSequence";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SelectWeightedSequenceFunc GetDetour()
+		{
+			return &SelectWeightedSequence::OnSelectWeightedSequence;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SELECT_WEIGHTED_SEQUENCE_H_

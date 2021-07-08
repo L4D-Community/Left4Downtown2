@@ -48,7 +48,7 @@ Gamemode() // 1 = Co-Op, 2 = Versus, 3 = Survival. False on anything else.
 	else if (strncmp(gmode,"survival",sizeof(gmode),false)==0) return 3;
 	else if (strncmp(gmode,"scavenge",sizeof(gmode),false)==0) return 4;
 	else if (strncmp(gmode,"realism",sizeof(gmode),false)==0) return 5;
-        else return false;
+	else return false;
 }
 
 IsServerLobbyFull()
@@ -58,7 +58,7 @@ IsServerLobbyFull()
 
 	DebugPrintToAll("IsServerLobbyFull : humans = %d, gamemode = %d", humans, gamemode);
 
-	if(gamemode == 2 || gamemode == 4)
+	if (gamemode == 2 || gamemode == 4)
 	{
 		return humans >= L4D_MAXHUMANS_LOBBY_VERSUS;
 	}
@@ -68,7 +68,7 @@ IsServerLobbyFull()
 
 IsAllowLobby(bool:e)
 {
-	if(GetConVarBool(cvarAutoLobby))
+	if (GetConVarBool(cvarAutoLobby))
 		SetConVarBool(FindConVar("sv_allow_lobby_connect_only"), e);
 }
 
@@ -76,7 +76,7 @@ public OnClientPutInServer(client)
 {
 	DebugPrintToAll("Client put in server %N", client);
 
-	if(GetConVarBool(cvarUnreserve) && !g_bUnreserved && IsServerLobbyFull())
+	if (GetConVarBool(cvarUnreserve) && !g_bUnreserved && IsServerLobbyFull())
 	{
 		if (GetConVarInt(FindConVar("sv_hosting_lobby")) > 0)
 		{
@@ -105,7 +105,7 @@ public Action:OnPlayerDisconnect(Handle:event, const String:name[], bool:dontBro
 
 public Action:Command_Unreserve(client, args)
 {
-	if(g_bUnreserved)
+	if (g_bUnreserved)
 	{
 		ReplyToCommand(client, "[UL] Server has already been unreserved.");
 	}
@@ -133,7 +133,7 @@ stock GetHumanCount()
 	new i;
 	for(i = 1; i < L4D_MAXCLIENTS_PLUS1; i++)
 	{
-		if(IsClientInGameHuman(i))
+		if (IsClientInGameHuman(i))
 		{
 			humans++
 		}
@@ -157,7 +157,7 @@ DebugPrintToAll(const String:format[], any:...)
 	LogMessage("%s", buffer);
 	#else
 	//suppress "format" never used warning
-	if(format[0])
+	if (format[0])
 		return;
 	else
 		return;

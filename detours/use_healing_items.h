@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,45 +36,45 @@
 
 class ActionSurvivorBot;
 
-namespace Detours {
-
-class UseHealingItems;
-
-// NOTE: UseHealingItems returns a struct by value
-// In assembly, this is accomplished using a "hidden" argument
-// so in the disassembly you will see two args + this, even though this function only has one arg
-// For Windows, thisptr is passed in ecx; for Linux, it is passed on top of the stack
-// I think CL (the Visual Studio compiler) needs this struct to be at least 64 bits, otherwise it would be passed back in eax:edx
-// I think GCC will always return structs by value on the stack, regardless of size, but it looks REALLY weird (unnecessary "retn 4"?)
-// This struct MUST be the return value or the compiler won't emit the correct code
-// And it must be returned-by-*value*, not by-reference or pointer!
-struct ActionStruct_t
+namespace Detours
 {
-	int ActionState;
-	void* ActionToTake;
-	char* ActionText;
-};
+	class UseHealingItems;
 
-typedef ActionStruct_t (UseHealingItems::*UseHealingItemsFunc)(ActionSurvivorBot* pAction);
-
-class UseHealingItems : public DetourTemplate<UseHealingItemsFunc, UseHealingItems>
-{
-private: //note: implementation of DetourTemplate abstracts
-
-	ActionStruct_t OnUseHealingItems(ActionSurvivorBot*);
-
-	// get the signature name (i.e. "UseHealingItems") from the game conf
-	virtual const char *GetSignatureName()
+	// NOTE: UseHealingItems returns a struct by value
+	// In assembly, this is accomplished using a "hidden" argument
+	// so in the disassembly you will see two args + this, even though this function only has one arg
+	// For Windows, thisptr is passed in ecx; for Linux, it is passed on top of the stack
+	// I think CL (the Visual Studio compiler) needs this struct to be at least 64 bits, otherwise it would be passed back in eax:edx
+	// I think GCC will always return structs by value on the stack, regardless of size, but it looks REALLY weird (unnecessary "retn 4"?)
+	// This struct MUST be the return value or the compiler won't emit the correct code
+	// And it must be returned-by-*value*, not by-reference or pointer!
+	struct ActionStruct_t
 	{
-		return "UseHealingItems";
-	}
+		int ActionState;
+		void* ActionToTake;
+		char* ActionText;
+	};
 
-	//notify our patch system which function should be used as the detour
-	virtual UseHealingItemsFunc GetDetour()
+	typedef ActionStruct_t (UseHealingItems::*UseHealingItemsFunc)(ActionSurvivorBot* pAction);
+
+	class UseHealingItems : public DetourTemplate<UseHealingItemsFunc, UseHealingItems>
 	{
-		return &UseHealingItems::OnUseHealingItems;
-	}
+	private: //note: implementation of DetourTemplate abstracts
+
+		ActionStruct_t OnUseHealingItems(ActionSurvivorBot*);
+
+		// get the signature name (i.e. "UseHealingItems") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "UseHealingItems";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual UseHealingItemsFunc GetDetour()
+		{
+			return &UseHealingItems::OnUseHealingItems;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_USE_HEALING_ITEMS_H_

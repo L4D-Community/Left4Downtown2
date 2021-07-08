@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -40,7 +40,7 @@ namespace Detours
 
 		int actualInvocationResult = (this->*(GetTrampoline()))();
 
-		if(g_pFwdOnRevived)
+		if (g_pFwdOnRevived)
 		{
 			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			int target = IndexOfEdict(pEntity);

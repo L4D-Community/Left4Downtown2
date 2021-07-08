@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -35,30 +35,30 @@
 #include "detour_template.h"
 #include <KeyValues.h>
 
-namespace Detours {
-
-class CTerrorGameRules;
-
-typedef KeyValues *(CTerrorGameRules::*GetMissionInfo)();
-
-class CTerrorGameRules: public DetourTemplate<GetMissionInfo, CTerrorGameRules>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class CTerrorGameRules;
 
-	KeyValues *OnGetMissionInfo();
+	typedef KeyValues *(CTerrorGameRules::*GetMissionInfo)();
 
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class CTerrorGameRules: public DetourTemplate<GetMissionInfo, CTerrorGameRules>
 	{
-		return "CTerrorGameRules__GetMissionInfo";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetMissionInfo GetDetour()
-	{
-		return &CTerrorGameRules::OnGetMissionInfo;
-	}
+		KeyValues *OnGetMissionInfo();
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorGameRules__GetMissionInfo";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetMissionInfo GetDetour()
+		{
+			return &CTerrorGameRules::OnGetMissionInfo;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_MISSION_INFO_H_

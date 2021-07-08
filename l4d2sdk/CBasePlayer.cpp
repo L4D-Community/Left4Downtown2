@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2021 A1mDev (A1m`)
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,36 +29,33 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
-#define _INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
+#include "extension.h"
+#include "CBasePlayer.h"
 
-#include "detour_template.h"
+int CBasePlayer::sendprop_m_iTeamNum = 0;
 
-class CTerrorPlayer;
-
-namespace Detours
+bool CBasePlayer::OnLoad(char* error, size_t maxlength)
 {
-	class CLedgeGrabbed;
-	typedef void (CLedgeGrabbed::*OnLedgeGrabbedFunc)(void *);
+	sm_sendprop_info_t info;
+	
+	if (!gamehelpers->FindSendPropInfo("CBasePlayer", "m_iTeamNum", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"СBasePlayer::m_iTeamNum\"");
 
-	class CLedgeGrabbed : public DetourTemplate<OnLedgeGrabbedFunc, CLedgeGrabbed>
-	{
-	private: //note: implementation of DetourTemplate abstracts
+		return false;
+	}
+	
+	sendprop_m_iTeamNum = info.actual_offset;
+	
+	return true;
+}
 
-		void OnLedgeGrabbed(void *position);
-
-		// get the signature name (i.e. "SpawnTank") from the game conf
-		virtual const char *GetSignatureName()
-		{
-			return "OnLedgeGrabbed";
-		}
-
-		//notify our patch system which function should be used as the detour
-		virtual OnLedgeGrabbedFunc GetDetour()
-		{
-			return &CLedgeGrabbed::OnLedgeGrabbed;
-		}
-	};
-};
-
-#endif //_INCLUDE_SOURCEMOD_DETOUR_ON_LEDGEGRABBED_H_
+L4DTeam CBasePlayer::GetTeamNumber()
+{
+	L4DTeam m_iTeamNum = static_cast<L4DTeam>(*(int *)((unsigned char *)this + sendprop_m_iTeamNum));
+	/*if (m_iTeamNum > Team_None && m_iTeamNum <= Team_Infected) {
+		return m_iTeamNum;
+	}
+	
+	return Team_None;*/
+	return m_iTeamNum;
+}

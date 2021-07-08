@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class GetRunTopSpeed;
-
-typedef float (GetRunTopSpeed::*GetRunTopSpeedFunc)();
-
-class GetRunTopSpeed : public DetourTemplate<GetRunTopSpeedFunc, GetRunTopSpeed>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class GetRunTopSpeed;
 
-	float OnGetRunTopSpeed();
+	typedef float (GetRunTopSpeed::*GetRunTopSpeedFunc)();
 
-	// get the signature name (i.e. "GetRunTopSpeed") from the game conf
-	virtual const char *GetSignatureName()
+	class GetRunTopSpeed : public DetourTemplate<GetRunTopSpeedFunc, GetRunTopSpeed>
 	{
-		return "CTerrorPlayer_GetRunTopSpeed";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetRunTopSpeedFunc GetDetour()
-	{
-		return &GetRunTopSpeed::OnGetRunTopSpeed;
-	}
+		float OnGetRunTopSpeed();
+
+		// get the signature name (i.e. "GetRunTopSpeed") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorPlayer_GetRunTopSpeed";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetRunTopSpeedFunc GetDetour()
+		{
+			return &GetRunTopSpeed::OnGetRunTopSpeed;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_RUN_TOP_SPEED_H_

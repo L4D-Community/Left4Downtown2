@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -39,22 +39,12 @@ namespace Detours
 		L4D_DEBUG_LOG("CTerrorPlayer::OnShovedBySurvivor has been called");
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnShovedBySurvivor)
-		{
-			int client;
-			if(p == NULL)
-			{
-				client = 0;
-			}
-			else
-			{
-				edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p));
-				client = IndexOfEdict(pEntity);
-			}
+		if (g_pFwdOnShovedBySurvivor) {
+			int client = (p == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
 			
 			edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			int victim = IndexOfEdict(pEntity2);
-
+			
 			L4D_DEBUG_LOG("L4D_OnShovedBySurvivor(client %d, victim %d) forward has been sent out", client, victim);
 			g_pFwdOnShovedBySurvivor->PushCell(client);
 			g_pFwdOnShovedBySurvivor->PushCell(victim);
@@ -62,14 +52,11 @@ namespace Detours
 			g_pFwdOnShovedBySurvivor->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("CDirector::OnShovedBySurvivor will be skipped");
 			return NULL;
 		}
-		else
-		{
-			return (this->*(GetTrampoline()))(p, vector);
-		}
+
+		return (this->*(GetTrampoline()))(p, vector);
 	}
 };

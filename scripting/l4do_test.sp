@@ -42,10 +42,10 @@ stock L4D_SetRoundEndTime(Float:endTime)
 	static bool:init = false;
 	static Handle:func = INVALID_HANDLE;
 	
-	if(!init)
+	if (!init)
 	{
 		new Handle:conf = LoadGameConfigFile(GAMECONFIG_FILE);
-		if(conf == INVALID_HANDLE)
+		if (conf == INVALID_HANDLE)
 		{
 			LogError("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
 			DebugPrintToAll("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
@@ -53,14 +53,14 @@ stock L4D_SetRoundEndTime(Float:endTime)
 		
 		StartPrepSDKCall(SDKCall_GameRules);
 		new bool:readConf = PrepSDKCall_SetFromConf(conf, SDKConf_Signature, "CTerrorGameRules_SetRoundEndTime");
-		if(!readConf)
+		if (!readConf)
 		{
 			ThrowError("Failed to read function from game configuration file");
 		}
 		PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain);
 		func = EndPrepSDKCall();
 		
-		if(func == INVALID_HANDLE)
+		if (func == INVALID_HANDLE)
 		{
 			ThrowError("Failed to end prep sdk call");
 		}
@@ -78,10 +78,10 @@ stock L4D_ResetRoundNumber()
 	static bool:init = false;
 	static Handle:func = INVALID_HANDLE;
 	
-	if(!init)
+	if (!init)
 	{
 		new Handle:conf = LoadGameConfigFile(GAMECONFIG_FILE);
-		if(conf == INVALID_HANDLE)
+		if (conf == INVALID_HANDLE)
 		{
 			LogError("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
 			DebugPrintToAll("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
@@ -89,13 +89,13 @@ stock L4D_ResetRoundNumber()
 		
 		StartPrepSDKCall(SDKCall_GameRules);
 		new bool:readConf = PrepSDKCall_SetFromConf(conf, SDKConf_Signature, "CTerrorGameRules_ResetRoundNumber");
-		if(!readConf)
+		if (!readConf)
 		{
 			ThrowError("Failed to read function from game configuration file");
 		}
 		func = EndPrepSDKCall();
 		
-		if(func == INVALID_HANDLE)
+		if (func == INVALID_HANDLE)
 		{
 			ThrowError("Failed to end prep sdk call");
 		}
@@ -110,7 +110,7 @@ stock L4D_ResetRoundNumber()
 public OnPluginStart()
 {
 	gConf = LoadGameConfigFile(GAMECONFIG_FILE);
-	if(gConf == INVALID_HANDLE) 
+	if (gConf == INVALID_HANDLE) 
 	{
 		DebugPrintToAll("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
 	}
@@ -286,7 +286,7 @@ public Action:Command_FindSig(client, args)
 	new len = strlen(functionName);
 	
 	StartPrepSDKCall(SDKCall_Static);
-	if(PrepSDKCall_SetSignature(SDKLibrary_Server, functionName, len)) {
+	if (PrepSDKCall_SetSignature(SDKLibrary_Server, functionName, len)) {
 		DebugPrintToAll("Signature '%s' initialized.", functionName);
 	} else {
 		DebugPrintToAll("Signature '%s' NOT FOUND.", functionName);
@@ -300,7 +300,7 @@ public Action:L4D_OnSpawnTank(const Float:vector[3], const Float:qangle[3])
 	DebugPrintToAll("OnSpawnTank(vector[%f,%f,%f], qangle[%f,%f,%f]", 
 		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
 		
-	if(GetConVarBool(cvarBlockTanks))
+	if (GetConVarBool(cvarBlockTanks))
 	{
 		DebugPrintToAll("Blocking tank spawn...");
 		return Plugin_Handled;
@@ -316,7 +316,7 @@ public Action:L4D_OnSpawnWitch(const Float:vector[3], const Float:qangle[3])
 	DebugPrintToAll("OnSpawnWitch(vector[%f,%f,%f], qangle[%f,%f,%f])", 
 		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
 		
-	if(GetConVarBool(cvarBlockWitches))
+	if (GetConVarBool(cvarBlockWitches))
 	{
 		DebugPrintToAll("Blocking witch spawn...");
 		return Plugin_Handled;
@@ -332,12 +332,12 @@ public Action:L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Floa
 	DebugPrintToAll("OnSpawnSpecial(zombieClass=%d, vector[%f,%f,%f], qangle[%f,%f,%f]", 
 		zombieClass, vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
 		
-	if(GetConVarBool(cvarBlockSpecials))
+	if (GetConVarBool(cvarBlockSpecials))
 	{
 		DebugPrintToAll("Blocking special spawn...");
 		return Plugin_Handled;
 	}
-	else if(GetConVarInt(cvarForceSpecials) > 0)
+	else if (GetConVarInt(cvarForceSpecials) > 0)
 	{
 		zombieClass = GetConVarInt(cvarForceSpecials);
 		DebugPrintToAll("Converting to type %d...", zombieClass);
@@ -354,7 +354,7 @@ public Action:L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3]
 	DebugPrintToAll("OnSpawnWitchBride(vector[%f,%f,%f], qangle[%f,%f,%f])", 
 		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
 		
-	if(GetConVarBool(cvarBlockWitches))
+	if (GetConVarBool(cvarBlockWitches))
 	{
 		DebugPrintToAll("Blocking witch bride spawn...");
 		return Plugin_Handled;
@@ -376,7 +376,7 @@ public Action:L4D_OnSetCampaignScores(&scoreA, &scoreB)
 {
 	DebugPrintToAll("SetCampaignScores(A=%d, B=%d", scoreA, scoreB); 
 	
-	if(GetConVarInt(cvarSetCampaignScores)) 
+	if (GetConVarInt(cvarSetCampaignScores)) 
 	{
 		scoreA = GetConVarInt(cvarSetCampaignScores);
 		DebugPrintToAll("Overrode with SetCampaignScores(A=%d, B=%d", scoreA, scoreB); 
@@ -387,7 +387,7 @@ public Action:L4D_OnFirstSurvivorLeftSafeArea(client)
 {
 	DebugPrintToAll("OnFirstSurvivorLeftSafeArea(client=%d)", client); 
 	
-	if(GetConVarInt(cvarFirstSurvivorLeftSafeArea)) 
+	if (GetConVarInt(cvarFirstSurvivorLeftSafeArea)) 
 	{
 		DebugPrintToAll("Blocking OnFirstSurvivorLeftSafeArea...");
 		return Plugin_Handled;
@@ -400,7 +400,7 @@ public Action:L4D_OnGetScriptValueInt(const String:key[], &retVal)
 {
 	//DebugPrintToAll("OnGetScriptValueInt(key=\"%s\",retVal=%d)", key, retVal); 
 	
-	if(GetConVarInt(cvarProhibitBosses) && StrEqual(key, "ProhibitBosses")) 
+	if (GetConVarInt(cvarProhibitBosses) && StrEqual(key, "ProhibitBosses")) 
 	{
 		//DebugPrintToAll("Overriding OnGetScriptValueInt(ProhibitBosses)...");
 		retVal = 0; //no, do not prohibit bosses thank you very much
@@ -530,7 +530,7 @@ public Action:L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_
 public Action:L4D_OnCThrowActivate()
 {
 	DebugPrintToAll("L4D_OnCThrowActivate() fired");
-	if(GetConVarBool(cvarBlockRocks))
+	if (GetConVarBool(cvarBlockRocks))
 	{
 		DebugPrintToAll("Blocking!")
 		return Plugin_Handled;
@@ -975,7 +975,7 @@ public Action:Command_SetFinaleStage(client, args)
 SearchForFunction(const String:functionName[])
 {
 	StartPrepSDKCall(SDKCall_Static);
-	if(PrepSDKCall_SetFromConf(gConf, SDKConf_Signature, functionName)) {
+	if (PrepSDKCall_SetFromConf(gConf, SDKConf_Signature, functionName)) {
 		DebugPrintToAll("Function '%s' initialized.", functionName);
 	} else {
 		DebugPrintToAll("Function '%s' not found.", functionName);
@@ -1006,7 +1006,7 @@ DebugPrintToAll(const String:format[], any:...)
 	LogMessage("%s", buffer);
 	#else
 	//suppress "format" never used warning
-	if(format[0])
+	if (format[0])
 		return;
 	else
 		return;

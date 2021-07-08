@@ -87,6 +87,7 @@
 #include "detours/shoved_by_pounce_landing.h"
 #include "detours/choose_victim.h"
 #include "detours/on_ledgegrabbed.h"
+#include "detours/inferno_spread.h"
 
 #include "addons_disabler.h"
 
@@ -141,6 +142,7 @@ IForward *g_pFwdAddonsDisabler = NULL;
 IForward *g_pFwdOnShovedByPounceLanding = NULL;
 IForward *g_pFwdOnChooseVictim = NULL;
 IForward *g_pFwdOnLedgeGrabbed = NULL;
+IForward *g_pFwdInfernoSpread = NULL;
 
 bool g_bRoundEnd = false;
 
@@ -191,7 +193,11 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	{
 		return false;
 	}
-
+	
+	if (!CBaseEntity::OnLoad(error, maxlength)) {
+		return false;
+	}
+	
 	if (!CTerrorPlayer::OnLoad(error, maxlength)) {
 		return false;
 	}
@@ -241,13 +247,14 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnEndVersusModeRound_Post = forwards->CreateForward("L4D2_OnEndVersusModeRound_Post", ET_Ignore, 0, /*types*/NULL);
 	g_pFwdOnSelectTankAttack = forwards->CreateForward("L4D2_OnSelectTankAttack", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnRevived = forwards->CreateForward("L4D_OnRevived", ET_Event, 1, /*types*/NULL, Param_Cell);
-    g_pFwdOnWaterMove = forwards->CreateForward("L4D2_OnWaterMove", ET_Event, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnWaterMove = forwards->CreateForward("L4D2_OnWaterMove", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnPlayerStagger = forwards->CreateForward("L4D2_OnStagger", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnTerrorWeaponHit = forwards->CreateForward("L4D2_OnEntityShoved", ET_Event, 5, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Array, Param_Cell);
 	g_pFwdAddonsDisabler = forwards->CreateForward("L4D2_OnClientDisableAddons", ET_Event, 1, /*types*/NULL, Param_String);
 	g_pFwdOnShovedByPounceLanding = forwards->CreateForward("L4D2_OnPounceOrLeapStumble", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnChooseVictim = forwards->CreateForward("L4D2_OnChooseVictim", ET_Event, 2, /*types*/ NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
+	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 
 	playerhelpers->AddClientListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -305,7 +312,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	maxplayers = cmdLine->ParmValue("+maxplayers", -1);
 	L4D_DEBUG_LOG("Command line +maxplayers is: %d", maxplayers);
 
-	if(maxplayers == -1) 
+	if (maxplayers == -1) 
 	{
 		maxplayers = cmdLine->ParmValue("-maxplayers", -1);
 	}
@@ -354,13 +361,14 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::EndVersusModeRound>());
 	g_PatchManager.Register(new AutoPatch<Detours::SelectWeightedSequence>());//for SelectTankAttack
 	g_PatchManager.Register(new AutoPatch<Detours::Revived>());
-    g_PatchManager.Register(new AutoPatch<Detours::WaterMove>());
+	g_PatchManager.Register(new AutoPatch<Detours::WaterMove>());
 	g_PatchManager.Register(new AutoPatch<Detours::PlayerStagger>());
 	g_PatchManager.Register(new AutoPatch<Detours::TerrorWeaponHit>());
-    g_PatchManager.Register(new AutoPatch<Detours::CTerrorGameRules>());
+	g_PatchManager.Register(new AutoPatch<Detours::CTerrorGameRules>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedByPounceLanding>());
 	g_PatchManager.Register(new AutoPatch<Detours::CBaseServer>());
 	g_PatchManager.Register(new AutoPatch<Detours::CLedgeGrabbed>());
+	g_PatchManager.Register(new AutoPatch<Detours::InfernoSpread>());
 
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
@@ -421,13 +429,14 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound_Post);
 	forwards->ReleaseForward(g_pFwdOnSelectTankAttack);
 	forwards->ReleaseForward(g_pFwdOnRevived);
-    forwards->ReleaseForward(g_pFwdOnWaterMove);
+	forwards->ReleaseForward(g_pFwdOnWaterMove);
 	forwards->ReleaseForward(g_pFwdOnPlayerStagger);
 	forwards->ReleaseForward(g_pFwdOnTerrorWeaponHit);
-    forwards->ReleaseForward(g_pFwdAddonsDisabler);
+	forwards->ReleaseForward(g_pFwdAddonsDisabler);
 	forwards->ReleaseForward(g_pFwdOnShovedByPounceLanding);
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
 	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
+	forwards->ReleaseForward(g_pFwdInfernoSpread);
 }
 
 class BaseAccessor : public IConCommandBaseAccessor
@@ -462,7 +471,7 @@ void Left4Downtown::OnServerActivated(int max_clients)
 	L4D_DEBUG_LOG("Server activated with %d maxclients", max_clients);
 
 	static bool firstTime = true;
-	if(!firstTime)
+	if (!firstTime)
 	{
 		L4D_DEBUG_LOG("Server activated with %d maxclients (doing nothing)", max_clients);
 		return;
@@ -480,7 +489,7 @@ void Left4Downtown::OnServerActivated(int max_clients)
 #if RESTRICT_MAX_PLAYERS_BY_COMMAND_LINE
 	int max_players = PlayerSlots::MaxPlayers;
 
-	if(max_players >= 0)
+	if (max_players >= 0)
 	{
 		//dont allow it to be larger than max_clients
 		max_players = max_players <= max_clients ? max_players : max_clients;
@@ -490,7 +499,7 @@ void Left4Downtown::OnServerActivated(int max_clients)
 		//if GSPs set maxplayers to the non-default value
 		//we will patch the code then by default even if l4d_maxplayers is never set
 		//otherwise default is -1 disabled
-		if(DEFAULT_MAX_PLAYERS != max_players)
+		if (DEFAULT_MAX_PLAYERS != max_players)
 		{
 			//by putting only +-maxplayers and never l4d_maxplayers, we set maxplayers +-maxplayers value
 			//by specifiying l4d_maxplayers, we override the +-maxplayers value as long as its <= +-maxplayers

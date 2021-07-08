@@ -193,8 +193,6 @@
 			/*
 			 * CBaseServer::SetReservationCookie(uint64_t, char*, va_list)
 			 *  - clear the reservation by setting a cookie of 0
-			 * Windows: sub_1013B680
-			 * Find string: "-> Reservation cookie %llx:  reason %s\n"
 			 */
 			"SetReservationCookie" 
 			{
@@ -680,20 +678,20 @@
 			}
 
 			/*
-			*  CTerrorPlayer::OnRevived(void)
+			* CTerrorPlayer::OnRevived(void)
 			*
-			*  ->Search for string "revive_success", then open vtables window. Should be the 5th member.
-			*  Left4Downtown2 patches this function, which will prevent Sourcemod from finding it
-			*  That is why the first six bytes are wild cards (five bytes for detour + nop fill the remaining bytes of the instructions)
+			* ->Search for string "revive_success", then open vtables window. Should be the 5th member.
+			* Left4Downtown2 patches this function, which will prevent Sourcemod from finding it
+			* That is why the first six bytes are wild cards (five bytes for detour + nop fill the remaining bytes of the instructions)
 			*/
 			"CTerrorPlayer_OnRevived"
 			{
-				"library"   "server"
-				"linux"     "@_ZN13CTerrorPlayer9OnRevivedEv"
-				"windows"   "\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x57\xff\xd2\x84\xc0\x0f\x84\x2A\x2A\x2A\x2A\x8B\xCE"
-				/* ? ? ? ? ? ? 53 56 8B F1 8B 06 8B 90 ? ? ? ? 57 ff d2 84 c0 0f 84 ? ? ? ? 8B CE */
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer9OnRevivedEv"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x57\xff\xd2\x84\xc0\x0f\x84\x2A\x2A\x2A\x2A\x8B\xCE"
+							/* ? ? ? ? ? ? 53 56 8B F1 8B 06 8B 90 ? ? ? ? 57 ff d2 84 c0 0f 84 ? ? ? ? 8B CE */
 			}
-			
+
 			/*
 			 *   GetDifficulty(void)
 			 */
@@ -702,7 +700,7 @@
 				"library"	"server"
 				"linux"		"@_Z13GetDifficultyv"
 				"windows" 	"\xA1\x2A\x48\x7A\x10\xC3"
-				/* A1 ? 48 7A 10 C3 */
+							/* A1 ? 48 7A 10 C3 */
 			}
 			
 			/*
@@ -775,7 +773,7 @@
 				 * 55 8B EC 56 57 8B 7D 08 85 FF 74 06 C7 07 00 00 00 00 8B 0D ? ? ? ? 8B 01 8B 50 28 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 5F 5E 5D C3 8B 0D ? ? ? ? 8B 11 8B 42 08 57 56 FF D0 8B 
 				 */
 			}
-
+			
 			/*
 			 *	CThrow::ActivateAbililty()
 			 *		Start a tank rock throw
@@ -900,17 +898,29 @@
 				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 56 57 8B F9 8B 97 ? ? ? ? 8D 85 */
 			}
 			
-            /* 
+			/* 
 			* CTerrorWeapon::OnHit(CGameTrace &, Vector  const&, bool)
 			*/
-            "CTerrorWeapon__OnHit"
+			"CTerrorWeapon__OnHit"
 			{
 				"library"   "server"
 				"linux"    	"@_ZN13CTerrorWeapon5OnHitER10CGameTraceRK6Vectorb"
 				"windows" 	"\x55\x8B\xEC\x56\x8B\x75\x08\x83\x7E\x4C\x00\x57"
 			}
-
-            /* 
+			
+			/*
+			* CInferno::Spread(Vector const&)
+			*/
+			"CInferno::Spread"
+			{
+				"library"	"server"
+				"linux"		"@_ZN8CInferno6SpreadERK6Vector"
+				"windows" 	"\x53\x8B\x2A\x83\x2A\x2A\x83\x2A\x2A\x83\x2A\x2A\x55\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x81\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x8B\x2A\x2A\x56\x57\x8B\x2A\xF3\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x0F\x2F"
+				/* 53 8B ? 83 ? ? 83 ? ? 83 ? ? 55 8B ? ? 89 ? ? ? 8B ? 81 ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 8B ? ? 56 57 8B ? F3 ? ? ? ? ? ? ? 0F 2F */
+				/* Search: "CInferno::InfernoThink (spread)" bit below is target call. */
+			}
+			
+			/* 
 			* CBasePlayer::WaterMove(void)
 			*/
 			"WaterMove"
@@ -919,8 +929,8 @@
 				"linux"    	"@_ZN11CBasePlayer9WaterMoveEv"
 				"windows" 	"\x55\x8B\xEC\x83\xEC\x60\x56\x8B\xF1\x80\xBE\x72\x01\x00\x00\x08"
 			}
-            
-            /* 
+
+			/* 
 			* KeyValues *CTerrorGameRules::GetMissionInfo(void)
 			*/
 			"CTerrorGameRules__GetMissionInfo"
@@ -943,7 +953,7 @@
 /*********************************************************************
 ********************* ADDONS DISABLER ********************************
 *********************************************************************/
-           		/* 
+			/* 
 			* CBaseServer::FillServerInfo(SVC_ServerInfo *)
 			*/
 			"CBaseServer__FillServerInfo"
@@ -953,7 +963,7 @@
 				"windows"	"\x55\x8B\xEC\x53\x56\x57\x68\x04\x01\x00\x00"
 			}
 
-           		 /*
+			/*
 			* Instruction where CBaseServer::FillServerInfo saves the result of the "Game/vanilla" check to member variable.
 			* Should be near instructions filling member variables with "L" or "W"
 			* Linux:
@@ -961,17 +971,18 @@
 			* mov     dword ptr [esp], 'L' ; c
 			* Windows:
 			* MOV        byte ptr [EDI + 0x5d],BL
-        		* MOV        dword ptr [EDI + 0x8c],DAT_10678ec8
+			* MOV        dword ptr [EDI + 0x8c],DAT_10678ec8
 			* MOV        dword ptr [EDI + 0x90],DAT_10678dc0
-        		* MOV        byte ptr [EDI + 0x5f],'W'
+			* MOV        byte ptr [EDI + 0x5f],'W'
 			*/
-            		"VanillaModeOffset"
+
+			"VanillaModeOffset"
 			{
 				"library"	"engine"
 				"linux"		"\x88\x43\x55\xC7\x04\x24\x4C"
 				"windows"	"\x88\x5F\x5D\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xC6\x47\x5F\x57"
 			}
-            
+
 /*********************************************************************
 ****************** PLAYER SLOTS PATCHING *****************************
 *********************************************************************/

@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class MobRushStart;
-typedef void (MobRushStart::*MobRushStartFunc)();
-
-class MobRushStart : public DetourTemplate<MobRushStartFunc, MobRushStart>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class MobRushStart;
+	typedef void (MobRushStart::*MobRushStartFunc)();
 
-	void OnMobRushStart();
-
-	// get the signature name (i.e. "OnMobRushStart") from the game conf
-	virtual const char *GetSignatureName()
+	class MobRushStart : public DetourTemplate<MobRushStartFunc, MobRushStart>
 	{
-		return "OnMobRushStart";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual MobRushStartFunc GetDetour()
-	{
-		return &MobRushStart::OnMobRushStart;
-	}
+		void OnMobRushStart();
+
+		// get the signature name (i.e. "OnMobRushStart") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "OnMobRushStart";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual MobRushStartFunc GetDetour()
+		{
+			return &MobRushStart::OnMobRushStart;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_MOBRUSHSTART_H_

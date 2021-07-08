@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,9 +34,11 @@
 
 namespace Detours
 {
-	int GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance, bool &allow_boss_mix)
+	int GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, 
+																		float &tank_chance, float &witch_chance, bool &allow_boss_mix)
 	{
-		L4D_DEBUG_LOG("CDirectorVersusMode::GetMissionVersusBossSpawning has been called, %f %f %f %f %d", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance, allow_boss_mix);
+		L4D_DEBUG_LOG("CDirectorVersusMode::GetMissionVersusBossSpawning has been called, %f %f %f %f %d", 
+								spawn_pos_min, spawn_pos_max, 	tank_chance, witch_chance, allow_boss_mix);
 
 		float ov_spawn_pos_min = spawn_pos_min;
 		float ov_spawn_pos_max = spawn_pos_max;
@@ -57,7 +59,7 @@ namespace Detours
 		
 		if (result == Pl_Handled) {
 			return 0;
-		} else if (result == Pl_Changed) {	
+		} else if (result == Pl_Changed) {
 			spawn_pos_min = ov_spawn_pos_min;
 			spawn_pos_max = ov_spawn_pos_max;
 			tank_chance = ov_tank_chance;

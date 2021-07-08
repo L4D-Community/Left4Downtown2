@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class GetScriptValueInt;
+namespace Detours
+{	
+	class GetScriptValueInt;
 
-typedef int (GetScriptValueInt::*GetScriptValueIntFunc)(const char*, int);
+	typedef int (GetScriptValueInt::*GetScriptValueIntFunc)(const char*, int);
 
-class GetScriptValueInt : public DetourTemplate<GetScriptValueIntFunc, GetScriptValueInt>
-{
-private: //note: implementation of DetourTemplate abstracts
-
-	int OnGetScriptValueInt(const char*, int);
-
-	// get the signature name (i.e. "GetScriptValueInt") from the game conf
-	virtual const char *GetSignatureName()
+	class GetScriptValueInt : public DetourTemplate<GetScriptValueIntFunc, GetScriptValueInt>
 	{
-		return "CDirector_GetScriptValueInt";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetScriptValueIntFunc GetDetour()
-	{
-		return &GetScriptValueInt::OnGetScriptValueInt;
-	}
+		int OnGetScriptValueInt(const char*, int);
+
+		// get the signature name (i.e. "GetScriptValueInt") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CDirector_GetScriptValueInt";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetScriptValueIntFunc GetDetour()
+		{
+			return &GetScriptValueInt::OnGetScriptValueInt;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_SCRIPT_VALUE_INT_H_

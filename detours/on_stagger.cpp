@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,7 +38,7 @@ namespace Detours
 	{
 		cell_t result = Pl_Continue;
 
-		if(g_pFwdOnPlayerStagger)
+		if (g_pFwdOnPlayerStagger)
 		{
 			cell_t target = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
 			edict_t *pSource = gameents->BaseEntityToEdict(sourceEnt);

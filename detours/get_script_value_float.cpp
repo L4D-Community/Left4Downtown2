@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -43,23 +43,23 @@ namespace Detours
 		float actualInvocationResult = (this->*(GetTrampoline()))(key, defaultValue);
 
 		float overrideValue = actualInvocationResult;
-		if(g_pFwdOnGetScriptValueFloat)
-		{
+		if (g_pFwdOnGetScriptValueFloat) {
 			//L4D_DEBUG_LOG("L4D_OnGetScriptValueFloat() forward has been sent out");
+			
 			g_pFwdOnGetScriptValueFloat->PushString(key);
 			g_pFwdOnGetScriptValueFloat->PushFloatByRef(&overrideValue);
-			float exec = g_pFwdOnGetScriptValueFloat->Execute(&result);
+			g_pFwdOnGetScriptValueFloat->Execute(&result);
+			
+			//float exec = g_pFwdOnGetScriptValueFloat->Execute(&result);
 			//L4D_DEBUG_LOG("L4D_OnGetScriptValueFloat() forward result = %d (0 means no error)", exec);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			//L4D_DEBUG_LOG("CDirector::OnGetScriptValueFloat return value overriden with %d", overrideValue);
+			
 			return overrideValue;
 		}
-		else
-		{
-			return actualInvocationResult;
-		}
+
+		return actualInvocationResult;
 	}
 };

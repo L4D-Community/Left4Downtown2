@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class ServerPlayerCounts;
-typedef int (ServerPlayerCounts::*ServerPlayerCountsFunc)(int*, int*, int*);
-
-class ServerPlayerCounts : public DetourTemplate<ServerPlayerCountsFunc, ServerPlayerCounts>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class ServerPlayerCounts;
+	typedef int (ServerPlayerCounts::*ServerPlayerCountsFunc)(int*, int*, int*);
 
-	int OnGetMasterServerPlayerCounts(int*, int*, int*);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class ServerPlayerCounts : public DetourTemplate<ServerPlayerCountsFunc, ServerPlayerCounts>
 	{
-		return "GetMasterServerPlayerCounts";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual ServerPlayerCountsFunc GetDetour()
-	{
-		return &ServerPlayerCounts::OnGetMasterServerPlayerCounts;
-	}
+		int OnGetMasterServerPlayerCounts(int*, int*, int*);
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "GetMasterServerPlayerCounts";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual ServerPlayerCountsFunc GetDetour()
+		{
+			return &ServerPlayerCounts::OnGetMasterServerPlayerCounts;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SERVERPLAYERCOUNTS_H_

@@ -439,6 +439,20 @@ forward Action L4D2_OnStagger(int target, int source);
 forward Action L4D2_OnEntityShoved(int client, int entity, int weapon, float vector[3], bool bIsHighPounce);
 
 /**
+ * @brief Called whenever CInferno::Spread(Vector const&) is invoked (only for spitters -- ignores fire)
+ *
+ * @param thrower	 	thrower entity (player), can return 0
+ * @param projectile	projectile entity
+ * @param vector		x, y, z coordinate of the new acid puddle (can be overridden)
+ *
+ * @return			Plugin_Handled to block, Plugin_Changed for coordinate changes, Plugin_Continue otherwise
+ */
+// 2020 update: Works for Molotovs and Spitters.
+// return Plugin_Handled to make small fire or goo puddle.
+// x,y,z has no affect, is 0,0,0 for spitter, molotovs is area size or something.
+forward Action L4D2_OnSpitSpread(int thrower, int projectile, float vector[3]);
+
+/**
  * @brief Called when the client's material system is expecting instructions from the server in regards to addons
  * @remarks Doesn't fire if l4d2_addons_eclipse is -1 or 0
  *
@@ -467,6 +481,15 @@ forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
  * @return 		Pl_Handled to block, Pl_Changed to use overwritten values from plugin, Pl_Continue otherwise
  */
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
+
+/**
+ * @brief Revives an incapacitated survivor, also from ledge hanging
+ *
+ * @param client			Client ID of the person to affect
+ *
+ * @noreturn
+ */
+native void L4D_ReviveSurvivor(int client);
 
 /**
  * @brief Retrieve a clients map flow progress percentage. Doesn't have to be Versus mode

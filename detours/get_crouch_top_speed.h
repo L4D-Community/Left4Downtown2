@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,30 +34,30 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-	
-class GetCrouchTopSpeed;
-
-typedef float (GetCrouchTopSpeed::*GetCrouchTopSpeedFunc)();
-
-class GetCrouchTopSpeed : public DetourTemplate<GetCrouchTopSpeedFunc, GetCrouchTopSpeed>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class GetCrouchTopSpeed;
 
-	float OnGetCrouchTopSpeed();
+	typedef float (GetCrouchTopSpeed::*GetCrouchTopSpeedFunc)();
 
-	// get the signature name (i.e. "GetCrouchTopSpeed") from the game conf
-	virtual const char *GetSignatureName()
+	class GetCrouchTopSpeed : public DetourTemplate<GetCrouchTopSpeedFunc, GetCrouchTopSpeed>
 	{
-		return "CTerrorPlayer_GetCrouchTopSpeed";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual GetCrouchTopSpeedFunc GetDetour()
-	{
-		return &GetCrouchTopSpeed::OnGetCrouchTopSpeed;
-	}
+		float OnGetCrouchTopSpeed();
+
+		// get the signature name (i.e. "GetCrouchTopSpeed") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorPlayer_GetCrouchTopSpeed";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual GetCrouchTopSpeedFunc GetDetour()
+		{
+			return &GetCrouchTopSpeed::OnGetCrouchTopSpeed;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_GET_CROUCH_TOP_SPEED_H_

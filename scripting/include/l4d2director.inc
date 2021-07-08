@@ -35,6 +35,21 @@
 #define _l4d2director_included
 
 /**
+ * @brief Returns true when any survivor has left the starting area and true in Versus when the saferoom door automatically opens.
+ *
+ * @return			True if a survivor has left the starting area. False otherwise.
+ */
+native bool L4D_HasAnySurvivorLeftSafeArea();
+
+/**
+ * @brief Gets the maximum flow distance any survivor has achieved.
+ *
+ * @return			Returns the maximum flow distance any survivor has achieved.
+ */
+// L4D2 only.
+native float L4D2_GetFurthestSurvivorFlow();
+
+/**
  * @brief Gets the number of tanks currently in play.
  * @remarks This value is tracked by the director, and should be a good 
  *		indicator that a tank is in play

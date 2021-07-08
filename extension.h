@@ -52,7 +52,11 @@
 #include <icvar.h>
 #include <icommandline.h>
 #include <iclient.h>
-
+#include <gametrace.h>
+#include "l4d2sdk/CBaseEntity.h"
+#include "l4d2sdk/CBasePlayer.h"
+#include "l4d2sdk/CBaseCombatWeapon.h"
+#include "l4d2sdk/CTerrorPlayer.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.
@@ -181,6 +185,7 @@ extern IForward *g_pFwdAddonsDisabler;
 extern IForward *g_pFwdOnShovedByPounceLanding;
 extern IForward *g_pFwdOnChooseVictim;
 extern IForward *g_pFwdOnLedgeGrabbed;
+extern IForward *g_pFwdInfernoSpread;
 
 extern bool g_bRoundEnd;
 

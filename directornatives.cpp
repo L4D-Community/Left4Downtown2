@@ -32,6 +32,44 @@
 #include "extension.h"
 #include "vglobals.h"
 
+//native bool L4D_HasAnySurvivorLeftSafeArea();
+cell_t L4D_HasAnySurvivorLeftSafeArea(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+
+	CDirector *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+
+	return (director->m_bHasSurvivorLeftSafeArea) ? true : false;
+}
+
+//native float L4D2_GetFurthestSurvivorFlow();
+cell_t L4D2_GetFurthestSurvivorFlow(IPluginContext *pContext, const cell_t *params)
+{
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+
+	CDirector *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+
+	cell_t fReturn = sp_ftoc(director->m_fFurthestSurvivorFlow);
+	
+	return fReturn;
+}
+
 cell_t L4D2_GetTankCount(IPluginContext *pContext, const cell_t *params)
 {
 	if (g_pDirector == NULL)
@@ -45,6 +83,7 @@ cell_t L4D2_GetTankCount(IPluginContext *pContext, const cell_t *params)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	return director->m_iTankCount;
 }
 
@@ -61,6 +100,7 @@ cell_t L4D2_GetWitchCount(IPluginContext *pContext, const cell_t *params)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	return director->m_iWitchCount;
 }
 
@@ -70,19 +110,23 @@ cell_t L4D2_GetVersusCampaignScores(IPluginContext *pContext, const cell_t *para
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+	
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * scores;
 	pContext->LocalToPhysAddr(params[1], &scores);
 	scores[0]=director->m_iCampaignScores[0];
 	scores[1]=director->m_iCampaignScores[1];
+
 	return 0;
 }
 
@@ -92,19 +136,23 @@ cell_t L4D2_SetVersusCampaignScores(IPluginContext *pContext, const cell_t *para
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+	
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * scores;
 	pContext->LocalToPhysAddr(params[1], &scores);
 	director->m_iCampaignScores[0]=scores[0];
 	director->m_iCampaignScores[1]=scores[1];
+
 	return 0;
 }
 
@@ -114,19 +162,23 @@ cell_t L4D2_GetVersusTankFlowPercent(IPluginContext *pContext, const cell_t *par
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+	
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * cell_flows;
 	pContext->LocalToPhysAddr(params[1], &cell_flows);
 	cell_flows[0]=sp_ftoc(director->m_fTankSpawnFlowPercent[0]);
 	cell_flows[1]=sp_ftoc(director->m_fTankSpawnFlowPercent[1]);
+	
 	return 0;
 }
 
@@ -136,19 +188,23 @@ cell_t L4D2_SetVersusTankFlowPercent(IPluginContext *pContext, const cell_t *par
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+	
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * cell_flows;
 	pContext->LocalToPhysAddr(params[1], &cell_flows);
 	director->m_fTankSpawnFlowPercent[0]=sp_ctof(cell_flows[0]);
 	director->m_fTankSpawnFlowPercent[1]=sp_ctof(cell_flows[1]);
+
 	return 0;
 }
 
@@ -158,19 +214,23 @@ cell_t L4D2_GetVersusWitchFlowPercent(IPluginContext *pContext, const cell_t *pa
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+	
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * cell_flows;
 	pContext->LocalToPhysAddr(params[1], &cell_flows);
 	cell_flows[0]=sp_ftoc(director->m_fWitchSpawnFlowPercent[0]);
 	cell_flows[1]=sp_ftoc(director->m_fWitchSpawnFlowPercent[1]);
+
 	return 0;
 }
 
@@ -180,24 +240,30 @@ cell_t L4D2_SetVersusWitchFlowPercent(IPluginContext *pContext, const cell_t *pa
 	{
 		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
 	}
+
 	if (*g_pDirector == NULL)
 	{
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
+	
 	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
-	if(director == NULL)
+	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
 	}
+	
 	cell_t * cell_flows;
 	pContext->LocalToPhysAddr(params[1], &cell_flows);
 	director->m_fWitchSpawnFlowPercent[0]=sp_ctof(cell_flows[0]);
 	director->m_fWitchSpawnFlowPercent[1]=sp_ctof(cell_flows[1]);
+
 	return 0;
 }
 
 sp_nativeinfo_t  g_L4DoDirectorNatives[] = 
 {
+	{"L4D_HasAnySurvivorLeftSafeArea",	L4D_HasAnySurvivorLeftSafeArea},
+	{"L4D2_GetFurthestSurvivorFlow",	L4D2_GetFurthestSurvivorFlow},
 	{"L4D2_GetTankCount",				L4D2_GetTankCount},
 	{"L4D2_GetWitchCount",				L4D2_GetWitchCount},
 	{"L4D2_GetVersusCampaignScores",	L4D2_GetVersusCampaignScores},

@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2010 Michael "ProdigySim" Busby
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -37,11 +37,10 @@ namespace Detours
 	CBaseEntity* BossZombiePlayerBotChooseVictim::BossZombiePlayerBotChooseVictimActivate(CBaseEntity* pCurTarget, int i1, CBaseEntity* pEnt)
 	{
 		cell_t result = Pl_Continue;
+		
 		int curTarget = gamehelpers->EntityToBCompatRef(pCurTarget);
-		if(g_pFwdOnChooseVictim)
-		{
-			edict_t *pZombieBoss = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
-			int specialInfected = IndexOfEdict(pZombieBoss);
+		if (g_pFwdOnChooseVictim) {
+			int specialInfected = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
 			
 			L4D_DEBUG_LOG("L4D2_ChooseVictim(%d, %d) forward has been sent out", specialInfected, gamehelpers->EntityToBCompatRef(pCurTarget));
 
@@ -50,20 +49,11 @@ namespace Detours
 			g_pFwdOnChooseVictim->Execute(&result);
 		}
 		
-		if(result == Pl_Handled)
-		{
-			if(curTarget <= 0)
-				return (this->*(GetTrampoline()))(pCurTarget, i1, pEnt);
-			else
-			{
-				CBaseEntity *pNewTarget = gamehelpers->ReferenceToEntity(curTarget);
-				return pNewTarget;
-			}
+		if (result == Pl_Handled && curTarget > 0) {
+			CBaseEntity *pNewTarget = gamehelpers->ReferenceToEntity(curTarget);
+			return pNewTarget;
 		}
-		else
-		{
-			
-			return (this->*(GetTrampoline()))(pCurTarget, i1, pEnt);
-		}
+		
+		return (this->*(GetTrampoline()))(pCurTarget, i1, pEnt);
 	}
 };

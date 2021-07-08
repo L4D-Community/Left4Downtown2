@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2010 Igor "Downtown1" Smirnov.
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,42 +38,41 @@ namespace Detours
 	{
 		L4D_DEBUG_LOG("SurvivorBot::FindScavengeItem has been called");
 
-
-		cell_t result = Pl_Continue;
-
 		int actualInvocationResult = (int)((this->*(GetTrampoline()))(fScavengeDistance));
 
 		int overrideValue = actualInvocationResult;
 
 		int client = 0, item = 0;
 		
-		if(g_pFwdOnFindScavengeItem)
-		{
+		cell_t result = Pl_Continue;
+		if (g_pFwdOnFindScavengeItem) {
 			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			client = IndexOfEdict(pEntity);
 			edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(actualInvocationResult));
 			item = IndexOfEdict(pEntity2);
-			if (!actualInvocationResult) item = 0;
+			
+			if (!actualInvocationResult) {
+				item = 0;
+			}
+			
 			L4D_DEBUG_LOG("L4D2_OnFindScavengeItem(client %d, item %x) forward has been sent out", client, item);
+			
 			g_pFwdOnFindScavengeItem->PushCell(client);
 			g_pFwdOnFindScavengeItem->PushCellByRef(&item);
 			g_pFwdOnFindScavengeItem->Execute(&result);
 		}
 		
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem will be skipped");
+			
 			return NULL;
-		}
-		else if (result == Pl_Changed)
-		{
+		} else if (result == Pl_Changed) {
 			L4D_DEBUG_LOG("SurvivorBot::OnFindScavengeItem result overridden with entindex %d");
+			
 			edict_t *pEntity3 = PEntityOfEntIndex(item);
 			return reinterpret_cast<void*>(gameents->EdictToBaseEntity(pEntity3));
 		}
-		else
-		{
-			return reinterpret_cast<void*>(actualInvocationResult);
-		}
+		
+		return reinterpret_cast<void*>(actualInvocationResult);
 	}
 };

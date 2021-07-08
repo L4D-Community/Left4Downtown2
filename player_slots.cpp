@@ -101,7 +101,7 @@ void PlayerSlots::Patch()
 	*/
 	
 #if defined PLATFORM_WINDOWS
-	if(firstTime)
+	if (firstTime)
 	{
 		if (!g_pGameConf->GetMemSig("HumanPlayerLimitReached", &humanLimitSig) || !humanLimitSig) 
 		{
@@ -183,7 +183,7 @@ void PlayerSlots::PatchGetMaxHumanPlayers()
 
 	bool firstTime = (getMaxHumanPlayersSig == NULL);
 
-	if(firstTime)
+	if (firstTime)
 	{
 		if (!g_pGameConf->GetMemSig("GetMaxHumanPlayers", &getMaxHumanPlayersSig) || !getMaxHumanPlayersSig) 
 		{ 
@@ -217,7 +217,7 @@ void PlayerSlots::PatchGetMaxHumanPlayers()
 	// retn
 	getMaxHumanPlayersPatch.patch[OP_MOV_EAX_IMM32_SIZE] = OP_RETN;
 
-	if(firstTime)
+	if (firstTime)
 	{
 		ApplyPatch(getMaxHumanPlayersSig, /*offset*/0, &getMaxHumanPlayersPatch, &getMaxHumanPlayersRestore);
 	}
@@ -239,7 +239,7 @@ void PlayerSlots::PatchGetTotalNumPlayersSupported()
 {
         bool firstTime = (getTotalNumPlayersSupportedSig == NULL);
 
-        if(firstTime)
+        if (firstTime)
         {
                 if (!g_pGameConf->GetMemSig("GetTotalNumPlayersSupported", &getTotalNumPlayersSupportedSig) || !getTotalNumPlayersSupportedSig)
                 {
@@ -258,7 +258,7 @@ void PlayerSlots::PatchGetTotalNumPlayersSupported()
         // retn
         getTotalNumPlayersSupportedPatch.patch[OP_MOV_EAX_IMM32_SIZE] = OP_RETN;
 
-        if(firstTime)
+        if (firstTime)
         {
                 ApplyPatch(getTotalNumPlayersSupportedSig, 0, &getTotalNumPlayersSupportedPatch, &getTotalNumPlayersSupportedRestore);
         }
@@ -274,11 +274,11 @@ void PlayerSlots::PatchGetTotalNumPlayersSupported()
 
 void PlayerSlots::PatchSlotCheckOnly()
 {
-	if(!lobbyConnectSig) return; //avoid a null dereference if we failed to lookup the sig
+	if (!lobbyConnectSig) return; //avoid a null dereference if we failed to lookup the sig
 
 	bool firstTime = (serverFullOffset == -1);
 
-	if(firstTime)
+	if (firstTime)
 	{
 		//////////////////////////
 		//valve reject server full
@@ -291,7 +291,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 
 		//the offset should point to the cmp eax, [esi+180h]... first byte incorrect => wrong offset
 
-		if(*((uint8_t*)lobbyConnectSig + serverFullOffset) != OP_CMP_R32_RM32)
+		if (*((uint8_t*)lobbyConnectSig + serverFullOffset) != OP_CMP_R32_RM32)
 		{
 			g_pSM->LogError(myself, "PlayerSlots -- Offset for 'ValveRejectServerFullFirst' is incorrect");
 			return;
@@ -328,7 +328,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 	fill_nop(serverFullPatch.patch + OP_CMP_EAX_IMM32_SIZE, OP_CMP_R32_RM32_SIZE - OP_CMP_EAX_IMM32_SIZE);
 #endif
 
-	if(firstTime)
+	if (firstTime)
 	{
 		ApplyPatch(lobbyConnectSig, serverFullOffset, &serverFullPatch, &serverFullRestore);
 	}
@@ -342,7 +342,7 @@ void PlayerSlots::PatchSlotCheckOnly()
 
 void PlayerSlots::UnpatchGetMaxHumanPlayers()
 {
-	if(getMaxHumanPlayersSig)
+	if (getMaxHumanPlayersSig)
 	{
 		ApplyPatch(getMaxHumanPlayersSig, /*offset*/0, &getMaxHumanPlayersRestore, /*restore*/NULL);
 		L4D_DEBUG_LOG("PlayerSlots -- 'GetMaxHumanPlayers' restored");
@@ -353,7 +353,7 @@ void PlayerSlots::UnpatchGetMaxHumanPlayers()
 
 void PlayerSlots::UnpatchGetTotalNumPlayersSupported()
 {
-        if(getTotalNumPlayersSupportedSig)
+        if (getTotalNumPlayersSupportedSig)
         {
                 ApplyPatch(getTotalNumPlayersSupportedSig, 0, &getTotalNumPlayersSupportedRestore, NULL);
                 L4D_DEBUG_LOG("PlayerSlots -- 'GetTotalNumPlayersSupported' restored");
@@ -366,7 +366,7 @@ void PlayerSlots::UnpatchSlotCheckOnly()
 {
 	//cmp around the string "#Valve_Reject_Server_Full"
 
-	if(lobbyConnectSig && serverFullOffset != -1)
+	if (lobbyConnectSig && serverFullOffset != -1)
 	{
 		ApplyPatch(lobbyConnectSig, serverFullOffset, &serverFullRestore, /*restore*/NULL);
 		L4D_DEBUG_LOG("PlayerSlots -- 'ValveRejectServerFullFirst' restored");
@@ -381,7 +381,7 @@ void PlayerSlots::Unpatch()
 	// Windows only
 
 #if defined PLATFORM_WINDOWS
-	if(humanLimitSig)
+	if (humanLimitSig)
 	{
 		ApplyPatch(humanLimitSig, /*offset*/0, &humanLimitRestore, /*restore*/NULL);
 		L4D_DEBUG_LOG("PlayerSlots -- 'HumanPlayerLimitReached' jl(e) restored");
@@ -390,7 +390,7 @@ void PlayerSlots::Unpatch()
 
 	//jz around the string "#Valve_Reject_Server_Full"
 
-	if(lobbyConnectSig)
+	if (lobbyConnectSig)
 	{
 		ApplyPatch(lobbyConnectSig, /*offset*/0, &lobbyConnectRestore, /*restore*/NULL);
 		L4D_DEBUG_LOG("PlayerSlots -- 'ConnectClientLobbyCheck' restored");
@@ -415,7 +415,7 @@ static void UpdateMaxSlots(int max_slots)
 
 void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 {
-	if(MaxClients == -1)
+	if (MaxClients == -1)
 	{
 	    L4D_DEBUG_LOG("MaxClients -1! Disallowing slots patch");
 		UpdateMaxSlots(-1);
@@ -424,12 +424,12 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 
 	/* no change */
 
-	if(MaxSlots == max_slots)
+	if (MaxSlots == max_slots)
 		return;
 
 	// disable
 
-	if(max_slots < 0)
+	if (max_slots < 0)
 	{
 		L4D_DEBUG_LOG("Disabling slots patch");
 		PlayerSlots::Unpatch();
@@ -442,7 +442,7 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 
 	int max_players = PlayerSlots::MaxPlayers;
 
-	if(max_players >= 0 && max_slots > max_players)
+	if (max_players >= 0 && max_slots > max_players)
 	{
 	    L4D_DEBUG_LOG("Attempt to set slots higher than set command line value (%d max: %d)", max_slots, max_players);
 		UpdateMaxSlots(MaxSlots);
@@ -452,7 +452,7 @@ void PlayerSlots::OnMaxSlotsChanged(int max_slots)
 
 	// cant allow this obviously
 
-	if(max_slots > MaxClients)
+	if (max_slots > MaxClients)
 	{
   	    L4D_DEBUG_LOG("Attempt to set slots higher than MaxClients (%d max: %d)", max_slots, MaxClients);
 		UpdateMaxSlots(MaxSlots);

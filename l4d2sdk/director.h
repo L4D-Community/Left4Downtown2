@@ -118,6 +118,7 @@ enum DirectorTempoState
 	TEMPO_PEAK_FADE=2,
 	TEMPO_RELAX=3
 };
+
 enum ScenarioRestartReason
 {
 	RESTART_FINALE_WON=3,

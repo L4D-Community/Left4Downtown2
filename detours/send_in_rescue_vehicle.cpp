@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -39,21 +39,17 @@ namespace Detours
 		L4D_DEBUG_LOG("SendInRescueVehicle has been called");
 
 		cell_t result = Pl_Continue;
-		if(g_pFwdOnSendInRescueVehicle)
-		{
+		if (g_pFwdOnSendInRescueVehicle) {
 			L4D_DEBUG_LOG("L4D2_OnSendInRescueVehicle() forward has been sent out");
 			g_pFwdOnSendInRescueVehicle->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("SendInRescueVehicle will be skipped");
 			return;
 		}
-		else
-		{
-			(this->*(GetTrampoline()))();
-			return;
-		}
+
+		(this->*(GetTrampoline()))();
+		return;
 	}
 };

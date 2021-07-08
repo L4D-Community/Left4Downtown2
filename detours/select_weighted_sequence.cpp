@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -47,12 +47,12 @@ namespace Detours
 		actualSequence = (this->*(GetTrampoline()))(Activity);
 
 		if ((Activity != ACT_HULK_THROW) && (Activity != ACT_TANK_OVERHEAD_THROW)
-			&& (Activity != ACT_HULK_ATTACK_LOW) && (Activity != ACT_TERROR_ATTACK_MOVING))
-				return actualSequence;
-
+		&& (Activity != ACT_HULK_ATTACK_LOW) && (Activity != ACT_TERROR_ATTACK_MOVING)) {
+			return actualSequence;
+		}
+		
 		int overrideSequence = actualSequence;
-		if (g_pFwdOnSelectTankAttack)
-		{
+		if (g_pFwdOnSelectTankAttack) {
 			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
 			int client = IndexOfEdict(pEntity);
 			L4D_DEBUG_LOG("L4D2_OnSelectTankAttack(client %d, sequence %d) forward has been sent out", client, overrideSequence);
@@ -61,14 +61,11 @@ namespace Detours
 			g_pFwdOnSelectTankAttack->Execute(&result);
 		}
 
-		if(result == Pl_Handled)
-		{
+		if (result == Pl_Handled) {
 			L4D_DEBUG_LOG("CBaseAnimating::SelectWeightedSequence() return value overriden with %d", overrideSequence);
 			return overrideSequence;
 		}
-		else
-		{
-			return actualSequence;
-		}
+
+		return actualSequence;
 	}
 };

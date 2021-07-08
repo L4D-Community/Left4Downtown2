@@ -33,18 +33,24 @@
 #define _INCLUDE_CTERRORPLAYER_H_
 
 #include "extension.h"
+#include "CBasePlayer.h"
+#include "constants.h"
 
-class CTerrorPlayer
+class CTerrorPlayer:
+	public CBasePlayer
 {
 public:
 
 	static bool OnLoad(char* error, size_t maxlength);
 	
-	bool GetMemberAttemptingToPounce();
+	bool IsAttemptingToPounce();
+	
+	ZombieClassType GetZombieClass();
 	
 public:
 
 	static int sendprop_m_isAttemptingToPounce;
+	static int sendprop_m_zombieClass;
 	
 };
 

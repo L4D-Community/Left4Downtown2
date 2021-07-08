@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +34,29 @@
 
 #include "detour_template.h"
 
-namespace Detours {
-
-class SetCampaignScores;
-typedef void (SetCampaignScores::*SetCampaignScoresFunc)(int,int);
-
-class SetCampaignScores : public DetourTemplate<SetCampaignScoresFunc, SetCampaignScores>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SetCampaignScores;
+	typedef void (SetCampaignScores::*SetCampaignScoresFunc)(int,int);
 
-	void OnSetCampaignScores(int a, int b);
-
-	// get the signature name (i.e. "SetCampaignScores") from the game conf
-	virtual const char *GetSignatureName()
+	class SetCampaignScores : public DetourTemplate<SetCampaignScoresFunc, SetCampaignScores>
 	{
-		return "SetCampaignScores";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SetCampaignScoresFunc GetDetour()
-	{
-		return &SetCampaignScores::OnSetCampaignScores;
-	}
+		void OnSetCampaignScores(int a, int b);
+
+		// get the signature name (i.e. "SetCampaignScores") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "SetCampaignScores";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SetCampaignScoresFunc GetDetour()
+		{
+			return &SetCampaignScores::OnSetCampaignScores;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SET_CAMPAIGN_SCORES_H_

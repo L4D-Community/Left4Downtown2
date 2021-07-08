@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -35,29 +35,29 @@
 #include "detour_template.h"
 #include "l4d2sdk/constants.h"
 
-namespace Detours {
-
-class SpawnSpecial;
-typedef void * (SpawnSpecial::*SpawnSpecialFunc)(ZombieClassType, void *, void*);
-
-class SpawnSpecial : public DetourTemplate<SpawnSpecialFunc, SpawnSpecial>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class SpawnSpecial;
+	typedef void * (SpawnSpecial::*SpawnSpecialFunc)(ZombieClassType, void *, void*);
 
-	void *OnSpawnSpecial(ZombieClassType zombieClassType, void *vector, void *qangle);
-
-	// get the signature name (i.e. "SpawnSpecial") from the game conf
-	virtual const char *GetSignatureName()
+	class SpawnSpecial : public DetourTemplate<SpawnSpecialFunc, SpawnSpecial>
 	{
-		return "SpawnSpecial";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual SpawnSpecialFunc GetDetour()
-	{
-		return &SpawnSpecial::OnSpawnSpecial;
-	}
+		void *OnSpawnSpecial(ZombieClassType zombieClassType, void *vector, void *qangle);
+
+		// get the signature name (i.e. "SpawnSpecial") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "SpawnSpecial";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual SpawnSpecialFunc GetDetour()
+		{
+			return &SpawnSpecial::OnSpawnSpecial;
+		}
+	};
 };
 
-};
-#endif
+#endif //_INCLUDE_SOURCEMOD_DETOUR_SPAWN_SPECIAL_H_

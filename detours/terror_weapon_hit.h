@@ -2,7 +2,7 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -33,34 +33,30 @@
 #define _INCLUDE_SOURCEMOD_DETOUR_TERROR_WEAPON_HIT_H_
 
 #include "detour_template.h"
-#include "l4d2sdk/CBaseCombatWeapon.h"
-#include "l4d2sdk/CTerrorPlayer.h"
-#include <gametrace.h>
 
-namespace Detours {
-
-class TerrorWeaponHit;
-typedef void * (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
-
-class TerrorWeaponHit : public DetourTemplate<TerrorWeaponHitFunc, TerrorWeaponHit>
+namespace Detours 
 {
-private: //note: implementation of DetourTemplate abstracts
+	class TerrorWeaponHit;
+	typedef void * (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
 
-	void *OnTerrorWeaponHit(trace_t &, const Vector &, bool);
-
-	// get the signature name from the game conf
-	virtual const char *GetSignatureName()
+	class TerrorWeaponHit : public DetourTemplate<TerrorWeaponHitFunc, TerrorWeaponHit>
 	{
-		return "CTerrorWeapon__OnHit";
-	}
+	private: //note: implementation of DetourTemplate abstracts
 
-	//notify our patch system which function should be used as the detour
-	virtual TerrorWeaponHitFunc GetDetour()
-	{
-		return &TerrorWeaponHit::OnTerrorWeaponHit;
-	}
-};
-	
+		void *OnTerrorWeaponHit(trace_t &, const Vector &, bool);
+
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTerrorWeapon__OnHit";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual TerrorWeaponHitFunc GetDetour()
+		{
+			return &TerrorWeaponHit::OnTerrorWeaponHit;
+		}
+	};
 };
 
 #endif //_INCLUDE_SOURCEMOD_DETOUR_TERROR_WEAPON_HIT_H_
