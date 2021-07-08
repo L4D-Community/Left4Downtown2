@@ -2,6 +2,14 @@
 
 ##Changelog##
 
+###July 08, 2021 :: 0.6.6###
+* New native L4D_HasAnySurvivorLeftSafeArea();
+* New native L4D2_GetFurthestSurvivorFlow();
+* New native L4D_ReviveSurvivor();
+* Restore the old forward L4D2_OnSpitSpread();
+* Fix very rare crash in forward L4D2_OnEntityShoved(), it looks like if the player shoved another object that has no property 'm_isAttemptingToPounce', then we read garbage on this offset, and this causes a crash in rare cases.
+
+m_isAttemptingToPounce
 ###May 24, 2021 :: 0.6.4###
 * New native L4D_GetHighestFlowSurvivor();
 * New native L4D2_AreTeamsFlipped();
