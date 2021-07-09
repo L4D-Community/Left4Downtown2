@@ -105,7 +105,7 @@
 				"library"	"server"
 				"linux"		"@_ZNK25CDirectorTacticalServices22GetHighestFlowSurvivorEN13TerrorNavArea8FlowTypeE"
 				"windows"	"\x55\x8B\x2A\x83\x2A\x2A\xF3\x0F\x2A\x2A\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x89\x2A\x2A\x89"
-				/* 55 8B ? 83 ? ? F3 0F ? ? ? ? ? ? 33 ? 89 ? ? 89 ? ? 89 */ // Found by SilverShot.
+				/* 55 8B ? 83 ? ? F3 0F ? ? ? ? ? ? 33 ? 89 ? ? 89 ? ? 89 */ // Found by "SilverShot".
 				/* Search "Director state change SUSTAIN_PEAK". Call below. */
 			}
 			
@@ -117,8 +117,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer14OnLedgeGrabbedERK6Vector"
-				"windows"	"\x55\x8B\x2A\x81\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x56\x8B\x2A\x8B\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x57\x2A\x2A\x84\x2A\x0F\x84\x2A\x2A\x2A\x2A\x8B"
-				/* 55 8B ? 81 ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 56 8B ? 8B ? 8B ? ? ? ? ? 57 ? ? 84 ? 0F 84 ? ? ? ? 8B */
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x56\x8B\x2A\x8B\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x57\x2A\x2A\x84\x2A\x0F\x84\x2A\x2A\x2A\x2A\x8B"
+				/* ? ? ? ? ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 56 8B ? 8B ? 8B ? ? ? ? ? 57 ? ? 84 ? 0F 84 ? ? ? ? 8B */
 			}
 			
 			/*
@@ -134,7 +134,7 @@
 				"windows"	"\x57\x8B\xF9\xE8\x2A\x2A\x2A\x2A\x84\xC0\x75\x2A\xF7"
 				/* 57 8B F9 E8 ? ? ? ? 84 C0 75 ? F7 */
 			}
-			
+
 			/*
 			 * CTerrorGameRules::GetVersusCompletion(CTerrorPlayer *)
 			 */
@@ -156,9 +156,9 @@
 			 */
 			"GetTeamScore"
 			{
-				"library"  "server"
-				"linux"    "@_ZN16CTerrorGameRules12GetTeamScoreEib"
-				"windows"  "\x55\x8B\xEC\x8B\x2A\x2A\x85\xC0\x2A\x2A\x33\xC0\x5D\xC2"
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules12GetTeamScoreEib"
+				"windows"	"\x55\x8B\xEC\x8B\x2A\x2A\x85\xC0\x2A\x2A\x33\xC0\x5D\xC2"
 				/* 55 8B EC 8B ? ? 85 C0 ? ? 33 C0 5D C2 */
 			}
 			
@@ -173,9 +173,9 @@
 			 */
 			"SetCampaignScores" 
 			{
-				"library"  "server"
-				"linux"    "@_ZN16CTerrorGameRules17SetCampaignScoresEii"
-				"windows"  "\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x8B\xF1\x39\xBE\x2A\x2A\x2A\x2A\x74\x2A\xE8\x2A\x2A\x2A\x2A\x89\xBE\x2A\x2A\x2A\x2A\x8B"
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules17SetCampaignScoresEii"
+				"windows"	"\x55\x8B\xEC\x56\x57\x8B\x7D\x08\x8B\xF1\x39\xBE\x2A\x2A\x2A\x2A\x74\x2A\xE8\x2A\x2A\x2A\x2A\x89\xBE\x2A\x2A\x2A\x2A\x8B"
 				/* 55 8B EC 56 57 8B 7D 08 8B F1 39 BE ? ? ? ? 74 ? E8 ? ? ? ? 89 BE ? ? ? ? 8B */
 			}
 			
@@ -184,22 +184,25 @@
 			 */
 			"ClearTeamScores"
 			{
-				"library"  "server"
-				"linux"    "@_ZN16CTerrorGameRules15ClearTeamScoresEb"
-				"windows"  "\x55\x8B\xEC\x51\x0F\x57\xC0\x53\x56\x57\x33\xDB\x8B"
-				/* 55 8B EC 51 0F 57 C0 53  56 57 33 DB 8B */
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules15ClearTeamScoresEb"
+				"windows"	"\x55\x8B\xEC\x51\x0F\x57\xC0\x53\x56\x57\x33\xDB\x8B"
+				/* 55 8B EC 51 0F 57 C0 53 56 57 33 DB 8B */
 			}
-            
+
 			/*
 			 * CBaseServer::SetReservationCookie(uint64_t, char*, va_list)
 			 *  - clear the reservation by setting a cookie of 0
 			 */
 			"SetReservationCookie" 
 			{
-				"library"  "engine"
-				"linux"    "@_ZN11CBaseServer20SetReservationCookieEyPKcz"
-				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x10\x56\x8B\x75\x08\x57\x8B\x7D\x0C\x3B"
-				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D 10 56 8B 75 08 57 8B 7D 0C 3B */
+				"library"	"engine"
+				"linux"		"@_ZN11CBaseServer20SetReservationCookieEyPKcz"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x8B\x2A\x2A\x56\x8B\x2A\x2A\x57\x8B\x2A\x2A\x3B"
+				/* ? ? ? ? ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 8B ? ? 56 8B ? ? 57 8B ? ? 3B */
+				// Wildcarded so compatible with l4dtoolz.
+				// "windows"	"\x55\x8B\x2A\x81\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x8B\x2A\x2A\x56\x8B\x2A\x2A\x57\x8B\x2A\x2A\x3B"
+				/* 55 8B ? 81 ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 8B ? ? 56 8B ? ? 57 8B ? ? 3B */
 			}
 			
 			/*
@@ -208,9 +211,9 @@
 			 */
 			"TakeOverBot"
 			{
-				"library"  "server"
-				"linux"    "@_ZN13CTerrorPlayer11TakeOverBotEb"
-				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x8D\x85"
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer11TakeOverBotEb"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x8D\x85"
 				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 56 8D 85 */
 			}
 			
@@ -218,12 +221,14 @@
 			* BossZombiePlayerBot::ChooseVictim(CTerrorPlayer *, int, CBaseCombatCharacter *)
 			* Unique String: switching to directly visible victim\n
 			*/
-            "BossZombiePlayerBotChooseVictim"
+			"BossZombiePlayerBotChooseVictim"
 			{
-				"library"	"server"
-				"linux"		"@_ZN19BossZombiePlayerBot12ChooseVictimEP13CTerrorPlayeriP20CBaseCombatCharacter"
-				"windows"	"\x55\x8B\xEC\x83\xEC\x24\xA1\x2A\x2A\x2A\x2A\x83\x78\x30\x00\x53"
-				/* 55 8B EC 83 EC 24 A1 ? ? ? ? 83 78 30 00 53 */
+				"library"		"server"
+				"windows"		"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x83\x2A\x2A\x2A\x53\x8B\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x56"
+				"linux"			"@_ZN19BossZombiePlayerBot12ChooseVictimEP13CTerrorPlayeriP20CBaseCombatCharacter"
+				/* ? ? ? ? ? ? ? ? ? ? ? 83 ? ? ? 53 8B ? 8B ? ? ? ? ? 8B ? ? ? ? ? 56 */ // Wildcarded for 3rd party plugins
+				/* 55 8B ? 83 ? ? ? ? ? ? ? 83 ? ? ? 53 8B ? 8B ? ? ? ? ? 8B */
+				/* Search: "switching to mobile victim" */
 			}
 			
 			/*
@@ -233,22 +238,22 @@
 			 */
 			"SetHumanSpec"
 			{
-				"library"  "server"
-				"linux"    "@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
-				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\x83\xBE\x2A\x2A\x2A\x2A\x00\x7E\x07\x32\xC0\x5E\x5D\xC2\x04\x00\x8B\x0D"
-				/* 55 8B EC 56 8B F1 83 BE ? ? ? ? 00 7E 07 32 C0 5E 5D C2 04 00 8B 0D */
+				"library"	"server"
+				"linux"		"@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x83\xBE\x2A\x2A\x2A\x2A\x00\x7E\x07\x32\xC0\x5E\x5D\xC2\x04\x00\x8B\x0D"
+				/* ? ? ? ? ? ? 83 BE ? ? ? ? 00 7E 07 32 C0 5E 5D C2 04 00 8B 0D */
 			}
 
 			/*
 			 * CDirectorScavengeMode::OnBeginRoundSetupTime
-			 *  used to reset the setup timer during scavenge mode
+			 * used to reset the setup timer during scavenge mode
 			 * has one of five references to string "ready_countdown"
 			 */
 			"CDirectorScavengeMode_OnBeginRoundSetupTime"
 			{
-				"library"  "server"
-				"linux"    "@_ZN21CDirectorScavengeMode21OnBeginRoundSetupTimeEv"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x10\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\xF3"
+				"library"	"server"
+				"linux"		"@_ZN21CDirectorScavengeMode21OnBeginRoundSetupTimeEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x10\x56\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\xF3"
 				/* 55 8B EC 83 EC 10 56 8B F1 E8 ? ? ? ? 84 C0 74 ? F3 */
 			}
 
@@ -263,9 +268,9 @@
 			 */
 			"CTerrorGameRules_ResetRoundNumber"
 			{
-				"library" 	"server"
+				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules16ResetRoundNumberEv"
-				"windows" 	"\x56\x8B\xF1\x83\xBE\x2A\x2A\x2A\x2A\x00\x74\x2A\xE8\x2A\x2A\x2A\x2A\xC7\x86\x2A\x2A\x2A\x2A\x00\x00\x00\x00\x5E\xC3"
+				"windows"	"\x56\x8B\xF1\x83\xBE\x2A\x2A\x2A\x2A\x00\x74\x2A\xE8\x2A\x2A\x2A\x2A\xC7\x86\x2A\x2A\x2A\x2A\x00\x00\x00\x00\x5E\xC3"
 				/* 56 8B F1 83 BE ? ? ? ? 00 74 ? E8 ? ? ? ? C7 86 ? ? ? ? 00 00 00 00 5E C3 */
 			}
 			
@@ -276,10 +281,10 @@
  			 */
 			"CTerrorGameRules_SetRoundEndTime"
 			{
-				"library"  "server"
-				"linux"    "@_ZN16CTerrorGameRules15SetRoundEndTimeEf"
-				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\xF3\x0F\x10\x86\x2A\x2A\x2A\x2A\x0F\x2E\x45\x08\x9F\x57"
-				/* 55 8B EC 56 8B F1 F3 0F  10 86 ? ? ? ? 0F 2E 45 08 9F 57 */
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules15SetRoundEndTimeEf"
+				"windows"	"\x55\x8B\xEC\x56\x8B\xF1\xF3\x0F\x10\x86\x2A\x2A\x2A\x2A\x0F\x2E\x45\x08\x9F\x57"
+				/* 55 8B EC 56 8B F1 F3 0F 10 86 ? ? ? ? 0F 2E 45 08 9F 57 */
 			}
 			
 			
@@ -290,10 +295,10 @@
  			*/
 			"CDirector_AreWanderersAllowed"
 			{
-				"library"  "server"
-				"linux"    "@_ZNK9CDirector19AreWanderersAllowedEv"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x56\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x8D\x45\xFF"
-				/* 55 8B EC 83 EC ? 56 8B  F1 8B 8E ? ? ? ? 8D 45 FF */
+				"library"	"server"
+				"linux"		"@_ZNK9CDirector19AreWanderersAllowedEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x2A\x56\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x8D\x45\xFF"
+				/* 55 8B EC 83 EC ? 56 8B F1 8B 8E ? ? ? ? 8D 45 FF */
 			}
 			
 			/* Used solely to get the offset for TheDirector
@@ -302,9 +307,9 @@
 			*/
 			"DirectorMusicBanks_OnRoundStart"
 			{
-				"library"  "server"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x84"
-				/* 55 8B EC 83 EC ? 56 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 84 */
+				"library"	"server"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F"
+				/* 55 8B EC 83 EC ? 56 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 84 C0 0F */
 
 			}
 			
@@ -358,7 +363,7 @@
 			{
 				"library"	"server"
 				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x8B\x45\x14\x53\x8B\x5D\x08"
-					/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 8B 45 14 53 8B 5D 08 */
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 8B 45 14 53 8B 5D 08 */
 			}
 			
 			/*
@@ -370,10 +375,10 @@
 			 */
 			"RestartScenarioFromVote"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector23RestartScenarioFromVoteEPKc"
-				"windows"  "\x55\x8B\xEC\x56\x8B\xF1\x8B\x0D\x2A\x2A\x2A\x2A\x57\x85"
-				/* 55 8B EC 56 8B F1 8B 0D  ? ? ? ? 57 85 */
+				"library"	"server"
+				"linux"		"@_ZN9CDirector23RestartScenarioFromVoteEPKc"
+				"windows"	"\x55\x8B\xEC\x56\x8B\xF1\x8B\x0D\x2A\x2A\x2A\x2A\x57\x85"
+				/* 55 8B EC 56 8B F1 8B 0D ? ? ? ? 57 85 */
 			}
 			
 			/*
@@ -384,9 +389,9 @@
 			*/
 			"SpawnSpecial"
 			{ 
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager12SpawnSpecialE15ZombieClassTypeRK6VectorRK6QAngle"
-				"windows"  "\x55\x8B\xEC\x53\x8B\x5D\x08\x8D\x43\xFF\x56"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager12SpawnSpecialE15ZombieClassTypeRK6VectorRK6QAngle"
+				"windows"	"\x55\x8B\xEC\x53\x8B\x5D\x08\x8D\x43\xFF\x56"
 				/* 55 8B EC 53 8B 5D 08 8D 43 FF 56 */
 			}
 
@@ -400,9 +405,9 @@
 			 */
 			"SpawnTank"
 			{ 
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager9SpawnTankERK6VectorRK6QAngle"
-				"windows"  "\x55\x8B\xEC\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager9SpawnTankERK6VectorRK6QAngle"
+				"windows"	"\x55\x8B\xEC\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39"
 				/* 55 8B EC 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 ? 8B 0D ? ? ? ? 39 */
 			}
 
@@ -430,9 +435,9 @@
 			 */
 			"SpawnWitch"
 			{ 
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
-				"windows"  "\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39\x81"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
+				"windows"	"\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x78\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x39\x81"
 				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 */
 			}
 
@@ -443,9 +448,9 @@
 			*/
 			"SpawnWitchBride"
 			{ 
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
-				"windows"  "\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
+				"windows"	"\x55\x8B\xEC\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x85\xC0\x75"
 				/* 55 8B EC 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 75 */
 			}
 			
@@ -459,8 +464,8 @@
 			{ 
 				"library" 	"server"
 				"linux" 	"@_ZN19CDirectorVersusMode20OnVersusRoundStartedEv"
-				"windows" 	"\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x2A\xA1\x2A\x2A\x2A\x2A\xF3\x0F\x2A\x2A\x2A\x51\xF3\x0F\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B"
-				/* 8B 0D ? ? ? ? 85 C9 74 ? A1 ? ? ? ? F3 0F ? ? ? 51 F3 0F ? ? ? E8 ? ? ? ? 8B */
+				"windows" 	"\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x74\x2A\xA1\x2A\x2A\x2A\x2A\xD9\x2A\x2A\x51\xD9\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B"
+				/* 8B 0D ? ? ? ? 85 C9 74 ? A1 ? ? ? ? D9 ? ? 51 D9 ? ? E8 ? ? ? ? 8B */
 			}
 			
 			/*
@@ -470,10 +475,11 @@
 			 */
 			"OnFirstSurvivorLeftSafeArea"
 			{ 
-				"library"  "server"
-				"linux"    "@_ZN9CDirector27OnFirstSurvivorLeftSafeAreaEP13CTerrorPlayer"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\x7D\x2A\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x57\xE8"
-				/* 55 8B EC 83 EC ? 56 57 8B 7D ? 8B F1 8B 8E ? ? ? ? 57 E8 */
+				"library"	"server"
+				"linux"		"@_ZN9CDirector27OnFirstSurvivorLeftSafeAreaEP13CTerrorPlayer"
+				"windows"	"\x55\x8B\x2A\x83\x2A\x2A\x53\x8B\x2A\x2A\x57\x8B\x2A\x8B"
+				/* 55 8B ? 83 ? ? 53 8B ? ? 57 8B ? 8B */
+				/* Search: "player_left_start_area" */
 			}
 			
 			/*
@@ -483,9 +489,9 @@
 			 */
 			"CDirector_GetScriptValueInt"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector14GetScriptValueEPKci"
-				"windows"  "\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x45\x2A\x8B"
+				"library"	"server"
+				"linux"		"@_ZN9CDirector14GetScriptValueEPKci"
+				"windows"	"\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x45\x2A\x8B"
 				/* 55 8B EC 8B 81 ? ? ? ? 83 EC 10 83 F8 FF ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? 8B 45 ? 8B */
 			}
 			
@@ -495,9 +501,9 @@
 			 */
 			"CDirector_GetScriptValueFloat"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector14GetScriptValueEPKcf"
-				"windows"  "\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xD9"
+				"library"	"server"
+				"linux"		"@_ZN9CDirector14GetScriptValueEPKcf"
+				"windows"	"\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x10\x83\xF8\xFF\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xD9"
 				/* 55 8B EC 8B 81 ? ? ? ? 83 EC 10 83 F8 FF ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? D9 */
 			}
 			
@@ -507,9 +513,9 @@
 			 */
 			"CDirector_GetScriptValueString"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector14GetScriptValueEPKcS1_Pci"
-				"windows"  "\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x2A\x56\x8B"
+				"library"	"server"
+				"linux"		"@_ZN9CDirector14GetScriptValueEPKcS1_Pci"
+				"windows"	"\x55\x8B\xEC\x8B\x81\x2A\x2A\x2A\x2A\x83\xEC\x2A\x56\x8B"
 				/* 55 8B EC 8B 81 ? ? ? ? 83 EC ? 56 8B */
 			}
 			
@@ -532,10 +538,10 @@
 			 */
 			"CTerrorPlayer_CanBecomeGhost"
 			{
-				"library"  "server"
-				"linux"    "@_ZN13CTerrorPlayer14CanBecomeGhostEb"
-				"windows"  "\x53\x8B\xDC\x83\xEC\x2A\x83\xE4\xF0\x83\xC4\x2A\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF1\xE8\x0E"
-				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 ? 55 8B 6B 04 89 6C 24 04 8B EC 83 EC ? 56 57 8B F1 E8 0E */
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer14CanBecomeGhostEb"
+				"windows"	"\x53\x8B\xDC\x83\xEC\x08\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x78\x56\x57\x8B\xF1"
+				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 ? 55 8B 6B 04 89 6C 24 ? 8B EC 83 EC 78 56 57 8B F1 */
 			}
 			
 			/*
@@ -544,9 +550,9 @@
 			 */
 			"CTerrorPlayer_OnEnterGhostState"
 			{
-				"library"  "server"
-				"linux"    "@_ZN13CTerrorPlayer17OnEnterGhostStateEv"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x08\x53\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x8B"
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer17OnEnterGhostStateEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x08\x53\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x8B"
 				/* 55 8B EC 83 EC 08 53 56 8B F1 8B 86 ? ? ? ? 8B */
 			}
 			
@@ -555,9 +561,9 @@
 			 */
 			"CDirector_IsFinale"
 			{
-				"library"  "server"
-				"linux"    "@_ZNK9CDirector8IsFinaleEv"
-				"windows"  "\x8B\x81\x2A\x2A\x2A\x2A\x33\xC9\x83\x38\x2A\x0F\x95\xC0\xC3"
+				"library"	"server"
+				"linux"		"@_ZNK9CDirector8IsFinaleEv"
+				"windows"	"\x8B\x81\x2A\x2A\x2A\x2A\x33\xC9\x83\x38\x2A\x0F\x95\xC0\xC3"
 				/* 8B 81 ? ? ? ? 33 C9 83 38 ? 0F 95 C0 C3 */
 			}
 			
@@ -567,9 +573,9 @@
 			 */
 			"TryOfferingTankBot"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
-				"windows"  "\x55\x8B\xEC\x51\x83\x7D\x08\x00\x56\x8B\xF1\x89"
+				"library"	"server"
+				"linux"		"@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
+				"windows"	"\x55\x8B\xEC\x51\x83\x7D\x08\x00\x56\x8B\xF1\x89"
 				/* 55 8B EC 51 83 7D 08 00 56 8B F1 89 */
 			}
 			
@@ -580,9 +586,9 @@
 			 */
 			"OnMobRushStart"
 			{
-				"library"  "server"
-				"linux"    "@_ZN9CDirector14OnMobRushStartEv"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x08\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2C\x56\x57\x51"
+				"library"	"server"
+				"linux"		"@_ZN9CDirector14OnMobRushStartEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x08\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2C\x56\x57\x51"
 				/* 55 8B EC 83 EC 08 A1 ? ? ? ? F3 0F 10 40 ? 56 57 51 */
 			}
 			
@@ -593,9 +599,9 @@
 			 */
 			"Zombiemanager_SpawnITMob"
 			{
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager10SpawnITMobEi"
-				"windows"  "\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\xD9\x40\x0C\x56\x57"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager10SpawnITMobEi"
+				"windows"	"\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\xD9\x40\x0C\x56\x57"
 				/* 55 8B EC A1 ? ? ? ?  F3 0F 10 40 ? 56 57 */
 			}
 			
@@ -607,9 +613,9 @@
 			 */
 			"Zombiemanager_SpawnMob"
 			{
-				"library"  "server"
-				"linux"    "@_ZN13ZombieManager8SpawnMobEi"
-				"windows"  "\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\xD9\x40\x0C\x83\xEC\x2A\x53\x56\x57"
+				"library"	"server"
+				"linux"		"@_ZN13ZombieManager8SpawnMobEi"
+				"windows"	"\x55\x8B\xEC\xA1\x2A\x2A\x2A\x2A\xD9\x40\x0C\x83\xEC\x2A\x53\x56\x57"
 				/* 55 8B EC A1 ? ? ? ? F3 0F 10 40 ? 83 EC ? 53 56 57 */
 			}
 			
@@ -622,8 +628,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer11OnStaggeredEP11CBaseEntityPK6Vector"
-				"windows" 	"\x53\x8B\xDC\x83\xEC\x08\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x48\x56\x57\x8B\xF1\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F\x85\x6E\x08"
-				/* 53 8B DC 83 EC ? 83 E4 F0 83 C4 04 55 8B 6B 04 89 6C 24 04 8B EC 83 EC ? 56 57 8B F1 E8 ? ? ? ? 84 C0 0F 85 73 08 
+				"windows" 	"\x2A\x2A\x2A\x2A\x2A\x2A\x83\x2A\x2A\x83\x2A\x2A\x55\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x83\x2A\x2A\x56\x57\x8B\x2A\xE8\x2A\x2A\x2A\x2A\x84\x2A\x0F\x85\x2A\x2A\x2A\x2A\x8B\x2A\x8B"
+				/* ? ? ? ? ? ? 83 ? ? 83 ? ? 55 8B ? ? 89 ? ? ? 8B ? 83 ? ? 56 57 8B ? E8 ? ? ? ? 84 ? 0F 85 ? ? ? ? 8B ? 8B
 				 * Using a long local jump as the unique portion (last few bytes of sig)
 				 */
 			}
@@ -634,10 +640,10 @@
 			 */
 			"CTerrorPlayer_OnShovedBySurvivor"
 			{
-				"library"   "server"
-				"linux" 	"@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
-				"windows" 	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x08\x56\x57\x8B\x7D\x0C\x8B\xF1"
-				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D 0C 56 57 8B 7D 08 8B F1 */
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
+				"windows" 	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x2A\x56\x57\x8B\x7D\x2A\x8B\xF1"
+				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D ? 56 57 8B 7D ? 8B F1 */
 			}
 			
 			/*
@@ -648,7 +654,7 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZNK13CTerrorPlayer15GetWalkTopSpeedEv"
-				"windows" 	"\x56\x8B\xF1\x80\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x5E\xE9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x50\xE8"
+				"windows"	"\x56\x8B\xF1\x80\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x5E\xE9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x50\xE8"
 				/* 56 8B F1 80 ? ? ? ? ? ? 74 ? 5E E9 ? ? ? ? E8 ? ? ? ? 50 E8 */
 			}
 			
@@ -661,7 +667,7 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZNK13CTerrorPlayer14GetRunTopSpeedEv"
-				"windows" 	"\x55\x8B\xEC\x83\xEC\x2A\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x84\xC0\x74\x0D\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x5E"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x2A\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x84\xC0\x74\x0D\xA1\x2A\x2A\x2A\x2A\xD9\x40\x2A\x5E"
 				/* 55 8B EC 83 EC ? 56 8B F1 8B 06 8B 90 ? ? ? ? FF D2 84 C0 74 0D A1 ? ? ? ? D9 40 ? 5E */
 			}
 			
@@ -688,8 +694,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer9OnRevivedEv"
-				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x57\xff\xd2\x84\xc0\x0f\x84\x2A\x2A\x2A\x2A\x8B\xCE"
-							/* ? ? ? ? ? ? 53 56 8B F1 8B 06 8B 90 ? ? ? ? 57 ff d2 84 c0 0f 84 ? ? ? ? 8B CE */
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x06\x8B\x90\x2A\x2A\x2A\x2A\x57\xFF\xD2\x84\xC0\x0F\x84\x2A\x2A\x2A\x2A\x8B\xCE"
+				/* ? ? ? ? ? ? 53 56 8B F1 8B 06 8B 90 ? ? ? ? 57 FF D2 84 C0 0F 84 ? ? ? ? 8B CE */
 			}
 
 			/*
@@ -699,12 +705,12 @@
 			{
 				"library"	"server"
 				"linux"		"@_Z13GetDifficultyv"
-				"windows" 	"\xA1\x2A\x48\x7A\x10\xC3"
+				"windows"	"\xA1\x2A\x48\x7A\x10\xC3"
 							/* A1 ? 48 7A 10 C3 */
 			}
 			
 			/*
-			 *	 CTerrorGameRules::HasConfigurableDifficultySetting(void)
+			 * CTerrorGameRules::HasConfigurableDifficultySetting(void)
 			 *
 			 * - Look for string "hasdifficulty"
 			 */
@@ -717,7 +723,7 @@
 			}
 			
 			/*
-			 *   CTerrorGameRules::GetSurvivorSet(void)
+			 * CTerrorGameRules::GetSurvivorSet(void)
 			 *
 			 * - string "survivor_set"
 			 */
@@ -725,7 +731,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules14GetSurvivorSetEv"
-				"windows" 	"\x55\x8B\xEC\x51\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\x53"
+				"windows" 	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\x53\x56\xBB"
+				/* ? ? ? ? ? ? ? ? ? ? 8B 01 8B 50 ? 53 56 BB */ // Wildcarded for 3rd party plugins
 				/* 55 8B EC 51 8B 0D ? ? ? ? 8B 01 8B 50 ? 53 */
 			}
 			
@@ -751,7 +758,7 @@
 			"GetMissionVersusBossSpawning"
 			{
 				"library"	"server"
-				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_Rb"			
+				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_Rb"
 				"windows"	"\x55\x8B\xEC\x6A\x00\xE8\x2A\x2A\x2A\x2A\x83\xC4\x04\x85"
 				/* 55 8B EC 6A 00 E8 ? ? ? ? 83 C4 04 85 */
 			}
@@ -797,7 +804,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN18CTerrorMeleeWeapon15StartMeleeSwingEP13CTerrorPlayerb"
-				"windows"	"\x55\x8B\xEC\x53\x56\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x8B\xF1\x8B\x86\x2A\x2A\x2A\x2A\x50\xB9\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B"
+				/* ? ? ? ? ? 8B F1 8B 86 ? ? ? ? 50 B9 ? ? ? ? E8 ? ? ? ? 8B */ // Wildcarded for 3rd party plugins
 				/* 55 8B EC 53 56 8B F1 8B 86 ? ? ? ? 50 B9 */
 			}
 			
@@ -808,9 +816,9 @@
 			 */
 			"SendInRescueVehicle"
 			{
-				"library"  "server"
-				"linux"    "@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x18\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1"
+				"library"	"server"
+				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x18\x56\x68\x2A\x2A\x2A\x2A\x8B\xF1"
 				/* 55 8B EC 83 EC 18 56 68 ? ? ? ? 8B F1 */
 			}
 			
@@ -824,8 +832,9 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_18ScriptedEventStageEPKc"
-				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x00\x00\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x8B\x5D\x08\x56\x8B\x75\x0C\x57\x53"
-				/* 55 8B EC 81 EC ? ? 00 00 A1 ? ? ? ? 33 C5 89 45 FC 53 8B 5D 08 56 8B 75 0C 57 53 */
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x8B\x2A\x2A\x56\x8B\x2A\x2A\x57\x53\x68"
+				/* ? ? ? ? ? ? ? ? ? ? ? ? ? ? 33 ? 89 ? ? 53 8B ? ? 56 8B ? ? 57 53 68 */ // Wildcarded for 3rd party plugins
+				/* 55 8B ? 81 ? ? ? ? ? ? ? ? ? ? 33 ? 89 ? ? 53 8B ? ? 56 8B ? ? 57 53 68 */
 			}
 
 			/*
@@ -871,16 +880,17 @@
 			}
 			
 			/*
-			*  SurvivorBot::UseHealingItems(Action<SurvivorBot> *)
-			*  Called by the game when deciding whether the bots should use any healing items
-			*  unique string "Trying to heal a friend"
+			* SurvivorBot::UseHealingItems(Action<SurvivorBot> *)
+			* Called by the game when deciding whether the bots should use any healing items
+			* unique string "Trying to heal a friend"
 			*/
 			"UseHealingItems"
 			{
 				"library"	"server"
-				"linux"    "@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
-				"windows"  "\x55\x8B\xEC\x83\xEC\x20\x53\x56\x8B\xD9\x57\x8D\x8B"
-				/* 55 8B EC 83 EC 20 53 56 8B D9 57 8D 8B */
+				"linux"		"@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
+				"windows"	"\x55\x8B\x2A\x83\x2A\x2A\x53\x56\x57\x8B\x2A\x8D\x2A\x2A\x2A\x2A\x2A\x8D\x2A\x2A\x2A\x2A\x2A\xE8"
+				/* 55 8B ? 83 ? ? 53 56 57 8B ? 8D ? ? ? ? ? 8D ? ? ? ? ? E8 */
+				/* Search "Trying to heal a friend" */
 			}
 			
 			/*
@@ -893,8 +903,8 @@
 			"FindScavengeItem"
 			{
 				"library"	"server"
-				"linux"    "@_ZNK11SurvivorBot16FindScavengeItemEf"
-				"windows"  "\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x57\x8B\xF9\x8B\x97\x2A\x2A\x2A\x2A\x8D\x85"
+				"linux"		"@_ZNK11SurvivorBot16FindScavengeItemEf"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x53\x56\x57\x8B\xF9\x8B\x97\x2A\x2A\x2A\x2A\x8D\x85"
 				/* 55 8B EC 81 EC ? ? ? ? A1 ? ? ? ? 33 C5 89 45 FC 53 56 57 8B F9 8B 97 ? ? ? ? 8D 85 */
 			}
 			
@@ -903,9 +913,10 @@
 			*/
 			"CTerrorWeapon__OnHit"
 			{
-				"library"   "server"
-				"linux"    	"@_ZN13CTerrorWeapon5OnHitER10CGameTraceRK6Vectorb"
-				"windows" 	"\x55\x8B\xEC\x56\x8B\x75\x08\x83\x7E\x4C\x00\x57"
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorWeapon5OnHitER10CGameTraceRK6Vectorb"
+				"windows"	"\x55\x8B\xEC\x81\xEC\xB0\x00\x00\x00\x80\x7D\x10\x00"
+				/* 55 8B EC 81 EC B0 00 00 00 80 7D 10 00 */
 			}
 			
 			/*
@@ -915,7 +926,7 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN8CInferno6SpreadERK6Vector"
-				"windows" 	"\x53\x8B\x2A\x83\x2A\x2A\x83\x2A\x2A\x83\x2A\x2A\x55\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x81\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x8B\x2A\x2A\x56\x57\x8B\x2A\xF3\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x0F\x2F"
+				"windows"	"\x53\x8B\x2A\x83\x2A\x2A\x83\x2A\x2A\x83\x2A\x2A\x55\x8B\x2A\x2A\x89\x2A\x2A\x2A\x8B\x2A\x81\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x8B\x2A\x2A\x56\x57\x8B\x2A\xF3\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x0F\x2F"
 				/* 53 8B ? 83 ? ? 83 ? ? 83 ? ? 55 8B ? ? 89 ? ? ? 8B ? 81 ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 8B ? ? 56 57 8B ? F3 ? ? ? ? ? ? ? 0F 2F */
 				/* Search: "CInferno::InfernoThink (spread)" bit below is target call. */
 			}
@@ -925,9 +936,9 @@
 			*/
 			"WaterMove"
 			{
-				"library"   "server"
-				"linux"    	"@_ZN11CBasePlayer9WaterMoveEv"
-				"windows" 	"\x55\x8B\xEC\x83\xEC\x60\x56\x8B\xF1\x80\xBE\x72\x01\x00\x00\x08"
+				"library"	"server"
+				"linux"		"@_ZN11CBasePlayer9WaterMoveEv"
+				"windows"	"\x55\x8B\xEC\x83\xEC\x60\x56\x8B\xF1\x80\xBE\x72\x01\x00\x00\x08"
 			}
 
 			/* 
@@ -935,9 +946,9 @@
 			*/
 			"CTerrorGameRules__GetMissionInfo"
 			{
-				"library"   "server"
-				"linux"    	"@_ZN16CTerrorGameRules14GetMissionInfoEv"
-				"windows" 	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42"
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules14GetMissionInfoEv"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42"
 			}
 			
 			/* 
@@ -945,9 +956,13 @@
 			*/
 			"CTerrorPlayer__OnShovedByPounceLanding"
 			{
-				"library"   "server"
-				"linux"    	"@_ZN13CTerrorPlayer23OnShovedByPounceLandingEPS_b"
-				"windows" 	"\x53\x8B\xDC\x83\xEC\x08\x83\xE4\xF0\x83\xC4\x04\x55\x8B\x6B\x04\x89\x6C\x24\x04\x8B\xEC\x83\xEC\x28\x56\x8B\x73\x08\x8B\x06\x8B\x90\x80\x02\x00\x00"
+				"library"	"server"
+				"linux"		"@_ZN13CTerrorPlayer23OnShovedByPounceLandingEPS_b"
+				"windows"	"\x55\x8B\x2A\x83\x2A\x2A\x56\x8B\x2A\xE8\x2A\x2A\x2A\x2A\x84\x2A\x0F\x85\x2A\x2A\x2A\x2A\x57\x8B"
+				/* 55 8B ? 83 ? ? 56 8B ? E8 ? ? ? ? 84 ? 0F 85 ? ? ? ? 57 8B */
+				/* Search: "pounced on %s, %d damage interrupts".
+				 * Several calls from here to target function, visual match with nix code.
+				 */
 			}
 			
 /*********************************************************************
@@ -958,7 +973,7 @@
 			*/
 			"CBaseServer__FillServerInfo"
 			{
-				"library"   "engine"
+				"library"	"engine"
 				"linux"		"@_ZN11CBaseServer14FillServerInfoER14SVC_ServerInfo"
 				"windows"	"\x55\x8B\xEC\x53\x56\x57\x68\x04\x01\x00\x00"
 			}
@@ -975,7 +990,6 @@
 			* MOV        dword ptr [EDI + 0x90],DAT_10678dc0
 			* MOV        byte ptr [EDI + 0x5f],'W'
 			*/
-
 			"VanillaModeOffset"
 			{
 				"library"	"engine"
@@ -1059,10 +1073,10 @@
 				 * For 2.1.2.5 this offset was ebx+17Ch on Linux and esi+180h on Windows */
 				"library"	"engine"
 				"linux"		"\x3B\xB3\x2A\x2A\x2A\x2A\x0F\x8E\x2A\x2A\x2A\x2A\x8B\x03\xC7\x44\x24\x08\x2A\x2A\x2A\x2A\x89"
-                /* 3B B3 ? ? ? ? 0F 8E ? ? ? ? 8B 03 C7 44 24 08 ? ? ? ? 89 */
+				/* 3B B3 ? ? ? ? 0F 8E ? ? ? ? 8B 03 C7 44 24 08 ? ? ? ? 89 */
 
 				"windows"    "\x74\x2A\x8B\x55\x2A\x8B\x06\x8B\x7A\x2A\x8B\x50"
-                /* windows: 74 ? 8B 55 ? 8B 06 8B 7A ? 8B 50 */
+				/* windows: 74 ? 8B 55 ? 8B 06 8B 7A ? 8B 50 */
 			}
 			
 			
@@ -1097,8 +1111,8 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZNK9CDirector20IsFirstMapInScenarioEv"
-				"windows"	"\xA1\x2A\x2A\x2A\x2A\x8B\x40\x3C\x56\x8B\xF0" 
-							/* A1 ? ? ? ? 8B 40 3C 56 8B F0 */
+				"windows"	"\xA1\x2A\x2A\x2A\x2A\x8B\x40\x3C\x56\x8B\xF0"
+				/* A1 ? ? ? ? 8B 40 3C 56 8B F0 */
 			}
 
 			/* CTerrorGameRules::IsMissionFinalMap()
@@ -1110,9 +1124,10 @@
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules17IsMissionFinalMapEv"
-				"windows"	"\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x04\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x04\xB0" 
-							/* 8B 0D ? ? ? ? 8B 01 8B 50 28 56 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 B0 */
+				"windows"	"\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x04\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x04\xB0"
+				/* 8B 0D ? ? ? ? 8B 01 8B 50 28 56 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 B0 */
 			}
+			
 			/* CDirector::ResetMobTimer()
 				Resets the Director's natural horde timer. Normally this
 				is called when a horde is spawned naturally or by boomer.
@@ -1126,8 +1141,9 @@
 				"library"	"server"
 				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
 				"windows"	"\x55\x8B\xEC\x51\x56\x57\x8D\xB9\x2A\x2A\x2A\x2A\x8B\xCF\xE8\x2A\x2A\x2A\x2A\xD9"
-							/* 55 8B EC 51 56 57 8D B9 ? ? ? ? 8B CF E8 ? ? ? ? D9 */
+				/* 55 8B EC 51 56 57 8D B9 ? ? ? ? 8B CF E8 ? ? ? ? D9 */
 			}
+			
 			/* CGameRulesProxy::NotifyNetworkStateChanged()
 				This function is called before changing a variety of 
 				pieces of networked data (data which is reflected in network
@@ -1141,7 +1157,7 @@
 				"library"	"server"
 				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"
 				"windows"	"\xA1\x2A\x2A\x2A\x2A\x85\xC0\x74\x2A\x80\x78"
-							/* A1 ? ? ? ? 85 C0 74 ? 80 78 */
+				/* A1 ? ? ? ? 85 C0 74 ? 80 78 */
 			}
 		}
 	}
