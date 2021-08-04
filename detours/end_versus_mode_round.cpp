@@ -36,35 +36,32 @@ namespace Detours
 {
 	void EndVersusModeRound::OnEndVersusModeRound(bool countSurvivors)
 	{
-		L4D_DEBUG_LOG("CDirectorVersusMode::EndVersusModeRound(%s) has been called", countSurvivors ? "true" : "false");
+		L4D_DEBUG_LOG("CDirectorVersusMode::EndVersusModeRound(%s) has been called", (countSurvivors) ? "true" : "false");
 		
-		if (g_bRoundEnd) {
-			return;
-		}
-		
-		g_bRoundEnd = true;
-		
-		cell_t result = Pl_Continue;
-		
-		if (g_pFwdOnEndVersusModeRound) {
-			L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound forward has been sent out");
+		if (!g_bRoundEnd) {
+			cell_t result = Pl_Continue;
 			
-			g_pFwdOnEndVersusModeRound->PushCell(static_cast<bool>(countSurvivors));
-			g_pFwdOnEndVersusModeRound->Execute(&result);
+			g_bRoundEnd = true;
+
+			if (g_pFwdOnEndVersusModeRound) {
+				L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound forward has been sent out");
+				
+				g_pFwdOnEndVersusModeRound->PushCell(static_cast<bool>(countSurvivors));
+				g_pFwdOnEndVersusModeRound->Execute(&result);
+			}
+			
+			if (result == Pl_Handled) {
+				return;
+			}
+			
+			if (g_pFwdOnEndVersusModeRound_Post) {
+				L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound_Post forward has been sent out");
+			
+				g_pFwdOnEndVersusModeRound_Post->Execute(NULL);
+			}
 		}
-		
-		if (result == Pl_Handled) {
-			return;
-		}
-		
+
 		(this->*(GetTrampoline()))(countSurvivors);
-
-		if (g_pFwdOnEndVersusModeRound_Post) {
-			L4D_DEBUG_LOG("L4D2_OnEndVersusModeRound_Post forward has been sent out");
-			
-			g_pFwdOnEndVersusModeRound_Post->Execute(NULL);
-		}
-
 		return;
 	}
 };

@@ -32,6 +32,8 @@
 #include "extension.h"
 #include "vglobals.h"
 
+#define MAX_WEAPON_NAME_LENGTH 128
+
 enum L4D2IntWeaponAttributes
 {
 	L4D2IWA_Damage,
@@ -62,10 +64,11 @@ enum L4D2FloatWeaponAttributes
 
 int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 {
-	if (pInfo == NULL) return NULL;
+	if (pInfo == NULL) {
+		return NULL;
+	}
 	
-	switch(id)
-	{
+	switch(id) {
 		case L4D2IWA_Damage:
 			return &pInfo->m_iDamage;
 		case L4D2IWA_Bullets:
@@ -76,9 +79,12 @@ int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 			return NULL;
 	}
 }
+
 float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 {
-	if (pInfo == NULL) return NULL;
+	if (pInfo == NULL) {
+		return NULL;
+	}
 	
 	switch(id)
 	{
@@ -127,97 +133,121 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 // native bool:L4D2_IsValidWeapon(const String:weaponName[]);
 cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
 {
-	if (g_pWeaponInfoDatabase == NULL)
-	{
+	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
 	
-	char * weapon = NULL;
-	pContext->LocalToString(params[1], &weapon);
+	char *pWeapon = NULL;
+	pContext->LocalToString(params[1], &pWeapon);
 
-	char goodWName[128];
-	if (strcmp(weapon, "weapon_") > 0) {
-		g_pSM->Format(goodWName, sizeof(goodWName), "%s", weapon);
+	char weaponName[MAX_WEAPON_NAME_LENGTH];
+	if (strncmp(pWeapon, "weapon_", 7)) {
+		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
 	} else {
-		g_pSM->Format(goodWName, sizeof(goodWName), "weapon_%s", weapon);
+		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
 	
-	return g_pWeaponInfoDatabase->IsValidIndex(g_pWeaponInfoDatabase->Find(goodWName));
+	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
+	
+	return g_pWeaponInfoDatabase->IsValidIndex(iIndex);
 }
-
 
 // native L4D2_GetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr);
 cell_t L4D2_GetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params)
 {
-	if (g_pWeaponInfoDatabase == NULL)
-	{
+	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	char * weapon = NULL;
-	pContext->LocalToString(params[1], &weapon);
-	int iIndex = g_pWeaponInfoDatabase->Find(weapon);
 
-	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex))
-	{
+	char *pWeapon = NULL;
+	pContext->LocalToString(params[1], &pWeapon);
+	
+	char weaponName[MAX_WEAPON_NAME_LENGTH];
+	if (strncmp(pWeapon, "weapon_", 7)) {
+		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
+	} else {
+		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
+	}
+	
+	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
+
+	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
+	
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 	
 	int * attr = IntIdToAttr(pInfo, params[2]);
-	if (attr == NULL)
-	{
+	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+
 	return *attr;
 }
 
 // native Float:L4D2_GetFloatWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr);
 cell_t L4D2_GetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *params)
 {
-	if (g_pWeaponInfoDatabase == NULL)
-	{
+	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	char * weapon = NULL;
-	pContext->LocalToString(params[1], &weapon);
-	int iIndex = g_pWeaponInfoDatabase->Find(weapon);
+	
+	char *pWeapon = NULL;
+	pContext->LocalToString(params[1], &pWeapon);
+	
+	char weaponName[MAX_WEAPON_NAME_LENGTH];
+	if (strncmp(pWeapon, "weapon_", 7)) {
+		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
+	} else {
+		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
+	}
+	
+	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
 
-	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex))
-	{
+	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
+	
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 	
 	float * attr = FloatIdToAttr(pInfo, params[2]);
-	if (attr == NULL)
-	{
+	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+	
 	return sp_ftoc(*attr);
 }
 
 // native L4D2_SetIntWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr, value);
 cell_t L4D2_SetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params)
 {
-	if (g_pWeaponInfoDatabase == NULL)
-	{
+	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	char * weapon = NULL;
-	pContext->LocalToString(params[1], &weapon);
-	int iIndex = g_pWeaponInfoDatabase->Find(weapon);
-
-	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex))
-	{
-	    return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
+	
+	char *pWeapon = NULL;
+	pContext->LocalToString(params[1], &pWeapon);
+	
+	char weaponName[MAX_WEAPON_NAME_LENGTH];
+	if (strncmp(pWeapon, "weapon_", 7)) {
+		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
+	} else {
+		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
+	
+	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
+
+	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
+		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
+	}
+	
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 	
 	int * attr = IntIdToAttr(pInfo, params[2]);
-	if (attr == NULL)
-	{
+	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+	
 	*attr=params[3];
 	return 0;
 }
@@ -225,37 +255,43 @@ cell_t L4D2_SetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params
 // native Float:L4D2_SetFloatWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr, Float:value);
 cell_t L4D2_SetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *params)
 {
-	if (g_pWeaponInfoDatabase == NULL)
-	{
+	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	char * weapon = NULL;
-	pContext->LocalToString(params[1], &weapon);
-	int iIndex = g_pWeaponInfoDatabase->Find(weapon);
-
-	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex))
-	{
-	    return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
+	
+	char *pWeapon = NULL;
+	pContext->LocalToString(params[1], &pWeapon);
+	
+	char weaponName[MAX_WEAPON_NAME_LENGTH];
+	if (strncmp(pWeapon, "weapon_", 7)) {
+		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
+	} else {
+		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
+	
+	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
+
+	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
+		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
+	}
+	
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 	
 	float * attr = FloatIdToAttr(pInfo, params[2]);
-	if (attr == NULL)
-	{
+	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
-	*attr=sp_ctof(params[3]);
 	
+	*attr = sp_ctof(params[3]);
 	return 0;
 }
 
-sp_nativeinfo_t  g_L4DoWeaponNatives[] = 
+sp_nativeinfo_t g_L4DoWeaponNatives[] = 
 {
-	{"L4D2_IsValidWeapon",			L4D2_IsValidWeapon},
-	{"L4D2_GetIntWeaponAttribute",	L4D2_GetIntWeaponAttribute},
+	{"L4D2_IsValidWeapon",				L4D2_IsValidWeapon},
+	{"L4D2_GetIntWeaponAttribute",		L4D2_GetIntWeaponAttribute},
 	{"L4D2_GetFloatWeaponAttribute",	L4D2_GetFloatWeaponAttribute},
-	{"L4D2_SetIntWeaponAttribute",	L4D2_SetIntWeaponAttribute},
+	{"L4D2_SetIntWeaponAttribute",		L4D2_SetIntWeaponAttribute},
 	{"L4D2_SetFloatWeaponAttribute",	L4D2_SetFloatWeaponAttribute},
-	{NULL,										NULL}
+	{NULL,								NULL}
 };
-
