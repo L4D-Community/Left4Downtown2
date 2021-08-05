@@ -690,7 +690,7 @@
 			* Left4Downtown2 patches this function, which will prevent Sourcemod from finding it
 			* That is why the first six bytes are wild cards (five bytes for detour + nop fill the remaining bytes of the instructions)
 			*/
-			"CTerrorPlayer_OnRevived"
+			"CTerrorPlayer::OnRevived"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer9OnRevivedEv"
