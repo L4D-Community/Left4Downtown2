@@ -545,6 +545,17 @@
 			}
 			
 			/*
+			 * CDirector::SwapTeams(void)
+			 */
+			"CDirector::SwapTeams"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CDirector9SwapTeamsEv"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\x53\x56\x8B\xF1\x8B\x8E\x2A\x2A\x2A\x2A\x57\x89\x75\x2A\xC6\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x8B"
+				/* 55 8B EC 81 EC ? ? ? ? 53 56 8B F1 8B 8E ? ? ? ? 57 89 75 ? C6 ? ? ? E8 ? ? ? ? 8B */
+			}
+			
+			/*
 			 * CTerrorPlayer::OnEnterGhostState()
 			 * almost unique string spawnmode_bar has three refs, one ref has strings "zombieClass" and "data"
 			 */

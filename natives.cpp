@@ -34,6 +34,42 @@
 #include "util.h"
 #include "l4d2sdk/constants.h"
 
+//native void L4D2_SwapTeams();
+/*cell_t L4D2_SwapTeams(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+	
+	//CDirector::SwapTeams(void)
+	if (!pWrapper)
+	{
+		REGISTER_NATIVE_ADDR("CDirector::SwapTeams", \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, NULL, NULL, 0));
+	}
+	
+	if (g_pDirector == NULL)
+	{
+		return pContext->ThrowNativeError("Director unsupported or not available; file a bug report");
+	}
+	
+	void *director = *g_pDirector;
+
+	if (director == NULL)
+	{
+		return pContext->ThrowNativeError("Director not available before map is loaded");
+	}
+	
+	unsigned char vstk[sizeof(void *)];
+	unsigned char *vptr = vstk;
+
+	*(void **)vptr = director;
+
+	L4D_DEBUG_LOG("Going to execute CDirector::SwapTeams");
+	pWrapper->Execute(vstk, NULL);
+	L4D_DEBUG_LOG("Invoked CDirector::SwapTeams");
+	
+	return 1;
+}*/
+
 //native void L4D_ReviveSurvivor(int client);
 cell_t L4D_ReviveSurvivor(IPluginContext *pContext, const cell_t *params)
 {
@@ -145,7 +181,7 @@ cell_t L4D2_AreTeamsFlipped(IPluginContext *pContext, const cell_t *params)
 		retInfo.size = sizeof(bool);  //ret value in al on windows, eax on linux
 		retInfo.type = PassType_Basic;
 		
-		REGISTER_NATIVE_ADDR("AreTeamsFlipped", 
+		REGISTER_NATIVE_ADDR("AreTeamsFlipped", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, /*paramInfo*/NULL, /*numparams*/0));
 	}
 	
@@ -354,7 +390,6 @@ cell_t L4D_GetCampaignScores(IPluginContext *pContext, const cell_t *params)
 
 	return 1;
 }
-
 
 // native L4D_LobbyUnreserve()
 cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
@@ -604,7 +639,6 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 	
 	return retbuffer;
 }
-
 
 // CDirector::ResetMobTimer()
 // native L4D_ResetMobTimer()
@@ -1119,7 +1153,7 @@ cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
 	*(QAngle**)vptr = &qangle;
 
 	pWrapper->Execute( vstk, (void*) &entity );
-	return gamehelpers->EntityToBCompatRef( entity );	
+	return gamehelpers->EntityToBCompatRef( entity );
 }
 
 cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
@@ -1190,6 +1224,7 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] = 
 {
+	//{"L4D2_SwapTeams",					L4D2_SwapTeams},
 	{"L4D_ReviveSurvivor",				L4D_ReviveSurvivor},
 	{"L4D_GetHighestFlowSurvivor",		L4D_GetHighestFlowSurvivor},
 	{"L4D2_AreTeamsFlipped",			L4D2_AreTeamsFlipped},
@@ -1199,7 +1234,7 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_RestartScenarioFromVote",		L4D_RestartScenarioFromVote},
 	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
 	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
-	{"L4D_ScavengeBeginRoundSetupTime", L4D_ScavengeBeginRoundSetupTime},
+	{"L4D_ScavengeBeginRoundSetupTime",	L4D_ScavengeBeginRoundSetupTime},
 	{"L4D_GetVersusMaxCompletionScore",	L4D_GetVersusMaxCompletionScore},
 	{"L4D_SetVersusMaxCompletionScore",	L4D_SetVersusMaxCompletionScore},
 	{"L4D_IsFirstMapInScenario",		L4D_IsFirstMapInScenario},
@@ -1217,5 +1252,5 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D2_SpawnTank",					L4D2_SpawnTank},
 	{"L4D2_SpawnWitch",					L4D2_SpawnWitch},
 	{"L4D2_SpawnWitchBride",			L4D2_SpawnWitchBride},
-	{NULL,							NULL}
+	{NULL,								NULL}
 };

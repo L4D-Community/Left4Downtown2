@@ -1,0 +1,92 @@
+import os.path
+
+import typing
+
+if typing.TYPE_CHECKING:
+    from ambuild2.frontend.v2_2.context import BuildContext
+    builder: BuildContext
+
+projectName = 'left4downtown'
+
+project = Extension.HL2Project(builder, projectName + '.ext')
+project.sources += [
+  'extension.cpp',
+  os.path.join(Extension.sm_root, 'public', 'smsdk_ext.cpp'),
+  'natives.cpp',
+  'vglobals.cpp',
+  'l4d2sdk/l4d2calls.cpp',
+  'util.cpp',
+  os.path.join(Extension.sm_root, 'public', 'CDetour', 'detours.cpp'),
+  os.path.join(Extension.sm_root, 'public', 'asm', 'asm.c'),
+  'detours/detour.cpp',
+  'detours/spawn_tank.cpp',
+  'detours/spawn_witch.cpp',
+  'detours/clear_team_scores.cpp',
+  'detours/set_campaign_scores.cpp',
+  'detours/first_survivor_left_safe_area.cpp',
+  'detours/mob_rush_start.cpp',
+  'detours/spawn_it_mob.cpp',
+  'detours/spawn_mob.cpp',
+  'detours/try_offering_tank_bot.cpp',
+  'detours/get_script_value_int.cpp',
+  'detours/get_script_value_float.cpp',
+  'detours/shoved_by_survivor.cpp',
+  'detours/get_crouch_top_speed.cpp',
+  'detours/get_run_top_speed.cpp',
+  'detours/get_walk_top_speed.cpp',
+  'detours/has_configurable_difficulty.cpp',
+  'detours/get_survivor_set.cpp',
+  'detours/fast_get_survivor_set.cpp',
+  'codepatch/patchmanager.cpp',
+  'detours/get_mission_versus_boss_spawning.cpp',
+  'detours/cthrow_activate_ability.cpp',
+  'l4d2sdk/l4d2timers.cpp',
+  'timernatives.cpp',
+  'detours/start_melee_swing.cpp',
+  'weaponnatives.cpp',
+  'meleeweaponnatives.cpp',
+  'directornatives.cpp',
+  'detours/send_in_rescue_vehicle.cpp',
+  'detours/change_finale_stage.cpp',
+  'detours/get_script_value_string.cpp',
+  'detours/end_versus_mode_round.cpp',
+  'detours/select_weighted_sequence.cpp',
+  'detours/spawn_special.cpp',
+  'detours/spawn_witchbride.cpp',
+  'detours/on_revived.cpp',
+  'detours/use_healing_items.cpp',
+  'detours/find_scavenge_item.cpp',
+  'detours/water_move.cpp',
+  'detours/on_stagger.cpp',
+  'detours/terror_weapon_hit.cpp',
+  'detours/get_mission_info.cpp',
+  'detours/shoved_by_pounce_landing.cpp',
+  'detours/replace_tank.cpp',
+  'detours/on_ledgegrabbed.cpp',
+  'detours/inferno_spread.cpp',
+  'l4d2sdk/CBaseEntity.cpp',
+  'detours/choose_victim.cpp',
+  'l4d2sdk/CBaseCombatWeapon.cpp',
+  'l4d2sdk/CBasePlayer.cpp',
+  'l4d2sdk/CTerrorPlayer.cpp',
+  'addons_disabler.cpp'
+]
+
+# sm1.10+
+libudis_folder = os.path.join(Extension.sm_root, 'public', 'libudis86')
+if os.path.isdir(libudis_folder):
+    project.sources += [
+        os.path.join(libudis_folder, 'decode.c'),
+        os.path.join(libudis_folder, 'itab.c'),
+        os.path.join(libudis_folder, 'syn-att.c'),
+        os.path.join(libudis_folder, 'syn-intel.c'),
+        os.path.join(libudis_folder, 'syn.c'),
+        os.path.join(libudis_folder, 'udis86.c'),
+    ]
+
+for sdk_name in Extension.sdks:
+  sdk = Extension.sdks[sdk_name]
+  
+  binary = Extension.HL2Config(project, projectName + '.ext.' + sdk.ext, sdk)
+
+Extension.extensions = builder.Add(project)

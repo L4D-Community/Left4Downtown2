@@ -35,9 +35,6 @@
 #include "iplayerinfo.h"
 #include "vglobals.h"
 #include "util.h"
-#ifdef USE_PLAYERSLOTS_PATCHES
-#include "player_slots.h"
-#endif
 #include "convar_public.h"
 
 #include "codepatch/patchmanager.h"
@@ -49,9 +46,6 @@
 #include "detours/spawn_tank.h"
 #include "detours/clear_team_scores.h"
 #include "detours/set_campaign_scores.h"
-#ifdef USE_PLAYERSLOTS_PATCHES
-#include "detours/server_player_counts.h"
-#endif
 #include "detours/first_survivor_left_safe_area.h"
 #include "detours/get_script_value_int.h"
 #include "detours/get_script_value_float.h"
@@ -158,9 +152,6 @@ extern sp_nativeinfo_t g_L4DoDirectorNatives[];
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
 ConVar g_AddonsEclipse("l4d2_addons_eclipse", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Addons Manager(-1: use addonconfig; 0/1: override addonconfig");
 ConVar g_UnlockMelees("l4d2_unlock_melees", "0", FCVAR_SPONLY|FCVAR_NOTIFY, "1: Unlock all melees, 0: don't (set to 0 if you're experiencing crashes on modes other than versus)");
-#ifdef USE_PLAYERSLOTS_PATCHES
-ConVar g_MaxPlayers("l4d_maxplayers", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Overrides maxplayers with this value");
-#endif
 PatchManager g_PatchManager;
 
 /**
@@ -286,41 +277,8 @@ void Left4Downtown::SDK_OnAllLoaded()
 
 	InitializeValveGlobals();
 
-    g_AddonsEclipse.InstallChangeCallback(::OnAddonsEclipseChanged);
-    AddonsDisabler::AddonsEclipse = g_AddonsEclipse.GetInt();
-
-#ifdef USE_PLAYERSLOTS_PATCHES
-	/*
-		allow more than 8 players in l4d if l4d_maxplayers is not -1
-		also if +maxplayers or -maxplayers is not the default value (8)
-	*/
-	g_MaxPlayers.InstallChangeCallback(::OnMaxPlayersChanged);
-
-	/*
-	read the +-maxplayers from command line
-	*/
-
-	/*commenting out the code below
-	seems to not make it crash during connection to my NFO
-	
-	START HERE
-	*/
-	ICommandLine *cmdLine = CommandLine_Tier0();
-	int maxplayers = -1;
-	L4D_DEBUG_LOG("Command line is: %s", cmdLine->GetCmdLine());
-
-	maxplayers = cmdLine->ParmValue("+maxplayers", -1);
-	L4D_DEBUG_LOG("Command line +maxplayers is: %d", maxplayers);
-
-	if (maxplayers == -1) 
-	{
-		maxplayers = cmdLine->ParmValue("-maxplayers", -1);
-	}
-	/*
-	end here
-	*/
-	PlayerSlots::MaxPlayers = maxplayers;
-#endif
+	g_AddonsEclipse.InstallChangeCallback(::OnAddonsEclipseChanged);
+	AddonsDisabler::AddonsEclipse = g_AddonsEclipse.GetInt();
 
 	/*
 	detour the witch/spawn spawns
@@ -373,9 +331,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	//new style detours that create/destroy the forwards themselves
 	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
 	g_PatchManager.Register(new AutoPatch<Detours::OnEnterGhostState>());
-	#ifdef USE_PLAYERSLOTS_PATCHES
-	g_PatchManager.Register(new AutoPatch<Detours::ServerPlayerCounts>());
-	#endif
 }
 
 void Left4Downtown::SDK_OnUnload()
@@ -386,12 +341,7 @@ void Left4Downtown::SDK_OnUnload()
 	playerhelpers->RemoveClientListener(&g_Left4DowntownTools);
 	playerhelpers->UnregisterCommandTargetProcessor(&g_Left4DowntownTools);
 
-#ifdef USE_PLAYERSLOTS_PATCHES
-	//go back to normal old asm 
-	PlayerSlots::Unpatch();
-#endif
-
-    AddonsDisabler::Unpatch();
+	AddonsDisabler::Unpatch();
 
 	g_PatchManager.UnregisterAll();
 
@@ -462,57 +412,6 @@ bool Left4Downtown::SDK_OnMetamodLoad(SourceMM::ISmmAPI *ismm, char *error, size
 
 	return true;
 }
-#ifdef USE_PLAYERSLOTS_PATCHES
-	/**
-	 * @brief Called when the server is activated.
-	 */
-void Left4Downtown::OnServerActivated(int max_clients)
-{
-	L4D_DEBUG_LOG("Server activated with %d maxclients", max_clients);
-
-	static bool firstTime = true;
-	if (!firstTime)
-	{
-		L4D_DEBUG_LOG("Server activated with %d maxclients (doing nothing)", max_clients);
-		return;
-	}
-	firstTime = false;
-
-	PlayerSlots::MaxClients = max_clients;
-	
-	ConVarPublic *maxPlayersCvar = (ConVarPublic*)&g_MaxPlayers;
-	maxPlayersCvar->m_bHasMax = true;
-	maxPlayersCvar->m_fMaxVal = (float) max_clients;
-	maxPlayersCvar->m_bHasMin  = true;
-	maxPlayersCvar->m_fMinVal = (float) -1;
-
-#if RESTRICT_MAX_PLAYERS_BY_COMMAND_LINE
-	int max_players = PlayerSlots::MaxPlayers;
-
-	if (max_players >= 0)
-	{
-		//dont allow it to be larger than max_clients
-		max_players = max_players <= max_clients ? max_players : max_clients;
-
-		maxPlayersCvar->m_fMaxVal = (float) max_players; 
-
-		//if GSPs set maxplayers to the non-default value
-		//we will patch the code then by default even if l4d_maxplayers is never set
-		//otherwise default is -1 disabled
-		if (DEFAULT_MAX_PLAYERS != max_players)
-		{
-			//by putting only +-maxplayers and never l4d_maxplayers, we set maxplayers +-maxplayers value
-			//by specifiying l4d_maxplayers, we override the +-maxplayers value as long as its <= +-maxplayers
-			g_MaxPlayers.SetValue(max_players);
-
-			static char defaultPlayers[5];
-			snprintf(defaultPlayers, sizeof(defaultPlayers), "%d", max_players);
-			maxPlayersCvar->m_pszDefaultValue = defaultPlayers;
-		}
-	}
-#endif
-}
-#endif
 
 bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 {
