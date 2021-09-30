@@ -34,14 +34,14 @@
 #endif
 #define _l4d2director_included
 
-/** (Left4Dhooks include)
+/** (Left4Dhooks)
  * @brief Swaps the teams in Versus
  * @remarks Some survivors may spawn dead on swapping, seems to be random
  *
  * @noreturn
  */
 // L4D2 only.
-//native void L4D2_SwapTeams();
+native void L4D2_SwapTeams();
 
 /**
  * @brief Returns true when any survivor has left the starting area and true in Versus when the saferoom door automatically opens.

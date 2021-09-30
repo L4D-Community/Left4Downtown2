@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -32,7 +32,7 @@
 #include "get_mission_info.h"
 #include "extension.h"
 
-#define ALL_MELEES	"crowbar;frying_pan;machete;tonfa;baseball_bat;knife;fireaxe;cricket_bat;katana;electric_guitar;golfclub"
+#define ALL_MELEES "fireaxe;frying_pan;machete;baseball_bat;crowbar;cricket_bat;tonfa;katana;electric_guitar;knife;golfclub;shovel;pitchfork"
 
 namespace Detours
 {
@@ -41,13 +41,13 @@ namespace Detours
 		KeyValues *kv = (this->*(GetTrampoline()))();
 		if (g_UnlockMelees.GetBool()) {
 			const char *meleeweapons = kv->GetString("meleeweapons", "N/A");
-			
+
 			if (strcmp(meleeweapons, ALL_MELEES)) {
 				L4D_DEBUG_LOG("CTerrorGameRules::GetMissionInfo() invoked with \"meleeweapons\"=\"%s\", superceding with custom value...", meleeweapons);
 				kv->SetString("meleeweapons", ALL_MELEES);
 			}
 		}
-		
+
 		return kv;
 	}
 };

@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -40,48 +40,48 @@
 #include "codepatch/patchmanager.h"
 #include "codepatch/autopatch.h"
 
-#include "detours/spawn_special.h"
-#include "detours/spawn_witch.h"
-#include "detours/spawn_witchbride.h"
-#include "detours/spawn_tank.h"
+#include "detours/change_finale_stage.h"
+#include "detours/choose_victim.h"
 #include "detours/clear_team_scores.h"
-#include "detours/set_campaign_scores.h"
+#include "detours/cthrow_activate_ability.h"
+#include "detours/end_versus_mode_round.h"
+#include "detours/fast_get_survivor_set.h"
+#include "detours/find_scavenge_item.h"
 #include "detours/first_survivor_left_safe_area.h"
-#include "detours/get_script_value_int.h"
-#include "detours/get_script_value_float.h"
-#include "detours/get_script_value_string.h"
-#include "detours/is_finale.h"
-#include "detours/on_enter_ghost_state.h"
-#include "detours/try_offering_tank_bot.h"
-#include "detours/mob_rush_start.h"
-#include "detours/spawn_it_mob.h"
-#include "detours/spawn_mob.h"
-#include "detours/shoved_by_survivor.h"
 #include "detours/get_crouch_top_speed.h"
+#include "detours/get_mission_info.h"
+#include "detours/get_mission_versus_boss_spawning.h"
 #include "detours/get_run_top_speed.h"
+#include "detours/get_script_value_float.h"
+#include "detours/get_script_value_int.h"
+#include "detours/get_script_value_string.h"
+#include "detours/get_survivor_set.h"
 #include "detours/get_walk_top_speed.h"
 #include "detours/has_configurable_difficulty.h"
-#include "detours/get_survivor_set.h"
-#include "detours/fast_get_survivor_set.h"
-#include "detours/get_mission_versus_boss_spawning.h"
-#include "detours/cthrow_activate_ability.h"
-#include "detours/start_melee_swing.h"
-#include "detours/replace_tank.h"
-#include "detours/use_healing_items.h"
-#include "detours/find_scavenge_item.h"
-#include "detours/send_in_rescue_vehicle.h"
-#include "detours/change_finale_stage.h"
-#include "detours/end_versus_mode_round.h"
-#include "detours/select_weighted_sequence.h"//for SelectTankAttack
-#include "detours/on_revived.h"
-#include "detours/water_move.h"
-#include "detours/on_stagger.h"
-#include "detours/terror_weapon_hit.h"
-#include "detours/get_mission_info.h"
-#include "detours/shoved_by_pounce_landing.h"
-#include "detours/choose_victim.h"
-#include "detours/on_ledgegrabbed.h"
 #include "detours/inferno_spread.h"
+#include "detours/is_finale.h"
+#include "detours/mob_rush_start.h"
+#include "detours/on_enter_ghost_state.h"
+#include "detours/on_ledgegrabbed.h"
+#include "detours/on_revived.h"
+#include "detours/on_stagger.h"
+#include "detours/replace_tank.h"
+#include "detours/select_weighted_sequence.h" //for SelectTankAttack
+#include "detours/send_in_rescue_vehicle.h"
+#include "detours/set_campaign_scores.h"
+#include "detours/shoved_by_pounce_landing.h"
+#include "detours/shoved_by_survivor.h"
+#include "detours/spawn_it_mob.h"
+#include "detours/spawn_mob.h"
+#include "detours/spawn_special.h"
+#include "detours/spawn_tank.h"
+#include "detours/spawn_witch.h"
+#include "detours/spawn_witchbride.h"
+#include "detours/start_melee_swing.h"
+#include "detours/terror_weapon_hit.h"
+#include "detours/try_offering_tank_bot.h"
+#include "detours/use_healing_items.h"
+#include "detours/water_move.h"
 
 #include "addons_disabler.h"
 
@@ -158,7 +158,6 @@ PatchManager g_PatchManager;
  * @file extension.cpp
  * @brief Implement extension code here.
  */
-
 bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 {
 	//only load extension for l4d2
@@ -167,7 +166,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D2");
 		return false;
 	}
-	
+
 	//load sigscans and offsets, etc from our gamedata file
 	char conf_error[255] = "";
 	if (!gameconfs->LoadGameConfigFile(GAMECONFIG_FILE, &g_pGameConf, conf_error, sizeof(conf_error)))
@@ -184,19 +183,19 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	{
 		return false;
 	}
-	
+
 	if (!CBaseEntity::OnLoad(error, maxlength)) {
 		return false;
 	}
-	
+
 	if (!CTerrorPlayer::OnLoad(error, maxlength)) {
 		return false;
 	}
-	
+
 	if (!CBaseCombatWeapon::OnLoad(error, maxlength)) {
 		return false;
 	}
-	
+
 	sharesys->AddDependency(myself, "bintools.ext", true, true);
 	sharesys->RegisterLibrary(myself, "left4downtown2");
 	sharesys->AddNatives(myself, g_L4DoNatives);
@@ -269,7 +268,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 
 	IServer *server = g_pSDKTools->GetIServer();
 	L4D_DEBUG_LOG("Address of IServer is %p", server);
-	//reading out server->GetName() we consistently seem to get (the same?) 
+	//reading out server->GetName() we consistently seem to get (the same?)
 	//garbage characters. this is possibly causing a crash on windows servers
 	//when a player connects. so lets not read the server name :(
 	//L4D_DEBUG_LOG("Server name is %s", server->GetName());
@@ -457,8 +456,8 @@ bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 	info->num_targets = 0;
 
 	max_clients = playerhelpers->GetMaxClients();
-	for (int i = 1; 
-		 i <= max_clients && (cell_t)info->num_targets < info->max_targets; 
+	for (int i = 1;
+		 i <= max_clients && (cell_t)info->num_targets < info->max_targets;
 		 i++)
 	{
 		if ((pPlayer = playerhelpers->GetGamePlayer(i)) == NULL)
@@ -477,7 +476,7 @@ bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 		{
 			continue;
 		}
-		if (playerhelpers->FilterCommandTarget(pAdmin, pPlayer, info->flags) 
+		if (playerhelpers->FilterCommandTarget(pAdmin, pPlayer, info->flags)
 			!= COMMAND_TARGET_VALID)
 		{
 			continue;

@@ -241,6 +241,13 @@ forward Action L4D_OnGetRunTopSpeed(int target, float &retVal);
  */
 forward Action L4D_OnGetWalkTopSpeed(int target, float &retVal);
 
+/** (Left4Dhooks)
+ * @brief Returns if players can control infected.
+ *
+ * @return			True if players can control infected, false otherwise
+ */
+native bool L4D_HasPlayerControlledZombies();
+
 /**
  * @brief Called whenever CTerrorGameRules::HasConfigurableDifficultySetting() is invoked
  * @remarks used to deny/allow difficulty changes in different game modes
@@ -590,6 +597,20 @@ native bool L4D_LobbyIsReserved();
  * @return     The map's max completion distance (map distance score)
  */
 native int L4D_GetVersusMaxCompletionScore();
+
+/** (Left4Dhooks)
+ * @brief To takeover a Survivor bot. First use "ChangeClientTeam" and change them to 0. Then call "L4D_SetHumanSpec" then call "L4D_TakeOverBot".
+ *
+ * @return			True or false
+ */
+native int L4D_SetHumanSpec(int bot, int client);
+
+/** (Left4Dhooks)
+ * @brief To takeover a Survivor bot. First use "ChangeClientTeam" and change them to 0. Then call "L4D_SetHumanSpec" then call "L4D_TakeOverBot".
+ *
+ * @return			True or false
+ */
+native int L4D_TakeOverBot(int client);
 
 /**
  * @brief Sets the max versus completion score for the map
