@@ -10,9 +10,7 @@ folder_list = [
   'addons/sourcemod/extensions',
   'addons/sourcemod/scripting',
   'addons/sourcemod/scripting/include',
-  'addons/sourcemod/gamedata',
-  #'addons/sourcemod/configs',
-  'addons/sourcemod/plugins'
+  'addons/sourcemod/gamedata'
 ]
 
 # Create the distribution folder hierarchy.
@@ -53,22 +51,6 @@ CopyFiles('extra/gamedata', 'addons/sourcemod/gamedata',
   [ 'left4downtown.l4d2.txt' ]
 )
 
-# Config Files
-#CopyFiles('configs', 'addons/sourcemod/configs',
-#  [ 'configfile.cfg',
-#  'otherconfig.cfg,
-#  ]
-#)
-
 # Copy binaries.
 for cxx_task in Extension.extensions:
   builder.AddCopy(cxx_task.binary, folder_map['addons/sourcemod/extensions'])
-
-for smx_file in Extension.smx_files:
-  smx_entry = Extension.smx_files[smx_file]
-  builder.AddCopy(smx_entry, folder_map['addons/sourcemod/plugins'])
-
-# Autoload file
-CopyFiles('extra', 'addons/sourcemod/extensions',
-  [ 'left4downtown.autoload' ]
-)
