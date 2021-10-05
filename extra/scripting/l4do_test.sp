@@ -518,9 +518,9 @@ public Action L4D2_OnSelectTankAttack(int client, int &sequence)
 	return Plugin_Continue;
 }
 
-public Action L4D_OnRevived(int client)
+public void L4D2_OnRevived(int client)
 {
-	DebugPrint("L4D_OnRevived(%d) fired", client);
+	DebugPrint("L4D2_OnRevived(%d) fired", client);
 	return Plugin_Continue;
 }
 

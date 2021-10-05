@@ -383,11 +383,11 @@ forward Action L4D2_OnSelectTankAttack(int client, int &sequence);
  * @brief Called when CTerrorPlayer::OnRevived(void) is invoked
  * @remarks Called post-revive so all data values are post-revive status.
  *
- * @param client   the client that has been revived
+ * @param client	the client that has been revived
  *
- * @noreturn Pl_Handled to override return value, Pl_Continue otherwise.
+ * @noreturn
  */
-forward Action L4D2_OnRevived(int client);
+forward void L4D2_OnRevived(int client);
 
 /**
  * @brief Called when SurvivorBot::UseHealingItems(Action<SurvivorBot> *) is invoked

@@ -236,7 +236,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnEndVersusModeRound_Post = forwards->CreateForward("L4D2_OnEndVersusModeRound_Post", ET_Ignore, 0, /*types*/NULL);
 	g_pFwdOnSelectTankAttack = forwards->CreateForward("L4D2_OnSelectTankAttack", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
-	g_pFwdOnRevived = forwards->CreateForward("L4D_OnRevived", ET_Event, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnRevived = forwards->CreateForward("L4D2_OnRevived", ET_Ignore, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnWaterMove = forwards->CreateForward("L4D2_OnWaterMove", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnPlayerStagger = forwards->CreateForward("L4D2_OnStagger", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnTerrorWeaponHit = forwards->CreateForward("L4D2_OnEntityShoved", ET_Event, 5, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Array, Param_Cell);
