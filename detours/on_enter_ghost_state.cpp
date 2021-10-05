@@ -43,7 +43,7 @@ namespace Detours
 
 		int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
 
-		g_pFrdOnEnterGhostState->PushCell(iClient);
-		g_pFrdOnEnterGhostState->Execute(NULL);
+		g_pFwdOnEnterGhostState->PushCell(iClient);
+		g_pFwdOnEnterGhostState->Execute(NULL);
 	}
 };

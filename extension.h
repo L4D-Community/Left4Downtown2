@@ -157,7 +157,7 @@ extern IForward *g_pFwdOnTryOfferingTankBot;
 extern IForward *g_pFwdOnMobRushStart;
 extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnSpawnMob;
-extern IForward *g_pFrdOnEnterGhostState;
+extern IForward *g_pFwdOnEnterGhostState;
 extern IForward *g_pFwdOnShovedBySurvivor;
 extern IForward *g_pFwdOnGetCrouchTopSpeed;
 extern IForward *g_pFwdOnGetRunTopSpeed;
