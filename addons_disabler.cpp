@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -35,7 +36,7 @@
 
 static void *vanillaModeSig = NULL;
 static patch_t vanillaModeSigRestore;
-    
+
 extern ConVar g_AddonsEclipse;
 
 int AddonsDisabler::AddonsEclipse;
@@ -43,7 +44,7 @@ int AddonsDisabler::AddonsEclipse;
 void AddonsDisabler::Patch()
 {
     L4D_DEBUG_LOG("AddonsDisabler - Patching ...");
-    
+
     bool firstTime = (vanillaModeSig == NULL);
     if (firstTime)
     {
@@ -83,7 +84,7 @@ void OnAddonsEclipseChanged( IConVar *var, const char *pOldValue, float flOldVal
 
     AddonsDisabler::AddonsEclipse = g_AddonsEclipse.GetInt();
     L4D_DEBUG_LOG("CVAR l4d2_addons_eclipse changed to %i...", AddonsDisabler::AddonsEclipse);
-    
+
     if (AddonsDisabler::AddonsEclipse > -1)
     {
         L4D_DEBUG_LOG("Enabling AddonsDisabler patch");
@@ -101,19 +102,19 @@ namespace Detours
     void CBaseServer::OnFillServerInfo(int SVC_ServerInfo)
     {
         cell_t result = Pl_Continue;
-		
-        if (g_pFwdAddonsDisabler && AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig)
+
+        if (AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig)
         {
 			int RetValue = (AddonsDisabler::AddonsEclipse == 1) ? 0 : 1; //for safety
-			
+
             int m_nPlayerSlot = *(int *)((unsigned char *)SVC_ServerInfo + playerSlotOffset);
             IClient *pClient = g_pServer->GetClient(m_nPlayerSlot);
 
             L4D_DEBUG_LOG("ADDONS DISABLER: Eligible client '%s' connected[%s]", pClient->GetClientName(), pClient->GetNetworkIDString());
-            
+
             g_pFwdAddonsDisabler->PushString(pClient->GetNetworkIDString());
             g_pFwdAddonsDisabler->Execute(&result);
-            
+
             /* uint8_t != unsigned char in terms of type */
             uint8_t disableAddons = result == Pl_Handled ? 0 : RetValue;
             memset((unsigned char *)SVC_ServerInfo + disableClientAddonsOffset, disableAddons, sizeof(uint8_t));

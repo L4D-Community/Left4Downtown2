@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -47,6 +48,16 @@ public:
 		register a code patch
 	*/
 	void Register(ICodePatch* patch);
+
+	/*
+		run Patch() on all registered code patches
+	*/
+	void PatchAll();
+
+	/*
+		run Unpatch() on all registered code patches
+	*/
+	void UnpatchAll();
 
 	/*
 		unregister all code patches, calling delete on each

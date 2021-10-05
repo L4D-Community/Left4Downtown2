@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,15 +39,12 @@ namespace Detours
 	{
 		cell_t result = Pl_Continue;
 
-		if (g_pFwdOnPlayerStagger)
-		{
-			cell_t target = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
-			edict_t *pSource = gameents->BaseEntityToEdict(sourceEnt);
+		cell_t target = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
+		edict_t *pSource = gameents->BaseEntityToEdict(sourceEnt);
 
-			g_pFwdOnPlayerStagger->PushCell(target);
-			g_pFwdOnPlayerStagger->PushCell(pSource ? IndexOfEdict(pSource) : 0);
-			g_pFwdOnPlayerStagger->Execute(&result);
-		}
+		g_pFwdOnPlayerStagger->PushCell(target);
+		g_pFwdOnPlayerStagger->PushCell(pSource ? IndexOfEdict(pSource) : 0);
+		g_pFwdOnPlayerStagger->Execute(&result);
 
 		return result == Pl_Handled ? 0 : (this->*(GetTrampoline()))(sourceEnt, sourceDir);
 	}

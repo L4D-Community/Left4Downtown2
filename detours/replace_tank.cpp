@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,16 +39,12 @@ namespace Detours
 	void ReplaceTank::OnReplaceTank(CTerrorPlayer* tank, CTerrorPlayer* newtank)
 	{
 		(this->*(GetTrampoline()))(tank, newtank);
-	
-		if (g_pFwdOnReplaceTank) {
-			int old_tank = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(tank)));
-			int new_tank = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(newtank)));
 
-			g_pFwdOnReplaceTank->PushCell(old_tank);
-			g_pFwdOnReplaceTank->PushCell(new_tank);
-			g_pFwdOnReplaceTank->Execute(NULL);
-		}
+		int old_tank = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(tank)));
+		int new_tank = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(newtank)));
 
-		return;
+		g_pFwdOnReplaceTank->PushCell(old_tank);
+		g_pFwdOnReplaceTank->PushCell(new_tank);
+		g_pFwdOnReplaceTank->Execute(NULL);
 	}
 };

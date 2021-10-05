@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -38,6 +39,38 @@
 void PatchManager::Register(ICodePatch* patch)
 {
 	patchList.push_back(patch);
+}
+
+/*
+	run Patch() on all registered code patches
+*/
+void PatchManager::PatchAll()
+{
+	L4D_DEBUG_LOG("PatchManager::PatchAll()");
+
+	for(PatchList::iterator iter = patchList.begin(); iter != patchList.end(); ++iter)
+	{
+		L4D_DEBUG_LOG("PatchManager added a patch");
+
+		ICodePatch *patch = *iter;
+		patch->Patch();
+	}
+}
+
+/*
+	run Unpatch() on all registered code patches
+*/
+void PatchManager::UnpatchAll()
+{
+	L4D_DEBUG_LOG("PatchManager::UnpatchAll()");
+
+	for(PatchList::iterator iter = patchList.begin(); iter != patchList.end(); ++iter)
+	{
+		L4D_DEBUG_LOG("PatchManager deleted a patch");
+
+		ICodePatch *patch = *iter;
+		patch->Unpatch();
+	}
 }
 
 /*

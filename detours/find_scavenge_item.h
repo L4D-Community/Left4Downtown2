@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -47,6 +48,11 @@ namespace Detours
 	private: //note: implementation of DetourTemplate abstracts
 
 		void* OnFindScavengeItem(float);
+
+		virtual bool OnPatch()
+		{
+			return (g_pFwdOnFindScavengeItem->GetFunctionCount() > 0);
+		}
 
 		// get the signature name (i.e. "FindScavengeItem") from the game conf
 		virtual const char *GetSignatureName()

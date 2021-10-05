@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -37,23 +38,19 @@ namespace Detours
 	CBaseEntity* BossZombiePlayerBotChooseVictim::BossZombiePlayerBotChooseVictimActivate(CBaseEntity* pCurTarget, int i1, CBaseEntity* pEnt)
 	{
 		cell_t result = Pl_Continue;
-		
-		int curTarget = gamehelpers->EntityToBCompatRef(pCurTarget);
-		if (g_pFwdOnChooseVictim) {
-			int specialInfected = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
-			
-			L4D_DEBUG_LOG("L4D2_ChooseVictim(%d, %d) forward has been sent out", specialInfected, gamehelpers->EntityToBCompatRef(pCurTarget));
 
-			g_pFwdOnChooseVictim->PushCell(specialInfected);
-			g_pFwdOnChooseVictim->PushCellByRef(&curTarget);
-			g_pFwdOnChooseVictim->Execute(&result);
-		}
-		
+		int curTarget = gamehelpers->EntityToBCompatRef(pCurTarget);
+		int specialInfected = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
+
+		g_pFwdOnChooseVictim->PushCell(specialInfected);
+		g_pFwdOnChooseVictim->PushCellByRef(&curTarget);
+		g_pFwdOnChooseVictim->Execute(&result);
+
 		if (result == Pl_Handled && curTarget > 0) {
 			CBaseEntity *pNewTarget = gamehelpers->ReferenceToEntity(curTarget);
 			return pNewTarget;
 		}
-		
+
 		return (this->*(GetTrampoline()))(pCurTarget, i1, pEnt);
 	}
 };

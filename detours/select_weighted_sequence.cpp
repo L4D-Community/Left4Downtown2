@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -41,28 +42,24 @@ namespace Detours
 {
 	int SelectWeightedSequence::OnSelectWeightedSequence(int Activity)
 	{
-		//L4D_DEBUG_LOG("CBaseAnimating::SelectWeightedSequence(%d) has been called", Activity);
 		cell_t result = Pl_Continue;
-		int actualSequence;
-		actualSequence = (this->*(GetTrampoline()))(Activity);
+		int actualSequence = (this->*(GetTrampoline()))(Activity);
 
 		if ((Activity != ACT_HULK_THROW) && (Activity != ACT_TANK_OVERHEAD_THROW)
 		&& (Activity != ACT_HULK_ATTACK_LOW) && (Activity != ACT_TERROR_ATTACK_MOVING)) {
 			return actualSequence;
 		}
-		
+
 		int overrideSequence = actualSequence;
-		if (g_pFwdOnSelectTankAttack) {
-			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
-			int client = IndexOfEdict(pEntity);
-			L4D_DEBUG_LOG("L4D2_OnSelectTankAttack(client %d, sequence %d) forward has been sent out", client, overrideSequence);
-			g_pFwdOnSelectTankAttack->PushCell(client);
-			g_pFwdOnSelectTankAttack->PushCellByRef(&overrideSequence);
-			g_pFwdOnSelectTankAttack->Execute(&result);
-		}
+
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		int client = IndexOfEdict(pEntity);
+
+		g_pFwdOnSelectTankAttack->PushCell(client);
+		g_pFwdOnSelectTankAttack->PushCellByRef(&overrideSequence);
+		g_pFwdOnSelectTankAttack->Execute(&result);
 
 		if (result == Pl_Handled) {
-			L4D_DEBUG_LOG("CBaseAnimating::SelectWeightedSequence() return value overriden with %d", overrideSequence);
 			return overrideSequence;
 		}
 

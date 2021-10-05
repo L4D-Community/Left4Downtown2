@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -109,7 +110,7 @@ IForward *g_pFwdOnTryOfferingTankBot = NULL;
 IForward *g_pFwdOnMobRushStart = NULL;
 IForward *g_pFwdOnSpawnITMob = NULL;
 IForward *g_pFwdOnSpawnMob = NULL;
-IForward *g_pFrdOnEnterGhostState = NULL;
+IForward *g_pFwdOnEnterGhostState = NULL;
 IForward *g_pFwdOnShovedBySurvivor = NULL;
 IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward *g_pFwdOnGetRunTopSpeed = NULL;
@@ -218,7 +219,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFrdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
@@ -247,7 +248,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
 	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 
-	playerhelpers->AddClientListener(&g_Left4DowntownTools);
+	plsys->AddPluginsListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	Detour::Init(g_pSM->GetScriptingEngine(), g_pGameConf);
@@ -335,7 +336,7 @@ void Left4Downtown::SDK_OnUnload()
 	gameconfs->CloseGameConfigFile(g_pGameConf);
 	gameconfs->CloseGameConfigFile(g_pGameConfSDKTools);
 
-	playerhelpers->RemoveClientListener(&g_Left4DowntownTools);
+	plsys->RemovePluginsListener(&g_Left4DowntownTools);
 	playerhelpers->UnregisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	AddonsDisabler::Unpatch();
@@ -357,7 +358,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
-	forwards->ReleaseForward(g_pFrdOnEnterGhostState);
+	forwards->ReleaseForward(g_pFwdOnEnterGhostState);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
 	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
@@ -385,6 +386,18 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
 	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
 	forwards->ReleaseForward(g_pFwdInfernoSpread);
+}
+
+void Left4Downtown::OnPluginLoaded(IPlugin *plugin)
+{
+	g_PatchManager.PatchAll();
+}
+
+void Left4Downtown::OnPluginUnloaded(IPlugin *plugin)
+{
+	// TODO: maybe there is a better way? need to rewrite the code ... :)
+	g_PatchManager.UnpatchAll();
+	g_PatchManager.PatchAll();
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

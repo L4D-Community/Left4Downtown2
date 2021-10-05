@@ -40,7 +40,7 @@
 /* Basic information exposed publicly */
 #define SMEXT_CONF_NAME			"Left 4 Downtown 2"
 #define SMEXT_CONF_DESCRIPTION	"Competitive framework support extension for L4D2"
-#define SMEXT_CONF_VERSION		"0.7.3"
+#define SMEXT_CONF_VERSION		"0.7.5"
 #define SMEXT_CONF_AUTHOR		"Downtown1, ProdigySim, Visor, Accelerator, A1m`; minor contrib.: XBetaAlpha, AtomicStryker, xerox8521"
 #define SMEXT_CONF_URL			"https://github.com/A1mDev/Left4Downtown2"
 #define SMEXT_CONF_LOGTAG		"LEFT4DOWNTOWN"
@@ -71,7 +71,7 @@
 //#define SMEXT_ENABLE_LIBSYS
 //#define SMEXT_ENABLE_MENUS
 //#define SMEXT_ENABLE_ADTFACTORY
-//#define SMEXT_ENABLE_PLUGINSYS
+#define SMEXT_ENABLE_PLUGINSYS
 //#define SMEXT_ENABLE_ADMINSYS
 //#define SMEXT_ENABLE_TEXTPARSERS
 //#define SMEXT_ENABLE_USERMSGS

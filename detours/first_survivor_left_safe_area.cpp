@@ -38,28 +38,22 @@ namespace Detours
 	//return 1 if versus, 0 otherwise
 	void *FirstSurvivorLeftSafeArea::OnFirstSurvivorLeftSafeArea(CTerrorPlayer *p)
 	{
-		L4D_DEBUG_LOG("CDirector::OnFirstSurvivorLeftSafeArea has been called");
-
 		cell_t result = Pl_Continue;
-		if (g_pFwdOnFirstSurvivorLeftSafeArea) {
-			int client = 0;
-			/*
-				quite possible the survivor is NULL
-				e.g. CDirectorScavengeMode::ShouldUpdateTeamReadiness
-				calls OnFirstSurvivorLeftSafeArea(NULL)
-			*/
-			if (p != NULL) {
-				client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
-			}
 
-			L4D_DEBUG_LOG("L4D_OnFirstSurvivorLeftSafeArea(%d) forward has been sent out", client);
-			
-			g_pFwdOnFirstSurvivorLeftSafeArea->PushCell(client);
-			g_pFwdOnFirstSurvivorLeftSafeArea->Execute(&result);
+		int client = 0;
+		/*
+			quite possible the survivor is NULL
+			e.g. CDirectorScavengeMode::ShouldUpdateTeamReadiness
+			calls OnFirstSurvivorLeftSafeArea(NULL)
+		*/
+		if (p != NULL) {
+			client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
 		}
 
+		g_pFwdOnFirstSurvivorLeftSafeArea->PushCell(client);
+		g_pFwdOnFirstSurvivorLeftSafeArea->Execute(&result);
+
 		if (result == Pl_Handled) {
-			L4D_DEBUG_LOG("CDirector::OnFirstSurvivorLeftSafeArea will be skipped");
 			return NULL;
 		}
 

@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,21 +37,15 @@ namespace Detours
 {
 	void SpawnITMob::OnSpawnITMob(int amount)
 	{
-		L4D_DEBUG_LOG("ZombieManager::SpawnITMob(%d) has been called", amount);
-
 		cell_t result = Pl_Continue;
-		if (g_pFwdOnSpawnITMob) {
-			L4D_DEBUG_LOG("L4D_OnSpawnITMob() forward has been sent out");
-			g_pFwdOnSpawnITMob->PushCellByRef(&amount);
-			g_pFwdOnSpawnITMob->Execute(&result);
-		}
+
+		g_pFwdOnSpawnITMob->PushCellByRef(&amount);
+		g_pFwdOnSpawnITMob->Execute(&result);
 
 		if (result == Pl_Handled) {
-			L4D_DEBUG_LOG("ZombieManager::SpawnITMob will be skipped");
 			return;
 		}
 
 		(this->*(GetTrampoline()))(amount);
-		return;
 	}
 };
