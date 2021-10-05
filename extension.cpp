@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -247,7 +248,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
 	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 
-	playerhelpers->AddClientListener(&g_Left4DowntownTools);
+	plsys->AddPluginsListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	Detour::Init(g_pSM->GetScriptingEngine(), g_pGameConf);
@@ -335,7 +336,7 @@ void Left4Downtown::SDK_OnUnload()
 	gameconfs->CloseGameConfigFile(g_pGameConf);
 	gameconfs->CloseGameConfigFile(g_pGameConfSDKTools);
 
-	playerhelpers->RemoveClientListener(&g_Left4DowntownTools);
+	plsys->RemovePluginsListener(&g_Left4DowntownTools);
 	playerhelpers->UnregisterCommandTargetProcessor(&g_Left4DowntownTools);
 
 	AddonsDisabler::Unpatch();
@@ -385,6 +386,16 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
 	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
 	forwards->ReleaseForward(g_pFwdInfernoSpread);
+}
+
+void Left4Downtown::OnPluginLoaded(IPlugin *plugin)
+{
+	m_patchManager.PatchAll();
+}
+
+void Left4Downtown::OnPluginUnloaded(IPlugin *plugin)
+{
+	// TODO: Unpatch the hook when the forward is no longer needed
 }
 
 class BaseAccessor : public IConCommandBaseAccessor

@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -240,13 +241,6 @@ forward Action L4D_OnGetRunTopSpeed(int target, float &retVal);
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetWalkTopSpeed(int target, float &retVal);
-
-/** (Left4Dhooks)
- * @brief Returns if players can control infected.
- *
- * @return			True if players can control infected, false otherwise
- */
-native bool L4D_HasPlayerControlledZombies();
 
 /**
  * @brief Called whenever CTerrorGameRules::HasConfigurableDifficultySetting() is invoked
@@ -488,6 +482,13 @@ forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
  * @return 		Pl_Handled to block, Pl_Changed to use overwritten values from plugin, Pl_Continue otherwise
  */
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
+
+/** (Left4Dhooks)
+ * @brief Returns if players can control infected.
+ *
+ * @return			True if players can control infected, false otherwise
+ */
+native bool L4D_HasPlayerControlledZombies();
 
 /**
  * @brief Revives an incapacitated survivor, also from ledge hanging

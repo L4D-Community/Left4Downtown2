@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -43,7 +44,6 @@ namespace Detours
 			const char *meleeweapons = kv->GetString("meleeweapons", "N/A");
 
 			if (strcmp(meleeweapons, ALL_MELEES)) {
-				L4D_DEBUG_LOG("CTerrorGameRules::GetMissionInfo() invoked with \"meleeweapons\"=\"%s\", superceding with custom value...", meleeweapons);
 				kv->SetString("meleeweapons", ALL_MELEES);
 			}
 		}

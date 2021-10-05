@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -64,7 +65,7 @@
  */
 class Left4Downtown :
 	public SDKExtension,
-	public IClientListener,
+	public IPluginsListener,
 	public ICommandTargetProcessor
 {
 public:
@@ -135,6 +136,9 @@ public:
 	 */
 	//virtual bool SDK_OnMetamodPauseChange(bool paused, char *error, size_t maxlength);
 #endif
+public: //IPluginsListener
+	void OnPluginLoaded(IPlugin *plugin);
+	void OnPluginUnloaded(IPlugin *plugin);
 public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
 };

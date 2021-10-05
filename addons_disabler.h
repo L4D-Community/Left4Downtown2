@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator, 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -65,31 +66,30 @@ public:
 
 void OnAddonsEclipseChanged( IConVar *var, const char *pOldValue, float flOldValue );
 
-namespace Detours {
-
-class CBaseServer;
-
-typedef void (CBaseServer::*FillServerInfo)(int a1);
-
-class CBaseServer: public DetourTemplate<FillServerInfo, CBaseServer>
+namespace Detours
 {
-private: //note: implementation of DetourTemplate abstracts
+	class CBaseServer;
 
-    void OnFillServerInfo(int);
+	typedef void (CBaseServer::*FillServerInfo)(int a1);
 
-    // get the signature name from the game conf
-    virtual const char *GetSignatureName()
-    {
-        return "CBaseServer__FillServerInfo";
-    }
+	class CBaseServer: public DetourTemplate<FillServerInfo, CBaseServer>
+	{
+	private: //note: implementation of DetourTemplate abstracts
 
-    //notify our patch system which function should be used as the detour
-    virtual FillServerInfo GetDetour()
-    {
-        return &CBaseServer::OnFillServerInfo;
-    }
-};
+		void OnFillServerInfo(int);
 
+		// get the signature name from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CBaseServer__FillServerInfo";
+		}
+
+		//notify our patch system which function should be used as the detour
+		virtual FillServerInfo GetDetour()
+		{
+			return &CBaseServer::OnFillServerInfo;
+		}
+	};
 };
 #endif
 

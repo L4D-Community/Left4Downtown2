@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,27 +37,19 @@ namespace Detours
 {
 	int HasConfigurableDifficulty::OnHasConfigurableDifficulty()
 	{
-		//L4D_DEBUG_LOG("HasConfigurableDifficulty() has been called");
-
 		int actualInvocationResult = (this->*(GetTrampoline()))();
 
 		int overrideValue = actualInvocationResult;
-		
+
 		cell_t result = Pl_Continue;
-		
-		if (g_pFwdOnHasConfigurableDifficulty) {
-			//L4D_DEBUG_LOG("L4D_OnHasConfigurableDifficulty(return %d) forward has been sent out", target);
-			
-			g_pFwdOnHasConfigurableDifficulty->PushCellByRef(&overrideValue);
-			g_pFwdOnHasConfigurableDifficulty->Execute(&result);
-		}
+
+		g_pFwdOnHasConfigurableDifficulty->PushCellByRef(&overrideValue);
+		g_pFwdOnHasConfigurableDifficulty->Execute(&result);
 
 		if (result == Pl_Handled) {
-			//L4D_DEBUG_LOG("CTerrorGameRules::HasConfigurableDifficulty() return value overriden with %d", overrideValue);
-			
 			return overrideValue;
 		}
-		
+
 		return actualInvocationResult;
 	}
 };

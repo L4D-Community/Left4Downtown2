@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -137,21 +138,23 @@ namespace Detours
 {
 	void *TerrorWeaponHit::OnTerrorWeaponHit(trace_t &trace/* a1 */, const Vector &swingVector/* a2 */, bool firstTime/* a3 */)
 	{
-		L4D_DEBUG_LOG("CTerrorWeapon::OnHit() has been called");
-		
 		//bool firstTime - It seems this bool means that the first ray of the deadstop has hit, because the deadstop has a lot of rays
 		//CBaseEntity* trace.m_pEnt - offset: trace + 76
 		/* there's another check being performed here to see if the current gamemode allows bashing... we don't need it */
-		if (firstTime && trace.m_pEnt) { 
+		if (firstTime && trace.m_pEnt)
+		{
 			CBaseEntity *pOwner = ((CBaseCombatWeapon *)this)->GetOwnerEntity(); //there is already a check if the player is
-			
-			if (pOwner != NULL && g_pFwdOnTerrorWeaponHit) {
+
+			if (pOwner != NULL)
+			{
+				cell_t result = Pl_Continue;
+
 				cell_t ctSwingVector[3] = {sp_ftoc(swingVector[0]), sp_ftoc(swingVector[1]), sp_ftoc(swingVector[2])};
-				
+
 				int iClientIndex = IndexOfEdict(pOwner->edict());
 				int iEntityIndex = IndexOfEdict(trace.m_pEnt->edict());
 				int iWeaponIndex = IndexOfEdict((reinterpret_cast<CBaseEntity *>(this))->edict());
-				
+
 				/*  
 					deadstop check: see if it's going to be versus_shove_hunter_fov_pouncing(true) or versus_shove_hunter_fov(false)
 					often returns 0 when it shouldn't  - either this shit is unreliable, or the game is buggy as fuck
@@ -162,7 +165,7 @@ namespace Detours
 					But we only need players, we will use this check IsPlayer()!
 					It seems that some objects return a true, which means we get garbage in some cases =(
 				*/
-				
+
 				bool IsDeadstop = (trace.m_pEnt->IsPlayer() && ((CTerrorPlayer *)trace.m_pEnt)->IsAttemptingToPounce());
 
 				g_pFwdOnTerrorWeaponHit->PushCell(iClientIndex); // who shoved
@@ -171,20 +174,14 @@ namespace Detours
 				g_pFwdOnTerrorWeaponHit->PushArray(ctSwingVector, 3); // shove angles
 				g_pFwdOnTerrorWeaponHit->PushCell(IsDeadstop); // reliable for high pounces only
 
-				L4D_DEBUG_LOG("L4D2_OnEntityShoved(client: %d, entity: %d, weapon: %d, vector: %f %f %f, bIsHighPounce: %d)", 
-								iClientIndex, iEntityIndex, iWeaponIndex, swingVector[0], swingVector[1], swingVector[2], IsDeadstop);
-								
-				cell_t result = Pl_Continue;
-
 				g_pFwdOnTerrorWeaponHit->Execute(&result);
-				
+
 				if (result == Pl_Handled) {
-					L4D_DEBUG_LOG("CTerrorWeapon::OnHit() will be skipped");
 					return NULL;
 				}
 			}
 		}
-		
+
 		return (this->*(GetTrampoline()))(trace, swingVector, firstTime);
 	}
 };

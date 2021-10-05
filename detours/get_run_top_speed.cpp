@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,31 +37,23 @@ namespace Detours
 {
 	float GetRunTopSpeed::OnGetRunTopSpeed()
 	{
-		//L4D_DEBUG_LOG("CTerrorPlayer::GetRunTopSpeed() has been called");
-
 		float actualInvocationResult = (this->*(GetTrampoline()))();
 
 		float overrideValue = actualInvocationResult;
-		
+
 		cell_t result = Pl_Continue;
-		
-		if (g_pFwdOnGetRunTopSpeed) {
-			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
-			int target = IndexOfEdict(pEntity);
-		
-			//L4D_DEBUG_LOG("L4D_OnGetRunTopSpeed(target %d) forward has been sent out", target);
-			
-			g_pFwdOnGetRunTopSpeed->PushCell(target);
-			g_pFwdOnGetRunTopSpeed->PushFloatByRef(&overrideValue);
-			g_pFwdOnGetRunTopSpeed->Execute(&result);
-		}
+
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		int target = IndexOfEdict(pEntity);
+
+		g_pFwdOnGetRunTopSpeed->PushCell(target);
+		g_pFwdOnGetRunTopSpeed->PushFloatByRef(&overrideValue);
+		g_pFwdOnGetRunTopSpeed->Execute(&result);
 
 		if (result == Pl_Handled) {
-			//L4D_DEBUG_LOG("CTerrorPlayer::GetRunTopSpeed() return value overriden with %d", overrideValue);
-			
 			return overrideValue;
 		}
-		
+
 		return actualInvocationResult;
 	}
 };

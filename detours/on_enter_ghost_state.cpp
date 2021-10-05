@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,23 +37,13 @@ namespace Detours
 {
 	void OnEnterGhostStateDetour::OnEnterGhostState()
 	{
-		L4D_DEBUG_LOG("L4D_OnEnterGhostState() has been called");
-		
 		(this->*(GetTrampoline()))();
-		
+
 		CTerrorPlayer *pPlayer = reinterpret_cast<CTerrorPlayer *>(this);
-		
-		L4D_DEBUG_LOG("L4D_OnEnterGhostState() has been tramped (player = %x)", pPlayer);
 
-		if (g_pFrdOnEnterGhostState) {
-			int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
+		int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
 
-			L4D_DEBUG_LOG("L4D_OnEnterGhostState() forward has been sent out");
-			
-			g_pFrdOnEnterGhostState->PushCell(iClient);
-			g_pFrdOnEnterGhostState->Execute(NULL);
-			
-			L4D_DEBUG_LOG("L4D_OnEnterGhostState() forward has been called");
-		}
+		g_pFrdOnEnterGhostState->PushCell(iClient);
+		g_pFrdOnEnterGhostState->Execute(NULL);
 	}
 };

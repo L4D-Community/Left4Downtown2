@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,28 +37,17 @@ namespace Detours
 {
 	int GetScriptValueInt::OnGetScriptValueInt(const char *key, int defaultValue)
 	{
-		//L4D_DEBUG_LOG("CDirector::GetScriptValue(%s,%d) has been called", key, defaultValue);
-
 		int actualInvocationResult = (this->*(GetTrampoline()))(key, defaultValue);
 
 		int overrideValue = actualInvocationResult;
-		
+
 		cell_t result = Pl_Continue;
-		
-		if (g_pFwdOnGetScriptValueInt) {
-			//L4D_DEBUG_LOG("L4D_OnGetScriptValueInt() forward has been sent out");
-			
-			g_pFwdOnGetScriptValueInt->PushString(key);
-			g_pFwdOnGetScriptValueInt->PushCellByRef(&overrideValue);
-			g_pFwdOnGetScriptValueInt->Execute(&result);
-			
-			//int exec = g_pFwdOnGetScriptValueInt->Execute(&result);
-			//L4D_DEBUG_LOG("L4D_OnGetScriptValueInt() forward result = %d (0 means no error)", exec);
-		}
+
+		g_pFwdOnGetScriptValueInt->PushString(key);
+		g_pFwdOnGetScriptValueInt->PushCellByRef(&overrideValue);
+		g_pFwdOnGetScriptValueInt->Execute(&result);
 
 		if (result == Pl_Handled) {
-			//L4D_DEBUG_LOG("CDirector::OnGetScriptValueInt return value overriden with %d", overrideValue);
-			
 			return overrideValue;
 		}
 

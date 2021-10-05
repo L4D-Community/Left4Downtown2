@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,27 +37,17 @@ namespace Detours
 {
 	float GetScriptValueFloat::OnGetScriptValueFloat(const char *key, float defaultValue)
 	{
-		//L4D_DEBUG_LOG("CDirector::GetScriptValue(%s,%d) has been called", key, defaultValue);
-
 		cell_t result = Pl_Continue;
 
 		float actualInvocationResult = (this->*(GetTrampoline()))(key, defaultValue);
 
 		float overrideValue = actualInvocationResult;
-		if (g_pFwdOnGetScriptValueFloat) {
-			//L4D_DEBUG_LOG("L4D_OnGetScriptValueFloat() forward has been sent out");
-			
-			g_pFwdOnGetScriptValueFloat->PushString(key);
-			g_pFwdOnGetScriptValueFloat->PushFloatByRef(&overrideValue);
-			g_pFwdOnGetScriptValueFloat->Execute(&result);
-			
-			//float exec = g_pFwdOnGetScriptValueFloat->Execute(&result);
-			//L4D_DEBUG_LOG("L4D_OnGetScriptValueFloat() forward result = %d (0 means no error)", exec);
-		}
+
+		g_pFwdOnGetScriptValueFloat->PushString(key);
+		g_pFwdOnGetScriptValueFloat->PushFloatByRef(&overrideValue);
+		g_pFwdOnGetScriptValueFloat->Execute(&result);
 
 		if (result == Pl_Handled) {
-			//L4D_DEBUG_LOG("CDirector::OnGetScriptValueFloat return value overriden with %d", overrideValue);
-			
 			return overrideValue;
 		}
 

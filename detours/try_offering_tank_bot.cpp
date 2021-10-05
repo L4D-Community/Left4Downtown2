@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -36,29 +37,20 @@ namespace Detours
 {
 	void TryOfferingTankBot::OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis)
 	{
-		L4D_DEBUG_LOG("CTerrorPlayer::TryOfferingTankBot has been called");
-
 		cell_t result = Pl_Continue;
 
-		if (g_pFwdOnTryOfferingTankBot) {
-			cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(tank)) : 0;
-			cell_t cellEnterStasis = static_cast<bool>(enterStasis);
-			
-			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot(tank %d, enterStasis %d) forward has been sent out", tank, enterStasis);
-			g_pFwdOnTryOfferingTankBot->PushCell(tankindex);
-			g_pFwdOnTryOfferingTankBot->PushCellByRef(&cellEnterStasis);
-			L4D_DEBUG_LOG("L4D_OnTryOfferingTankBot() forward has been sent out");
-			g_pFwdOnTryOfferingTankBot->Execute(&result);
-			enterStasis = cellEnterStasis != 0;
-		}
+		cell_t tankindex = tank ? IndexOfEdict(gameents->BaseEntityToEdict(tank)) : 0;
+		cell_t cellEnterStasis = static_cast<bool>(enterStasis);
+
+		g_pFwdOnTryOfferingTankBot->PushCell(tankindex);
+		g_pFwdOnTryOfferingTankBot->PushCellByRef(&cellEnterStasis);
+		g_pFwdOnTryOfferingTankBot->Execute(&result);
+		enterStasis = cellEnterStasis != 0;
 
 		if (result == Pl_Handled) {
-			L4D_DEBUG_LOG("CDirector::TryOfferingTankBot will be skipped");
 			return;
 		}
-		
-		L4D_DEBUG_LOG("CTerrorGameRules::SetCampaignScores will be invoked with enterStasis=%d", enterStasis);
+
 		(this->*(GetTrampoline()))(tank, enterStasis);
-		return;
 	}
 };

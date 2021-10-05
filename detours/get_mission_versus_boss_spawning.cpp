@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -34,29 +35,23 @@
 
 namespace Detours
 {
-	int GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, 
-																		float &tank_chance, float &witch_chance, bool &allow_boss_mix)
+	int GetMissionVersusBossSpawning::OnGetMissionVersusBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance, bool &allow_boss_mix)
 	{
-		L4D_DEBUG_LOG("CDirectorVersusMode::GetMissionVersusBossSpawning has been called, %f %f %f %f %d", 
-								spawn_pos_min, spawn_pos_max, 	tank_chance, witch_chance, allow_boss_mix);
-
 		float ov_spawn_pos_min = spawn_pos_min;
 		float ov_spawn_pos_max = spawn_pos_max;
 		float ov_tank_chance = tank_chance;
 		float ov_witch_chance = witch_chance;
 		//bool ov_allow_boss_mix = allow_boss_mix;
-		
+
 		cell_t result = Pl_Continue;
-		if (g_pFwdOnGetMissionVersusBossSpawning) {
-			L4D_DEBUG_LOG("L4D_OnGetMissionVersusBossSpawning forward has been sent out");
-			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_min);
-			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_max);
-			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_tank_chance);
-			g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_witch_chance);
-			//g_pFwdOnGetMissionVersusBossSpawning->PushCellByRef(&ov_allow_boss_mix);
-			g_pFwdOnGetMissionVersusBossSpawning->Execute(&result);
-		}
-		
+
+		g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_min);
+		g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_spawn_pos_max);
+		g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_tank_chance);
+		g_pFwdOnGetMissionVersusBossSpawning->PushFloatByRef(&ov_witch_chance);
+		//g_pFwdOnGetMissionVersusBossSpawning->PushCellByRef(&ov_allow_boss_mix);
+		g_pFwdOnGetMissionVersusBossSpawning->Execute(&result);
+
 		if (result == Pl_Handled) {
 			return 0;
 		} else if (result == Pl_Changed) {
@@ -66,7 +61,7 @@ namespace Detours
 			witch_chance = ov_witch_chance;
 			//allow_boss_mix = ov_allow_boss_mix;
 		}
-		
+
 		return (this->*(GetTrampoline()))(spawn_pos_min, spawn_pos_max, tank_chance, witch_chance, allow_boss_mix);
 	}
 };
