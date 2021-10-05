@@ -29,28 +29,22 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_CBASEABILITY_H_
-#define _INCLUDE_CBASEABILITY_H_
+#ifndef _INCLUDE_CBASECOMBATWEAPON_H_
+#define _INCLUDE_CBASECOMBATWEAPON_H_
 
 #include "extension.h"
-#include "constants.h"
+#include "wrappers/CBasePlayer.h"
+//class CBasePlayer;
 
-class CBaseEntity
+class CBaseCombatWeapon
 {
 public:
 
 	static bool OnLoad(char* error, size_t maxlength);
 	
 	CBaseEntity *GetOwnerEntity();
-	
-	edict_t* edict();
-	
-	bool IsPlayer();
-	
 public:
-
-	static int sendprop_m_hOwnerEntity;
-
+	static int sendprop_m_hOwner;
 };
 
-#endif //_INCLUDE_CBASEABILITY_H_
+#endif //_INCLUDE_CBASECOMBATWEAPON_H_

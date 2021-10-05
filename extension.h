@@ -54,10 +54,10 @@
 #include <icommandline.h>
 #include <iclient.h>
 #include <gametrace.h>
-#include "l4d2sdk/CBaseEntity.h"
-#include "l4d2sdk/CBasePlayer.h"
-#include "l4d2sdk/CBaseCombatWeapon.h"
-#include "l4d2sdk/CTerrorPlayer.h"
+#include "wrappers/CBaseEntity.h"
+#include "wrappers/CBasePlayer.h"
+#include "wrappers/CBaseCombatWeapon.h"
+#include "wrappers/CTerrorPlayer.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.

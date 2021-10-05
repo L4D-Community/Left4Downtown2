@@ -29,22 +29,22 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_CBASECOMBATWEAPON_H_
-#define _INCLUDE_CBASECOMBATWEAPON_H_
+#ifndef _INCLUDE_CBASEPLAYER_H_
+#define _INCLUDE_CBASEPLAYER_H_
 
-#include "extension.h"
-#include "l4d2sdk/CBasePlayer.h"
-//class CBasePlayer;
+#include "l4d2sdk/constants.h"
 
-class CBaseCombatWeapon
+class CBasePlayer
 {
 public:
 
 	static bool OnLoad(char* error, size_t maxlength);
 	
-	CBaseEntity *GetOwnerEntity();
+	L4DTeam GetTeamNumber();
+
 public:
-	static int sendprop_m_hOwner;
+
+	static int sendprop_m_iTeamNum;
 };
 
-#endif //_INCLUDE_CBASECOMBATWEAPON_H_
+#endif //_INCLUDE_CBASEPLAYER_H_

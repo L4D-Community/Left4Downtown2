@@ -33,7 +33,7 @@
 #define _INCLUDE_CMELEEWEAPONINFO_H_
 #include "utlvector.h"
 #include "utlmap.h"
-#include "CBasePlayer.h"
+#include "wrappers/CBasePlayer.h"
 
 // I'm sorry :(
 //class CBasePlayer;

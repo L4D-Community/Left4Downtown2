@@ -48,7 +48,7 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnChangeFinaleStage->GetFunctionCount() > 0);
+			return (g_pFwdOnSpawnMob->GetFunctionCount() > 0);
 		}
 
 		// get the signature name from the game conf

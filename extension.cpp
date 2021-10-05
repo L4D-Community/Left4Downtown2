@@ -36,7 +36,7 @@
 #include "iplayerinfo.h"
 #include "vglobals.h"
 #include "util.h"
-#include "convar_public.h"
+#include "l4d2sdk/convar_public.h"
 
 #include "codepatch/patchmanager.h"
 #include "codepatch/autopatch.h"

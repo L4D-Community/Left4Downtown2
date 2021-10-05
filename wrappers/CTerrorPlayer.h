@@ -29,12 +29,12 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_CTERRORPLAYER_H_
-#define _INCLUDE_CTERRORPLAYER_H_
+#ifndef _INCLUDE_WRAPPERS_H_
+#define _INCLUDE_WRAPPERS_H_
 
 #include "extension.h"
 #include "CBasePlayer.h"
-#include "constants.h"
+#include "l4d2sdk/constants.h"
 
 class CTerrorPlayer:
 	public CBasePlayer
@@ -54,4 +54,4 @@ public:
 	
 };
 
-#endif //_INCLUDE_CTERRORPLAYER_H_
+#endif //_INCLUDE_WRAPPERS_H_

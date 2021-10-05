@@ -29,22 +29,28 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_CBASEPLAYER_H_
-#define _INCLUDE_CBASEPLAYER_H_
+#ifndef _INCLUDE_CBASEABILITY_H_
+#define _INCLUDE_CBASEABILITY_H_
 
-#include "constants.h"
+#include "extension.h"
+#include "l4d2sdk/constants.h"
 
-class CBasePlayer
+class CBaseEntity
 {
 public:
 
 	static bool OnLoad(char* error, size_t maxlength);
 	
-	L4DTeam GetTeamNumber();
-
+	CBaseEntity *GetOwnerEntity();
+	
+	edict_t* edict();
+	
+	bool IsPlayer();
+	
 public:
 
-	static int sendprop_m_iTeamNum;
+	static int sendprop_m_hOwnerEntity;
+
 };
 
-#endif //_INCLUDE_CBASEPLAYER_H_
+#endif //_INCLUDE_CBASEABILITY_H_
