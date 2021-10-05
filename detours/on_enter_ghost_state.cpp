@@ -1,8 +1,8 @@
 /**
  * vim: set ts=4 :
  * =============================================================================
- * Left 4 Downtown 2 SourceMod Extension
- * Copyright (C) 2010 Michael "ProdigySim" Busby
+ * Left 4 Downtown SourceMod Extension
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor; 2021 A1m`;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,16 +29,30 @@
  * Version: $Id$
  */
 
-#ifndef _INCLUDE_L4DOWNTOWN_L4D2CALLS_H_
-#define _INCLUDE_L4DOWNTOWN_L4D2CALLS_H_
+#include "on_enter_ghost_state.h"
+#include "extension.h"
 
-#include <KeyValues.h>
+namespace Detours
+{
+	void OnEnterGhostStateDetour::OnEnterGhostState()
+	{
+		L4D_DEBUG_LOG("L4D_OnEnterGhostState() has been called");
+		
+		(this->*(GetTrampoline()))();
+		
+		CTerrorPlayer *pPlayer = reinterpret_cast<CTerrorPlayer *>(this);
+		
+		L4D_DEBUG_LOG("L4D_OnEnterGhostState() has been tramped (player = %x)", pPlayer);
 
-// Reproduced or wrapped valve calls
+		if (g_pFrdOnEnterGhostState) {
+			int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
 
-// Get The Current Map's Mission KeyValues
-KeyValues *CTerrorGameRules__GetMissionCurrentMap(KeyValues**);
-
-
-#endif // _INCLUDE_L4DOWNTOWN_L4D2CALLS_H_
-
+			L4D_DEBUG_LOG("L4D_OnEnterGhostState() forward has been sent out");
+			
+			g_pFrdOnEnterGhostState->PushCell(iClient);
+			g_pFrdOnEnterGhostState->Execute(NULL);
+			
+			L4D_DEBUG_LOG("L4D_OnEnterGhostState() forward has been called");
+		}
+	}
+};

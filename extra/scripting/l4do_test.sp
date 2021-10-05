@@ -76,7 +76,7 @@ public void OnPluginStart()
 	SearchForFunction("CDirector_IsFinaleEscapeInProgress");
 	SearchForFunction("CTerrorPlayer_CanBecomeGhost");
 
-	SearchForFunction("CTerrorPlayer_OnEnterGhostState");
+	SearchForFunction("OnEnterGhostState");
 	SearchForFunction("CDirector_IsFinale");
 
 	SearchForFunction("TryOfferingTankBot");

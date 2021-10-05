@@ -41,7 +41,7 @@ public:
 
 	static bool OnLoad(char* error, size_t maxlength);
 	
-	CBaseEntity	*GetOwnerEntity();
+	CBaseEntity *GetOwnerEntity();
 	
 	edict_t* edict();
 	
@@ -50,7 +50,7 @@ public:
 public:
 
 	static int sendprop_m_hOwnerEntity;
-	
+
 };
 
 #endif //_INCLUDE_CBASEABILITY_H_

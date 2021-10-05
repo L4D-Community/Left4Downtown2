@@ -59,7 +59,6 @@
 #include "detours/get_walk_top_speed.h"
 #include "detours/has_configurable_difficulty.h"
 #include "detours/inferno_spread.h"
-#include "detours/is_finale.h"
 #include "detours/mob_rush_start.h"
 #include "detours/on_enter_ghost_state.h"
 #include "detours/on_ledgegrabbed.h"
@@ -110,6 +109,7 @@ IForward *g_pFwdOnTryOfferingTankBot = NULL;
 IForward *g_pFwdOnMobRushStart = NULL;
 IForward *g_pFwdOnSpawnITMob = NULL;
 IForward *g_pFwdOnSpawnMob = NULL;
+IForward *g_pFrdOnEnterGhostState = NULL;
 IForward *g_pFwdOnShovedBySurvivor = NULL;
 IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward *g_pFwdOnGetRunTopSpeed = NULL;
@@ -218,6 +218,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	g_pFrdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
@@ -299,6 +300,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::MobRushStart>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnITMob>());
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnMob>());
+	g_PatchManager.Register(new AutoPatch<Detours::OnEnterGhostStateDetour>());
 	g_PatchManager.Register(new AutoPatch<Detours::ShovedBySurvivor>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetCrouchTopSpeed>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetRunTopSpeed>());
@@ -326,10 +328,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::CBaseServer>());
 	g_PatchManager.Register(new AutoPatch<Detours::CLedgeGrabbed>());
 	g_PatchManager.Register(new AutoPatch<Detours::InfernoSpread>());
-
-	//new style detours that create/destroy the forwards themselves
-	g_PatchManager.Register(new AutoPatch<Detours::IsFinale>());
-	g_PatchManager.Register(new AutoPatch<Detours::OnEnterGhostState>());
 }
 
 void Left4Downtown::SDK_OnUnload()
@@ -359,6 +357,7 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
+	forwards->ReleaseForward(g_pFrdOnEnterGhostState);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
 	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
