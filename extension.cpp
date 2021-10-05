@@ -390,7 +390,7 @@ void Left4Downtown::SDK_OnUnload()
 
 void Left4Downtown::OnPluginLoaded(IPlugin *plugin)
 {
-	m_patchManager.PatchAll();
+	g_PatchManager.PatchAll();
 }
 
 void Left4Downtown::OnPluginUnloaded(IPlugin *plugin)
