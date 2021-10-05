@@ -2,6 +2,13 @@
 
 ##Changelog##
 
+###October 5, 2021 :: 0.7.5###
+* Hook only required detours.
+* Code cleanup.
+* Removed unused code & files.
+* Added missing melees to the unlock on all maps.
+* Fixed wrong name 'L4D_OnRevived' changed to 'L4D2_OnRevived'
+
 ###September 30, 2021 :: 0.7.1###
 * Added natives L4D2_SwapTeams(), L4D_SetHumanSpec(), L4D_TakeOverBot(), L4D_HasPlayerControlledZombies().
 * Fixed mistakes in old natives.
