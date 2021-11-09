@@ -1,6 +1,6 @@
 //===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -37,7 +37,7 @@ public:
 
 	// Static data
 	const char					*m_pszDefaultValue;		//this offset 0x20
-	
+
 	// Value
 	// Dynamically allocated
 	char						*m_pszString;			//this offset 0x24
@@ -52,7 +52,7 @@ public:
 	float						m_fMinVal;				//this offset 0x38
 	bool						m_bHasMax;				//this offset 0x3C
 	float						m_fMaxVal;				//this offset 0x40
-	
+
 	// Call this function when ConVar changes
 	FnChangeCallback_t			m_fnChangeCallback;		//this offset 0x44
 };

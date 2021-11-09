@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -36,7 +36,7 @@
 #include "detour_template.h"
 
 namespace Detours
-{	
+{
 	class GetScriptValueInt;
 
 	typedef int (GetScriptValueInt::*GetScriptValueIntFunc)(const char*, int);
@@ -52,10 +52,10 @@ namespace Detours
 			return (g_pFwdOnGetScriptValueInt->GetFunctionCount() > 0);
 		}
 
-		// get the signature name (i.e. "GetScriptValueInt") from the game conf
+		// get the signature name (i.e. "CDirector::GetScriptValueInt") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "CDirector_GetScriptValueInt";
+			return "CDirector::GetScriptValueInt";
 		}
 
 		//notify our patch system which function should be used as the detour

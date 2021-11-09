@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -78,7 +78,7 @@ public:
 	 * @return			True to succeed loading, false to fail.
 	 */
 	virtual bool SDK_OnLoad(char *error, size_t maxlength, bool late);
-	
+
 	/**
 	 * @brief This is called right before the extension is unloaded.
 	 */

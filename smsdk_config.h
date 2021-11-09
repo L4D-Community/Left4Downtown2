@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -40,14 +40,14 @@
 /* Basic information exposed publicly */
 #define SMEXT_CONF_NAME			"Left 4 Downtown 2"
 #define SMEXT_CONF_DESCRIPTION	"Competitive framework support extension for L4D2"
-#define SMEXT_CONF_VERSION		"0.7.6"
+#define SMEXT_CONF_VERSION		"0.7.7"
 #define SMEXT_CONF_AUTHOR		"Downtown1, ProdigySim, Visor, Accelerator, A1m`; minor contrib.: XBetaAlpha, AtomicStryker, xerox8521"
 #define SMEXT_CONF_URL			"https://github.com/A1mDev/Left4Downtown2"
 #define SMEXT_CONF_LOGTAG		"LEFT4DOWNTOWN"
 #define SMEXT_CONF_LICENSE		"GPLv3"
 #define SMEXT_CONF_DATESTRING	__DATE__
 
-/** 
+/**
  * @brief Exposes plugin's main interface.
  */
 #define SMEXT_LINK(name) SDKExtension *g_pExtensionIface = name;

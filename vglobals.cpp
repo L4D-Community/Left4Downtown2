@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -41,7 +41,7 @@ CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore = NULL;
 void InitializeValveGlobals()
 {
 	char *addr = NULL;
-	
+
 	/* g_pDirector */
 	if (!g_pGameConf->GetAddress("CDirector", (void **)&addr) || !addr)
 	{
@@ -50,7 +50,7 @@ void InitializeValveGlobals()
 	}
 	g_pDirector = reinterpret_cast<CDirector **>(addr);
 	L4D_DEBUG_LOG("TheDirector found at: %p", g_pDirector);
-	
+
 	/* g_pZombieManager */
 	if (!g_pGameConf->GetAddress("ZombieManager", (void **)&addr))
 	{
@@ -59,7 +59,7 @@ void InitializeValveGlobals()
 	}
 	g_pZombieManager = addr;
 	L4D_DEBUG_LOG("TheZombieManager found at: %p", g_pZombieManager);
-	
+
 	/* g_pWeaponInfoDatabase */
 	if (!g_pGameConf->GetAddress("WeaponInfoDatabase", (void **)&addr))
 	{
@@ -68,7 +68,7 @@ void InitializeValveGlobals()
 	}
 	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(addr);
 	L4D_DEBUG_LOG("WeaponInfoDatabase found at: %p", g_pWeaponInfoDatabase);
-	
+
 	/* g_pMeleeWeaponInfoStore */
 	if (!g_pGameConf->GetAddress("MeleeWeaponInfoStore", (void **)&addr))
 	{

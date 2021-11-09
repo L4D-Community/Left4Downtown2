@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -53,10 +53,10 @@ namespace Detours
 			return ((g_pFwdOnFirstSurvivorLeftSafeArea->GetFunctionCount() > 0) || (g_pFwdOnEndVersusModeRound->GetFunctionCount() > 0) || (g_pFwdOnEndVersusModeRound_Post->GetFunctionCount() > 0));
 		}
 
-		// get the signature name (i.e. "FirstSurvivorLeftSafeArea") from the game conf
+		// get the signature name (i.e. "CDirector::OnFirstSurvivorLeftSafeArea") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "OnFirstSurvivorLeftSafeArea";
+			return "CDirector::OnFirstSurvivorLeftSafeArea";
 		}
 
 		//notify our patch system which function should be used as the detour

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -35,7 +35,7 @@
 
 #include "detour_template.h"
 
-namespace Detours 
+namespace Detours
 {
 	class TerrorWeaponHit;
 	typedef void * (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
@@ -51,10 +51,10 @@ namespace Detours
 			return (g_pFwdOnTerrorWeaponHit->GetFunctionCount() > 0);
 		}
 
-		// get the signature name from the game conf
+		// get the signature name (i.e. "CTerrorWeapon::OnHit") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "CTerrorWeapon__OnHit";
+			return "CTerrorWeapon::OnHit";
 		}
 
 		//notify our patch system which function should be used as the detour

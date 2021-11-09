@@ -49,58 +49,58 @@ public void OnPluginStart()
 	SearchForOffset("WeaponInfoDatabase"); //fails on Linux
 	SearchForOffset("ValveRejectServerFullFirst");
 
-	SearchForFunction("GetTeamScore");
-	SearchForFunction("SetCampaignScores");
-	SearchForFunction("ClearTeamScores");
-	SearchForFunction("SetReservationCookie");
-	SearchForFunction("TakeOverBot");
-	SearchForFunction("SetHumanSpec");
+	SearchForFunction("CTerrorGameRules::GetTeamScore");
+	SearchForFunction("CTerrorGameRules::SetCampaignScores");
+	SearchForFunction("CTerrorGameRules::ClearTeamScores");
+	SearchForFunction("CBaseServer::SetReservationCookie");
+	SearchForFunction("CTerrorPlayer::TakeOverBot");
+	SearchForFunction("SurvivorBot::SetHumanSpectator");
 
 	SearchForFunction("CDirectorScavengeMode_OnBeginRoundSetupTime");
 	SearchForFunction("CTerrorGameRules_ResetRoundNumber");
 	SearchForFunction("CTerrorGameRules_SetRoundEndTime");
-	SearchForFunction("CDirector_AreWanderersAllowed");
-	SearchForFunction("DirectorMusicBanks_OnRoundStart");
+	SearchForFunction("CDirector::AreWanderersAllowed");
+	SearchForFunction("CDirectorMusicBanks::OnRoundStart");
 
 	SearchForFunction("TheDirector"); //fails on Windows
-	SearchForFunction("RestartScenarioFromVote");
+	SearchForFunction("CDirector::RestartScenarioFromVote");
 
-	SearchForFunction("SpawnTank");
-	SearchForFunction("SpawnWitch");
-	SearchForFunction("SpawnSpecial");
-	SearchForFunction("SpawnWitchBride");
-	SearchForFunction("OnFirstSurvivorLeftSafeArea");
-	SearchForFunction("CDirector_GetScriptValueInt");
-	SearchForFunction("CDirector_GetScriptValueFloat");
-	SearchForFunction("CDirector_GetScriptValueString");
-	SearchForFunction("CDirector_IsFinaleEscapeInProgress");
-	SearchForFunction("CTerrorPlayer_CanBecomeGhost");
+	SearchForFunction("ZombieManager::SpawnTank");
+	SearchForFunction("ZombieManager::SpawnWitch");
+	SearchForFunction("ZombieManager::SpawnSpecial");
+	SearchForFunction("ZombieManager::SpawnWitchBride");
+	SearchForFunction("CDirector::OnFirstSurvivorLeftSafeArea");
+	SearchForFunction("CDirector::GetScriptValueInt");
+	SearchForFunction("CDirector::GetScriptValueFloat");
+	SearchForFunction("CDirector::GetScriptValueFloat");
+	SearchForFunction("CDirector::IsFinaleEscapeInProgress");
+	SearchForFunction("CTerrorPlayer::CanBecomeGhost");
 
-	SearchForFunction("OnEnterGhostState");
+	SearchForFunction("CTerrorPlayer::OnEnterGhostState");
 	SearchForFunction("CDirector_IsFinale");
 
-	SearchForFunction("TryOfferingTankBot");
-	SearchForFunction("OnMobRushStart");
-	SearchForFunction("Zombiemanager_SpawnITMob");
-	SearchForFunction("Zombiemanager_SpawnMob");
+	SearchForFunction("CDirector::TryOfferingTankBot");
+	SearchForFunction("CDirector::OnMobRushStart");
+	SearchForFunction("ZombieManager::SpawnITMob");
+	SearchForFunction("ZombieManager::SpawnMob");
 
-	SearchForFunction("CTerrorPlayer_OnStaggered");
-	SearchForFunction("CTerrorPlayer_OnShovedBySurvivor");
-	SearchForFunction("CTerrorPlayer_GetCrouchTopSpeed");
-	SearchForFunction("CTerrorPlayer_GetRunTopSpeed");
-	SearchForFunction("CTerrorPlayer_GetWalkTopSpeed");
-	SearchForFunction("HasConfigurableDifficulty"); // fails on windows
+	SearchForFunction("CTerrorPlayer::OnStaggered");
+	SearchForFunction("CTerrorPlayer::OnShovedBySurvivor");
+	SearchForFunction("CTerrorPlayer::GetCrouchTopSpeed");
+	SearchForFunction("CTerrorPlayer::GetRunTopSpeed");
+	SearchForFunction("CTerrorPlayer::GetWalkTopSpeed");
+	SearchForFunction("CTerrorGameRules::HasConfigurableDifficultySetting"); // fails on windows
 	SearchForFunction("DifficultyChanged");
-	SearchForFunction("GetSurvivorSet");
-	SearchForFunction("FastGetSurvivorSet");
-	SearchForFunction("GetMissionVersusBossSpawning");
-	SearchForFunction("CThrowActivate");
-	SearchForFunction("StartMeleeSwing");
+	SearchForFunction("CTerrorGameRules::GetSurvivorSet");
+	SearchForFunction("CTerrorGameRules::FastGetSurvivorSet");
+	SearchForFunction("CDirectorVersusMode::GetMissionVersusBossSpawning");
+	SearchForFunction("CThrow::ActivateAbililty");
+	SearchForFunction("CTerrorMeleeWeapon::StartMeleeSwing");
 	SearchForFunction("ReadWeaponDataFromFileForSlot");
-	SearchForFunction("SendInRescueVehicle");
-	SearchForFunction("ChangeFinaleStage");
-	SearchForFunction("EndVersusModeRound");
-	SearchForFunction("SelectWeightedSequence");
+	SearchForFunction("CDirectorScriptedEventManager::SendInRescueVehicle");
+	SearchForFunction("CDirectorScriptedEventManager::ChangeFinaleStage");
+	SearchForFunction("CDirectorVersusMode::EndVersusModeRound");
+	SearchForFunction("CBaseAnimating::SelectWeightedSequence");
 	SearchForFunction("CTerrorPlayer_OnRevived");
 
 	/*
@@ -790,11 +790,11 @@ public Action Command_SetIntMeleeAttr(int client, int args)
 		ReplyToCommand(client, "%s not found in melee database", sWeapon);
 		return Plugin_Handled;
 	}
-	
+
 	GetCmdArg(2, sArgBuf, sizeof(sArgBuf));
 	L4D2IntMeleeWeaponAttributes iAttr = view_as<L4D2IntMeleeWeaponAttributes>(StringToInt(sArgBuf));
 	GetCmdArg(3, sArgBuf, sizeof(sArgBuf));
-	
+
 	int iValue = StringToInt(sArgBuf);
 	ReplyToCommand(client, "%s: Attribute %d was %d", sWeapon, iAttr, L4D2_GetIntMeleeAttribute(iId, iAttr));
 	L4D2_SetIntMeleeAttribute(iId, iAttr, iValue)
@@ -814,13 +814,13 @@ public Action Command_SetFloatMeleeAttr(int client, int args)
 		ReplyToCommand(client, "%s not found in melee database", sWeapon);
 		return Plugin_Handled;
 	}
-	
+
 	GetCmdArg(2, sArgBuf, sizeof(sArgBuf));
 	L4D2FloatMeleeWeaponAttributes iAttr = view_as<L4D2FloatMeleeWeaponAttributes>(StringToInt(sArgBuf));
 	GetCmdArg(3, sArgBuf, sizeof(sArgBuf));
-	
+
 	float fValue = StringToFloat(sArgBuf);
-	
+
 	ReplyToCommand(client, "%s: Attribute %d was %f", sWeapon, iAttr, L4D2_GetFloatMeleeAttribute(iId, iAttr));
 	L4D2_SetFloatMeleeAttribute(iId, iAttr, fValue);
 	ReplyToCommand(client, "%s: Attribute %d is now %f", sWeapon, iAttr, L4D2_GetFloatMeleeAttribute(iId, iAttr));
@@ -839,12 +839,12 @@ public Action Command_SetBoolMeleeAttr(int client, int args)
 		ReplyToCommand(client, "%s not found in melee database", sWeapon);
 		return Plugin_Handled;
 	}
-	
+
 	GetCmdArg(2, argbuf, sizeof(argbuf));
 	L4D2BoolMeleeWeaponAttributes iAttr = view_as<L4D2BoolMeleeWeaponAttributes>(StringToInt(argbuf));
 	GetCmdArg(3, argbuf, sizeof(argbuf));
 	int iValue = StringToInt(argbuf);
-	
+
 	ReplyToCommand(client, "%s: Attribute %d was %d", sWeapon, iAttr, L4D2_GetBoolMeleeAttribute(iId, iAttr));
 	L4D2_SetBoolMeleeAttribute(iId, iAttr, view_as<bool>(iValue));
 	ReplyToCommand(client, "%s: Attribute %d is now %d", sWeapon, iAttr, L4D2_GetBoolMeleeAttribute(iId, iAttr));
@@ -902,11 +902,11 @@ public Action Command_SetFinaleStage(int client, int args)
 	GetCmdArg(1, sBuffer, sizeof(sBuffer));
 	int iFinaleType = StringToInt(sBuffer);
 	strcopy(sBuffer, sizeof(sBuffer), "");
-	
+
 	if (GetCmdArgs() > 1) {
 		GetCmdArg(2, sBuffer, sizeof(sBuffer));
 	}
-	
+
 	ReplyToCommand(client, "Attempting to call CDirectorScriptedEventManager::ChangeFinaleStage(%i, %s)", iFinaleType, sBuffer);
 	passOnChangeFinaleStage = true;
 	L4D2_ChangeFinaleStage(iFinaleType, sBuffer);
@@ -996,7 +996,7 @@ public Action Cmd_SwapTeams(int client, int args)
 {
 	L4D2_SwapTeams();
 	PrintToChat(client, "L4D2_SwapTeams();");
-	
+
 	return Plugin_Handled;
 }
 
@@ -1062,7 +1062,7 @@ stock void L4D_SetRoundEndTime(float fEndTime)
 		if (!PrepSDKCall_SetFromConf(hConf, SDKConf_Signature, "CTerrorGameRules_SetRoundEndTime")) {
 			ThrowError("Failed to read function from game configuration file");
 		}
-		
+
 		PrepSDKCall_AddParameter(SDKType_Float, SDKPass_Plain);
 		hFunc = EndPrepSDKCall();
 
@@ -1094,7 +1094,7 @@ stock void L4D_ResetRoundNumber()
 		if (!PrepSDKCall_SetFromConf(hConf, SDKConf_Signature, "CTerrorGameRules_ResetRoundNumber")) {
 			ThrowError("Failed to read function from game configuration file");
 		}
-		
+
 		hCall = EndPrepSDKCall();
 
 		if (hCall == null) {
@@ -1105,6 +1105,6 @@ stock void L4D_ResetRoundNumber()
 	}
 
 	SDKCall(hCall);
-	
+
 	DebugPrint("CTerrorGameRules::ResetRoundNumber()");
 }

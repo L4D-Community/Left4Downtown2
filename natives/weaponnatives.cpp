@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,7 +28,7 @@
  *
  * Version: $Id$
  */
- 
+
 #include "extension.h"
 #include "vglobals.h"
 
@@ -67,7 +67,7 @@ int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 	if (pInfo == NULL) {
 		return NULL;
 	}
-	
+
 	switch(id) {
 		case L4D2IWA_Damage:
 			return &pInfo->m_iDamage;
@@ -85,7 +85,7 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 	if (pInfo == NULL) {
 		return NULL;
 	}
-	
+
 	switch(id)
 	{
 		case L4D2FWA_MaxPlayerSpeed:
@@ -128,7 +128,7 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 }
 
 /*************************************
-	WeaponInfo Natives 
+	WeaponInfo Natives
 	***********************************/
 // native bool:L4D2_IsValidWeapon(const String:weaponName[]);
 cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
@@ -136,7 +136,7 @@ cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
 	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	
+
 	char *pWeapon = NULL;
 	pContext->LocalToString(params[1], &pWeapon);
 
@@ -146,9 +146,9 @@ cell_t L4D2_IsValidWeapon(IPluginContext *pContext, const cell_t *params)
 	} else {
 		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
-	
+
 	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
-	
+
 	return g_pWeaponInfoDatabase->IsValidIndex(iIndex);
 }
 
@@ -161,22 +161,22 @@ cell_t L4D2_GetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params
 
 	char *pWeapon = NULL;
 	pContext->LocalToString(params[1], &pWeapon);
-	
+
 	char weaponName[MAX_WEAPON_NAME_LENGTH];
 	if (strncmp(pWeapon, "weapon_", 7)) {
 		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
 	} else {
 		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
-	
+
 	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
 
 	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
-	
+
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
-	
+
 	int * attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
@@ -191,30 +191,30 @@ cell_t L4D2_GetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *para
 	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	
+
 	char *pWeapon = NULL;
 	pContext->LocalToString(params[1], &pWeapon);
-	
+
 	char weaponName[MAX_WEAPON_NAME_LENGTH];
 	if (strncmp(pWeapon, "weapon_", 7)) {
 		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
 	} else {
 		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
-	
+
 	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
 
 	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
-	
+
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
-	
+
 	float * attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
-	
+
 	return sp_ftoc(*attr);
 }
 
@@ -224,30 +224,30 @@ cell_t L4D2_SetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params
 	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	
+
 	char *pWeapon = NULL;
 	pContext->LocalToString(params[1], &pWeapon);
-	
+
 	char weaponName[MAX_WEAPON_NAME_LENGTH];
 	if (strncmp(pWeapon, "weapon_", 7)) {
 		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
 	} else {
 		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
-	
+
 	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
 
 	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
-	
+
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
-	
+
 	int * attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
-	
+
 	*attr=params[3];
 	return 0;
 }
@@ -258,35 +258,35 @@ cell_t L4D2_SetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *para
 	if (g_pWeaponInfoDatabase == NULL) {
 		return pContext->ThrowNativeError("WeaponInfoDatabase unavailable or unsupported. File a bug report.");
 	}
-	
+
 	char *pWeapon = NULL;
 	pContext->LocalToString(params[1], &pWeapon);
-	
+
 	char weaponName[MAX_WEAPON_NAME_LENGTH];
 	if (strncmp(pWeapon, "weapon_", 7)) {
 		g_pSM->Format(weaponName, sizeof(weaponName), "weapon_%s", pWeapon);
 	} else {
 		g_pSM->Format(weaponName, sizeof(weaponName), "%s", pWeapon);
 	}
-	
+
 	int iIndex = g_pWeaponInfoDatabase->Find(weaponName);
 
 	if (!g_pWeaponInfoDatabase->IsValidIndex(iIndex)) {
 		return pContext->ThrowNativeError("Invalid weapon name or weapon unavailable");
 	}
-	
+
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
-	
+
 	float * attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
-	
+
 	*attr = sp_ctof(params[3]);
 	return 0;
 }
 
-sp_nativeinfo_t g_L4DoWeaponNatives[] = 
+sp_nativeinfo_t g_L4DoWeaponNatives[] =
 {
 	{"L4D2_IsValidWeapon",				L4D2_IsValidWeapon},
 	{"L4D2_GetIntWeaponAttribute",		L4D2_GetIntWeaponAttribute},

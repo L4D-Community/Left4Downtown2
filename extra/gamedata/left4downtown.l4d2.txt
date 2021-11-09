@@ -35,7 +35,7 @@
 			{
 				"windows"
 				{
-					"signature" "CTerrorPlayer_GiveNamedItem"
+					"signature" "CTerrorPlayer::GiveNamedItem"
 					"read" "340"
 				}
 				"linux"
@@ -48,7 +48,7 @@
 			{
 				"windows"
 				{
-					"signature" "DirectorMusicBanks_OnRoundStart"
+					"signature" "CDirectorMusicBanks::OnRoundStart"
 					"read" "12"
 				}
 				"linux"
@@ -57,6 +57,7 @@
 				}
 			}
 		}
+
 		"Offsets"
 		{
 			/* Offset into CDirector::AreWanderersAllowed */
@@ -115,7 +116,7 @@
 			 * void CTerrorPlayer::OnLedgeGrabbed(CTerrorPlayer *this, const Vector *)
 			 * Search: "%s grabs a ledge - last standing at %s."
 			*/
-			"OnLedgeGrabbed"
+			"CTerrorPlayer::OnLedgeGrabbed"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer14OnLedgeGrabbedERK6Vector"
@@ -126,7 +127,7 @@
 			/* (Left4Dhooks)
 			* CTerrorGameRules::HasPlayerControlledZombies()
 			*/
-			"HasPlayerControlledZombies"
+			"CTerrorGameRules::HasPlayerControlledZombies"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules26HasPlayerControlledZombiesEv"
@@ -141,7 +142,7 @@
 			 * got via CTerrorPlayer::UpdateTeamDesired and its String "CTerrorPlayer::UpdateTeamDesired error "
 			 *
 			*/
-			"AreTeamsFlipped"
+			"CDirector::AreTeamsFlipped"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK9CDirector15AreTeamsFlippedEv"
@@ -152,7 +153,7 @@
 			/*
 			 * CTerrorGameRules::GetVersusCompletion(CTerrorPlayer *)
 			*/
-			"GetVersusCompletionPlayer"
+			"CTerrorGameRules::GetVersusCompletion"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules19GetVersusCompletionEP13CTerrorPlayer"
@@ -168,7 +169,7 @@
 			 * -> showed up near "info_window"
 			 * -> called twice along with another function called twice (CterrorGameRules::UpdateChapterScores)
 			*/
-			"GetTeamScore"
+			"CTerrorGameRules::GetTeamScore"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules12GetTeamScoreEib"
@@ -185,7 +186,7 @@
 			 * -> first call is CTerrorGameRules::SetCampaignScores()
 			 * make sure to double check uniqueness when done
 			*/
-			"SetCampaignScores"
+			"CTerrorGameRules::SetCampaignScores"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules17SetCampaignScoresEii"
@@ -196,7 +197,7 @@
 			/*
 			 * CTerrorGameRules::ClearTeamScores(bool)
 			*/
-			"ClearTeamScores"
+			"CTerrorGameRules::ClearTeamScores"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules15ClearTeamScoresEb"
@@ -208,7 +209,7 @@
 			 * CBaseServer::SetReservationCookie(uint64_t, char*, va_list)
 			 * - clear the reservation by setting a cookie of 0
 			*/
-			"SetReservationCookie"
+			"CBaseServer::SetReservationCookie"
 			{
 				"library"	"engine"
 				"linux"		"@_ZN11CBaseServer20SetReservationCookieEyPKcz"
@@ -223,7 +224,7 @@
 			 * CTerrorPlayer::TakeOverBot
 			 * unique string "[TAKEOVER]: %s (%d) possessed %s"
 			*/
-			"TakeOverBot"
+			"CTerrorPlayer::TakeOverBot"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer11TakeOverBotEb"
@@ -235,11 +236,11 @@
 			 * BossZombiePlayerBot::ChooseVictim(CTerrorPlayer *, int, CBaseCombatCharacter *)
 			 * Unique String: switching to directly visible victim\n
 			*/
-			"BossZombiePlayerBotChooseVictim"
+			"BossZombiePlayerBot::ChooseVictim"
 			{
 				"library"		"server"
-				"windows"		"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x83\x2A\x2A\x2A\x53\x8B\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x56"
 				"linux"			"@_ZN19BossZombiePlayerBot12ChooseVictimEP13CTerrorPlayeriP20CBaseCombatCharacter"
+				"windows"		"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x83\x2A\x2A\x2A\x53\x8B\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x56"
 				/* ? ? ? ? ? ? ? ? ? ? ? 83 ? ? ? 53 8B ? 8B ? ? ? ? ? 8B ? ? ? ? ? 56 */ // Wildcarded for 3rd party plugins
 				/* 55 8B ? 83 ? ? ? ? ? ? ? 83 ? ? ? 53 8B ? 8B ? ? ? ? ? 8B */
 				/* Search: "switching to mobile victim" */
@@ -250,7 +251,7 @@
 			 * Very similar to BossZombiePlayerBot::SetHumanSpectator()
 			 * SurvivorBot version has 5 xref (one of them is CTerrorPlayer::TakeOverBot), BossZombie has just 1 (CTerrorPlayer::TakeOverBot)
 			*/
-			"SetHumanSpec"
+			"SurvivorBot::SetHumanSpectator"
 			{
 				"library"	"server"
 				"linux"		"@_ZN11SurvivorBot17SetHumanSpectatorEP13CTerrorPlayer"
@@ -306,7 +307,7 @@
 			 * *(director + offset) == ptr to CDirectorScavengeMode
 			 * has unique string "AlwaysAllowWanderers"
  			*/
-			"CDirector_AreWanderersAllowed"
+			"CDirector::AreWanderersAllowed"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK9CDirector19AreWanderersAllowedEv"
@@ -318,12 +319,11 @@
 			 * CDirectorMusicBanks::OnRoundStart
 			 * Has unique string "Event.Reveal"
 			*/
-			"DirectorMusicBanks_OnRoundStart"
+			"CDirectorMusicBanks::OnRoundStart"
 			{
 				"library"	"server"
 				"windows"	"\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x84\xC0\x0F"
 				/* 55 8B EC 83 EC ? 56 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 84 C0 0F */
-
 			}
 
 			/* Find the Director/ZombieManager singleton classes */
@@ -371,7 +371,7 @@
 			 * - "NULL Ent '%s' in GiveNamedItem!\n" is unique in thie function
 			 * - There are at least 3 calls using the g_MeleeWeaponInfoStore here--use some brain for offset.
 			*/
-			"CTerrorPlayer_GiveNamedItem"
+			"CTerrorPlayer::GiveNamedItem"
 			{
 				"library"	"server"
 				"windows"	"\x55\x8B\xEC\x81\xEC\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\xC5\x89\x45\xFC\x8B\x45\x14\x53\x8B\x5D\x08"
@@ -385,7 +385,7 @@
 			 * -> has two xref, one is CRestartGameIssue::ExecuteCommand() (exclude the other, CServerGameDLL::ServerHibernationUpdate(), which has string "FCVAR_NEVER_AS_STRING")
 			 * -> Last call in CRestartGameIssue::ExecuteCommand
 			*/
-			"RestartScenarioFromVote"
+			"CDirector::RestartScenarioFromVote"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector23RestartScenarioFromVoteEPKc"
@@ -399,7 +399,7 @@
 			 * Make sure the one you have has like 11 xrefs, 6 from CCommentaryZombieSpawner::InputSpawnZombie
 			 * To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
 			*/
-			"SpawnSpecial"
+			"ZombieManager::SpawnSpecial"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager12SpawnSpecialE15ZombieClassTypeRK6VectorRK6QAngle"
@@ -415,7 +415,7 @@
 			 * To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
 			 * SpawnTank will be called after string "tank"
 			*/
-			"SpawnTank"
+			"ZombieManager::SpawnTank"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager9SpawnTankERK6VectorRK6QAngle"
@@ -423,13 +423,12 @@
 				/* 55 8B EC 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 85 C0 78 ? 8B 0D ? ? ? ? 39 */
 			}
 
-
 			/*
 			 * ZombieManager::ReplaceTank(CTerrorPlayer *, CTerrorPlayer *)
 			 *
 			 * for finding: in CDirector::UpdateTankSpawns, easily findable in graph view from ReplaceWithBot
 			*/
-			"ReplaceTank"
+			"ZombieManager::ReplaceTank"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager11ReplaceTankEP13CTerrorPlayerS1_"
@@ -445,7 +444,7 @@
 			 * To find, look for non-unique string "common_", has three refs, one ref will have strings for all classes, that's CCommentaryZombieSpawner::InputSpawnZombie
 			 * SpawnWitch will be called after string "witch"
 			*/
-			"SpawnWitch"
+			"ZombieManager::SpawnWitch"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager10SpawnWitchERK6VectorRK6QAngle"
@@ -458,7 +457,7 @@
 			 * Has three xref, one is CInfoZombieSpawn::SpawnZombie (shared with SpawnWitch above)
 			 * where SpawnWitch is the third call after string "bride", and SpawnWitchBride is the second call after "bride"
 			*/
-			"SpawnWitchBride"
+			"ZombieManager::SpawnWitchBride"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager15SpawnWitchBrideERK6VectorRK6QAngle"
@@ -485,7 +484,7 @@
 			 *
 			 * string "Allowing spawning - %s left safe area\n"
 			*/
-			"OnFirstSurvivorLeftSafeArea"
+			"CDirector::OnFirstSurvivorLeftSafeArea"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector27OnFirstSurvivorLeftSafeAreaEP13CTerrorPlayer"
@@ -499,7 +498,7 @@
 			 * Find CTerrorPlayer::OnRevived(), then look for string SurvivorMaxIncapacitatedCount
 			 * If you look for string "No conversion from %s to int now\n" you will be one call too deep
 			*/
-			"CDirector_GetScriptValueInt"
+			"CDirector::GetScriptValueInt"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector14GetScriptValueEPKci"
@@ -511,7 +510,7 @@
 			 * CDirector::GetScriptValue(const char*, float)
 			 * Called in CDirector::OnMobRushStart
 			*/
-			"CDirector_GetScriptValueFloat"
+			"CDirector::GetScriptValueFloat"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector14GetScriptValueEPKcf"
@@ -523,7 +522,7 @@
 			 * CDirector::GetScriptValue(const char*, const char*, char*, int)
 			 * unique string "OnChangeFinaleMusic", call right after it
 			*/
-			"CDirector_GetScriptValueString"
+			"CDirector::GetScriptValueFloat"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector14GetScriptValueEPKcS1_Pci"
@@ -536,7 +535,7 @@
 			 * unique string "#L4D_idle_spectator" in CTerrorPlayer::PreThink()
 			 * CDirector::IsFinaleEscapeInProgress is a couple calls before the string, and a couple calls after CountdownTimer::Now
 			*/
-			"CDirector_IsFinaleEscapeInProgress"
+			"CDirector::IsFinaleEscapeInProgress"
 			{
 				"library" 	"server"
 				"linux" 	"@_ZNK9CDirector24IsFinaleEscapeInProgressEv"
@@ -548,7 +547,7 @@
 			 * CTerrorPlayer::CanBecomeGhost(bool areSpawnsDisabled)
 			 * unique string "ghost_spawn_time"
 			*/
-			"CTerrorPlayer_CanBecomeGhost"
+			"CTerrorPlayer::CanBecomeGhost"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer14CanBecomeGhostEb"
@@ -571,7 +570,7 @@
 			 * CTerrorPlayer::OnEnterGhostState()
 			 * almost unique string spawnmode_bar has three refs, one ref has strings "zombieClass" and "data"
 			*/
-			"OnEnterGhostState"
+			"CTerrorPlayer::OnEnterGhostState"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer17OnEnterGhostStateEv"
@@ -594,7 +593,7 @@
 			 * CDirector::TryOfferingTankBot(void)
 			 * unique string "Tank offer: Starting the lottery\n"
 			*/
-			"TryOfferingTankBot"
+			"CDirector::TryOfferingTankBot"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
@@ -607,7 +606,7 @@
 			 *
 			 * find by String: "MobMinSize", its inlined in Windows
 			*/
-			"OnMobRushStart"
+			"CDirector::OnMobRushStart"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector14OnMobRushStartEv"
@@ -620,7 +619,7 @@
 			 *
 			 * search for unique strings with "SpawnITMob"
 			*/
-			"Zombiemanager_SpawnITMob"
+			"ZombieManager::SpawnITMob"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager10SpawnITMobEi"
@@ -634,7 +633,7 @@
 			 *
 			 * search for unique strings with "SpawnMob"
 			*/
-			"Zombiemanager_SpawnMob"
+			"ZombieManager::SpawnMob"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13ZombieManager8SpawnMobEi"
@@ -647,7 +646,7 @@
 			 *
 			 * - string "PlayerShoved" has 3 refs, the one furthest into a function should be this one.
 			*/
-			"CTerrorPlayer_OnStaggered"
+			"CTerrorPlayer::OnStaggered"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer11OnStaggeredEP11CBaseEntityPK6Vector"
@@ -661,7 +660,7 @@
 			 * CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer*, Vector  const&) - used by L4D2 on Special Infected (got melee'd)
 			 * unique string "jockey_ride" in CTerrorPlayer::OnLeptOnSurvivor(), look up for "JockeyZombie.Ride", look up for var_14, CTerrorPlayer::OnShovedBySurvivor is call after that
 			*/
-			"CTerrorPlayer_OnShovedBySurvivor"
+			"CTerrorPlayer::OnShovedBySurvivor"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer18OnShovedBySurvivorEPS_RK6Vector"
@@ -673,7 +672,7 @@
 			 * CTerrorPlayer::GetWalkTopSpeed(void)const
 			 * an xref from GetRunTopSpeed
 			*/
-			"CTerrorPlayer_GetWalkTopSpeed"
+			"CTerrorPlayer::GetWalkTopSpeed"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK13CTerrorPlayer15GetWalkTopSpeedEv"
@@ -686,7 +685,7 @@
 			 *
 			 * - Only references to float value 115.0 (00 00 E6 42) are in this func.
 			*/
-			"CTerrorPlayer_GetRunTopSpeed"
+			"CTerrorPlayer::GetRunTopSpeed"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK13CTerrorPlayer14GetRunTopSpeedEv"
@@ -698,7 +697,7 @@
 			 * CTerrorPlayer::GetCrouchTopSpeed(void)const
 			 * an xref from GetRunTopSpeed
 			*/
-			"CTerrorPlayer_GetCrouchTopSpeed"
+			"CTerrorPlayer::GetCrouchTopSpeed"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK13CTerrorPlayer17GetCrouchTopSpeedEv"
@@ -737,7 +736,7 @@
 			 *
 			 * - Look for string "hasdifficulty"
 			*/
-			"HasConfigurableDifficulty"
+			"CTerrorGameRules::HasConfigurableDifficultySetting"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules32HasConfigurableDifficultySettingEv"
@@ -750,7 +749,7 @@
 			 *
 			 * - string "survivor_set"
 			*/
-			"GetSurvivorSet"
+			"CTerrorGameRules::GetSurvivorSet"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules14GetSurvivorSetEv"
@@ -764,7 +763,7 @@
 			 *
 			 * - Should be 2 calls after "DistToMechanic" in CTerrorPlayer::ModifyOrAppendCriteria
 			*/
-			"FastGetSurvivorSet"
+			"CTerrorGameRules::FastGetSurvivorSet"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules18FastGetSurvivorSetEv"
@@ -777,7 +776,7 @@
 			 *
 			 * - string "versus_boss_spawning" hits in 2 functions: This short func and the much longer InitVersusBossSpawning
 			*/
-			"GetMissionVersusBossSpawning"
+			"CDirectorVersusMode::GetMissionVersusBossSpawning"
 			{
 				"library"	"server"
 				"linux"		"@_ZN19CDirectorVersusMode28GetMissionVersusBossSpawningERfS0_S0_S0_Rb"
@@ -809,7 +808,7 @@
 			 *
 			 * - "HulkZombie.Throw.Fail" has 2 refs in this function. Should be easy to find.
 			*/
-			"CThrowActivate"
+			"CThrow::ActivateAbililty"
 			{
 				"library"	"server"
 				"linux"		"@_ZN6CThrow15ActivateAbilityEv"
@@ -822,7 +821,7 @@
 			 *
 			 * find "melee attack failed - !IsWeaponVisible" in CTerrorWeapon::PrimaryAttack and look for a call (being passed ptr and float) followed by some sse xmm0 calls.
 			*/
-			"StartMeleeSwing"
+			"CTerrorMeleeWeapon::StartMeleeSwing"
 			{
 				"library"	"server"
 				"linux"		"@_ZN18CTerrorMeleeWeapon15StartMeleeSwingEP13CTerrorPlayerb"
@@ -836,7 +835,7 @@
 			 *
 			 * find by String "FinaleEscapeStarted"
 			*/
-			"SendInRescueVehicle"
+			"CDirectorScriptedEventManager::SendInRescueVehicle"
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager19SendInRescueVehicleEv"
@@ -850,7 +849,7 @@
 			 *
 			 * find by String "CHANGEFINALESTAGEOVERRIDE: %s\n"
 			*/
-			"ChangeFinaleStage"
+			"CDirectorScriptedEventManager::ChangeFinaleStage"
 			{
 				"library"	"server"
 				"linux"		"@_ZN29CDirectorScriptedEventManager17ChangeFinaleStageENS_18ScriptedEventStageEPKc"
@@ -865,7 +864,7 @@
 			 *
 			 * find by String "fullscreen_vs_scoreboard", and look for a func which also creates a "scores" kv and sets values for "t1", "t2", "c1", "c2", and "tiebreak"
 			*/
-			"EndVersusModeRound"
+			"CDirectorVersusMode::EndVersusModeRound"
 			{
 				"library"	"server"
 				"linux"		"@_ZN19CDirectorVersusMode18EndVersusModeRoundEb"
@@ -879,7 +878,7 @@
 			 * - Called at the end of CTerrorPlayer::SelectWeightedSequence() (found via string "Hulk_RunAttack1_Gesture")
 			 * NOTE - WARNING - This function should probably be hooked using vtable methods!!!!!!!! DEPRECATE
 			*/
-			"SelectWeightedSequence"
+			"CBaseAnimating::SelectWeightedSequence"
 			{
 				"library"	"server"
 				"linux"		"@_ZN14CBaseAnimating22SelectWeightedSequenceE8Activity"
@@ -906,7 +905,7 @@
 			 * Called by the game when deciding whether the bots should use any healing items
 			 * unique string "Trying to heal a friend"
 			*/
-			"UseHealingItems"
+			"SurvivorBot::UseHealingItems"
 			{
 				"library"	"server"
 				"linux"		"@_ZN11SurvivorBot15UseHealingItemsEP6ActionIS_E"
@@ -922,7 +921,7 @@
 			 * SurvivorBot::ScavengeNearbyItems(Action<SurvivorBot>*) has almost unique string "Scavenging something"
 			 * FindScavengeItem(float) is called with 420.0 (0x43D20000) as its argument
 			*/
-			"FindScavengeItem"
+			"SurvivorBot::FindScavengeItem"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK11SurvivorBot16FindScavengeItemEf"
@@ -933,7 +932,7 @@
 			/*
 			 * CTerrorWeapon::OnHit(CGameTrace &, Vector  const&, bool)
 			*/
-			"CTerrorWeapon__OnHit"
+			"CTerrorWeapon::OnHit"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorWeapon5OnHitER10CGameTraceRK6Vectorb"
@@ -956,7 +955,7 @@
 			/*
 			 * CBasePlayer::WaterMove(void)
 			*/
-			"WaterMove"
+			"CBasePlayer::WaterMove"
 			{
 				"library"	"server"
 				"linux"		"@_ZN11CBasePlayer9WaterMoveEv"
@@ -966,7 +965,7 @@
 			/*
 			 * KeyValues *CTerrorGameRules::GetMissionInfo(void)
 			*/
-			"CTerrorGameRules__GetMissionInfo"
+			"CTerrorGameRules::GetMissionInfo"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules14GetMissionInfoEv"
@@ -976,7 +975,7 @@
 			/*
 			 * CTerrorPlayer::OnShovedByPounceLanding(CTerrorPlayer*)
 			*/
-			"CTerrorPlayer__OnShovedByPounceLanding"
+			"CTerrorPlayer::OnShovedByPounceLanding"
 			{
 				"library"	"server"
 				"linux"		"@_ZN13CTerrorPlayer23OnShovedByPounceLandingEPS_b"
@@ -994,7 +993,7 @@
 			/*
 			 * CBaseServer::FillServerInfo(SVC_ServerInfo *)
 			*/
-			"CBaseServer__FillServerInfo"
+			"CBaseServer::FillServerInfo"
 			{
 				"library"	"engine"
 				"linux"		"@_ZN11CBaseServer14FillServerInfoER14SVC_ServerInfo"
@@ -1029,7 +1028,7 @@
 			 * is a First map.
 			 * Called from CDirector::OnEndScenario, look near string "vs_shutting_down", up to case 7
 			*/
-			"IsFirstMapInScenario"
+			"CDirector::IsFirstMapInScenario"
 			{
 				"library"	"server"
 				"linux"		"@_ZNK9CDirector20IsFirstMapInScenarioEv"
@@ -1042,7 +1041,7 @@
 			 * is a Final(e) map.
 			 * Called from CDirectorVersusMode::EndVersusModeRound(), look near string "versus_match_finished"
 			*/
-			"IsMissionFinalMap"
+			"CTerrorGameRules::IsMissionFinalMap"
 			{
 				"library"	"server"
 				"linux"		"@_ZN16CTerrorGameRules17IsMissionFinalMapEv"
@@ -1058,7 +1057,7 @@
 			 * - Find it through only xref, which is setting up ScriptDesc structures: string "Trigger a mob as soon as possible when"
 			 * - If you go past the first call, you should hit unique bytes in sig making
 			*/
-			"ResetMobTimer"
+			"CDirector::ResetMobTimer"
 			{
 				"library"	"server"
 				"linux"		"@_ZN9CDirector13ResetMobTimerEv"
@@ -1074,7 +1073,7 @@
 			 * - Find "Going to intermission...\n" in CGameRules::GoToIntermission
 			 * - Last call in the func
 			*/
-			"NotifyNetworkStateChanged"
+			"CGameRulesProxy::NotifyNetworkStateChanged"
 			{
 				"library"	"server"
 				"linux"		"@_ZN15CGameRulesProxy25NotifyNetworkStateChangedEv"

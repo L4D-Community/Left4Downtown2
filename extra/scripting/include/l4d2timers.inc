@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -29,7 +29,7 @@
  *
  * Version: $Id$
  */
- 
+
  #if defined _l4d2timers_included
   #endinput
 #endif
@@ -61,35 +61,35 @@ enum L4D2IntervalTimer
 /**
  * @brief Resets a given CountdownTimer (start again with same duration)
  * @remarks Equivalent to Start(timer, GetCountdownDuration(timer))
- * 
+ *
  * @param timer 		CountdownTimer to reset
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_CTimerReset(L4D2CountdownTimer timer);
 
 /**
  * @brief Starts a given CountdownTimer with a given duration
  * @remarks This sets a new duration and sets up the end timestamp
- * 
+ *
  * @param timer 		CountdownTimer to start
  * @param duration		Duration for the timer to use
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_CTimerStart(L4D2CountdownTimer timer, float duration);
 
 /**
  * @brief Invalidates a given CountdownTimer (Timer essentially does not run)
  * @remarks Sets the timestamp to -1.0f
- * 
+ *
  * @param timer 		CountdownTimer to Invalidate
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_CTimerInvalidate(L4D2CountdownTimer timer);
 
 /**
  * @brief Tells if a given CountdownTimer has started
  * @remarks Checks to see if the end timestamp is greater than 0.0f
- * 
+ *
  * @param timer 		CountdownTimer to check
  * @return 				true if timer has started, false if timer is not started/invalid.
  */
@@ -98,7 +98,7 @@ native bool L4D2_CTimerHasStarted(L4D2CountdownTimer timer);
 /**
  * @brief Tells if a given CountdownTimer is elapsed
  * @remarks If a timer is "up," e.g duration has passed since Start(), this returns true;
- * 
+ *
  * @param timer 		CountdownTimer to check
  * @return 				true if timer has elapsed or timer invalid/not started, false otherwise
  */
@@ -107,7 +107,7 @@ native bool L4D2_CTimerIsElapsed(L4D2CountdownTimer timer);
 /**
  * @brief Gets elapsed time of a given CountdownTimer, from the timed it was Start()ed
  * @remarks Value is (Now() - timestamp) + duration
- * 
+ *
  * @param timer 		CountdownTimer to get elapsed time of
  * @return 				Float amount of time since timer started
  */
@@ -116,7 +116,7 @@ native float L4D2_CTimerGetElapsedTime(L4D2CountdownTimer timer);
 /**
  * @brief Gets remaining time on a given CountdownTimer
  * @remarks Value is (timestamp - Now())
- * 
+ *
  * @param timer 		CountdownTimer to get remaining time of
  * @return 				Float amount of time remaining on the timer
  */
@@ -125,47 +125,47 @@ native float L4D2_CTimerGetRemainingTime(L4D2CountdownTimer timer);
 /**
  * @brief Gets the duration of a given CountdownTimer
  * @remarks Value is (timestamp > 0.0f ? duration : 0.0f)
- * 
+ *
  * @param timer 		CountdownTimer to get duration of
  * @return 				0.0 for invalid/not started timers, timer duration otherwise.
  */
 native float L4D2_CTimerGetCountdownDuration(L4D2CountdownTimer timer);
 
 /*************************************
-	IntervalTimer Natives 
+	IntervalTimer Natives
 	***********************************/
 
 /**
  * @brief Starts a given IntervalTimer
  * @remarks Just sets timestamp = Now(), so counting starts from now
- * 
+ *
  * @param timer 		IntervalTimer to start
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_ITimerStart(L4D2IntervalTimer timer);
 
 /**
  * @brief Invalidates a given IntervalTimer
  * @remarks Just sets timestamp = -1.0f
- * 
+ *
  * @param timer 		IntervalTimer to Invalidate
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_ITimerInvalidate(L4D2IntervalTimer timer);
 
 /**
  * @brief Tells whether a given IntervalTimer has started
  * @remarks Checks to see if timestamp > 0.0f
- * 
+ *
  * @param timer 		IntervalTimer to check
  * @return 				true if timer is started, false if it is invalid/not started
  */
 native bool L4D2_ITimerHasStarted(L4D2IntervalTimer timer);
-	
+
 /**
  * @brief Gets the elapsed time of a given IntervalTimer
  * @remarks Value is Now() - Timestamp
- * 
+ *
  * @param timer 		IntervalTimer to get elapsed time of
  * @return				Elapsed time if timer started and valid, 99999.9f otherwise
  */

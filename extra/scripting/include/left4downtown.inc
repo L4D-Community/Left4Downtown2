@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -73,16 +73,16 @@ forward Action L4D_OnSpawnWitchBride(const float vecOrigin[3], const float vecAn
  * @param zombieClass	Zombie class that will be spawned.
  * @param vector		Vector coordinate where special will be spawned
  * @param qangle		QAngle where spcial will be facing
- * @return 				Pl_Handled to block special from spawning, 
+ * @return 				Pl_Handled to block special from spawning,
  * 				Pl_Changed to change the zombie class type to spawn, Pl_Continue otherwise.
  */
 forward Action L4D_OnSpawnSpecial(int &zombieClass, const float vecOrigin[3], const float vecAngles[3]);
 
 /**
  * @brief Called whenever CTerrorGameRules::ClearTeamScores(bool) is invoked
- * @remarks 	This resets the map score at the beginning of a map, and by checking 
+ * @remarks 	This resets the map score at the beginning of a map, and by checking
  *                the campaign scores on a small timer you can see if they were reset as well.
- * 
+ *
  * @param newCampaign  if true then this is a new campaign, if false a new chapter
  * @return 		Pl_Handled to block scores from being cleared, Pl_Continue otherwise.
  */
@@ -91,7 +91,7 @@ forward Action L4D_OnClearTeamScores(bool newCampaign);
 /**
  * @brief Called whenever CTerrorGameRules::SetCampaignScores(int,int) is invoked
  * @remarks The campaign scores are updated after the 2nd round is completed
- * 
+ *
  * @param scoreA  score of logical team A
  * @param scoreB  score of logical team B
  * @return 		Pl_Handled to block campaign scores from being set, Pl_Continue otherwise.
@@ -102,9 +102,9 @@ forward Action L4D_OnSetCampaignScores(int &scoreA, int &scoreB);
  * @brief Called whenever CDirector::OnFirstSurvivorLeftSafeArea is invoked
  * @remarks A versus round is started when survivors leave the safe room, or force started
  *           after 90 seconds regardless.
- * 
+ *
  * @param client  the survivor that left the safe area first
- * 
+ *
  * @return 		Pl_Handled to block round from being started, Pl_Continue otherwise.
  */
 forward Action L4D_OnFirstSurvivorLeftSafeArea(int client);
@@ -112,10 +112,10 @@ forward Action L4D_OnFirstSurvivorLeftSafeArea(int client);
 /**
  * @brief Called whenever CDirector::GetScriptValue(const char*, int) is invoked
  * @remarks A script value is map specific
- * 
+ *
  * @param key     the script's key name
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetScriptValueInt(const char[] key, int &retVal);
@@ -123,10 +123,10 @@ forward Action L4D_OnGetScriptValueInt(const char[] key, int &retVal);
 /**
  * @brief Called whenever CDirector::GetScriptValue(const char*, float) is invoked
  * @remarks A script value is map specific
- * 
+ *
  * @param key     the script's key name
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetScriptValueFloat(const char[] key, float &retVal);
@@ -134,11 +134,11 @@ forward Action L4D_OnGetScriptValueFloat(const char[] key, float &retVal);
 /**
  * @brief Called whenever CDirector::GetScriptValue(const char*, const char*, char*, int) is invoked
  * @remarks A script value is map specific
- * 
+ *
  * @param key     	  the script's key name
  * @param defaultVal  default key return, usually empty
  * @param retVal	  returned String
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetScriptValueString(const char[] key, const char[] defaultVal, char retVal[128]);
@@ -146,7 +146,7 @@ forward Action L4D_OnGetScriptValueString(const char[] key, const char[] default
 /**
  * @brief Called whenever CTerrorPlayer::OnEnterGhostState(CTerrorPlayer*) is invoked
  * @remarks This happens when a player enters ghost mode (or in finales auto-materialized)
- * 
+ *
  * @param client  the client that has entered ghost mode
  */
 forward void L4D_OnEnterGhostState(int client);
@@ -163,7 +163,7 @@ forward void L4D_OnReplaceTank(int tank, int newtank);
 /**
  * @brief Called whenever CDirector::TryOfferingTankBot is invoked
  * @remarks Is used for displaying the "X gets Tank" window and transferring Tank control
- * 
+ *
  * @return 		Pl_Handled to block window from showing and to keep Tank Bot, Pl_Continue otherwise
  */
 forward Action L4D_OnTryOfferingTankBot(int tank_index, bool &enterStasis);
@@ -173,7 +173,7 @@ forward Action L4D_OnTryOfferingTankBot(int tank_index, bool &enterStasis);
  * @remarks called on random hordes, mini- and finale hordes, and boomer hordes, causes Zombies to attack
  *           Not called on "z_spawn mob", hook the console command and check arguments to catch plugin mobs
  *           This function is used to reset the Director's natural horde timer
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnMobRushStart();
@@ -181,21 +181,21 @@ forward Action L4D_OnMobRushStart();
 /**
  * @brief Called whenever ZombieManager::SpawnITMob(int) is invoked
  * @remarks called on boomer hordes, increases Zombie Spawn Queue
- * 
+ *
  * @param amount	Amount of Zombies to add to Queue
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnSpawnITMob(int &amount);
 
 /**
  * @brief Called whenever ZombieManager::SpawnMob(int) is invoked
- * @remarks called on natural hordes & z_spawn mob, increases Zombie Spawn 
+ * @remarks called on natural hordes & z_spawn mob, increases Zombie Spawn
  *           Queue, triggers player OnMobSpawned (vocalizations), sets horde
  *           direction, and plays horde music.
- * 
+ *
  * @param amount	Amount of Zombies to add to Queue
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnSpawnMob(int &amount);
@@ -217,7 +217,7 @@ forward Action L4D_OnShovedBySurvivor(int client, int victim, const float vecDir
  *
  * @param target	the client that its being called on (not changible)
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetCrouchTopSpeed(int target, float &retVal);
@@ -227,7 +227,7 @@ forward Action L4D_OnGetCrouchTopSpeed(int target, float &retVal);
  *
  * @param target	the client that its being called on (not changible)
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetRunTopSpeed(int target, float &retVal);
@@ -237,7 +237,7 @@ forward Action L4D_OnGetRunTopSpeed(int target, float &retVal);
  *
  * @param target	the client that its being called on (not changible)
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetWalkTopSpeed(int target, float &retVal);
@@ -247,7 +247,7 @@ forward Action L4D_OnGetWalkTopSpeed(int target, float &retVal);
  * @remarks used to deny/allow difficulty changes in different game modes
  *
  * @param retVal  what to override the return value with. 1 to allow difficulty configuration, 0 to deny.
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnHasConfigurableDifficulty(int &retVal);
@@ -256,7 +256,7 @@ forward Action L4D_OnHasConfigurableDifficulty(int &retVal);
  * @brief Called whenever CTerrorGameRules::GetSurvivorSet(void) is invoked
  *
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnGetSurvivorSet(int &retVal);
@@ -265,7 +265,7 @@ forward Action L4D_OnGetSurvivorSet(int &retVal);
  * @brief Called whenever CTerrorGameRules::FastGetSurvivorSet(void) is invoked
  *
  * @param retVal  what to override the return value with
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D_OnFastGetSurvivorSet(int &retVal);
@@ -278,7 +278,7 @@ forward Action L4D_OnFastGetSurvivorSet(int &retVal);
  * @param spawn_pos_max		Maximum spawn position (perfect of flow distance) for bosses
  * @param tank_chance		Chance for a tank to spawn on this map
  * @param witch_chance		Chance for a witch to spawn on this map
- * 
+ *
  * @return 		Pl_Handled to block reading map data, Pl_Changed to use overwritten values from plugin, Pl_Continue to continue to read from mission data.
  */
 forward Action L4D_OnGetMissionVSBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance);
@@ -289,7 +289,7 @@ forward Action L4D_OnGetMissionVSBossSpawning(float &spawn_pos_min, float &spawn
  *			keep the tank from throwing a rock.
  *
  * @param ability	ability_throw entity index
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnCThrowActivate(int ability);
@@ -297,7 +297,7 @@ forward Action L4D_OnCThrowActivate(int ability);
 /**
  * @brief Called whenever InfectedShoved::OnShoved(Infected *, CBaseEntity *) is invoked
  * @remarks Called when common Infected are about to get shoved
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnInfectedShoved(int infected, int entity);
@@ -306,7 +306,7 @@ forward Action L4D_OnInfectedShoved(int infected, int entity);
  * @brief Called whenever CTerrorMeleeWeapon::StartMeleeSwing(CTerrorPlayer *, bool) is invoked
  * @remarks Called when a player uses his melee Weapons primary attack. This is before the game
  *			reads the melee weapon data (model etc) and decides if he CAN attack at all.
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D_OnStartMeleeSwing(int client, bool boolean);
@@ -315,7 +315,7 @@ forward Action L4D_OnStartMeleeSwing(int client, bool boolean);
  * @brief Called whenever CDirectorScriptedEventManager::SendInRescueVehicle(void) is invoked
  * @remarks Called when the last Finale stage is reached and the Rescue Means becomes 'available'.
  *			Take note this forward WILL fire upon using the native of the same function.
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D2_OnSendInRescueVehicle();
@@ -326,7 +326,7 @@ forward Action L4D2_OnSendInRescueVehicle();
  * @param FinaleStageType	integer value
  * @remarks some values for FinaleStageType: 1 - Finale Started; 6 - Rescue Vehicle Ready; 7 - Zombie Hordes; 8 - Tank; 10 - Combat Respite (nothing spawns)
  * @remarks SendInRescueVehicle does not depend on Finale Stage being 6, that only signals endless Hordes/Tanks
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D2_OnChangeFinaleStage(int &finaleType, const char[] arg);
@@ -337,7 +337,7 @@ forward Action L4D2_OnChangeFinaleStage(int &finaleType, const char[] arg);
  * @param countSurvivors	True if the survival multiplier count needs to be nonzero. I guess.
  * @remarks Not sure what bool does exactly yet. Just monitor it. If true, survivors will be counted for multiplier. If false, survival multiplier will be set to 0.
  * @remarks A lot of Score calculations happen on this function, and the round-end scoreboard comes up doing this. Don't block unless you're sure you can reproduce this logic.
- * 
+ *
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D2_OnEndVersusModeRound(bool countSurvivors);
@@ -345,7 +345,7 @@ forward Action L4D2_OnEndVersusModeRound(bool countSurvivors);
 /**
  * @brief Called after CDirectorVersusMode::EndVersusModeRound(bool)
  * @remarks Called after all score calculations inside CDirectorVersusMode::EndVersusModeRound(bool). This good forward to replace standard "round_end" hook.
- * 
+ *
  * @return 		noreturn
  */
 forward void L4D2_OnEndVersusModeRound_Post();
@@ -368,7 +368,7 @@ forward Action L4D_OnLedgeGrabbed(int client);
  * @param sequence  current selected sequence for attack, option to override the return value with it
  * @remarks	sequences(punches): 40(uppercut), 43(right hook), 45(left hook), 46 and 47 (pounding the ground)
  * @remarks	sequences(throws): 48(undercut), 49(1handed overhand), 50(throw from the hip), 51(2handed overhand)
- * 
+ *
  * @return 		Pl_Handled to override return value, Pl_Continue otherwise.
  */
 forward Action L4D2_OnSelectTankAttack(int client, int &sequence);
@@ -519,10 +519,10 @@ native int L4D_GetHighestFlowSurvivor();
 /**
  * @brief Get the current campaign scores stored in the Director
  * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
- * 
+ *
  * @deprecated This will set the scores to -1 for both sides on L4D2,
  *               this function is no longer supported.
- * 
+ *
  * @param scoreA  score of logical team A
  * @param scoreB  score of logical team B
  * @return 		1 always
@@ -545,10 +545,10 @@ native bool L4D2_AreTeamsFlipped();
  *
  * @deprecated This function can be called through SDKTools using CTerrorGameRules,
  *          and so you should switch off to using SDKTools instead of this native.
- * 
+ *
  * @param logical_team  0 for A, 1 for B
  * @param campaign_score  true to get campaign score instead of map score
- * @return 		the logical team's map score 
+ * @return 		the logical team's map score
  *                      or -1 if the team hasn't played the round yet,
  *                or the team's campaign score if campaign_score = true
  */
@@ -564,7 +564,7 @@ native void L4D_ScavengeBeginRoundSetupTime();
 /**
  * @brief Restarts the round, switching the map if necessary
  * @remarks Set the map to the current map to restart the round
- * 
+ *
  * @param map  the mapname it should go to after the round restarts
  * @return     1 always
  */
@@ -654,20 +654,20 @@ native void L4D_ResetMobTimer();
 native void L4D_NotifyNetworkStateChanged();
 
 /**
- * @brief Trigger's a target player's stagger behavior 
+ * @brief Trigger's a target player's stagger behavior
  * @remarks Works on any CTerrorPlayer--survivor or infected.
- * 
+ *
  * @param target 		Player to stagger
  * @param source_ent	Source of the stagger (another player, etc)
  * @param vecSource 	Source location of the stagger. If NULL_VECTOR, origins of source_ent is used.
- * @noreturn 				
+ * @noreturn
  */
 native void L4D_StaggerPlayer(int target, int source_ent, float vecSource[3]);
 
 /**
- * @brief Get the time remaining before the next director horde. 
+ * @brief Get the time remaining before the next director horde.
  * @remarks This timer is used for scripted event hordes and natural timed hordes
- * 
+ *
  * @return 	Time remaining before next director horde
  */
 #pragma deprecated Use L4D2_CTimerGetRemainingTime(L4D2CT_MobSpawnTimer)
@@ -676,7 +676,7 @@ native float L4D_GetMobSpawnTimerRemaining();
 /**
  * @brief Get the duration the horde timer was set to after the last horde
  * @remarks This timer is used for scripted event hordes and natural timed hordes
- * 
+ *
  * @return 	Total time from last horde to next horde.
  */
 #pragma deprecated Use L4D2_CTimerGetCountdownDuration(L4D2CT_MobSpawnTimer)
@@ -685,7 +685,7 @@ native float L4D_GetMobSpawnTimerDuration();
 /**
  * @brief Get the remaining spawn time for an SI
  * @remarks This is meant for Special infected in ghost mode in versus.
- * 
+ *
  * @return 	Time (seconds) until the SI will spawn.
  */
 native float L4D_GetPlayerSpawnTime(int player);
@@ -694,7 +694,7 @@ native float L4D_GetPlayerSpawnTime(int player);
  * @brief Calls CDirectorScriptedEventManager::SendInRescueVehicle(void)
  *
  * @remarks will fire the forward of the same function
- * 
+ *
  * @noreturn
  */
 native void L4D2_SendInRescueVehicle();
@@ -760,7 +760,7 @@ native int L4D2_SpawnWitchBride(const float vecOrigin[3], const float vecAngles[
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file
 */
-public Extension __ext_left4downtown = 
+public Extension __ext_left4downtown =
 {
 	name = "Left 4 Downtown",
 	file = "left4downtown.ext",

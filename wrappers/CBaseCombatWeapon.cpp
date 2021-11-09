@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,7 +28,7 @@
  *
  * Version: $Id$
  */
- 
+
 #include "CBaseCombatWeapon.h"
 
 int CBaseCombatWeapon::sendprop_m_hOwner = 0;
@@ -36,15 +36,15 @@ int CBaseCombatWeapon::sendprop_m_hOwner = 0;
 bool CBaseCombatWeapon::OnLoad(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
-	
+
 	if (!gamehelpers->FindSendPropInfo("CBaseCombatWeapon", "m_hOwner", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"CBaseCombatWeapon::m_hOwner\"");
 
 		return false;
 	}
-	
+
 	sendprop_m_hOwner = info.actual_offset;
-	
+
 	return true;
 }
 

@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,11 +28,11 @@
  *
  * Version: $Id$
  */
- 
+
 #include "extension.h"
 #include "vglobals.h"
 
-enum L4D2CountdownTimers 
+enum L4D2CountdownTimers
 {
 	L4D2CT_MobSpawnTimer,
 	L4D2CT_SmokerSpawnTimer,
@@ -66,7 +66,7 @@ CountdownTimer * IdToCTimer(int id)
 	{
 		return NULL;
 	}
-	
+
 	switch (id)
 	{
 		case L4D2CT_MobSpawnTimer:
@@ -107,7 +107,7 @@ IntervalTimer * IdToITimer(int id)
 	{
 		return NULL;
 	}
-	
+
 	switch(id)
 	{
 		case L4D2IT_SmokerDeathTimer:
@@ -128,7 +128,7 @@ IntervalTimer * IdToITimer(int id)
 }
 
 /*************************************
-	CountdownTimer Natives 
+	CountdownTimer Natives
 	***********************************/
 // native L4D2_CTimerReset(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerReset(IPluginContext *pContext, const cell_t *params)
@@ -222,7 +222,7 @@ cell_t L4D2_CTimerGetCountdownDuration(IPluginContext *pContext, const cell_t *p
 }
 
 /*************************************
-	IntervalTimer Natives 
+	IntervalTimer Natives
 	***********************************/
 
 // native L4D2_ITimerStart(L4D2IntervalTimer:timer);
@@ -236,7 +236,7 @@ cell_t L4D2_ITimerStart(IPluginContext *pContext, const cell_t *params)
 	myTimer->Start();
 	return 0;
 }
-	
+
 // native L4D2_ITimerInvalidate(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerInvalidate(IPluginContext *pContext, const cell_t *params)
 {
@@ -248,7 +248,7 @@ cell_t L4D2_ITimerInvalidate(IPluginContext *pContext, const cell_t *params)
 	myTimer->Invalidate();
 	return 0;
 }
-	
+
 // native bool:L4D2_ITimerHasStarted(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerHasStarted(IPluginContext *pContext, const cell_t *params)
 {
@@ -259,7 +259,7 @@ cell_t L4D2_ITimerHasStarted(IPluginContext *pContext, const cell_t *params)
 	}
 	return myTimer->HasStarted();
 }
-	
+
 // native Float:L4D2_ITimerGetElapsedTime(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerGetElapsedTime(IPluginContext *pContext, const cell_t *params)
 {
@@ -271,7 +271,7 @@ cell_t L4D2_ITimerGetElapsedTime(IPluginContext *pContext, const cell_t *params)
 	return sp_ftoc(myTimer->GetElapsedTime());
 }
 
-sp_nativeinfo_t  g_L4DoTimerNatives[] = 
+sp_nativeinfo_t  g_L4DoTimerNatives[] =
 {
 	{"L4D2_CTimerReset",				L4D2_CTimerReset},
 	{"L4D2_CTimerStart",				L4D2_CTimerStart},
@@ -279,11 +279,11 @@ sp_nativeinfo_t  g_L4DoTimerNatives[] =
 	{"L4D2_CTimerHasStarted",			L4D2_CTimerHasStarted},
 	{"L4D2_CTimerIsElapsed",			L4D2_CTimerIsElapsed},
 	{"L4D2_CTimerGetElapsedTime",		L4D2_CTimerGetElapsedTime},
-	{"L4D2_CTimerGetRemainingTime",	L4D2_CTimerGetRemainingTime},
+	{"L4D2_CTimerGetRemainingTime",		L4D2_CTimerGetRemainingTime},
 	{"L4D2_CTimerGetCountdownDuration", L4D2_CTimerGetCountdownDuration},
 	{"L4D2_ITimerStart",				L4D2_ITimerStart},
 	{"L4D2_ITimerInvalidate",			L4D2_ITimerInvalidate},
 	{"L4D2_ITimerHasStarted",			L4D2_ITimerHasStarted},
 	{"L4D2_ITimerGetElapsedTime",		L4D2_ITimerGetElapsedTime},
-	{NULL,										NULL}
+	{NULL,								NULL}
 };

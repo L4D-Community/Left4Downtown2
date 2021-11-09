@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -37,15 +37,15 @@ int CBasePlayer::sendprop_m_iTeamNum = 0;
 bool CBasePlayer::OnLoad(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
-	
+
 	if (!gamehelpers->FindSendPropInfo("CBasePlayer", "m_iTeamNum", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"СBasePlayer::m_iTeamNum\"");
 
 		return false;
 	}
-	
+
 	sendprop_m_iTeamNum = info.actual_offset;
-	
+
 	return true;
 }
 
@@ -55,7 +55,7 @@ L4DTeam CBasePlayer::GetTeamNumber()
 	/*if (m_iTeamNum > Team_None && m_iTeamNum <= Team_Infected) {
 		return m_iTeamNum;
 	}
-	
+
 	return Team_None;*/
 	return m_iTeamNum;
 }

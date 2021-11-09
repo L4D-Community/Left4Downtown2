@@ -48,10 +48,10 @@ namespace Detours
 
 		KeyValues *OnGetMissionInfo();
 
-		// get the signature name from the game conf
+		// get the signature name (i.e. "CTerrorGameRules::GetMissionInfo") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "CTerrorGameRules__GetMissionInfo";
+			return "CTerrorGameRules::GetMissionInfo";
 		}
 
 		//notify our patch system which function should be used as the detour

@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,7 +28,7 @@
  *
  * Version: $Id$
  */
- 
+
 #include "CBaseEntity.h"
 
 int CBaseEntity::sendprop_m_hOwnerEntity = 0;
@@ -36,15 +36,15 @@ int CBaseEntity::sendprop_m_hOwnerEntity = 0;
 bool CBaseEntity::OnLoad(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
-	
+
 	if (!gamehelpers->FindSendPropInfo("CBaseEntity", "m_hOwnerEntity", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"CBaseEntity::m_hOwnerEntity\"");
 
 		return false;
 	}
-	
+
 	sendprop_m_hOwnerEntity = info.actual_offset;
-	
+
 	return true;
 }
 
@@ -59,7 +59,7 @@ bool CBaseEntity::IsPlayer()
 	if (engine->GetPlayerUserId(pEdict) != -1) {
 		return true;
 	}
-	
+
 	return false;
 }
 

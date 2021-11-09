@@ -47,7 +47,7 @@ cell_t L4D_HasPlayerControlledZombies(IPluginContext *pContext, const cell_t *pa
 		retInfo.size = sizeof(bool);
 		retInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("HasPlayerControlledZombies", \
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::HasPlayerControlledZombies", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
 
 		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::HasPlayerControlledZombies");
@@ -69,7 +69,7 @@ cell_t L4D_SetHumanSpec(IPluginContext *pContext, const cell_t *params)
 
 	//SurvivorBot::SetHumanSpectator(CTerrorPlayer *)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("SetHumanSpec", \
+		REGISTER_NATIVE_ADDR("SurvivorBot::SetHumanSpectator", \
 			PassInfo passInfo; \
 			passInfo.flags = PASSFLAG_BYVAL; \
 			passInfo.size = sizeof(CBaseEntity *); \
@@ -113,7 +113,7 @@ cell_t L4D_TakeOverBot(IPluginContext *pContext, const cell_t *params)
 
 	// CTerrorPlayer::TakeOverBot(bool)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("TakeOverBot", \
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::TakeOverBot", \
 			PassInfo passInfo; \
 			passInfo.flags = PASSFLAG_BYVAL; \
 			passInfo.size = sizeof(bool); \
@@ -276,7 +276,7 @@ cell_t L4D2_AreTeamsFlipped(IPluginContext *pContext, const cell_t *params)
 		retInfo.size = sizeof(bool); //ret value in al on windows, eax on linux
 		retInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("AreTeamsFlipped", \
+		REGISTER_NATIVE_ADDR("CDirector::AreTeamsFlipped", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, /*paramInfo*/NULL, /*numparams*/0));
 	}
 
@@ -317,7 +317,7 @@ cell_t L4D2_GetVersusCompletionPlayer(IPluginContext *pContext, const cell_t *pa
 		retInfo.size = sizeof(int);
 		retInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("GetVersusCompletionPlayer",
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::GetVersusCompletion",
 			PassInfo passInfo; \
 			passInfo.flags = PASSFLAG_BYVAL; \
 			passInfo.size = sizeof(CBaseEntity *); \
@@ -367,7 +367,7 @@ cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 		ret.size = sizeof(int);
 		ret.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("GetTeamScore",
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::GetTeamScore",
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(int); \
@@ -424,7 +424,7 @@ cell_t L4D_RestartScenarioFromVote(IPluginContext *pContext, const cell_t *param
 
 	// Director::RestartScenario(void)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("RestartScenarioFromVote",
+		REGISTER_NATIVE_ADDR("CDirector::RestartScenarioFromVote",
 			PassInfo pass[1]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(char *); \
@@ -499,7 +499,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 	*/
 	if (!pWrapper) {
 #ifdef PLATFORM_WINDOWS
-		REGISTER_NATIVE_ADDR("SetReservationCookie", \
+		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
 		PassInfo pass[4]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(IServer *); \
@@ -515,7 +515,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 			pass[3].type = PassType_Basic; \
 				pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/NULL, /*paramInfo*/pass, /*numparams*/4));
 #else
-		REGISTER_NATIVE_ADDR("SetReservationCookie", \
+		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
 		PassInfo pass[3]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(uint64_t); \
@@ -589,11 +589,11 @@ cell_t L4D_ScavengeBeginRoundSetupTime(IPluginContext *pContext, const cell_t *p
 	}
 
 	/* Get the DirectorScavengeMode pointer */
-	if (!g_pGameConf->GetMemSig("CDirector_AreWanderersAllowed", (void **)&addr) || !addr) {
-		return pContext->ThrowNativeError( "Could not read CDirector_AreWanderersAllowed from GameConf");
+	if (!g_pGameConf->GetMemSig("CDirector::AreWanderersAllowed", (void **)&addr) || !addr) {
+		return pContext->ThrowNativeError( "Could not read CDirector::AreWanderersAllowed from GameConf");
 	}
 
-	//read offset into CDirector_AreWanderersAllowed
+	//read offset into CDirector::AreWanderersAllowed
 	int offset;
 	if (!g_pGameConf->GetOffset("CDirectorScavengeMode", &offset) || !offset) {
 #if !defined THEDIRECTOR_SETNEXTMISSION_OFFSET
@@ -676,7 +676,7 @@ cell_t L4D_IsFirstMapInScenario(IPluginContext *pContext, const cell_t *params)
 		retInfo.size = sizeof(bool);
 		retInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("IsFirstMapInScenario", \
+		REGISTER_NATIVE_ADDR("CDirector::IsFirstMapInScenario", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
 
 		L4D_DEBUG_LOG("Built call wrapper CDirector::IsFirstMapInScenario");
@@ -704,7 +704,7 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 		retInfo.size = sizeof(bool); //ret value in al on windows, eax on linux
 		retInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("IsMissionFinalMap", \
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::IsMissionFinalMap", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
 
 		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::IsMissionFinalMap");
@@ -727,7 +727,7 @@ cell_t L4D_ResetMobTimer(IPluginContext *pContext, const cell_t *params)
 
 	// CDirector::ResetMobTimer(void)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("ResetMobTimer", \
+		REGISTER_NATIVE_ADDR("CDirector::ResetMobTimer", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
 	}
 
@@ -758,7 +758,7 @@ cell_t L4D_NotifyNetworkStateChanged(IPluginContext *pContext, const cell_t *par
 
 	// CGameRulesProxy::NotifyNetworkStateChanged(void)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("NotifyNetworkStateChanged", \
+		REGISTER_NATIVE_ADDR("CGameRulesProxy::NotifyNetworkStateChanged", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
 	}
 
@@ -773,7 +773,7 @@ cell_t L4D_StaggerPlayer(IPluginContext *pContext, const cell_t *params)
 
 	// CBasePlayer::OnStaggered(CBaseEntity *, Vector *);
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("CTerrorPlayer_OnStaggered", \
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::OnStaggered", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(CBaseEntity *); \
@@ -891,7 +891,7 @@ cell_t L4D_ReplaceTank(IPluginContext *pContext, const cell_t *params)
 
 	// ZombieManager::ReplaceTank(CTerrorPlayer *, CTerrorPlayer *)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("ReplaceTank", \
+		REGISTER_NATIVE_ADDR("ZombieManager::ReplaceTank", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(CBaseEntity *); \
@@ -937,7 +937,7 @@ cell_t L4D2_SendInRescueVehicle(IPluginContext *pContext, const cell_t *params)
 
 	// CDirectorScriptedEventManager::SendInRescueVehicle(void)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("SendInRescueVehicle", \
+		REGISTER_NATIVE_ADDR("CDirectorScriptedEventManager::SendInRescueVehicle", \
 			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, /*Pass*/NULL, /*numparams*/0));
 	}
 
@@ -968,7 +968,7 @@ cell_t L4D2_ChangeFinaleStage(IPluginContext *pContext, const cell_t *params)
 
 	// CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
 	if (!pWrapper) {
-		REGISTER_NATIVE_ADDR("ChangeFinaleStage", \
+		REGISTER_NATIVE_ADDR("CDirectorScriptedEventManager::ChangeFinaleStage", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(int); \
@@ -1024,7 +1024,7 @@ cell_t L4D2_SpawnSpecial(IPluginContext *pContext, const cell_t *params)
 		passInfo.size = sizeof(CBaseEntity *);
 		passInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("SpawnSpecial", \
+		REGISTER_NATIVE_ADDR("ZombieManager::SpawnSpecial", \
 			PassInfo pass[3]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(ZombieClassType); \
@@ -1094,7 +1094,7 @@ cell_t L4D2_SpawnTank(IPluginContext *pContext, const cell_t *params)
 		passInfo.size = sizeof(CBaseEntity *);
 		passInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("SpawnTank", \
+		REGISTER_NATIVE_ADDR("ZombieManager::SpawnTank", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(Vector *); \
@@ -1159,7 +1159,7 @@ cell_t L4D2_SpawnWitch(IPluginContext *pContext, const cell_t *params)
 		passInfo.size = sizeof(CBaseEntity *);
 		passInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("SpawnWitch", \
+		REGISTER_NATIVE_ADDR("ZombieManager::SpawnWitch", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(Vector *); \
@@ -1224,7 +1224,7 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 		passInfo.size = sizeof(CBaseEntity *);
 		passInfo.type = PassType_Basic;
 
-		REGISTER_NATIVE_ADDR("SpawnWitchBride", \
+		REGISTER_NATIVE_ADDR("ZombieManager::SpawnWitchBride", \
 			PassInfo pass[2]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(Vector *); \

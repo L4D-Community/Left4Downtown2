@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -51,10 +51,10 @@ namespace Detours
 			return (g_pFwdOnSetCampaignScores->GetFunctionCount() > 0);
 		}
 
-		// get the signature name (i.e. "SetCampaignScores") from the game conf
+		// get the signature name (i.e. "CTerrorGameRules::SetCampaignScores") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "SetCampaignScores";
+			return "CTerrorGameRules::SetCampaignScores";
 		}
 
 		//notify our patch system which function should be used as the detour

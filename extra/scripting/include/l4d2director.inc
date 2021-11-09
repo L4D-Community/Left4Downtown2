@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -29,7 +29,7 @@
  *
  * Version: $Id$
  */
- 
+
  #if defined _l4d2director_included
   #endinput
 #endif
@@ -61,9 +61,9 @@ native float L4D2_GetFurthestSurvivorFlow();
 
 /**
  * @brief Gets the number of tanks currently in play.
- * @remarks This value is tracked by the director, and should be a good 
+ * @remarks This value is tracked by the director, and should be a good
  *		indicator that a tank is in play
- * 
+ *
  * @return 	current tank count
  */
 native int L4D2_GetTankCount();
@@ -81,9 +81,9 @@ stock bool L4D2_IsTankInPlay()
 
 /**
  * @brief Gets the number of witches currently in play.
- * @remarks This value is tracked by the director, and should be a good 
+ * @remarks This value is tracked by the director, and should be a good
  *		indicator that a witch is in play
- * 
+ *
  * @return 	current witch count
  */
 native int L4D2_GetWitchCount();
@@ -91,18 +91,18 @@ native int L4D2_GetWitchCount();
 /**
  * @brief Gets the campaign scores stored in the Versus Director
  * @remarks These are the actual values used for campaign scores--not proxies
- * 
+ *
  * @param scores 		Array to store the campaign scores in
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_GetVersusCampaignScores(int scores[2]);
 
 /**
  * @brief Sets the campaign scores stored in the Versus Director
  * @remarks These are the actual values used for campaign scores--not proxies
- * 
+ *
  * @param scores 		Array of campaign scores to set the director's values to.
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_SetVersusCampaignScores(const int scores[2]);
 
@@ -111,9 +111,9 @@ native void L4D2_SetVersusCampaignScores(const int scores[2]);
  * @remarks These values are checked against as the survivors move through the
  *		map. Once they are passed, the tank spawns. Note that this is flow
  *		as a percent of the map's flow, not flow distance.
- * 
+ *
  * @param tankFlows	Array to store the Tank Spawn Flow percents in
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_GetVersusTankFlowPercent(float tankFlows[2]);
 
@@ -122,9 +122,9 @@ native void L4D2_GetVersusTankFlowPercent(float tankFlows[2]);
  * @remarks These values are checked against as the survivors move through the
  *		map. Once they are passed, the tank spawns. Note that this is flow
  *		as a percent of the map's flow, not flow distance.
- * 
+ *
  * @param tankFlows	Array of Tank Spawn Flow percents to store in director
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_SetVersusTankFlowPercent(const float tankFlows[2]);
 
@@ -133,9 +133,9 @@ native void L4D2_SetVersusTankFlowPercent(const float tankFlows[2]);
  * @remarks These values are checked against as the survivors move through the
  *		map. Once they are passed, the witch spawns. Note that this is flow
  *		as a percent of the map's flow, not flow distance.
- * 
+ *
  * @param witchFlows	Array to store the Witch Spawn Flow percents in
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_GetVersusWitchFlowPercent(float witchFlows[2]);
 
@@ -144,9 +144,9 @@ native void L4D2_GetVersusWitchFlowPercent(float witchFlows[2]);
  * @remarks These values are checked against as the survivors move through the
  *		map. Once they are passed, the witch spawns. Note that this is flow
  *		as a percent of the map's flow, not flow distance.
- * 
+ *
  * @param witchFlows	Array of Witch Spawn Flow percents to store in director
- * @noreturn 				
+ * @noreturn
  */
 native void L4D2_SetVersusWitchFlowPercent(const float witchFlows[2]);
 

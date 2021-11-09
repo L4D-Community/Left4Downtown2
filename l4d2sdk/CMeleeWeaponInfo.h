@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -50,8 +50,8 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	char m_aViewModel[80];
 	char m_aPlayerModel[80];
 	char m_aAddonAttachment[80];
-	Vector m_vAddonOffest; 
-	Vector m_vAddonAngles; 
+	Vector m_vAddonOffest;
+	Vector m_vAddonAngles;
 	char m_aAnimPrefix[16];
 	float m_fDamage;
 	int m_iDamageFlags;
@@ -73,7 +73,7 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	char m_aActivityDeploy[80];
 	char m_aActivityShove[80];
 	char SoundData[20][80]; // 1501
-	// 3101: 3 bytes should be padding 
+	// 3101: 3 bytes should be padding
 	CUtlVector<char[48]> PrimaryAttacks; //3104
 	CUtlVector<char[48]> SecondaryAttacks; //3124
 	int m_iPlayerAnimEvent; // 3144

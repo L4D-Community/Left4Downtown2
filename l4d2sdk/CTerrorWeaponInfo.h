@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -77,9 +77,9 @@ public:
 	float m_fMusicDynamicSpeed; // 3052
 	bool m_bNewInL4D2; // 3056
 	bool m_bCSWeapon; // 3057
-};  
+};
 
-class CTerrorWeaponInfo : public CCSWeaponInfo { 
+class CTerrorWeaponInfo : public CCSWeaponInfo {
 public:
 	int m_iLoadoutSlots; // 3060
 	float m_fMaxAutoAimDeflection1; // 3064
@@ -114,7 +114,7 @@ public:
 	Vector m_vAddonOffest; // 3432 vector
 	Vector m_vAddonAngles; // 3444 vector
 	char m_aWorldModel[80]; // 3456
-}; 
+};
 
 typedef CUtlDict< CTerrorWeaponInfo *, unsigned short > WeaponDatabase;
 

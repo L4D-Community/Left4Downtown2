@@ -28,7 +28,7 @@ def CopyFiles(src, dest, files):
     source_path = os.path.join(builder.sourcePath, src, source_file)
     builder.AddCopy(source_path, dest_entry)
 
-# Plugin files 
+# Plugin files
 CopyFiles('extra/scripting', 'addons/sourcemod/scripting',
   [
     'l4d2_unreservelobby.sp',
@@ -36,7 +36,7 @@ CopyFiles('extra/scripting', 'addons/sourcemod/scripting',
   ]
 )
 
-# Include files 
+# Include files
 CopyFiles('extra/scripting/include', 'addons/sourcemod/scripting/include',
   [
     'l4d2director.inc',

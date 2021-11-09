@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,7 +28,7 @@
  *
  * Version: $Id$
  */
- 
+
 #include "extension.h"
 #include "vglobals.h"
 
@@ -53,7 +53,7 @@ enum L4D2FloatMeleeWeaponAttributes
 bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
-	
+
 	switch(id)
 	{
 		case L4D2BMWA_Decapitates:
@@ -66,7 +66,7 @@ bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
-	
+
 	switch(id)
 	{
 		case L4D2IMWA_DamageFlags:
@@ -81,7 +81,7 @@ int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 float * FloatIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
-	
+
 	switch(id)
 	{
 		case L4D2FMWA_Damage:
@@ -122,10 +122,10 @@ CMeleeWeaponInfo * IndexToId(int i)
 }
 
 /*************************************
-	Melee Weapon Natives 
+	Melee Weapon Natives
 	***********************************/
 
-// native L4D2_GetMeleeWeaponIndex(const String:weaponName[]);	
+// native L4D2_GetMeleeWeaponIndex(const String:weaponName[]);
 cell_t L4D2_GetMeleeWeaponIndex(IPluginContext *pContext, const cell_t *params)
 {
 	if (g_pMeleeWeaponInfoStore == NULL)
@@ -203,7 +203,7 @@ cell_t L4D2_SetIntMeleeAttribute(IPluginContext *pContext, const cell_t *params)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
-	
+
 	int * attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
@@ -226,7 +226,7 @@ cell_t L4D2_SetFloatMeleeAttribute(IPluginContext *pContext, const cell_t *param
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
-	
+
 	float * attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
@@ -271,7 +271,7 @@ cell_t L4D2_SetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
-	
+
 	bool * attr = BoolIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
@@ -281,14 +281,14 @@ cell_t L4D2_SetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 	return 0;
 }
 
-sp_nativeinfo_t g_L4DoMeleeWeaponNatives[] = 
+sp_nativeinfo_t g_L4DoMeleeWeaponNatives[] =
 {
-	{"L4D2_GetMeleeWeaponIndex", L4D2_GetMeleeWeaponIndex},
+	{"L4D2_GetMeleeWeaponIndex",	L4D2_GetMeleeWeaponIndex},
 	{"L4D2_GetIntMeleeAttribute",	L4D2_GetIntMeleeAttribute},
 	{"L4D2_GetFloatMeleeAttribute",	L4D2_GetFloatMeleeAttribute},
 	{"L4D2_GetBoolMeleeAttribute",	L4D2_GetBoolMeleeAttribute},
 	{"L4D2_SetIntMeleeAttribute",	L4D2_SetIntMeleeAttribute},
 	{"L4D2_SetFloatMeleeAttribute",	L4D2_SetFloatMeleeAttribute},
 	{"L4D2_SetBoolMeleeAttribute",	L4D2_SetBoolMeleeAttribute},
-	{NULL,										NULL}
+	{NULL,							NULL}
 };

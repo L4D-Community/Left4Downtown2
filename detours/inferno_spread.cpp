@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -41,7 +41,7 @@ namespace Detours
 		CBaseEntity *pOwner = pEntity->GetOwnerEntity(); // spitter or other kind of fire-raiser (survivor that has thrown a molotov etc)
 
 		// infected and spitter
-		//if ((CTerrorPlayer *)pOwner->GetTeamNumber() == Team_Infected && (CTerrorPlayer *)pOwner->GetZombieClass() == ZombieClassType_Spitter) {} 
+		//if ((CTerrorPlayer *)pOwner->GetTeamNumber() == Team_Infected && (CTerrorPlayer *)pOwner->GetZombieClass() == ZombieClassType_Spitter) {}
 
 		cell_t ctSpreadVelocity[3] = {sp_ftoc(spreadVelocity.x), sp_ftoc(spreadVelocity.y), sp_ftoc(spreadVelocity.z)};
 

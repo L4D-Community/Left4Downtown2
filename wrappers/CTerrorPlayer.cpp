@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,7 +28,7 @@
  *
  * Version: $Id$
  */
- 
+
 #include "CTerrorPlayer.h"
 
 int CTerrorPlayer::sendprop_m_isAttemptingToPounce = 0;
@@ -37,21 +37,21 @@ int CTerrorPlayer::sendprop_m_zombieClass = 0;
 bool CTerrorPlayer::OnLoad(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
-	
+
 	if (!gamehelpers->FindSendPropInfo("CTerrorPlayer", "m_isAttemptingToPounce", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"CTerrorPlayer::m_isAttemptingToPounce\"");
 
 		return false;
 	}
-	
+
 	sendprop_m_isAttemptingToPounce = info.actual_offset;
-	
+
 	if (!gamehelpers->FindSendPropInfo("CTerrorPlayer", "m_zombieClass", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"CTerrorPlayer::m_zombieClass\"");
 
 		return false;
 	}
-	
+
 	sendprop_m_zombieClass = info.actual_offset;
 
 	return true;
@@ -60,7 +60,7 @@ bool CTerrorPlayer::OnLoad(char* error, size_t maxlength)
 bool CTerrorPlayer::IsAttemptingToPounce()
 {
 	int m_isAttemptingToPounce = *(int *)((unsigned char *)this + sendprop_m_isAttemptingToPounce);
-	
+
 	return (m_isAttemptingToPounce) ? true : false;
 }
 
@@ -70,7 +70,7 @@ ZombieClassType CTerrorPlayer::GetZombieClass()
 	/*if (m_zombieClass > Zombie_Common && m_zombieClass < Zombie_Survivor) {
 		return m_zombieClass;
 	}
-	
+
 	return Zombie_Common;*/
 	return m_zombieClass;
 }

@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -29,7 +29,7 @@
  *
  * Version: $Id$
  */
- 
+
  #if defined _l4d2weapons_included
   #endinput
 #endif
@@ -46,9 +46,9 @@ enum L4D2IntWeaponAttributes
 A note regarding Clipsize: Any nonstandard value will NOT be in effect at weapon pickup, which means the client
 has to reload once to achieve the modified value. To fix this, add a weapon pickup hook in your plugin (eg "player_use")
 and use something like this with a small timer delay of 0.1 seconds or more (dont you love this engine)
-	
+
 	int weapon = GetPlayerWeaponSlot(client, 0);
-	if (weapon == INVALID_ENT_REFERENCE) return; 
+	if (weapon == INVALID_ENT_REFERENCE) return;
 	char class[56];
 	GetEdictClassname(weapon, class, sizeof(class));
 	SetEntProp(weapon, Prop_Send, "m_iClip1", L4D2_GetIntWeaponAttribute(class, L4D2IWA_ClipSize));
@@ -97,7 +97,7 @@ enum L4D2FloatMeleeWeaponAttributes
 /**
  * @brief Checks for a given weapon string to exist in the WeaponInformationDatabase
  * @remarks Throws an error if Database is unavailable
- * 
+ *
  * @param weaponName 	Weapon to check up on
  * @return 				True if weapon is found, false if not
  */
@@ -106,7 +106,7 @@ native bool L4D2_IsValidWeapon(const char[] weaponName);
 /**
  * @brief Read an int-typed attribute for a given weapon from the WeaponInformationDatabase
  * @remarks Throws an error if the weapon is not found or the attribute is incorrect
- * 
+ *
  * @param weaponName 	Weapon to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
@@ -116,7 +116,7 @@ native int L4D2_GetIntWeaponAttribute(const char[] weaponName, L4D2IntWeaponAttr
 /**
  * @brief Read a float-typed attribute for a given weapon from the WeaponInformationDatabase
  * @remarks Throws an error if the weapon is not found or the attribute is incorrect
- * 
+ *
  * @param weaponName 	Weapon to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
@@ -126,7 +126,7 @@ native float L4D2_GetFloatWeaponAttribute(const char[] weaponName, L4D2FloatWeap
 /**
  * @brief Set an int-typed attribute for a given weapon from the WeaponInformationDatabase to a given value
  * @remarks Throws an error if the weapon is not found or the attribute is incorrect
- * 
+ *
  * @param weaponName 	Weapon to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
@@ -137,7 +137,7 @@ native void L4D2_SetIntWeaponAttribute(const char[] weaponName, L4D2IntWeaponAtt
 /**
  * @brief Set a float-typed attribute for a given weapon from the WeaponInformationDatabase to a given value
  * @remarks Throws an error if the weapon is not found or the attribute is incorrect
- * 
+ *
  * @param weaponName 	Weapon to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
@@ -148,7 +148,7 @@ native void L4D2_SetFloatWeaponAttribute(const char[] weaponName, L4D2FloatWeapo
 /**
  * @brief Retrieve the index for a given melee weapon from the Melee Weapon Database
  * @remarks returns -1 if no match is found
- * 
+ *
  * @param weaponName 	Weapon to lookup index id for
  * @return 				The index id
  */
@@ -157,7 +157,7 @@ native int L4D2_GetMeleeWeaponIndex(const char[] weaponName);
 /**
  * @brief Read an int-typed attribute for a given id from the Melee Weapon Database
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
@@ -167,7 +167,7 @@ native int L4D2_GetIntMeleeAttribute(int id, L4D2IntMeleeWeaponAttributes attr);
 /**
  * @brief Read a float-typed attribute for a given id from the Melee Weapon Database
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
@@ -177,7 +177,7 @@ native float L4D2_GetFloatMeleeAttribute(int id, L4D2FloatMeleeWeaponAttributes 
 /**
  * @brief Read a bool-typed attribute for a given id from the Melee Weapon Database
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to read from the weapon's info struct
  * @return 				The value read.
@@ -187,7 +187,7 @@ native bool L4D2_GetBoolMeleeAttribute(int id, L4D2BoolMeleeWeaponAttributes att
 /**
  * @brief Set an int-typed attribute for a given id from the Melee Weapon Database to a given value
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
@@ -198,7 +198,7 @@ native void L4D2_SetIntMeleeAttribute(int id, L4D2IntMeleeWeaponAttributes attr,
 /**
  * @brief Set a float-typed attribute for a given id from the Melee Weapon Database to a given value
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to
@@ -209,7 +209,7 @@ native void L4D2_SetFloatMeleeAttribute(int id, L4D2FloatMeleeWeaponAttributes a
 /**
  * @brief Set a bool-typed attribute for a given id from the Melee Weapon Database to a given value
  * @remarks Throws an error if the id is not found or the attribute is incorrect
- * 
+ *
  * @param id 			Melee id to lookup attribute for
  * @param attr			Attribute to alter in the weapon's info struct
  * @param value			Value to set the attribute to

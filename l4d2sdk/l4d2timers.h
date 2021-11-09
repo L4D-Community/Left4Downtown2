@@ -23,7 +23,7 @@ public:
 	void Reset( void )
 	{
 		m_timestamp = Now();
-	}		
+	}
 
 	void Start( void )
 	{
@@ -33,7 +33,7 @@ public:
 	void Invalidate( void )
 	{
 		m_timestamp = -1.0f;
-	}		
+	}
 
 	bool HasStarted( void ) const
 	{
@@ -80,7 +80,7 @@ public:
 	void Reset( void )
 	{
 		m_timestamp = Now() + m_duration;
-	}		
+	}
 
 	void Start( float duration )
 	{
@@ -91,7 +91,7 @@ public:
 	void Invalidate( void )
 	{
 		m_timestamp = -1.0f;
-	}		
+	}
 
 	bool HasStarted( void ) const
 	{

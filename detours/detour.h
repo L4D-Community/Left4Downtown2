@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -55,9 +55,9 @@ public:
 	//disable the detour
 	void Unpatch();
 
-	// get the signature name (i.e. "SpawnTank") from the game conf
+	// get the signature name from the game conf
 	virtual const char *GetSignatureName() = 0;
-	
+
 	virtual unsigned char *GetSignatureAddress() { return NULL; }
 
 protected: //note: implemented by direct superclass
@@ -91,7 +91,7 @@ private:
 	static ISourcePawnEngine *spengine;
 
 	void PatchFromSignature(const char *signatureName, void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature);
-	
+
 	void PatchFromAddress(void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature);
 
 	//insert a specific JMP instruction at the given location, save it to the buffer

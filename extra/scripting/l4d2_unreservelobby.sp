@@ -94,7 +94,7 @@ public Action:OnPlayerDisconnect(Handle:event, const String:name[], bool:dontBro
 
 	if (IsFakeClient(client))
 		return;
-	
+
 	if (!RealClientsInServer(client))
 	{
 		PrintToServer("[UL] No human want to play in this server. :(");

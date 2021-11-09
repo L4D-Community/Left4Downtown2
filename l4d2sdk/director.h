@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -85,8 +85,8 @@ typedef struct _CDirectorSurvivalMode {
 
 // 104 bytes
 typedef struct _CDirectorScavengeMode {
-	bool m_bUnknown; 
-	char padding[3]; 
+	bool m_bUnknown;
+	char padding[3];
 	float m_fUnknown; // 0x04
 	bool m_bScavengeRoundInProgress; // 0x08
 	bool m_bUnk2; // 0x09
@@ -212,7 +212,7 @@ typedef struct _CDirector {
 	int m_iNextThreatIdx; // 912 Which threat will be used next?
 	char unknown916[20];
 	CountdownTimer unknownCTimer936;
-	char unknown948[96]; // "forbidden targets" starts here 
+	char unknown948[96]; // "forbidden targets" starts here
 	CountdownTimer unknownCTimer1044;
 	float m_flUnknown1056; // 1056
 	bool m_bUnknown1160;
@@ -223,12 +223,12 @@ typedef struct _CDirector {
 	char unknown1076[308]; // 0x434
 	CDirectorTacticalServices * TacticalServicesPtr; //0x568
 	CDirectorItemManager * ItemManagerPtr; // 0x56c
-	CDirectorMusicBanks * MusicBanksPtr; 
-	CDirectorSessionManager * SessionManagerPtr; 
-	CDirectorScriptedEventManager * ScriptedEventManagerPtr; 
-	CDirectorVersusMode * VersusModePtr; 
+	CDirectorMusicBanks * MusicBanksPtr;
+	CDirectorSessionManager * SessionManagerPtr;
+	CDirectorScriptedEventManager * ScriptedEventManagerPtr;
+	CDirectorVersusMode * VersusModePtr;
 	CDirectorSurvivalMode * SurvivalModePtr;
-	CDirectorScavengeMode * ScavengeModePtr; 
+	CDirectorScavengeMode * ScavengeModePtr;
 	CDirectorChallengeMode * ChallengeModePtr;
 } CDirector;
 

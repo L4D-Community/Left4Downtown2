@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -34,21 +34,21 @@
 #include "extension.h"
 
 /*
-	It is foolish to directly access memory without checks. 
+	It is foolish to directly access memory without checks.
 	Even the game makes checks when executing this function and its clone.
-	There was already one crash quite rare, when accessing memory, on this line of code: 
+	There was already one crash quite rare, when accessing memory, on this line of code:
 	'int isDeadstop = *(int *)((unsigned char *)hEntity + 16024);'. New offset after update 15992
-	
+
 	Apparently some incorrect object was received here, this is very strange. =/
 	It will be better and safer anyway!
-	
+
 	SIGSEGV /SEGV_MAPERR accessing 0x13e50058
 
 	Thread 0 (crashed):
 	   0: left4downtown.ext.2.l4d2.so!Detours::TerrorWeaponHit::OnTerrorWeaponHit(CGameTrace*, void*, bool) + 0x47
 		  eip: 0xe7b8ac07  esp: 0xffa040f0  ebp: 0xffa0437c  ebx: 0x13e4c1c0
 		  esi: 0x1381aea0  edi: 0xffa041bc  eax: 0xee0b2af0  ecx: 0x13e4c1c0
-		  edx: 0xffa0437c  efl: 0x00210206  
+		  edx: 0xffa0437c  efl: 0x00210206
 
 		  e7b8abf1  0f 84 89 01 00 00  jz 0xe7b8ad80
 		  e7b8abf7  8b 5f 4c           mov ebx, [edi+0x4c]
@@ -69,7 +69,7 @@
 		  ffa04130  bc 41 a0 ff a0 ae 81 13  e8 42 a0 ff 22 da 65 ed  .A.......B..".e.
 
 		  Found via instruction pointer in context
-		  
+
 		Stack Trace:
 		0	left4downtown.ext.2.l4d2.so!Detours::TerrorWeaponHit::OnTerrorWeaponHit(CGameTrace*, void*, bool) + 0x47
 		1	server_srv.so!CTerrorWeapon::TestSwingCollision(Vector const&) + 0x582
@@ -85,12 +85,12 @@
 
 /*
 	Another crash occurred on a different server:
-	
+
 	Thread 0 (crashed):
 	   0: left4downtown.ext.2.l4d2.so!CTerrorPlayer::GetMemberAttemptingToPounce() + 0x9
 		  eip: 0xe7b411e9  esp: 0xff9de5cc  ebp: 0x0000032e  ebx: 0x00000001
 		  esi: 0xff9de71c  edi: 0xff9de824  eax: 0x00003e78  ecx: 0x00000280
-		  edx: 0x10a337a0  efl: 0x00210202  
+		  edx: 0x10a337a0  efl: 0x00210202
 
 		  e7b411d3  90                 nop
 		  e7b411d4  8d b6 00 00 00 00  lea esi, [esi+0x0]
@@ -104,14 +104,14 @@
 		  e7b411f2  66 90              nop
 		  e7b411f4  66 90              nop
 
-		  ff9de5cc  63 08 b4 e7                                       c...            
+		  ff9de5cc  63 08 b4 e7                                       c...
 
 		  Found via instruction pointer in context
 
 
 	   1: left4downtown.ext.2.l4d2.so!Detours::TerrorWeaponHit::OnTerrorWeaponHit(CGameTrace&, Vector const&, bool) + 0xd3
 		  eip: 0xe7b40863  esp: 0xff9de5d0  ebp: 0x0000032e  ebx: 0x00000001
-		  esi: 0xff9de71c  edi: 0xff9de824  
+		  esi: 0xff9de71c  edi: 0xff9de824
 
 		  ff9de5d0  a0 37 a3 10 f0 e9 bc 0d  f8 e5 9d ff 9c e6 9d ff  .7..............
 		  ff9de5e0  00 00 00 00 9c e6 9d ff  80 02 00 00 03 00 00 00  ................
@@ -120,7 +120,7 @@
 		  ff9de610  f0 e9 bc 0d 1c e7 9d ff  88 e7 9d ff 22 f8 5c ed  ............".\.
 
 		  Found via call frame info
-		  
+
 		Stack Trace:
 		0	left4downtown.ext.2.l4d2.so!CTerrorPlayer::GetMemberAttemptingToPounce() + 0x9
 		1	left4downtown.ext.2.l4d2.so!Detours::TerrorWeaponHit::OnTerrorWeaponHit(CGameTrace&, Vector const&, bool) + 0xd3
@@ -133,7 +133,7 @@
 		8	server_srv.so!CBasePlayer::PostThink() + 0xc12
 		9	server_srv.so!CCSPlayer::PostThink() + 0xbb
 */
-		
+
 namespace Detours
 {
 	void *TerrorWeaponHit::OnTerrorWeaponHit(trace_t &trace/* a1 */, const Vector &swingVector/* a2 */, bool firstTime/* a3 */)
@@ -155,13 +155,13 @@ namespace Detours
 				int iEntityIndex = IndexOfEdict(trace.m_pEnt->edict());
 				int iWeaponIndex = IndexOfEdict((reinterpret_cast<CBaseEntity *>(this))->edict());
 
-				/*  
+				/*
 					deadstop check: see if it's going to be versus_shove_hunter_fov_pouncing(true) or versus_shove_hunter_fov(false)
 					often returns 0 when it shouldn't  - either this shit is unreliable, or the game is buggy as fuck
 					probably both
-					
+
 					We need to make sure here that we go to that memory area, does this really have a property 'm_isAttemptingToPounce'?
-					Only players or all CBaseEntity objects have this property(including world)? 
+					Only players or all CBaseEntity objects have this property(including world)?
 					But we only need players, we will use this check IsPlayer()!
 					It seems that some objects return a true, which means we get garbage in some cases =(
 				*/

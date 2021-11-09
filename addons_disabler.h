@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -50,18 +50,18 @@
 class AddonsDisabler
 {
 public:
-    /* 
-        patch the engine to skip setting addons mode for clients
-        so we can do it manually
-    */
-    static void Patch();
+	/*
+		patch the engine to skip setting addons mode for clients
+		so we can do it manually
+	*/
+	static void Patch();
 
-    /*
-        remove the previous patch and restore the binary back to normal 
-    */
-    static void Unpatch();
+	/*
+		remove the previous patch and restore the binary back to normal
+	*/
+	static void Unpatch();
 
-    static int AddonsEclipse;
+	static int AddonsEclipse;
 };
 
 void OnAddonsEclipseChanged( IConVar *var, const char *pOldValue, float flOldValue );
@@ -77,11 +77,11 @@ namespace Detours
 	private: //note: implementation of DetourTemplate abstracts
 
 		void OnFillServerInfo(int);
-
-		// get the signature name from the game conf
+		
+		// get the signature name (i.e. "CBaseServer::FillServerInfo") from the game conf
 		virtual const char *GetSignatureName()
 		{
-			return "CBaseServer__FillServerInfo";
+			return "CBaseServer::FillServerInfo";
 		}
 
 		//notify our patch system which function should be used as the detour

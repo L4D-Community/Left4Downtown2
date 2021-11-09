@@ -9,7 +9,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -42,7 +42,7 @@ class DetourTemplate : public Detour
 {
 protected: //note: virtuals should be implemented by the TParent class
 
-	// get the signature name (i.e. "SpawnTank") from the game conf
+	// get the signature name from the game conf
 	virtual const char *GetSignatureName() = 0;
 
 	//notify our patch system which function should be used as the detour
@@ -65,16 +65,16 @@ protected: //note: virtuals should be implemented by the TParent class
 
 	//yes this assumes that we instantiate a Singleton
 	DetourTemplate()
-	{ 
-		GetAutoForwardPtrRef() = NULL; 
+	{
+		GetAutoForwardPtrRef() = NULL;
 	}
-	
+
 	~DetourTemplate()
 	{
 		if (GetAutoForward()) {
 			delete GetAutoForward();
 			SetAutoForward(NULL);
-		} 
+		}
 	}
 
 	static void SetAutoForward(AutoForward *autoForward)
@@ -88,7 +88,7 @@ protected: //note: virtuals should be implemented by the TParent class
 		return autoFwd;
 	}
 
-private: 
+private:
 
 	static AutoForward*& GetAutoForwardPtrRef()
 	{
