@@ -42,13 +42,19 @@ CopyFiles('extra/scripting/include', 'addons/sourcemod/scripting/include',
     'l4d2director.inc',
     'l4d2timers.inc',
     'l4d2weapons.inc',
-    'left4downtown.inc'
+    'left4downtown.inc',
+    'l4d2_direct.inc',
+    'l4d2d_internals.inc',
+    'l4d2d_timers.inc',
   ]
 )
 
 # GameData files
 CopyFiles('extra/gamedata', 'addons/sourcemod/gamedata',
-  [ 'left4downtown.l4d2.txt' ]
+  [
+    'left4downtown.l4d2.txt',
+    'l4d2_direct.txt'
+  ]
 )
 
 # Copy binaries.
