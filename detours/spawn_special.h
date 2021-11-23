@@ -39,17 +39,17 @@
 namespace Detours
 {
 	class SpawnSpecial;
-	typedef void * (SpawnSpecial::*SpawnSpecialFunc)(ZombieClassType, void *, void*);
+	typedef CTerrorPlayer *(SpawnSpecial::*SpawnSpecialFunc)(ZombieClassType, Vector *, QAngle *);
 
 	class SpawnSpecial : public DetourTemplate<SpawnSpecialFunc, SpawnSpecial>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnSpawnSpecial(ZombieClassType zombieClassType, void *vector, void *qangle);
+		CTerrorPlayer *OnSpawnSpecial(ZombieClassType zombieClassType, Vector *vector, QAngle *qangle);
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnSpawnSpecial->GetFunctionCount() > 0);
+			return ((g_pFwdOnSpawnSpecial->GetFunctionCount() > 0) || (g_pFwdOnSpawnSpecialPost->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "ZombieManager::SpawnSpecial") from the game conf

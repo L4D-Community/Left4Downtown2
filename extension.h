@@ -144,9 +144,13 @@ public: //ICommandTargetProcessor
 };
 
 extern IForward *g_pFwdOnSpawnSpecial;
+extern IForward *g_pFwdOnSpawnSpecialPost;
 extern IForward *g_pFwdOnSpawnTank;
+extern IForward *g_pFwdOnSpawnTankPost;
 extern IForward *g_pFwdOnSpawnWitch;
+extern IForward *g_pFwdOnSpawnWitchPost;
 extern IForward *g_pFwdOnSpawnWitchBride;
+extern IForward *g_pFwdOnSpawnWitchBridePost;
 extern IForward *g_pFwdOnClearTeamScores;
 extern IForward *g_pFwdOnSetCampaignScores;
 extern IForward *g_pFwdOnFirstSurvivorLeftSafeArea;

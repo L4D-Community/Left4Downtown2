@@ -16,16 +16,18 @@
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
-Handle gConf;
+Handle
+	gConf = null;
 
-new Handle:cvarBlockTanks = null;
-new Handle:cvarBlockWitches = null;
-new Handle:cvarBlockSpecials = null;
-new Handle:cvarSetCampaignScores = null;
-new Handle:cvarFirstSurvivorLeftSafeArea = null;
-new Handle:cvarProhibitBosses = null;
-new Handle:cvarBlockRocks = null;
-new Handle:cvarForceSpecials = null;
+ConVar
+	cvarBlockTanks = null,
+	cvarBlockWitches = null,
+	cvarBlockSpecials = null,
+	cvarSetCampaignScores = null,
+	cvarFirstSurvivorLeftSafeArea = null,
+	cvarProhibitBosses = null,
+	cvarBlockRocks = null,
+	cvarForceSpecials = null;
 
 public Plugin myinfo =
 {
@@ -168,16 +170,13 @@ public void OnPluginStart()
 
 public Action Command_BeginRoundSetupTime(int client, int args)
 {
-
 	L4D_ScavengeBeginRoundSetupTime()
 
 	return Plugin_Handled;
 }
 
-
 public Action Command_ResetRoundNumber(int client, int args)
 {
-
 	L4D_ResetRoundNumber();
 
 	return Plugin_Handled;
@@ -185,18 +184,16 @@ public Action Command_ResetRoundNumber(int client, int args)
 
 public Action Command_SetRoundEndTime(int client, int args)
 {
-	if (args < 1)
-	{
+	if (args < 1) {
 		ReplyToCommand(client, "[SM] Error: Specify a round end time");
 		return Plugin_Handled;
 	}
 
-	decl String:functionName[256];
+	char functionName[256];
 	GetCmdArg(1, functionName, sizeof(functionName));
 	float time = StringToFloat(functionName);
 
 	L4D_SetRoundEndTime(time);
-
 	return Plugin_Handled;
 }
 
@@ -207,15 +204,14 @@ public Action Command_FindSig(int client, int args)
 	* DOES NOT ACTUALLY WORK :(
 	*
 	*/
-	if (args < 1)
-	{
+	if (args < 1) {
 		ReplyToCommand(client, "[SM] Error: Specify a signature");
 		return Plugin_Handled;
 	}
 
-	decl String:functionName[256];
+	char functionName[256];
 	GetCmdArg(1, functionName, sizeof(functionName));
-	new len = strlen(functionName);
+	int len = strlen(functionName);
 
 	StartPrepSDKCall(SDKCall_Static);
 	if (PrepSDKCall_SetSignature(SDKLibrary_Server, functionName, len)) {
@@ -227,100 +223,108 @@ public Action Command_FindSig(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action L4D_OnSpawnTank(const Float:vector[3], const Float:qangle[3])
+public Action L4D_OnSpawnSpecial(int &zombieClass, const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("OnSpawnTank(vector[%f,%f,%f], qangle[%f,%f,%f]", \
-		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
+	DebugPrint("L4D_OnSpawnSpecial(zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+					zombieClass, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
 
-	if (GetConVarBool(cvarBlockTanks))
-	{
-		DebugPrint("Blocking tank spawn...");
-		return Plugin_Handled;
-	}
-	else
-	{
-		return Plugin_Continue;
-	}
-}
-
-public Action L4D_OnSpawnWitch(const Float:vector[3], const Float:qangle[3])
-{
-	DebugPrint("OnSpawnWitch(vector[%f,%f,%f], qangle[%f,%f,%f])",
-		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
-
-	if (GetConVarBool(cvarBlockWitches))
-	{
-		DebugPrint("Blocking witch spawn...");
-		return Plugin_Handled;
-	}
-	else
-	{
-		return Plugin_Continue;
-	}
-}
-
-public Action L4D_OnSpawnSpecial(&zombieClass, const Float:vector[3], const Float:qangle[3])
-{
-	DebugPrint("OnSpawnSpecial(zombieClass=%d, vector[%f,%f,%f], qangle[%f,%f,%f]",
-		zombieClass, vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
-
-	if (GetConVarBool(cvarBlockSpecials))
-	{
+	if (cvarBlockSpecials.BoolValue) {
 		DebugPrint("Blocking special spawn...");
 		return Plugin_Handled;
-	}
-	else if (GetConVarInt(cvarForceSpecials) > 0)
-	{
+	} else if (cvarForceSpecials.IntValue > 0) {
 		zombieClass = GetConVarInt(cvarForceSpecials);
 		DebugPrint("Converting to type %d...", zombieClass);
 		return Plugin_Changed;
 	}
-	else
-	{
-		return Plugin_Continue;
-	}
+
+	return Plugin_Continue;
 }
 
-public Action L4D_OnSpawnWitchBride(const Float:vector[3], const Float:qangle[3])
+public void L4D_OnSpawnSpecial_Post(int client, int zombieClass, const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("OnSpawnWitchBride(vector[%f,%f,%f], qangle[%f,%f,%f])",
-		vector[0], vector[1], vector[2], qangle[0], qangle[1], qangle[2]);
+	DebugPrint("L4D_OnSpawnSpecial_Post(client=%d, zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+					client, zombieClass, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+}
 
-	if (GetConVarBool(cvarBlockWitches))
-	{
+public Action L4D_OnSpawnTank(const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("L4D_OnSpawnTank(vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+					vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+
+	if (cvarBlockTanks.BoolValue) {
+		DebugPrint("Blocking tank spawn...");
+		return Plugin_Handled;
+	}
+	
+	return Plugin_Continue;
+}
+
+public void L4D_OnSpawnTank_Post(int client, const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("L4D_OnSpawnTank_Post(client=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+					client, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+}
+
+public Action L4D_OnSpawnWitch(const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("L4D_OnSpawnWitch(vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
+					vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+
+	if (cvarBlockWitches.BoolValue) {
+		DebugPrint("Blocking witch spawn...");
+		return Plugin_Handled;
+	}
+
+	return Plugin_Continue;
+}
+
+public void L4D_OnSpawnWitch_Post(int entity, const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("L4D_OnSpawnWitch_Post(entity=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
+					entity, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+}
+
+public Action L4D2_OnSpawnWitchBride(const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("OnSpawnWitchBride(vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
+					vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+
+	if (cvarBlockWitches.BoolValue) {
 		DebugPrint("Blocking witch bride spawn...");
 		return Plugin_Handled;
 	}
-	else
-	{
-		return Plugin_Continue;
-	}
+
+	return Plugin_Continue;
 }
 
-public Action L4D_OnClearTeamScores(bool:newCampaign)
+public void L4D2_OnSpawnWitchBride_Post(int entity, const float vecPos[3], const float vecAng[3])
+{
+	DebugPrint("L4D2_OnSpawnWitchBride_Post(entity=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
+					entity, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
+}
+
+public Action L4D_OnClearTeamScores(bool newCampaign)
 {
 	DebugPrint("OnClearTeamScores(newCampaign=%d)", newCampaign);
 
 	return Plugin_Continue;
 }
 
-public Action L4D_OnSetCampaignScores(&scoreA, &scoreB)
+public Action L4D_OnSetCampaignScores(int &scoreA, int &scoreB)
 {
 	DebugPrint("SetCampaignScores(A=%d, B=%d", scoreA, scoreB);
 
-	if (GetConVarInt(cvarSetCampaignScores))
-	{
+	if (GetConVarInt(cvarSetCampaignScores)) {
 		scoreA = GetConVarInt(cvarSetCampaignScores);
 		DebugPrint("Overrode with SetCampaignScores(A=%d, B=%d", scoreA, scoreB);
 	}
 }
 
-public Action L4D_OnFirstSurvivorLeftSafeArea(client)
+public Action L4D_OnFirstSurvivorLeftSafeArea(int client)
 {
 	DebugPrint("OnFirstSurvivorLeftSafeArea(client=%d)", client);
 
-	if (GetConVarInt(cvarFirstSurvivorLeftSafeArea))
-	{
+	if (GetConVarInt(cvarFirstSurvivorLeftSafeArea)) {
 		DebugPrint("Blocking OnFirstSurvivorLeftSafeArea...");
 		return Plugin_Handled;
 	}
@@ -332,8 +336,7 @@ public Action L4D_OnGetScriptValueInt(const String:key[], &retVal)
 {
 	//DebugPrint("OnGetScriptValueInt(key=\"%s\",retVal=%d)", key, retVal);
 
-	if (GetConVarInt(cvarProhibitBosses) && StrEqual(key, "ProhibitBosses"))
-	{
+	if (GetConVarInt(cvarProhibitBosses) && StrEqual(key, "ProhibitBosses")) {
 		//DebugPrint("Overriding OnGetScriptValueInt(ProhibitBosses)...");
 		retVal = 0; //no, do not prohibit bosses thank you very much
 		return Plugin_Handled;
@@ -453,9 +456,10 @@ public Action L4D_OnFastGetSurvivorSet(&retVal)
 public Action L4D_OnGetMissionVSBossSpawning(&Float:spawn_pos_min, &Float:spawn_pos_max, &Float:tank_chance, &Float:witch_chance)
 {
 	DebugPrint("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
-	#if TEST_DEBUG_LOG
+#if TEST_DEBUG_LOG
 	LogMessage("L4D_OnGetMissionVersusBossSpawning(%f, %f, %f, %f) fired", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
-	#endif
+#endif
+
 	return Plugin_Continue;
 }
 
@@ -521,7 +525,6 @@ public Action L4D2_OnSelectTankAttack(int client, int &sequence)
 public void L4D2_OnRevived(int client)
 {
 	DebugPrint("L4D2_OnRevived(%d) fired", client);
-	return Plugin_Continue;
 }
 
 /*public void OnMapStart()

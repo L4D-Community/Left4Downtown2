@@ -39,6 +39,32 @@
 #include <l4d2director>
 
 /**
+ * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ * @remarks Only used for bot special spawns (not players)
+ *
+ * @param zombieClass	Zombie class that will be spawned.
+ * @param vector		Vector coordinate where special will be spawned
+ * @param qangle		QAngle where spcial will be facing
+ * @return 				Pl_Handled to block special from spawning,
+ * 				Pl_Changed to change the zombie class type to spawn, Pl_Continue otherwise.
+ */
+forward Action L4D_OnSpawnSpecial(int &zombieClass, const float vecOrigin[3], const float vecAngles[3]);
+
+/**
+ * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ * @remarks Only used for bot special spawns (not players)
+ * @remarks zombieClass: 1=Smoker, 2=Boomer, 3=Hunter, 4=Spitter, 5=Jockey, 6=Charger
+ *
+ * @param client		The client index who spawned
+ * @param zombieClass	Zombie class that will be spawned.
+ * @param vecPos		Vector coordinate where special will be spawned
+ * @param vecAng		QAngle where spcial will be facing
+ *
+ * @noreturn
+ */
+forward void L4D_OnSpawnSpecial_Post(int client, int zombieClass, const float vecPos[3], const float vecAng[3]);
+
+/**
  * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
  * @remarks Not invoked if z_spawn tank is used and it gives a ghosted/dead player tank
  *
@@ -47,6 +73,18 @@
  * @return 		Pl_Handled to block tank from spawning, Pl_Continue otherwise.
  */
 forward Action L4D_OnSpawnTank(const float vecOrigin[3], const float vecAngles[3]);
+
+/**
+ * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
+ * @remarks Not invoked if z_spawn tank is used and it gives a ghosted/dead player tank
+ *
+ * @param client		The client index who spawned
+ * @param vecPos		Vector coordinate where tank is spawned
+ * @param vecAng		QAngle where tank will be facing
+ *
+ * @noreturn
+ */
+forward void L4D_OnSpawnTank_Post(int client, const float vecPos[3], const float vecAng[3]);
 
 /**
  * @brief Called whenever ZombieManager::SpawnWitch(Vector&,QAngle&) is invoked
@@ -58,25 +96,38 @@ forward Action L4D_OnSpawnTank(const float vecOrigin[3], const float vecAngles[3
 forward Action L4D_OnSpawnWitch(const float vecOrigin[3], const float vecAngles[3]);
 
 /**
+ * @brief Called whenever ZombieManager::SpawnWitch(Vector&,QAngle&) is invoked
+ * @brief Called when a Witch spawns
+ *
+ * @param entity		Entity index that spawned
+ * @param vecPos		Vector coordinate where witch is spawned
+ * @param vecAng		QAngle where witch will be facing
+ *
+ * @noreturn
+ */
+forward void L4D_OnSpawnWitch_Post(int entity, const float vecPos[3], const float vecAng[3]);
+
+/**
  * @brief Called whenever ZombieManager::SpawnWitchBride(Vector&,QAngle&) is invoked
  *
  * @param vector	Vector coordinate where witch is spawned
  * @param qangle	QAngle where witch will be facing
  * @return 		Pl_Handled to block witch from spawning, Pl_Continue otherwise.
  */
-forward Action L4D_OnSpawnWitchBride(const float vecOrigin[3], const float vecAngles[3]);
+forward Action L4D2_OnSpawnWitchBride(const float vecOrigin[3], const float vecAngles[3]);
 
 /**
- * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
- * @remarks Only used for bot special spawns (not players)
+ * @brief Called whenever ZombieManager::SpawnWitchBride(Vector&,QAngle&) is invoked
+ * @brief Called when a Witch Bride spawns
  *
- * @param zombieClass	Zombie class that will be spawned.
- * @param vector		Vector coordinate where special will be spawned
- * @param qangle		QAngle where spcial will be facing
- * @return 				Pl_Handled to block special from spawning,
- * 				Pl_Changed to change the zombie class type to spawn, Pl_Continue otherwise.
+ * @param entity		Entity index that spawned
+ * @param vecPos		Vector coordinate where witch is spawned
+ * @param vecAng		QAngle where witch will be facing
+ *
+ * @noreturn
  */
-forward Action L4D_OnSpawnSpecial(int &zombieClass, const float vecOrigin[3], const float vecAngles[3]);
+// L4D2 only.
+forward void L4D2_OnSpawnWitchBride_Post(int entity, const float vecPos[3], const float vecAng[3]);
 
 /**
  * @brief Called whenever CTerrorGameRules::ClearTeamScores(bool) is invoked

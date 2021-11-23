@@ -38,17 +38,17 @@
 namespace Detours
 {
 	class SpawnTank;
-	typedef void * (SpawnTank::*SpawnTankFunc)(void *, void*);
+	typedef CTerrorPlayer *(SpawnTank::*SpawnTankFunc)(Vector *, QAngle *);
 
 	class SpawnTank : public DetourTemplate<SpawnTankFunc, SpawnTank>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnSpawnTank(void *vector, void *qangle);
+		CTerrorPlayer *OnSpawnTank(Vector *vector, QAngle *qangle);
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnSpawnTank->GetFunctionCount() > 0);
+			return ((g_pFwdOnSpawnTank->GetFunctionCount() > 0) || (g_pFwdOnSpawnTankPost->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "ZombieManager::SpawnTank") from the game conf

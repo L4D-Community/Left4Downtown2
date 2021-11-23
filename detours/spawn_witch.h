@@ -38,17 +38,17 @@
 namespace Detours
 {
 	class SpawnWitch;
-	typedef void * (SpawnWitch::*SpawnWitchFunc)(void *, void*);
+	typedef CBaseEntity *(SpawnWitch::*SpawnWitchFunc)(Vector *, QAngle *);
 
 	class SpawnWitch : public DetourTemplate<SpawnWitchFunc, SpawnWitch>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnSpawnWitch(void *vector, void *qangle);
+		CBaseEntity *OnSpawnWitch(Vector *vector, QAngle *qangle);
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnSpawnWitch->GetFunctionCount() > 0);
+			return ((g_pFwdOnSpawnWitch->GetFunctionCount() > 0) || (g_pFwdOnSpawnWitchPost->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "ZombieManager::SpawnWitch") from the game conf

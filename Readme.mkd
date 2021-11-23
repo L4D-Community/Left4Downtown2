@@ -2,30 +2,34 @@
 
 ##Changelog##
 
+###November 23, 2021 :: 0.7.8###
+* Added forwards 'L4D_OnSpawnSpecial_Post', 'L4D_OnSpawnTank_Post', 'L4D_OnSpawnWitch_Post', 'L4D2_OnSpawnWitchBride_Post'.
+* Fixed wrong name 'L4D_OnSpawnWitchBride' changed to 'L4D2_OnSpawnWitchBride'.
+
 ###October 5, 2021 :: 0.7.5###
 * Hook only required detours.
 * Code cleanup.
 * Removed unused code & files.
 * Added missing melees to the unlock on all maps.
-* Fixed wrong name 'L4D_OnRevived' changed to 'L4D2_OnRevived'
+* Fixed wrong name 'L4D_OnRevived' changed to 'L4D2_OnRevived'.
 
 ###September 30, 2021 :: 0.7.1###
 * Added natives L4D2_SwapTeams(), L4D_SetHumanSpec(), L4D_TakeOverBot(), L4D_HasPlayerControlledZombies().
 * Fixed mistakes in old natives.
-* Added ambuild and github actions
+* Added ambuild and github actions.
 
 ###July 08, 2021 :: 0.6.6###
-* Added natives L4D_HasAnySurvivorLeftSafeArea(), L4D2_GetFurthestSurvivorFlow(), L4D_ReviveSurvivor();
-* Restore the old forward L4D2_OnSpitSpread();
+* Added natives L4D_HasAnySurvivorLeftSafeArea(), L4D2_GetFurthestSurvivorFlow(), L4D_ReviveSurvivor().
+* Restore the old forward L4D2_OnSpitSpread().
 * Fix very rare crash in forward L4D2_OnEntityShoved(), it looks like if the player shoved another object that has no property 'm_isAttemptingToPounce', then we read garbage on this offset, and this causes a crash in rare cases.
 
 ###May 24, 2021 :: 0.6.4###
-* Added natives L4D_GetHighestFlowSurvivor(), L4D2_AreTeamsFlipped(), L4D2_GetVersusCompletionPlayer(), L4D2_IsTankInPlay();
-* Added new forward L4D_OnLedgeGrabbed(client);
+* Added natives L4D_GetHighestFlowSurvivor(), L4D2_AreTeamsFlipped(), L4D2_GetVersusCompletionPlayer(), L4D2_IsTankInPlay().
+* Added new forward L4D_OnLedgeGrabbed(client).
 
 ###Fixes after 'The Last Stand' update ###
-* Update addons disabler, thx ProdigySim
-* Update gamedata
-* Update OnGetMissionVersusBossSpawning detour
+* Update addons disabler, thx ProdigySim.
+* Update gamedata.
+* Update OnGetMissionVersusBossSpawning detour.
 * Fix native L4D2_IsValidWeapon, thx Sir for show. You need to update old plugins like 'l4d2 weapon attributes.sp' and others using the native L4D2_IsValidWeapon and put an exclamation mark here https://github.com/Attano/L4D2-Competitive-Framework/blob/master/addons/sourcemod/scripting/l4d2_weapon_attributes.sp#L169 as it now works correctly.
-* Update makefile for Linux build (Sourcemod 1.10, Memamod 1.11)
+* Update makefile for Linux build (Sourcemod 1.10, Memamod 1.11).

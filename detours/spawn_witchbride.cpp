@@ -35,18 +35,26 @@
 
 namespace Detours
 {
-	void *SpawnWitchBride::OnSpawnWitchBride(void *vector, void *qangle)
+	CBaseEntity *SpawnWitchBride::OnSpawnWitchBride(Vector *position, QAngle *angles)
 	{
 		cell_t result = Pl_Continue;
 
-		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(vector), 3);
-		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(qangle), 3);
+		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(position), 3);
+		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(angles), 3);
 		g_pFwdOnSpawnWitchBride->Execute(&result);
 
 		if (result == Pl_Handled) {
 			return NULL;
 		}
 
-		return (this->*(GetTrampoline()))(vector, qangle);
+		CBaseEntity *pEntity = (this->*(GetTrampoline()))(position, angles);
+		int entity = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pEntity)));
+		
+		g_pFwdOnSpawnWitchBridePost->PushCell(entity);
+		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t*>(position), 3);
+		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnWitchBridePost->Execute(NULL);
+
+		return pEntity;
 	}
 };
