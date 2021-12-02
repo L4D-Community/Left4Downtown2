@@ -29,8 +29,9 @@
  *
  * Version: $Id$
  */
+
 #if defined _l4do_included
- #endinput
+	#endinput
 #endif
 #define _l4do_included
 
@@ -759,7 +760,7 @@ native void L4D2_SendInRescueVehicle();
 native void L4D_ReplaceTank(int tank, int newtank);
 
 /**
- * @brief Calls CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char  const*)
+ * @brief Calls CDirectorScriptedEventManager::ChangeFinaleStage(CDirectorScriptedEventManager::FinaleStageType,char const*)
  *
  * @param FinaleStageType	integer value
  * @remarks some values for FinaleStageType: 1 - Finale Started; 6 - Rescue Vehicle Ready; 7 - Zombie Hordes; 8 - Tank; 10 - Combat Respite (nothing spawns)

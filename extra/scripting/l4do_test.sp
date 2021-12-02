@@ -255,7 +255,7 @@ public Action L4D_OnSpawnTank(const float vecPos[3], const float vecAng[3])
 		DebugPrint("Blocking tank spawn...");
 		return Plugin_Handled;
 	}
-	
+
 	return Plugin_Continue;
 }
 

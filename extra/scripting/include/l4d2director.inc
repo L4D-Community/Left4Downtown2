@@ -30,8 +30,8 @@
  * Version: $Id$
  */
 
- #if defined _l4d2director_included
-  #endinput
+#if defined _l4d2director_included
+	#endinput
 #endif
 #define _l4d2director_included
 

@@ -8,7 +8,7 @@
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, version 3.0, as published by the
  * Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
@@ -28,8 +28,9 @@
  *
  * Version: $Id$
  */
+
 #if defined _l4d2d_internals_included
- #endinput
+	#endinput
 #endif
 #define _l4d2d_internals_included
 
@@ -49,7 +50,7 @@ stock Handle L4D2Direct_GetGameConf()
 	if (g_hGameConf_l4d2dir == null) {
 		g_hGameConf_l4d2dir = LoadGameConfigFile("l4d2_direct");
 	}
-	
+
 	return g_hGameConf_l4d2dir;
 }
 
@@ -80,7 +81,7 @@ stock Address L4D2Direct_GetCDirectorVersusMode()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pVersusModeDirector = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 		pVersusModeDirector = view_as<Address>(LoadFromAddress(pVersusModeDirector, NumberType_Int32));
 	}
@@ -100,7 +101,7 @@ stock Address L4D2Direct_GetCDirectorScavengeMode()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pScavengeModeDirector = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 		pScavengeModeDirector = view_as<Address>(LoadFromAddress(pScavengeModeDirector, NumberType_Int32));
 	}
@@ -118,7 +119,7 @@ stock Address L4D2Direct_GetTerrorNavMesh()
 	if (TheNavMesh == Address_Null) {
 		TheNavMesh = GameConfGetAddress(L4D2Direct_GetGameConf(), "TerrorNavMesh");
 	}
-	
+
 	return TheNavMesh;
 }
 
@@ -135,7 +136,7 @@ stock Address L4D2Direct_GetTankCountAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pTankCount = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 	}
 	return pTankCount;
@@ -154,7 +155,7 @@ stock Address L4D2Direct_GetTankPassedCountAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pTankPassedCount = L4D2Direct_GetCDirector() + view_as<Address>(offs);
 	}
 	return pTankPassedCount;
@@ -173,7 +174,7 @@ stock Address L4D2Direct_GetVSCampaignScoresAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pCampaignScores = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pCampaignScores;
@@ -192,7 +193,7 @@ stock Address L4D2Direct_GetVSTankFlowAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pTankFlowPercent = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pTankFlowPercent;
@@ -211,7 +212,7 @@ stock Address L4D2Direct_GeVSTankToSpawnAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pTankSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pTankSpawnThisRound;
@@ -230,7 +231,7 @@ stock Address L4D2Direct_GetVSWitchFlowAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pWitchFlowPercent = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pWitchFlowPercent;
@@ -249,7 +250,7 @@ stock Address L4D2Direct_GetVSWitchToSpawnAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pWitchSpawnThisRound = L4D2Direct_GetCDirectorVersusMode() + view_as<Address>(offs);
 	}
 	return pWitchSpawnThisRound;
@@ -268,7 +269,7 @@ stock Address L4D2Direct_GetMapMaxFlowDistanceAddr()
 		if (offs == -1) {
 			return Address_Null;
 		}
-		
+
 		pMapMaxFlowDistance = L4D2Direct_GetTerrorNavMesh() + view_as<Address>(offs);
 	}
 	return pMapMaxFlowDistance;
@@ -289,12 +290,12 @@ stock bool GetEntityValueFromOffset(int entity, const char[] offset, NumberType 
 	if (pEntity == Address_Null) {
 		return false;
 	}
-	
+
 	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
 	if (offs == -1) {
 		return false;
 	}
-	
+
 	value = LoadFromAddress(pEntity + view_as<Address>(offs), size);
 	return true;
 }
@@ -314,12 +315,12 @@ stock bool SetEntityValueFromOffset(int entity, const char[] offset, NumberType 
 	if (pEntity == Address_Null) {
 		return false;
 	}
-	
+
 	int offs = GameConfGetOffset(L4D2Direct_GetGameConf(), offset);
 	if (offs == -1) {
 		return false;
 	}
-	
+
 	StoreToAddress(pEntity + view_as<Address>(offs), value, size);
 	return true;
 }
