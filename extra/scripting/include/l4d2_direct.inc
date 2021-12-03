@@ -224,7 +224,7 @@ stock float L4D2Direct_GetVSTankFlowPercent(int iRoundNumber)
 		return -1.0;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
 	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(iTeamNumber * 4), NumberType_Int32));
 }
 
@@ -246,8 +246,8 @@ stock void L4D2Direct_SetVSTankFlowPercent(int iRoundNumber, float fFlow)
 		return;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
-	StoreToAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(iTeamNumber * 4), fFlow, NumberType_Int32);
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(iTeamNumber * 4), view_as<int>(fFlow), NumberType_Int32);
 }
 
 /**
@@ -263,8 +263,8 @@ stock bool L4D2Direct_GetVSTankToSpawnThisRound(int iRoundNumber)
 		return false;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
-	return LoadFromAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8);
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return view_as<bool>(LoadFromAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8));
 }
 
 /**
@@ -283,7 +283,7 @@ stock void L4D2Direct_SetVSTankToSpawnThisRound(int iRoundNumber, bool bSpawn)
 		return;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
 	StoreToAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(iTeamNumber), bSpawn, NumberType_Int8);
 }
 
@@ -304,7 +304,7 @@ stock float L4D2Direct_GetVSWitchFlowPercent(int iRoundNumber)
 		return -1.0;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
 	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(iTeamNumber * 4), NumberType_Int32));
 }
 
@@ -326,8 +326,8 @@ stock void L4D2Direct_SetVSWitchFlowPercent(int iRoundNumber, float fFlow)
 		return;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
-	StoreToAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(iTeamNumber * 4), fFlow, NumberType_Int32);
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(iTeamNumber * 4), view_as<int>(fFlow), NumberType_Int32);
 }
 
 /**
@@ -343,8 +343,8 @@ stock bool L4D2Direct_GetVSWitchToSpawnThisRound(int iRoundNumber)
 		return false;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
-	return LoadFromAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8);
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return view_as<bool>(LoadFromAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8));
 }
 
 /**
@@ -363,7 +363,7 @@ stock void L4D2Direct_SetVSWitchToSpawnThisRound(int iRoundNumber, bool bSpawn)
 		return;
 	}
 
-	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	int iTeamNumber = iRoundNumber ^ view_as<int>(GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
 	StoreToAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(iTeamNumber), bSpawn, NumberType_Int8);
 }
 
