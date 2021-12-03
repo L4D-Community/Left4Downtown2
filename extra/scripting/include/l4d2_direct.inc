@@ -218,13 +218,14 @@ stock void L4D2Direct_SetVSCampaignScore(int teamNumber , int score)
  * @return				Tank spawn flow percent for the given round
  * @error				Director or Versus Director address not found.
  */
-stock float L4D2Direct_GetVSTankFlowPercent(int roundNumber)
+stock float L4D2Direct_GetVSTankFlowPercent(int iRoundNumber)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return -1.0;
 	}
 
-	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4), NumberType_Int32));
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(iTeamNumber * 4), NumberType_Int32));
 }
 
 /**
@@ -239,13 +240,14 @@ stock float L4D2Direct_GetVSTankFlowPercent(int roundNumber)
  * @noreturn
  * @error				Director or Versus Director address not found.
  */
-stock void L4D2Direct_SetVSTankFlowPercent(int roundNumber, float flow)
+stock void L4D2Direct_SetVSTankFlowPercent(int iRoundNumber, float fFlow)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return;
 	}
 
-	StoreToAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(roundNumber * 4), view_as<int>(flow), NumberType_Int32);
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GetVSTankFlowAddr() + view_as<Address>(iTeamNumber * 4), fFlow, NumberType_Int32);
 }
 
 /**
@@ -255,13 +257,14 @@ stock void L4D2Direct_SetVSTankFlowPercent(int roundNumber, float flow)
  * @return				True if there is still a tank to spawn for the given round, false if it has already been spawned or will not spawn.
  * @error				Director or Versus Director address not found.
  */
-stock bool L4D2Direct_GetVSTankToSpawnThisRound(int roundNumber)
+stock bool L4D2Direct_GetVSTankToSpawnThisRound(int iRoundNumber)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return false;
 	}
 
-	return view_as<bool>(LoadFromAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber), NumberType_Int8));
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return LoadFromAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8);
 }
 
 /**
@@ -274,13 +277,14 @@ stock bool L4D2Direct_GetVSTankToSpawnThisRound(int roundNumber)
  * @noreturn
  * @error				Director or Versus Director address not found.
  */
-stock void L4D2Direct_SetVSTankToSpawnThisRound(int roundNumber, bool spawn)
+stock void L4D2Direct_SetVSTankToSpawnThisRound(int iRoundNumber, bool bSpawn)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return;
 	}
 
-	StoreToAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(roundNumber), view_as<int>(spawn), NumberType_Int8);
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GeVSTankToSpawnAddr() + view_as<Address>(iTeamNumber), bSpawn, NumberType_Int8);
 }
 
 /**
@@ -294,13 +298,14 @@ stock void L4D2Direct_SetVSTankToSpawnThisRound(int roundNumber, bool spawn)
  * @return				Witch spawn flow percent for the given round
  * @error				Director or Versus Director address not found.
  */
-stock float L4D2Direct_GetVSWitchFlowPercent(int roundNumber)
+stock float L4D2Direct_GetVSWitchFlowPercent(int iRoundNumber)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return -1.0;
 	}
 
-	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4), NumberType_Int32));
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return view_as<float>(LoadFromAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(iTeamNumber * 4), NumberType_Int32));
 }
 
 /**
@@ -315,13 +320,14 @@ stock float L4D2Direct_GetVSWitchFlowPercent(int roundNumber)
  * @noreturn
  * @error				Director or Versus Director address not found.
  */
-stock void L4D2Direct_SetVSWitchFlowPercent(int roundNumber , float flow)
+stock void L4D2Direct_SetVSWitchFlowPercent(int iRoundNumber, float fFlow)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return;
 	}
 
-	StoreToAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(roundNumber * 4), view_as<int>(flow), NumberType_Int32);
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GetVSWitchFlowAddr() + view_as<Address>(iTeamNumber * 4), fFlow, NumberType_Int32);
 }
 
 /**
@@ -331,13 +337,14 @@ stock void L4D2Direct_SetVSWitchFlowPercent(int roundNumber , float flow)
  * @return				True if there is still a witch to spawn for the given round, false if it has already been spawned or will not spawn.
  * @error				Director or Versus Director address not found.
  */
-stock bool L4D2Direct_GetVSWitchToSpawnThisRound(int roundNumber)
+stock bool L4D2Direct_GetVSWitchToSpawnThisRound(int iRoundNumber)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return false;
 	}
 
-	return view_as<bool>(LoadFromAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber), NumberType_Int8));
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	return LoadFromAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(iTeamNumber), NumberType_Int8);
 }
 
 /**
@@ -350,13 +357,14 @@ stock bool L4D2Direct_GetVSWitchToSpawnThisRound(int roundNumber)
  * @noreturn
  * @error				Director or Versus Director address not found.
  */
-stock void L4D2Direct_SetVSWitchToSpawnThisRound(int roundNumber, bool spawn)
+stock void L4D2Direct_SetVSWitchToSpawnThisRound(int iRoundNumber, bool bSpawn)
 {
-	if (roundNumber < 0 || roundNumber > 1) {
+	if (iRoundNumber < 0 || iRoundNumber > 1) {
 		return;
 	}
 
-	StoreToAddress( L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(roundNumber), view_as<int>(spawn), NumberType_Int8);
+	int iTeamNumber = iRoundNumber ^ (GameRules_GetProp("m_bInSecondHalfOfRound") != GameRules_GetProp("m_bAreTeamsFlipped"));
+	StoreToAddress(L4D2Direct_GetVSWitchToSpawnAddr() + view_as<Address>(iTeamNumber), bSpawn, NumberType_Int8);
 }
 
 /**
