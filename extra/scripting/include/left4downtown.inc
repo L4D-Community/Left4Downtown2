@@ -38,6 +38,7 @@
 #include <l4d2timers>
 #include <l4d2weapons>
 #include <l4d2director>
+#include <l4d2stocks>
 
 /**
  * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked

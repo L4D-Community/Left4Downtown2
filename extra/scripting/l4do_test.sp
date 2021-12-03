@@ -155,6 +155,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_takeover_test", Cmd_TakeOverTest);
 	RegConsoleCmd("sm_swap_teams", Cmd_SwapTeams);
 	RegConsoleCmd("sm_has_controlled_zombies", Cmd_HasPlayerControlledZombies);
+	RegConsoleCmd("sm_setclass", Cmd_SetClass);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1006,6 +1007,40 @@ public Action Cmd_SwapTeams(int client, int args)
 public Action Cmd_HasPlayerControlledZombies(int client, int args)
 {
 	PrintToChat(client, "L4D_HasPlayerControlledZombies() %d", L4D_HasPlayerControlledZombies());
+	return Plugin_Handled;
+}
+
+public Action Cmd_SetClass(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		ReplyToCommand(iClient, "This command is not available for the server!");
+		return Plugin_Handled;
+	}
+
+	if (GetClientTeam(iClient) != 3) {
+		PrintToChat(iClient, "This command is only available to infected!");
+		return Plugin_Handled;
+	}
+
+	if (iArgs != 1) {
+		PrintToChat(iClient, "Enter class number from 1 to 6.");
+		PrintToChat(iClient, "Example: sm_setclass 2.");
+		return Plugin_Handled;
+	}
+
+	char sArgs[4];
+	GetCmdArg(1, sArgs, sizeof(sArgs));
+	int iZClass = StringToInt(sArgs);
+	if (iZClass < 1 || iZClass > 6) {
+		PrintToChat(iClient, "Enter class number from 1 to 6.");
+		PrintToChat(iClient, "Example: sm_setclass 2.");
+		return Plugin_Handled;
+	}
+
+	PrintToChat(iClient, "Start call L4D_SetClass(%d, %d)", iClient, iZClass);
+	L4D_SetClass(iClient, iZClass);
+	PrintToChat(iClient, "Called successfully L4D_SetClass(%d, %d)", iClient, iZClass);
+
 	return Plugin_Handled;
 }
 
