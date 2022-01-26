@@ -687,29 +687,35 @@ PrintL4D2FloatWeaponAttrib(client, const String:weapon[], const String:name[], L
 public Action Command_ReadWeaponAttributes(int client, int args)
 {
 #if USE_NATIVES
-	decl String:weapon[80];
-	GetCmdArg(1, weapon, sizeof(weapon));
+	char sWeapon[80];
+	GetCmdArg(1, sWeapon, sizeof(sWeapon));
 
-	ReplyToCommand(client, "Attributes for %s:", weapon);
-	PrintL4D2IntWeaponAttrib(client, weapon, "Damage", L4D2IWA_Damage);
-	PrintL4D2IntWeaponAttrib(client, weapon, "Bullets", L4D2IWA_Bullets);
-	PrintL4D2IntWeaponAttrib(client, weapon, "ClipSize", L4D2IWA_ClipSize);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxPlayerSpeed", L4D2FWA_MaxPlayerSpeed);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxSpread", L4D2FWA_MaxSpread);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "SpreadDecay", L4D2FWA_SpreadDecay);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MinDuckingSpread", L4D2FWA_MinDuckingSpread);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationPower", L4D2FWA_PenetrationPower);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "CharacterPenetrationMaxDistance", L4D2FWA_CharPenetrationMaxDist);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "Range", L4D2FWA_Range);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "RangeModifier", L4D2FWA_RangeModifier);
-	PrintL4D2FloatWeaponAttrib(client, weapon, "CycleTime", L4D2FWA_CycleTime);
+	ReplyToCommand(client, "Attributes for %s:", sWeapon);
+	PrintL4D2IntWeaponAttrib(client, sWeapon, "Damage", L4D2IWA_Damage);
+	PrintL4D2IntWeaponAttrib(client, sWeapon, "Bullets", L4D2IWA_Bullets);
+	PrintL4D2IntWeaponAttrib(client, sWeapon, "ClipSize", L4D2IWA_ClipSize);
+	PrintL4D2IntWeaponAttrib(client, sWeapon, "Bucket", L4D2IWA_Bucket);
+	PrintL4D2IntWeaponAttrib(client, sWeapon, "Tier", L4D2IWA_Tier);
+
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MaxPlayerSpeed", L4D2FWA_MaxPlayerSpeed);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "SpreadPerShot", L4D2FWA_SpreadPerShot);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MaxSpread", L4D2FWA_MaxSpread);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "SpreadDecay", L4D2FWA_SpreadDecay);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MinDuckingSpread", L4D2FWA_MinDuckingSpread);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MinStandingSpread", L4D2FWA_MinStandingSpread);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MinInAirSpread", L4D2FWA_MinInAirSpread);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "MaxMovementSpread", L4D2FWA_MaxMovementSpread);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "PenetrationNumLayers", L4D2FWA_PenetrationNumLayers);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "PenetrationPower", L4D2FWA_PenetrationPower);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "PenetrationMaxDistance", L4D2FWA_PenetrationMaxDist);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "CharacterPenetrationMaxDistance", L4D2FWA_CharPenetrationMaxDist);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "Range", L4D2FWA_Range);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "RangeModifier", L4D2FWA_RangeModifier);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "CycleTime", L4D2FWA_CycleTime);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "VerticalPunch", L4D2FWA_VerticalPunch);
+	PrintL4D2FloatWeaponAttrib(client, sWeapon, "HorizontalPunch", L4D2FWA_HorizontalPunch);
 #endif
+
 	return Plugin_Handled;
 }
 

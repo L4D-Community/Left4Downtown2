@@ -39,7 +39,9 @@ enum L4D2IntWeaponAttributes
 {
 	L4D2IWA_Damage,
 	L4D2IWA_Bullets,
-	L4D2IWA_ClipSize
+	L4D2IWA_ClipSize,
+	L4D2IWA_Bucket,
+	L4D2IWA_Tier // L4D2 only
 };
 
 /*
@@ -72,7 +74,9 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_RangeModifier,
 	L4D2FWA_CycleTime,
 	L4D2FWA_PelletScatterPitch,
-	L4D2FWA_PelletScatterYaw
+	L4D2FWA_PelletScatterYaw,
+	L4D2FWA_VerticalPunch,
+	L4D2FWA_HorizontalPunch // Requires "z_gun_horiz_punch" cvar changed to "1".
 };
 
 enum L4D2BoolMeleeWeaponAttributes

@@ -38,7 +38,9 @@ enum L4D2IntWeaponAttributes
 {
 	L4D2IWA_Damage,
 	L4D2IWA_Bullets,
-	L4D2IWA_ClipSize
+	L4D2IWA_ClipSize,
+	L4D2IWA_Bucket,
+	L4D2IWA_Tier // L4D2 only
 };
 
 enum L4D2FloatWeaponAttributes
@@ -59,7 +61,9 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_RangeModifier,
 	L4D2FWA_CycleTime,
 	L4D2FWA_PelletScatterPitch,
-	L4D2FWA_PelletScatterYaw
+	L4D2FWA_PelletScatterYaw,
+	L4D2FWA_VerticalPunch,
+	L4D2FWA_HorizontalPunch // Requires "z_gun_horiz_punch" cvar changed to "1".
 };
 
 int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
@@ -75,6 +79,10 @@ int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 			return &pInfo->m_iBullets;
 		case L4D2IWA_ClipSize:
 			return &pInfo->iMaxClip1;
+		case L4D2IWA_Bucket:
+			return &pInfo->iSlot;
+		case L4D2IWA_Tier:
+			return &pInfo->m_iTier;
 		default:
 			return NULL;
 	}
@@ -122,6 +130,10 @@ float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 			return &pInfo->m_fPelletScatterPitch;
 		case L4D2FWA_PelletScatterYaw:
 			return &pInfo->m_fPelletScatterYaw;
+		case L4D2FWA_VerticalPunch:
+			return &pInfo->m_fVerticalPunch;
+		case L4D2FWA_HorizontalPunch:
+			return &pInfo->m_fHorizontalPunch;
 		default:
 			return NULL;
 	}

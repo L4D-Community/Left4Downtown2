@@ -31,7 +31,7 @@
  */
 
 #if defined __l4do_stocks_included
-	#endinputы
+	#endinput
 #endif
 #define __l4do_stocks_included
 
