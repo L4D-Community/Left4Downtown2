@@ -35,6 +35,143 @@
 #include "util.h"
 #include "l4d2sdk/constants.h"
 
+// native int L4D_GetLastKnownArea(int client);
+cell_t L4D_GetLastKnownArea(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CTerrorPlayer::GetLastKnownArea(void)
+	if (!pWrapper) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(void *);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_OFFSET("CTerrorPlayer::GetLastKnownArea", \
+			pWrapper = g_pBinTools->CreateVCall(offset, 0, 0, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built vcall wrapper CTerrorPlayer::GetLastKnownArea");
+	}
+
+	int iTarget = params[1];
+
+	CBaseEntity * pTarget = UTIL_GetCBaseEntity(iTarget, true);
+	if (pTarget == NULL) {
+		return pContext->ThrowNativeError("Invalid target player: %d!", iTarget);
+	}
+
+	unsigned char vstk[sizeof(CBaseEntity *)];
+	unsigned char *vptr = vstk;
+
+	*(CBaseEntity **)vptr = pTarget;
+
+	void *pRet = NULL;
+
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::GetLastKnownArea");
+	pWrapper->Execute(vstk, /*retbuffer*/&pRet);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::GetLastKnownArea");
+
+	return reinterpret_cast<cell_t>(pRet);
+}
+
+//GetNearestNavArea( origin, maxDist, checkLOS, checkGround ) - given a position in the world, return the nearest nav area that is closest to or below that height.
+// native int L4D_GetNearestNavArea(const float vecPos[3], float maxDist = 10000.0, bool checkLOS = false, bool checkGround = true);
+cell_t L4D_GetNearestNavArea(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	//CNavArea *GetNearestNavArea( const Vector &pos, bool anyZ = false, float maxDist = 10000.0f, bool checkLOS = false, bool checkGround = true ) const;
+	//CNavMesh *CNavMesh::GetNearestNavArea(CNavMesh *this, const Vector *, bool, float, bool, bool, bool)
+	if (!pWrapper) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(void *);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("CNavMesh::GetNearestNavArea", \
+			PassInfo pass[6]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(Vector *); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(bool); \
+			pass[1].type = PassType_Basic; \
+			pass[2].flags = PASSFLAG_BYVAL; \
+			pass[2].size = sizeof(float); \
+			pass[2].type = PassType_Basic; \
+			pass[3].flags = PASSFLAG_BYVAL; \
+			pass[3].size = sizeof(bool); \
+			pass[3].type = PassType_Basic; \
+			pass[4].flags = PASSFLAG_BYVAL; \
+			pass[4].size = sizeof(bool); \
+			pass[4].type = PassType_Basic; \
+			pass[5].flags = PASSFLAG_BYVAL; \
+			pass[5].size = sizeof(bool); \
+			pass[5].type = PassType_Basic; \
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*retInfo*/&retInfo, /*paramInfo*/pass, /*numparams*/6));
+
+		L4D_DEBUG_LOG("Built call wrapper CNavMesh::GetNearestNavArea");
+	}
+
+	cell_t *source_vector;
+	pContext->LocalToPhysAddr(params[1], &source_vector);
+
+	Vector vectorPos;
+
+	if (source_vector != pContext->GetNullRef(SP_NULL_VECTOR)) {
+		vectorPos[0] = sp_ctof(source_vector[0]);
+		vectorPos[1] = sp_ctof(source_vector[1]);
+		vectorPos[2] = sp_ctof(source_vector[2]);
+	}
+
+	unsigned char vstk[sizeof(void *) + sizeof(Vector *) + sizeof(bool) + sizeof(float) + sizeof(bool) + sizeof(bool) + sizeof(bool)];
+	unsigned char *vptr = vstk;
+
+	//CNavMesh *this
+	*(void **)vptr = g_pNavMesh;
+	vptr += sizeof(void *);
+
+	// Arg 1: Vector pos
+	// The position to look from
+	*(Vector **)vptr = &vectorPos;
+	vptr += sizeof(Vector *);
+
+	// Arg 2: boolean anyZ = false
+	// This argument is ignored and has no effect
+	*(bool *)vptr = false;
+	vptr += sizeof(bool);
+
+	// Arg 3: number maxDist = 10000.0f
+	// This is the maximum distance from the given position that the function will look for a CNavArea
+	*(float *)vptr = sp_ctof(params[2]);
+	vptr += sizeof(float);
+
+	// Arg 4: boolean checkLOS = false
+	// If this is set to true then the function will internally do a util.
+	// TraceLine from the starting position to each potential CNavArea with a MASK_NPCSOLID_BRUSHONLY. 
+	// If the trace fails then the CNavArea is ignored.
+	*(bool *)vptr = (params[3]) ? true : false;
+	vptr += sizeof(bool);
+
+	// Arg 5: boolean checkGround = true
+	// If checkGround is true then this function will internally call navmesh.
+	// GetNavArea to check if there is a CNavArea directly below the position, and return it if so, before checking anywhere else.
+	*(bool *)vptr = (params[4]) ? true : false;
+	vptr += sizeof(bool);
+	
+	// Arg 5: bolean unknown = false
+	// Unknown parameter
+	*(bool *)vptr = false;
+
+	void *pRet = NULL;
+
+	L4D_DEBUG_LOG("Going to execute CNavMesh::GetNearestNavArea");
+	pWrapper->Execute(vstk, &pRet);
+	L4D_DEBUG_LOG("Invoked CNavMesh::GetNearestNavArea, got back = %x", pRet);
+
+	return reinterpret_cast<cell_t>(pRet);
+}
+
 // native bool L4D_HasPlayerControlledZombies();
 cell_t L4D_HasPlayerControlledZombies(IPluginContext *pContext, const cell_t *params)
 {
@@ -500,7 +637,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 	if (!pWrapper) {
 #ifdef PLATFORM_WINDOWS
 		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
-		PassInfo pass[4]; \
+			PassInfo pass[4]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(IServer *); \
 			pass[0].type = PassType_Basic; \
@@ -516,7 +653,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
 				pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/NULL, /*paramInfo*/pass, /*numparams*/4));
 #else
 		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
-		PassInfo pass[3]; \
+			PassInfo pass[3]; \
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(uint64_t); \
 			pass[0].type = PassType_Basic; \
@@ -1275,6 +1412,8 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] =
 {
+	{"L4D_GetLastKnownArea",			L4D_GetLastKnownArea},
+	{"L4D_GetNearestNavArea",			L4D_GetNearestNavArea},
 	{"L4D_HasPlayerControlledZombies",	L4D_HasPlayerControlledZombies},
 	{"L4D_SetHumanSpec",				L4D_SetHumanSpec},
 	{"L4D_TakeOverBot",					L4D_TakeOverBot},

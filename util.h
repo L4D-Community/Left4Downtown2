@@ -40,6 +40,13 @@
 	} \
 	code;
 
+#define REGISTER_NATIVE_OFFSET(name, code) \
+	int offset = -1; \
+	if (!g_pGameConf->GetOffset(name, &offset)) \
+	{ \
+		return pContext->ThrowNativeError("Failed to locate offset " #name); \
+	} \
+	code;
 
 size_t UTIL_Format(char *buffer, size_t maxlength, const char *fmt, ...);
 

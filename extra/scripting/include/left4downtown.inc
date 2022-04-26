@@ -536,6 +536,31 @@ forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
  */
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
 
+/**
+ * @brief Given a position in the world, return the nearest nav area that is closest to or below that height.
+ * @remarks This is more reliable than L4D2Direct_GetTerrorNavArea.
+ *
+ * @param vecPos			The vector array to use to retrieve the NavArea
+ * @param maxDist			This is the maximum distance from the given position that the function will look for a CNavArea
+ * @param checkLOS 			If this is set to true then the function will internally do a util.
+ * 							TraceLine from the starting position to each potential CNavArea with a MASK_NPCSOLID_BRUSHONLY.
+ * 							If the trace fails then the CNavArea is ignored.
+ * @param checkGround		If checkGround is true then this function will internally call navmesh.
+ * 							GetNavArea to check if there is a CNavArea directly below the position, and return it if so, before checking anywhere else.
+ *
+ * @return					The NavArea value, or 0 on failure probably
+ */
+native int L4D_GetNearestNavArea(const float vecPos[3], float maxDist = 10000.0, bool checkLOS = false, bool checkGround = true);
+
+/**
+ * @brief Returns the nav address of the last known area.
+ *
+ * @param client			The client to check
+ *
+ * @return					The nav area adress or 0 on fail
+ */
+native int L4D_GetLastKnownArea(int client);
+
 /** (Left4Dhooks)
  * @brief Returns if players can control infected.
  *

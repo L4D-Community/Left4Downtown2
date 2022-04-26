@@ -44,6 +44,7 @@ extern CDirector **g_pDirector;		/* Director */
 extern void *g_pZombieManager;	/* ZombieManager */
 extern WeaponDatabase *g_pWeaponInfoDatabase; /* WeaponInfoDatabase */
 extern CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore; /* CMeleeWeaponInfo */
+extern void *g_pNavMesh;
 
 void InitializeValveGlobals();
 

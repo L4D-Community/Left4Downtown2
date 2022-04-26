@@ -16,6 +16,30 @@
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
+// TerrorNavArea
+// Bitflags for TerrorNavArea.SpawnAttributes
+enum
+{
+	TERROR_NAV_EMPTY = 2,
+	TERROR_NAV_STOP = 4,
+	TERROR_NAV_FINALE = 0x40,
+	TERROR_NAV_BATTLEFIELD = 0x100,
+	TERROR_NAV_PLAYER_START = 0x80,
+	TERROR_NAV_IGNORE_VISIBILITY = 0x200,
+	TERROR_NAV_NOT_CLEARABLE = 0x400,
+	TERROR_NAV_CHECKPOINT = 0x800,
+	TERROR_NAV_OBSCURED = 0x1000,
+	TERROR_NAV_NO_MOBS = 0x2000,
+	TERROR_NAV_THREAT = 0x4000,
+	TERROR_NAV_NOTHREAT = 0x80000,
+	TERROR_NAV_LYINGDOWN = 0x100000,
+	TERROR_NAV_RESCUE_CLOSET = 0x10000,
+	TERROR_NAV_RESCUE_VEHICLE = 0x8000
+};
+
+int
+	g_iOffs_SpawnAttributes = -1;
+
 Handle
 	gConf = null;
 
@@ -34,7 +58,7 @@ public Plugin myinfo =
 	name = "L4D2 Downtown Extension Test Plugin",
 	author = "L4D2 Downtown Devs",
 	description = "Ensures functions/offsets are valid and provides commands to test-call most natives directly",
-	version = "0.7.1",
+	version = "0.8.0",
 	url = "https://github.com/A1mDev/Left4Downtown2"
 };
 
@@ -43,6 +67,11 @@ public void OnPluginStart()
 	gConf = LoadGameConfigFile(GAMECONFIG_FILE);
 	if (gConf == null) {
 		DebugPrint("Could not load gamedata/%s.txt", GAMECONFIG_FILE);
+	}
+
+	g_iOffs_SpawnAttributes = GameConfGetOffset(gConf, "TerrorNavArea::m_spawnAttributes");
+	if (g_iOffs_SpawnAttributes == -1) {
+		DebugPrint("Could not find offset for 'TerrorNavArea::m_spawnAttributes'");
 	}
 
 	SearchForOffset("TheDirector"); //fails on Linux
@@ -156,6 +185,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_swap_teams", Cmd_SwapTeams);
 	RegConsoleCmd("sm_has_controlled_zombies", Cmd_HasPlayerControlledZombies);
 	RegConsoleCmd("sm_setclass", Cmd_SetClass);
+	RegConsoleCmd("sm_test_navarea", Cmd_TestNavArea);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1048,6 +1078,49 @@ public Action Cmd_SetClass(int iClient, int iArgs)
 	PrintToChat(iClient, "Called successfully L4D_SetClass(%d, %d)", iClient, iZClass);
 
 	return Plugin_Handled;
+}
+
+public Action Cmd_TestNavArea(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+		return Plugin_Handled;
+	}
+
+	if (g_iOffs_SpawnAttributes == -1) {
+		PrintToChat(iClient, "Could not find offset for 'TerrorNavArea::m_spawnAttributes'");
+		return Plugin_Handled;
+	}
+
+	float fVec[3];
+	GetClientAbsOrigin(iClient, fVec);
+
+	Address pAddr = view_as<Address>(L4D_GetNearestNavArea(fVec));
+
+	if (pAddr != Address_Null) {
+		int iAttri = TerrorNavArea_GetSpawnAttributes(pAddr);
+		PrintToChatAll("[L4D_GetNearestNavArea] Client: %N, navarea address: %x, navarea attributes: %d, in saferoom: %s", \
+							iClient, pAddr, iAttri, (iAttri & TERROR_NAV_CHECKPOINT) ? "true" : "false");
+	} else {
+		PrintToChatAll("[L4D_GetNearestNavArea] Client: %N, navarea address: %x (null)", iClient, pAddr);
+	}
+
+	pAddr = view_as<Address>(L4D_GetLastKnownArea(iClient));
+
+	if (pAddr != Address_Null) {
+		int iAttri = TerrorNavArea_GetSpawnAttributes(pAddr);
+		PrintToChatAll("[L4D_GetLastKnownArea] Client: %N, navarea address: %x, navarea attributes: %d, in saferoom: %s", \
+							iClient, pAddr, iAttri, (iAttri & TERROR_NAV_CHECKPOINT) ? "true" : "false");
+	} else {
+		PrintToChatAll("[L4D_GetLastKnownArea] Client: %N, navarea address: %x (null)", iClient, pAddr);
+	}
+
+	return Plugin_Handled;
+}
+
+int TerrorNavArea_GetSpawnAttributes(Address iNav)
+{
+	return LoadFromAddress(iNav + view_as<Address>(g_iOffs_SpawnAttributes), NumberType_Int32);
 }
 
 void SearchForFunction(const char[] sFunctionName)

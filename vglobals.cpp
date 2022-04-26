@@ -37,10 +37,20 @@ CDirector **g_pDirector = NULL;
 void *g_pZombieManager = NULL;
 WeaponDatabase *g_pWeaponInfoDatabase = NULL;
 CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore = NULL;
+void *g_pNavMesh = NULL;
 
 void InitializeValveGlobals()
 {
 	char *addr = NULL;
+
+	/* g_pNavMesh */
+	if (!g_pGameConf->GetAddress("TerrorNavMesh", (void **)&addr) || !addr)
+	{
+		L4D_DEBUG_LOG("Couldn't find TheNavMesh instance!");
+		return;
+	}
+	g_pNavMesh = addr;
+	L4D_DEBUG_LOG("TheNavMesh found at: %p", g_pNavMesh);
 
 	/* g_pDirector */
 	if (!g_pGameConf->GetAddress("CDirector", (void **)&addr) || !addr)
@@ -76,6 +86,7 @@ void InitializeValveGlobals()
 		return;
 	}
 	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore *>(addr);
+
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %p ", g_pMeleeWeaponInfoStore);
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %s ", g_pMeleeWeaponInfoStore->Name());
 }
