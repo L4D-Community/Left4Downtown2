@@ -561,12 +561,19 @@ native int L4D_GetNearestNavArea(const float vecPos[3], float maxDist = 10000.0,
  */
 native int L4D_GetLastKnownArea(int client);
 
-/** (Left4Dhooks)
+/**
  * @brief Returns if players can control infected.
  *
  * @return			True if players can control infected, false otherwise
  */
 native bool L4D_HasPlayerControlledZombies();
+
+/**
+ * @brief Returns if the current game mode is Coop mode.
+ *
+ * @return				True if the current game mode is Coop mode, false otherwise.
+ **/
+native bool L4D_IsCoopMode();
 
 /**
  * @brief Revives an incapacitated survivor, also from ledge hanging
@@ -677,14 +684,14 @@ native bool L4D_LobbyIsReserved();
  */
 native int L4D_GetVersusMaxCompletionScore();
 
-/** (Left4Dhooks)
+/**
  * @brief To takeover a Survivor bot. First use "ChangeClientTeam" and change them to 0. Then call "L4D_SetHumanSpec" then call "L4D_TakeOverBot".
  *
  * @return			True or false
  */
 native int L4D_SetHumanSpec(int bot, int client);
 
-/** (Left4Dhooks)
+/**
  * @brief To takeover a Survivor bot. First use "ChangeClientTeam" and change them to 0. Then call "L4D_SetHumanSpec" then call "L4D_TakeOverBot".
  *
  * @return			True or false

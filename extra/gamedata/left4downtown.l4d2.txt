@@ -153,7 +153,7 @@
 				/* ? ? ? ? ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 56 8B ? 8B ? 8B ? ? ? ? ? 57 ? ? 84 ? 0F 84 ? ? ? ? 8B */
 			}
 
-			/* (Left4Dhooks)
+			/*
 			* CTerrorGameRules::HasPlayerControlledZombies()
 			*/
 			"CTerrorGameRules::HasPlayerControlledZombies"
@@ -163,6 +163,18 @@
 				"windows"	"\xF7\x05\x2A\x2A\x2A\x2A\x00\x10\x00\x00\x74\x2A\xB8\x2A\x2A\x2A\x2A\xEB\x2A\xA1\x2A\x2A\x2A\x2A\x8B\x40\x24\x85\xC0\x75\x2A\xB8\x2A\x2A\x2A\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x11\x50\x8B\x42\x10\xFF\xD0\x85\xC0\x74\x2A\x6A\x00\x68\x2A\x2A\x2A\x2A\x8B\xC8\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7E\x2A"
 				/* F7 05 ? ? ? ? 00 10 00 00 74 ? B8 ? ? ? ? EB ? A1 ? ? ? ? 8B 40 24 85 C0 75 ? B8 ? ? ? ? 8B 0D ? ? ? ? 8B 11 50 8B 42 10 FF D0 85 C0 74 ? 6A 00 68 ? ? ? ? 8B C8 E8 ? ? ? ? 85 C0 7E ? */
 				/* Search "playercontrolledzombies". */
+			}
+
+			/*
+			* CTerrorGameRules::IsCoopMode()
+			*/
+			"CTerrorGameRules::IsCoopMode"
+			{
+				"library"	"server"
+				"linux"		"@_ZN16CTerrorGameRules10IsCoopModeEv"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x85\x2A\x75\x2A\x32\x2A\xC3\xF7\x05\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\xB8\x10\x2A\x2A\x2A\xEB\x2A\xA1\xC4\x2A\x2A\x2A\x8B\x2A\x2A\x85\x2A\x75\x2A\xB8\x64\x2A\x2A\x2A\x8B\x2A\x50\x8B\x2A\x2A\xFF\x2A\x85\x2A\x74\x2A\x68\x3C"
+				/* ? ? ? ? ? ? 85 ? 75 ? 32 ? C3 F7 05 ? ? ? ? ? ? ? ? 74 ? B8 10 ? ? ? EB ? A1 C4 ? ? ? 8B ? ? 85 ? 75 ? B8 64 ? ? ? 8B ? 50 8B ? ? FF ? 85 ? 74 ? 68 3C */
+				/* Search string "coop", this function also contains the line "base" */
 			}
 
 			/*

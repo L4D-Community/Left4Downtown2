@@ -186,6 +186,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_has_controlled_zombies", Cmd_HasPlayerControlledZombies);
 	RegConsoleCmd("sm_setclass", Cmd_SetClass);
 	RegConsoleCmd("sm_test_navarea", Cmd_TestNavArea);
+	RegConsoleCmd("sm_gamemode", Cmd_GetGameMode);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1077,6 +1078,12 @@ public Action Cmd_SetClass(int iClient, int iArgs)
 	L4D_SetClass(iClient, iZClass);
 	PrintToChat(iClient, "Called successfully L4D_SetClass(%d, %d)", iClient, iZClass);
 
+	return Plugin_Handled;
+}
+
+public Action Cmd_GetGameMode(int iClient, int iArgs)
+{
+	PrintToChat(iClient, "L4D_IsCoopMode: %s", (L4D_IsCoopMode()) ? "true" : "false");
 	return Plugin_Handled;
 }
 

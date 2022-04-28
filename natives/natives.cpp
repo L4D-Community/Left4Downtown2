@@ -194,8 +194,8 @@ cell_t L4D_HasPlayerControlledZombies(IPluginContext *pContext, const cell_t *pa
 
 	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::HasPlayerControlledZombies");
 	pWrapper->Execute(NULL, &iRet);
-
 	L4D_DEBUG_LOG("Invoked CTerrorGameRules::HasPlayerControlledZombies, got back = %d", iRet);
+
 	return iRet;
 }
 
@@ -459,7 +459,7 @@ cell_t L4D2_GetVersusCompletionPlayer(IPluginContext *pContext, const cell_t *pa
 			passInfo.flags = PASSFLAG_BYVAL; \
 			passInfo.size = sizeof(CBaseEntity *); \
 			passInfo.type = PassType_Basic; \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, &passInfo, /*numparams*/1));
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &retInfo, &passInfo, /*numparams*/1));
 	}
 
 	void *pGameRules = g_pSDKTools->GetGameRules();
@@ -512,7 +512,7 @@ cell_t L4D_GetTeamScore(IPluginContext *pContext, const cell_t *params)
 			pass[1].flags = PASSFLAG_BYVAL; \
 			pass[1].size = sizeof(bool); \
 			pass[1].type = PassType_Basic; \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &ret, pass, /*numparams*/2));
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, &ret, pass, /*numparams*/2));
 	}
 
 #define SCORE_TEAM_A 1
@@ -566,7 +566,7 @@ cell_t L4D_RestartScenarioFromVote(IPluginContext *pContext, const cell_t *param
 			pass[0].flags = PASSFLAG_BYVAL; \
 			pass[0].size = sizeof(char *); \
 			pass[0].type = PassType_Basic; \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, pass, /*numparams*/1));
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, pass, /*numparams*/1));
 	}
 
 	/* Get the Director pointer */

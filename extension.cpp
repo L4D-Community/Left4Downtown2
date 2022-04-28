@@ -153,6 +153,7 @@ extern sp_nativeinfo_t g_L4DoTimerNatives[];
 extern sp_nativeinfo_t g_L4DoWeaponNatives[];
 extern sp_nativeinfo_t g_L4DoMeleeWeaponNatives[];
 extern sp_nativeinfo_t g_L4DoDirectorNatives[];
+extern sp_nativeinfo_t g_L4DoMatchNatives[];
 
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
 ConVar g_AddonsEclipse("l4d2_addons_eclipse", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Addons Manager(-1: use addonconfig; 0/1: override addonconfig");
@@ -208,6 +209,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	sharesys->AddNatives(myself, g_L4DoWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoMeleeWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoDirectorNatives);
+	sharesys->AddNatives(myself, g_L4DoMatchNatives);
 
 	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
 	g_pFwdOnSpawnSpecialPost = forwards->CreateForward("L4D_OnSpawnSpecial_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);

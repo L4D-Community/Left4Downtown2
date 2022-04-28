@@ -3,7 +3,7 @@
 ##Changelog##
 
 ###April 26, 2022 :: 0.8.0###
-* Added natives 'L4D_GetLastKnownArea', 'L4D_GetNearestNavArea'.
+* Added natives 'L4D_GetLastKnownArea', 'L4D_GetNearestNavArea', 'L4D_IsCoopMode'.
 
 ###November 23, 2021 :: 0.7.8###
 * Added forwards 'L4D_OnSpawnSpecial_Post', 'L4D_OnSpawnTank_Post', 'L4D_OnSpawnWitch_Post', 'L4D2_OnSpawnWitchBride_Post'.
