@@ -46,7 +46,7 @@ inline char *ConfigValidateAddress(const char *sName)
 	if (!g_pGameConf->GetAddress(sName, (void **)&pAddr) || !pAddr) {
 		//L4D_DEBUG_LOG("Failed to find \"%s\" address.", sName);
 		g_pSM->LogError(myself, "Failed to find \"%s\" address.", sName);
-		return;
+		return NULL;
 	}
 
 	L4D_DEBUG_LOG("%s found at: %p", sName, pAddr);
