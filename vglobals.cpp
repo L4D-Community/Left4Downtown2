@@ -41,51 +41,11 @@ void *g_pNavMesh = NULL;
 
 void InitializeValveGlobals()
 {
-	char *addr = NULL;
-
-	/* g_pNavMesh */
-	if (!g_pGameConf->GetAddress("TerrorNavMesh", (void **)&addr) || !addr)
-	{
-		L4D_DEBUG_LOG("Couldn't find TheNavMesh instance!");
-		return;
-	}
-	g_pNavMesh = addr;
-	L4D_DEBUG_LOG("TheNavMesh found at: %p", g_pNavMesh);
-
-	/* g_pDirector */
-	if (!g_pGameConf->GetAddress("CDirector", (void **)&addr) || !addr)
-	{
-		L4D_DEBUG_LOG("Couldn't find CDirector instance!");
-		return;
-	}
-	g_pDirector = reinterpret_cast<CDirector **>(addr);
-	L4D_DEBUG_LOG("TheDirector found at: %p", g_pDirector);
-
-	/* g_pZombieManager */
-	if (!g_pGameConf->GetAddress("ZombieManager", (void **)&addr))
-	{
-		L4D_DEBUG_LOG("TheZombieManager address not found.");
-		return;
-	}
-	g_pZombieManager = addr;
-	L4D_DEBUG_LOG("TheZombieManager found at: %p", g_pZombieManager);
-
-	/* g_pWeaponInfoDatabase */
-	if (!g_pGameConf->GetAddress("WeaponInfoDatabase", (void **)&addr))
-	{
-		L4D_DEBUG_LOG("WeaponInfoDatabase address not found.");
-		return;
-	}
-	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(addr);
-	L4D_DEBUG_LOG("WeaponInfoDatabase found at: %p", g_pWeaponInfoDatabase);
-
-	/* g_pMeleeWeaponInfoStore */
-	if (!g_pGameConf->GetAddress("MeleeWeaponInfoStore", (void **)&addr))
-	{
-		L4D_DEBUG_LOG("MeleeWeaponInfoStore address not found.");
-		return;
-	}
-	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore *>(addr);
+	g_pNavMesh = ConfigValidateAddress("TerrorNavMesh");
+	g_pZombieManager = ConfigValidateAddress("ZombieManager");
+	g_pDirector = reinterpret_cast<CDirector **>(ConfigValidateAddress("CDirector"));
+	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(ConfigValidateAddress("WeaponInfoDatabase"));
+	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore *>(ConfigValidateAddress("MeleeWeaponInfoStore"));
 
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %p ", g_pMeleeWeaponInfoStore);
 	L4D_DEBUG_LOG("MeleeWeaponInfo Store: %s ", g_pMeleeWeaponInfoStore->Name());

@@ -260,7 +260,7 @@ cell_t L4D2_SetVersusWitchFlowPercent(IPluginContext *pContext, const cell_t *pa
 	return 0;
 }
 
-sp_nativeinfo_t  g_L4DoDirectorNatives[] =
+sp_nativeinfo_t g_L4DoDirectorNatives[] =
 {
 	{"L4D_HasAnySurvivorLeftSafeArea",	L4D_HasAnySurvivorLeftSafeArea},
 	{"L4D2_GetFurthestSurvivorFlow",	L4D2_GetFurthestSurvivorFlow},

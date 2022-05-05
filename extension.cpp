@@ -204,6 +204,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 
 	sharesys->AddDependency(myself, "bintools.ext", true, true);
 	sharesys->RegisterLibrary(myself, "left4downtown2");
+
 	sharesys->AddNatives(myself, g_L4DoNatives);
 	sharesys->AddNatives(myself, g_L4DoTimerNatives);
 	sharesys->AddNatives(myself, g_L4DoWeaponNatives);

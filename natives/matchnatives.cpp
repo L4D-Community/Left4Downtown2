@@ -59,8 +59,94 @@ cell_t L4D_IsCoopMode(IPluginContext *pContext, const cell_t *params)
 	return iRet;
 }
 
+// native bool L4D_HasPlayerControlledZombies();
+cell_t L4D_HasPlayerControlledZombies(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	//bool CTerrorGameRules::HasPlayerControlledZombies(void)
+	if (!pWrapper) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(bool);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::HasPlayerControlledZombies", \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::HasPlayerControlledZombies");
+	}
+
+	cell_t iRet = 0;
+
+	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::HasPlayerControlledZombies");
+	pWrapper->Execute(NULL, &iRet);
+	L4D_DEBUG_LOG("Invoked CTerrorGameRules::HasPlayerControlledZombies, got back = %d", iRet);
+
+	return iRet;
+}
+
+// native bool L4D_IsFirstMapInScenario();
+cell_t L4D_IsFirstMapInScenario(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CDirector::IsFirstMapInScenario(void)
+	if (!pWrapper) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(bool);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("CDirector::IsFirstMapInScenario", \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built call wrapper CDirector::IsFirstMapInScenario");
+	}
+
+	cell_t retbuffer = 0;
+
+	L4D_DEBUG_LOG("Going to execute CDirector::IsFirstMapInScenario");
+	pWrapper->Execute(NULL, &retbuffer);
+
+	L4D_DEBUG_LOG("Invoked CDirector::IsFirstMapInScenario, got back = %d", retbuffer);
+
+	return retbuffer;
+}
+
+// native bool L4D_IsMissionFinalMap();
+cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
+{
+	static ICallWrapper *pWrapper = NULL;
+
+	// CTerrorGameRules::IsMissionFinalMap(void)
+	if (!pWrapper) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(bool); //ret value in al on windows, eax on linux
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_ADDR("CTerrorGameRules::IsMissionFinalMap", \
+			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorGameRules::IsMissionFinalMap");
+	}
+
+	cell_t retbuffer = 0;
+
+	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::IsMissionFinalMap");
+	pWrapper->Execute(NULL, &retbuffer);
+
+	L4D_DEBUG_LOG("Invoked CTerrorGameRules::IsMissionFinalMap, got back = %d", retbuffer);
+
+	return retbuffer;
+}
+
 sp_nativeinfo_t g_L4DoMatchNatives[] =
 {
 	{"L4D_IsCoopMode",					L4D_IsCoopMode},
+	{"L4D_HasPlayerControlledZombies",	L4D_HasPlayerControlledZombies},
+	{"L4D_IsFirstMapInScenario",		L4D_IsFirstMapInScenario},
+	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
 	{NULL,								NULL}
 };

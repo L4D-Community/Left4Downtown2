@@ -40,11 +40,25 @@
 
 //#define THEDIRECTOR_SETNEXTMISSION_OFFSET 2
 
-extern CDirector **g_pDirector;		/* Director */
-extern void *g_pZombieManager;	/* ZombieManager */
-extern WeaponDatabase *g_pWeaponInfoDatabase; /* WeaponInfoDatabase */
-extern CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore; /* CMeleeWeaponInfo */
-extern void *g_pNavMesh;
+inline char *ConfigValidateAddress(const char *sName)
+{
+	char *pAddr = NULL;
+	if (!g_pGameConf->GetAddress(sName, (void **)&pAddr) || !pAddr) {
+		//L4D_DEBUG_LOG("Failed to find \"%s\" address.", sName);
+		g_pSM->LogError(myself, "Failed to find \"%s\" address.", sName);
+		return;
+	}
+
+	L4D_DEBUG_LOG("%s found at: %p", sName, pAddr);
+
+	return pAddr;
+}
+
+extern CDirector **g_pDirector;							/* Director */
+extern void *g_pZombieManager;							/* ZombieManager */
+extern WeaponDatabase *g_pWeaponInfoDatabase;			/* WeaponInfoDatabase */
+extern CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore;	/* CMeleeWeaponInfo */
+extern void *g_pNavMesh;								/* TerrorNavMesh */
 
 void InitializeValveGlobals();
 
