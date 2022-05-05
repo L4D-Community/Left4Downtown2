@@ -34,6 +34,38 @@
 #include "vglobals.h"
 #include "util.h"
 #include "l4d2sdk/constants.h"
+#include "natives.h"
+
+// native Address L4D_GetPointer(PointerType ptr_type);
+cell_t L4D_GetPointer(IPluginContext *pContext, const cell_t *params)
+{
+	int iPtrType = params[2];
+
+	switch (iPtrType) {
+		case POINTER_DIRECTOR:
+			return NativeValidateAddress(*g_pDirector, "CDirector", pContext);
+		case POINTER_SERVER:
+			return NativeValidateAddress(g_pServer, "CBaseServer", pContext);
+		case POINTER_GAMERULES:
+			return NativeValidateAddress(g_pSDKTools->GetGameRules(), "CTerrorGameRules", pContext);
+		case POINTER_NAVMESH:
+			return NativeValidateAddress(g_pNavMesh, "TerrorNavMesh", pContext);
+		case POINTER_ZOMBIEMANAGER:
+			return NativeValidateAddress(g_pZombieManager, "ZombieManager", pContext);
+		case POINTER_WEAPONINFO:
+			return NativeValidateAddress(g_pWeaponInfoDatabase, "WeaponInfoDatabase", pContext);
+		case POINTER_MELEEINFO:
+			return NativeValidateAddress(g_pMeleeWeaponInfoStore, "MeleeWeaponInfoStore", pContext);
+		case POINTER_EVENTMANAGER:
+			return NativeValidateAddress((*g_pDirector)->ScriptedEventManagerPtr, "CDirectorScriptedEventManager", pContext);
+		case POINTER_SCAVENGEMODE:
+			return NativeValidateAddress((*g_pDirector)->ScavengeModePtr, "CDirectorScavengeMode", pContext);
+		case POINTER_VERSUSMODE:
+			return NativeValidateAddress((*g_pDirector)->VersusModePtr, "CDirectorVersusMode", pContext);
+	}
+
+	return pContext->ThrowNativeError("Return pointer type not specified or invalid: %d", iPtrType);
+}
 
 // native int L4D_GetLastKnownArea(int client);
 cell_t L4D_GetLastKnownArea(IPluginContext *pContext, const cell_t *params)
@@ -1412,6 +1444,7 @@ cell_t L4D2_SpawnWitchBride(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoNatives[] =
 {
+	{"L4D_GetPointer",					L4D_GetPointer},
 	{"L4D_GetLastKnownArea",			L4D_GetLastKnownArea},
 	{"L4D_GetNearestNavArea",			L4D_GetNearestNavArea},
 	{"L4D_HasPlayerControlledZombies",	L4D_HasPlayerControlledZombies},

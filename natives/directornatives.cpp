@@ -116,7 +116,7 @@ cell_t L4D2_GetVersusCampaignScores(IPluginContext *pContext, const cell_t *para
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
@@ -142,7 +142,7 @@ cell_t L4D2_SetVersusCampaignScores(IPluginContext *pContext, const cell_t *para
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
@@ -168,7 +168,7 @@ cell_t L4D2_GetVersusTankFlowPercent(IPluginContext *pContext, const cell_t *par
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
@@ -194,7 +194,7 @@ cell_t L4D2_SetVersusTankFlowPercent(IPluginContext *pContext, const cell_t *par
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
@@ -220,7 +220,7 @@ cell_t L4D2_GetVersusWitchFlowPercent(IPluginContext *pContext, const cell_t *pa
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");
@@ -246,7 +246,7 @@ cell_t L4D2_SetVersusWitchFlowPercent(IPluginContext *pContext, const cell_t *pa
 		return pContext->ThrowNativeError("Director not available before map is loaded");
 	}
 
-	CDirectorVersusMode * director=(*g_pDirector)->VersusModePtr;
+	CDirectorVersusMode * director = (*g_pDirector)->VersusModePtr;
 	if (director == NULL)
 	{
 		return pContext->ThrowNativeError("DirectorVersusMode not available--is this versus mode?");

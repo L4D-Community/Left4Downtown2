@@ -204,7 +204,6 @@ extern IGameConfig *g_pGameConfSDKTools;
 //extern IRootConsole *rootconsole;
 extern IServerGameEnts *gameents;
 extern ICvar *icvar;
-extern IServer *iserver;
 extern CGlobalVars *gpGlobals;
 /* Interfaces from SourceMod */
 

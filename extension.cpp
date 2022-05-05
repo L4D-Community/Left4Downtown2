@@ -278,13 +278,19 @@ void Left4Downtown::SDK_OnAllLoaded()
 		return;
 	}
 
-	IServer *server = g_pSDKTools->GetIServer();
-	L4D_DEBUG_LOG("Address of IServer is %p", server);
+	IServer *pServer = g_pSDKTools->GetIServer();
+
 	//reading out server->GetName() we consistently seem to get (the same?)
 	//garbage characters. this is possibly causing a crash on windows servers
 	//when a player connects. so lets not read the server name :(
 	//L4D_DEBUG_LOG("Server name is %s", server->GetName());
-	g_pServer = server;
+	if (pServer == NULL) {
+		g_pSM->LogError(myself, "Couldn't find IServer instance!");
+	} else {
+		L4D_DEBUG_LOG("Address of IServer is %p", pServer);
+	}
+
+	g_pServer = pServer;
 
 	InitializeValveGlobals();
 

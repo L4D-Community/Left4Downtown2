@@ -35,6 +35,21 @@
 #endif
 #define _l4do_included
 
+// For the "L4D_GetPointer" native
+enum PointerType
+{
+	POINTER_DIRECTOR		= 1,	// @TheDirector
+	POINTER_SERVER			= 2,	// @sv
+	POINTER_GAMERULES		= 3,	// @g_pGameRules
+	POINTER_NAVMESH			= 4,	// @TheNavMesh
+	POINTER_ZOMBIEMANAGER	= 5,	// @TheZombieManager
+	POINTER_WEAPONINFO		= 6,	// @_ZL20m_WeaponInfoDatabase
+	POINTER_MELEEINFO		= 7,	// @g_MeleeWeaponInfoStore
+	POINTER_EVENTMANAGER	= 8,	// pScriptedEventManager
+	POINTER_SCAVENGEMODE	= 9,	// pScavengeMode
+	POINTER_VERSUSMODE		= 10	// pVersusMode
+};
+
 #include <l4d2timers>
 #include <l4d2weapons>
 #include <l4d2director>
@@ -535,6 +550,16 @@ forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
  * @return 		Pl_Handled to block, Pl_Changed to use overwritten values from plugin, Pl_Continue otherwise
  */
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
+
+/**
+ * @brief Returns the address pointer to various internal game objects
+ * @remarks CTerrorGameRules (POINTER_GAMERULES) not available if the map is not loaded
+ *
+ * @param	ptr_type		Using the PointerType enum to select which pointer to return
+ *
+ * @return	Address pointer or 0 on failure.
+ */
+native Address L4D_GetPointer(PointerType ptr_type);
 
 /**
  * @brief Given a position in the world, return the nearest nav area that is closest to or below that height.
