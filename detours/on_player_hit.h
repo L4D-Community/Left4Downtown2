@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2021 A1mDev (A1m`)
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,36 +30,41 @@
  * Version: $Id$
  */
 
-#include "CBaseCombatWeapon.h"
+#ifndef _INCLUDE_SOURCEMOD_DETOUR_ON_PLAYER_HIT_DOWN_H_
+#define _INCLUDE_SOURCEMOD_DETOUR_ON_PLAYER_HIT_DOWN_H_
 
-int CBaseCombatWeapon::sendprop_m_hOwner = 0;
+#include "detour_template.h"
 
-bool CBaseCombatWeapon::OnLoad(char* error, size_t maxlength)
+class CTerrorPlayer;
+
+namespace Detours
 {
-	sm_sendprop_info_t info;
+	class CPlayerHit;
+	typedef void (CPlayerHit::*OnPlayerHitFunc)(CTerrorPlayer *, bool);
 
-	if (!gamehelpers->FindSendPropInfo("CBaseCombatWeapon", "m_hOwner", &info)) {
-		snprintf(error, maxlength, "Unable to find SendProp \"CBaseCombatWeapon::m_hOwner\"");
+	class CPlayerHit : public DetourTemplate<OnPlayerHitFunc, CPlayerHit>
+	{
+	private: //note: implementation of DetourTemplate abstracts
 
-		return false;
-	}
+		void OnPlayerHit(CTerrorPlayer *pVictim, bool bIncapacitated);
 
-	sendprop_m_hOwner = info.actual_offset;
+		virtual bool OnPatch()
+		{
+			return ((g_pFwdOnPlayerHit->GetFunctionCount() > 0) || (g_pFwdOnPlayerHitPost->GetFunctionCount() > 0));
+		}
 
-	return true;
-}
+		// get the signature name (i.e. "CTankClaw::OnPlayerHit") from the game conf
+		virtual const char *GetSignatureName()
+		{
+			return "CTankClaw::OnPlayerHit";
+		}
 
-CBaseEntity *CBaseCombatWeapon::GetOwnerEntity()
-{
-	edict_t* pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle*)((byte*)(this) + sendprop_m_hOwner));
-	if (pEdict == NULL) {
-		return NULL;
-	}
+		//notify our patch system which function should be used as the detour
+		virtual OnPlayerHitFunc GetDetour()
+		{
+			return &CPlayerHit::OnPlayerHit;
+		}
+	};
+};
 
-	// Make sure it's a player
-	if (engine->GetPlayerUserId(pEdict) == -1) {
-		return NULL;
-	}
-
-	return gameents->EdictToBaseEntity(pEdict);
-}
+#endif //_INCLUDE_SOURCEMOD_DETOUR_ON_PLAYER_HIT_DOWN_H_

@@ -15,6 +15,7 @@
 #define TEAM_SURVIVOR 2
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
+#define ENTITY_NAME_LENGTH 64
 
 // TerrorNavArea
 // Bitflags for TerrorNavArea.SpawnAttributes
@@ -58,8 +59,8 @@ public Plugin myinfo =
 	name = "L4D2 Downtown Extension Test Plugin",
 	author = "L4D2 Downtown Devs",
 	description = "Ensures functions/offsets are valid and provides commands to test-call most natives directly",
-	version = "0.8.0",
-	url = "https://github.com/A1mDev/Left4Downtown2"
+	version = "0.8.2",
+	url = "https://github.com/L4D-Community/Left4Downtown2"
 };
 
 public void OnPluginStart()
@@ -569,6 +570,30 @@ public Action L4D_OnKnockedDown(int client, int reason)
 public void L4D_OnKnockedDown_Post(int client, int reason)
 {
 	DebugPrint("L4D_OnKnockedDown_Post(client=%d, reason=%d)", client, reason);
+}
+
+public Action L4D_TankClaw_OnPlayerHit_Pre(int tank, int claw, int player, bool incapacitated)
+{
+	char sTankName[MAX_NAME_LENGTH], sVictimName[MAX_NAME_LENGTH], sClawEntityName[ENTITY_NAME_LENGTH];
+	GetValidEntityName(claw, sClawEntityName, sizeof(sClawEntityName));
+	GetValidPlayerName(tank, sTankName, sizeof(sTankName));
+	GetValidPlayerName(player, sVictimName, sizeof(sVictimName));
+
+	DebugPrint("L4D_TankClaw_OnPlayerHit_Pre(tank = %d (%s), claw = %d (%s), player = %d (%s), incapacitated = %d)", \
+					tank, sTankName, claw, sClawEntityName, player, sVictimName, incapacitated);
+
+	return Plugin_Continue;
+}
+
+public void L4D_TankClaw_OnPlayerHit_Post(int tank, int claw, int player, bool incapacitated)
+{
+	char sTankName[MAX_NAME_LENGTH], sVictimName[MAX_NAME_LENGTH], sClawEntityName[ENTITY_NAME_LENGTH];
+	GetValidEntityName(claw, sClawEntityName, sizeof(sClawEntityName));
+	GetValidPlayerName(tank, sTankName, sizeof(sTankName));
+	GetValidPlayerName(player, sVictimName, sizeof(sVictimName));
+
+	DebugPrint("L4D_TankClaw_OnPlayerHit_Post(tank = %d (%s), claw = %d (%s), player = %d (%s), incapacitated = %d)", \
+					tank, sTankName, claw, sClawEntityName, player, sVictimName, incapacitated);
 }
 
 /*public void OnMapStart()
@@ -1243,4 +1268,30 @@ stock void L4D_ResetRoundNumber()
 	SDKCall(hCall);
 
 	DebugPrint("CTerrorGameRules::ResetRoundNumber()");
+}
+
+bool GetValidPlayerName(int iClient, char[] sPlayerName, const int iStrSize)
+{
+	if (iClient < 1 || iClient > MaxClients || !IsClientConnected(iClient)) {
+		Format(sPlayerName, iStrSize, "Invalid player");
+		return false;
+	}
+
+	GetClientName(iClient, sPlayerName, iStrSize);
+	return true;
+}
+
+bool GetValidEntityName(int iEntity, char[] sEntityName, const int iStrSize)
+{
+	if (!IsValidEntity(iEntity)) {
+		Format(sEntityName, iStrSize, "Invalid entity");
+		return false;
+	}
+
+	if (!GetEntityClassname(iEntity, sEntityName, iStrSize)) {
+		Format(sEntityName, iStrSize, "Invalid entity");
+		return false;
+	}
+
+	return true;
 }

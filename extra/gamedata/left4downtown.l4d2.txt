@@ -612,6 +612,28 @@
 				/* 55 8B EC 8B 81 ? ? ? ? 83 EC ? 56 8B */
 			}
 
+			/**
+			 * Thanks to "Psyk0tik" from: https://github.com/Psykotikism/L4D1-2_Signatures
+			 * CTankClaw::OnPlayerHit(CTerrorPlayer*, bool)
+			 *
+			 * How to find on Windows:
+			 * 1a. Search for the "PlayerGroundPoundedByTank" string.
+			 * 2a. The string can only be found in this function.
+			 *
+			 * 1b. Find the function's offsets with asherkin's VTable dump.
+			 * 2b. In IDA Pro, go to the ".rdata" section of the Windows binary.
+			 * 3b. Search for "CTankClaw::`vftable'" to jump to the "CTankClaw" vtable.
+			 * 4b. Compare your dump's offsets with asherkin's dump's offsets to find the target function.
+			 * 5b. Look for the target function in the Windows binary.
+			 **/
+			"CTankClaw::OnPlayerHit"
+			{
+				"library"	"server"
+				"linux"		"@_ZN9CTankClaw11OnPlayerHitEP13CTerrorPlayerb"
+				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\xA1\x2A\x2A\x2A\x2A\x33\x2A\x89\x2A\x2A\x53\x56\x8B\x2A\x2A\x57\x8B\x2A\x89\x2A\x2A\xE8"
+				/* ? ? ? ? ? ? ? ? ? A1 ? ? ? ? 33 ? 89 ? ? 53 56 8B ? ? 57 8B ? 89 ? ? E8 */
+			}
+
 			/*
 			 * CDirector::IsFinaleEscapeInProgress(void)
 			 * unique string "#L4D_idle_spectator" in CTerrorPlayer::PreThink()

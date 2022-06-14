@@ -2,7 +2,8 @@
  * vim: set ts=4 :
  * =============================================================================
  * Left 4 Downtown SourceMod Extension
- * Copyright (C) 2021 A1mDev (A1m`)
+ * Copyright (C) 2009-2011 Downtown1, ProdigySim; 2012-2015 Visor;
+ * 2017-2019 Accelerator; 2021 A1m`, Accelerator;
  * =============================================================================
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,36 +30,36 @@
  * Version: $Id$
  */
 
-#include "CBaseCombatWeapon.h"
+#include "on_player_hit.h"
+#include "extension.h"
 
-int CBaseCombatWeapon::sendprop_m_hOwner = 0;
-
-bool CBaseCombatWeapon::OnLoad(char* error, size_t maxlength)
+namespace Detours
 {
-	sm_sendprop_info_t info;
+	void CPlayerHit::OnPlayerHit(CTerrorPlayer *pVictim, bool bIncapacitated)
+	{
+		cell_t result = Pl_Continue;
+		CBaseEntity *pOwner = ((CBaseEntity *)this)->GetOwnerEntity();
 
-	if (!gamehelpers->FindSendPropInfo("CBaseCombatWeapon", "m_hOwner", &info)) {
-		snprintf(error, maxlength, "Unable to find SendProp \"CBaseCombatWeapon::m_hOwner\"");
+		int iTankAttacker = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pOwner)));
+		int iClawWeapon = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this)));
+		int iPlayerVictim = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pVictim)));
 
-		return false;
+		g_pFwdOnPlayerHit->PushCell(iTankAttacker);
+		g_pFwdOnPlayerHit->PushCell(iClawWeapon);
+		g_pFwdOnPlayerHit->PushCell(iPlayerVictim);
+		g_pFwdOnPlayerHit->PushCell(bIncapacitated);
+		g_pFwdOnPlayerHit->Execute(&result);
+
+		if (result == Pl_Handled) {
+			return;
+		}
+
+		(this->*(GetTrampoline()))(pVictim, bIncapacitated);
+
+		g_pFwdOnPlayerHit->PushCell(iTankAttacker);
+		g_pFwdOnPlayerHit->PushCell(iClawWeapon);
+		g_pFwdOnPlayerHit->PushCell(iPlayerVictim);
+		g_pFwdOnPlayerHit->PushCell(bIncapacitated);
+		g_pFwdOnPlayerHit->Execute(NULL);
 	}
-
-	sendprop_m_hOwner = info.actual_offset;
-
-	return true;
-}
-
-CBaseEntity *CBaseCombatWeapon::GetOwnerEntity()
-{
-	edict_t* pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle*)((byte*)(this) + sendprop_m_hOwner));
-	if (pEdict == NULL) {
-		return NULL;
-	}
-
-	// Make sure it's a player
-	if (engine->GetPlayerUserId(pEdict) == -1) {
-		return NULL;
-	}
-
-	return gameents->EdictToBaseEntity(pEdict);
-}
+};

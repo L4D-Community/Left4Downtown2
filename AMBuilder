@@ -66,6 +66,7 @@ project.sources += [
   'detours/on_ledgegrabbed.cpp',
   'detours/inferno_spread.cpp',
   'detours/on_knocked_down.cpp',
+  'detours/on_player_hit.cpp',
   'wrappers/CBaseEntity.cpp',
   'detours/choose_victim.cpp',
   'wrappers/CBaseCombatWeapon.cpp',

@@ -191,7 +191,8 @@ extern IForward *g_pFwdOnLedgeGrabbed;
 extern IForward *g_pFwdInfernoSpread;
 extern IForward *g_pFwdOnKnockedDown;
 extern IForward *g_pFwdOnKnockedDownPost;
-
+extern IForward *g_pFwdOnPlayerHit;
+extern IForward *g_pFwdOnPlayerHitPost;
 
 extern bool g_bRoundEnd;
 
