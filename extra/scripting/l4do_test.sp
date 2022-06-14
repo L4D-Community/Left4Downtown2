@@ -257,7 +257,7 @@ public Action Command_FindSig(int client, int args)
 
 public Action L4D_OnSpawnSpecial(int &zombieClass, const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("L4D_OnSpawnSpecial(zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+	DebugPrint("L4D_OnSpawnSpecial(zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
 					zombieClass, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
 
 	if (cvarBlockSpecials.BoolValue) {
@@ -274,13 +274,13 @@ public Action L4D_OnSpawnSpecial(int &zombieClass, const float vecPos[3], const 
 
 public void L4D_OnSpawnSpecial_Post(int client, int zombieClass, const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("L4D_OnSpawnSpecial_Post(client=%d, zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+	DebugPrint("L4D_OnSpawnSpecial_Post(client=%d, zombieClass=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
 					client, zombieClass, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
 }
 
 public Action L4D_OnSpawnTank(const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("L4D_OnSpawnTank(vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+	DebugPrint("L4D_OnSpawnTank(vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
 					vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
 
 	if (cvarBlockTanks.BoolValue) {
@@ -293,7 +293,7 @@ public Action L4D_OnSpawnTank(const float vecPos[3], const float vecAng[3])
 
 public void L4D_OnSpawnTank_Post(int client, const float vecPos[3], const float vecAng[3])
 {
-	DebugPrint("L4D_OnSpawnTank_Post(client=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f]", \
+	DebugPrint("L4D_OnSpawnTank_Post(client=%d, vecPos[%f,%f,%f], vecAng[%f,%f,%f])", \
 					client, vecPos[0], vecPos[1], vecPos[2], vecAng[0], vecAng[1], vecAng[2]);
 }
 
@@ -557,6 +557,18 @@ public Action L4D2_OnSelectTankAttack(int client, int &sequence)
 public void L4D2_OnRevived(int client)
 {
 	DebugPrint("L4D2_OnRevived(%d) fired", client);
+}
+
+public Action L4D_OnKnockedDown(int client, int reason)
+{
+	DebugPrint("L4D_OnKnockedDown(client=%d, reason=%d)", client, reason);
+
+	return Plugin_Continue;
+}
+
+public void L4D_OnKnockedDown_Post(int client, int reason)
+{
+	DebugPrint("L4D_OnKnockedDown_Post(client=%d, reason=%d)", client, reason);
 }
 
 /*public void OnMapStart()

@@ -50,6 +50,13 @@ enum PointerType
 	POINTER_VERSUSMODE		= 10	// pVersusMode
 };
 
+enum
+{
+	KNOCKDOWN_HUNTER = 1,
+	KNOCKDOWN_TANK = 2,
+	KNOCKDOWN_CHARGER = 3
+};
+
 #include <l4d2timers>
 #include <l4d2weapons>
 #include <l4d2director>
@@ -540,6 +547,31 @@ forward Action L4D2_OnClientDisableAddons(const char[] SteamID);
  * @return 		Pl_Handled to block, Pl_Continue otherwise
  */
 forward Action L4D2_OnPounceOrLeapStumble(int victim, int attacker);
+
+/**
+ * @brief Called when CTerrorPlayer::OnKnockedDown(CTerrorPlayer*) is invoked.
+ * @remarks Called when someone is about to be hit by a Tank rock or lunged by a Hunter
+ * @remarks Called multiple times when someone is about to be has been pounced by a Hunter
+ *
+ * @param victim		Client index of the victim.
+ * @param reason		The Knockdown reason type. 1=Hunter lunge, 2=Tank rock, 3=Charger impact.
+ *
+ * @return				Plugin_Handled to block fling, Plugin_Continue to allow.
+ **/
+forward Action L4D_OnKnockedDown(int client, int reason);
+
+/**
+ * @brief Called when CTerrorPlayer::OnKnockedDown(CTerrorPlayer*) is invoked.
+ * @remarks Called when someone is about to be hit by a Tank rock or lunged by a Hunter
+ * @remarks Called multiple times when someone is about to be has been pounced by a Hunter
+ * @remarks This forward will not trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param victim		Client index of the victim.
+ * @param reason		The Knockdown reason type. 1=Hunter lunge, 2=Tank rock.
+ *
+ * @noreturn
+ **/
+forward void L4D_OnKnockedDown_Post(int client, int reason);
 
 /**
  * @brief Called whenever BossZombiePlayer(CTerrorPlayer *, int, CBaseEntity *) is invoked

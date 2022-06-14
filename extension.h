@@ -189,6 +189,9 @@ extern IForward *g_pFwdOnShovedByPounceLanding;
 extern IForward *g_pFwdOnChooseVictim;
 extern IForward *g_pFwdOnLedgeGrabbed;
 extern IForward *g_pFwdInfernoSpread;
+extern IForward *g_pFwdOnKnockedDown;
+extern IForward *g_pFwdOnKnockedDownPost;
+
 
 extern bool g_bRoundEnd;
 

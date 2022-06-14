@@ -63,6 +63,7 @@
 #include "detours/mob_rush_start.h"
 #include "detours/on_enter_ghost_state.h"
 #include "detours/on_ledgegrabbed.h"
+#include "detours/on_knocked_down.h"
 #include "detours/on_revived.h"
 #include "detours/on_stagger.h"
 #include "detours/replace_tank.h"
@@ -142,6 +143,8 @@ IForward *g_pFwdOnShovedByPounceLanding = NULL;
 IForward *g_pFwdOnChooseVictim = NULL;
 IForward *g_pFwdOnLedgeGrabbed = NULL;
 IForward *g_pFwdInfernoSpread = NULL;
+IForward *g_pFwdOnKnockedDown = NULL;
+IForward *g_pFwdOnKnockedDownPost = NULL;
 
 bool g_bRoundEnd = false;
 
@@ -258,6 +261,8 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	g_pFwdOnChooseVictim = forwards->CreateForward("L4D2_OnChooseVictim", ET_Event, 2, /*types*/ NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
 	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	g_pFwdOnKnockedDown = forwards->CreateForward("L4D_OnKnockedDown", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 
 	plsys->AddPluginsListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -346,6 +351,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::CBaseServer>());
 	g_PatchManager.Register(new AutoPatch<Detours::CLedgeGrabbed>());
 	g_PatchManager.Register(new AutoPatch<Detours::InfernoSpread>());
+	g_PatchManager.Register(new AutoPatch<Detours::CKnockedDown>());
 }
 
 void Left4Downtown::SDK_OnUnload()
@@ -407,6 +413,8 @@ void Left4Downtown::SDK_OnUnload()
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
 	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
 	forwards->ReleaseForward(g_pFwdInfernoSpread);
+	forwards->ReleaseForward(g_pFwdOnKnockedDown);
+	forwards->ReleaseForward(g_pFwdOnKnockedDownPost);
 }
 
 void Left4Downtown::OnPluginLoaded(IPlugin *plugin)

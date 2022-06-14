@@ -314,6 +314,18 @@
 			}
 
 			/*
+			*	CTerrorPlayer::OnKnockedDown(int reason)
+			*	Search: "HunterZombie.Pounce.shred". This function contains a sub calling with the param (1).
+			*/
+			"CTerrorPlayer::OnKnockedDown"
+			{
+				"library"		"server"
+				"linux"			"@_ZN13CTerrorPlayer13OnKnockedDownENS_19KnockdownReasonTypeE"
+				"windows"		"\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x57\x8D\x2A\x2A\x2A\x2A\x2A\x8B\x2A\xE8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x04\x2A\x2A\x2A\x2A\x9F\x2A\x2A\x2A\x7B\x2A\x8B\x2A\x2A\x8B\x2A\x8D\x2A\x2A\x57\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x8B\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\x2A\x2A\x2A\x2A\x74"
+				/* ? ? ? ? ? ? ? 57 8D ? ? ? ? ? 8B ? E8 ? ? ? ? ? ? ? ? ? ? ? ? 04 ? ? ? ? 9F ? ? ? 7B ? 8B ? ? 8B ? 8D ? ? 57 ? ? ? ? ? ? ? ? ? ? ? 8B ? ? ? ? ? ? ? ? 74 ? ? ? ? ? 74 */
+			}
+
+			/*
 			 * CDirectorScavengeMode::OnBeginRoundSetupTime
 			 * used to reset the setup timer during scavenge mode
 			 * has one of five references to string "ready_countdown"
