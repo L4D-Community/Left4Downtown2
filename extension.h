@@ -46,6 +46,7 @@
  */
 
 #include "smsdk_ext.h"
+#include "wrappers.h"
 #include <IBinTools.h>
 #include <ISDKTools.h>
 #include <iserver.h>
@@ -54,10 +55,6 @@
 #include <icommandline.h>
 #include <iclient.h>
 #include <gametrace.h>
-#include "wrappers/CBaseEntity.h"
-#include "wrappers/CBasePlayer.h"
-#include "wrappers/CBaseCombatWeapon.h"
-#include "wrappers/CTerrorPlayer.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.
@@ -205,7 +202,10 @@ extern IGameConfig *g_pGameConf;
 extern IGameConfig *g_pGameConfSDKTools;
 
 /* Interfaces from engine or gamedll */
-//extern IRootConsole *rootconsole;
+#if defined SMEXT_ENABLE_ROOTCONSOLEMENU
+extern IRootConsole *rootconsole;
+#endif
+
 extern IServerGameEnts *gameents;
 extern ICvar *icvar;
 extern CGlobalVars *gpGlobals;

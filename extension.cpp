@@ -196,15 +196,8 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 		return false;
 	}
 
-	if (!CBaseEntity::OnLoad(error, maxlength)) {
-		return false;
-	}
-
-	if (!CTerrorPlayer::OnLoad(error, maxlength)) {
-		return false;
-	}
-
-	if (!CBaseCombatWeapon::OnLoad(error, maxlength)) {
+	if (!L4D2_GetOffsets(error, maxlength))
+	{
 		return false;
 	}
 

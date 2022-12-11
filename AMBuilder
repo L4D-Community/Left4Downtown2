@@ -16,6 +16,7 @@ project.sources += [
   os.path.join(Extension.sm_root, 'public', 'asm', 'asm.c'),
   'vglobals.cpp',
   'util.cpp',
+  'wrappers.cpp',
   'detours/detour.cpp',
   'detours/spawn_tank.cpp',
   'detours/spawn_witch.cpp',
@@ -67,11 +68,7 @@ project.sources += [
   'detours/inferno_spread.cpp',
   'detours/on_knocked_down.cpp',
   'detours/on_player_hit.cpp',
-  'wrappers/CBaseEntity.cpp',
   'detours/choose_victim.cpp',
-  'wrappers/CBaseCombatWeapon.cpp',
-  'wrappers/CBasePlayer.cpp',
-  'wrappers/CTerrorPlayer.cpp',
   'addons_disabler.cpp'
 ]
 

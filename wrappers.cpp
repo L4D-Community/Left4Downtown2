@@ -29,13 +29,52 @@
  * Version: $Id$
  */
 
-#include "CBaseCombatWeapon.h"
+#include "wrappers.h"
+
+int CBaseEntity::sendprop_m_hOwnerEntity = 0;
+
+int CBasePlayer::sendprop_m_iTeamNum = 0;
+
+int CTerrorPlayer::sendprop_m_isAttemptingToPounce = 0;
+int CTerrorPlayer::sendprop_m_zombieClass = 0;
 
 int CBaseCombatWeapon::sendprop_m_hOwner = 0;
 
-bool CBaseCombatWeapon::OnLoad(char* error, size_t maxlength)
+bool L4D2_GetOffsets(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
+
+	if (!gamehelpers->FindSendPropInfo("CBaseEntity", "m_hOwnerEntity", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"CBaseEntity::m_hOwnerEntity\"");
+
+		return false;
+	}
+
+	CBaseEntity::sendprop_m_hOwnerEntity = info.actual_offset;
+
+	if (!gamehelpers->FindSendPropInfo("CBasePlayer", "m_iTeamNum", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"CBasePlayer::m_iTeamNum\"");
+
+		return false;
+	}
+
+	CBasePlayer::sendprop_m_iTeamNum = info.actual_offset;
+
+	if (!gamehelpers->FindSendPropInfo("CTerrorPlayer", "m_isAttemptingToPounce", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"CTerrorPlayer::m_isAttemptingToPounce\"");
+
+		return false;
+	}
+
+	CTerrorPlayer::sendprop_m_isAttemptingToPounce = info.actual_offset;
+
+	if (!gamehelpers->FindSendPropInfo("CTerrorPlayer", "m_zombieClass", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"CTerrorPlayer::m_zombieClass\"");
+
+		return false;
+	}
+
+	CTerrorPlayer::sendprop_m_zombieClass = info.actual_offset;
 
 	if (!gamehelpers->FindSendPropInfo("CBaseCombatWeapon", "m_hOwner", &info)) {
 		snprintf(error, maxlength, "Unable to find SendProp \"CBaseCombatWeapon::m_hOwner\"");
@@ -43,22 +82,7 @@ bool CBaseCombatWeapon::OnLoad(char* error, size_t maxlength)
 		return false;
 	}
 
-	sendprop_m_hOwner = info.actual_offset;
+	CBaseCombatWeapon::sendprop_m_hOwner = info.actual_offset;
 
 	return true;
-}
-
-CBaseEntity *CBaseCombatWeapon::GetOwnerEntity()
-{
-	edict_t* pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle*)((byte*)(this) + sendprop_m_hOwner));
-	if (pEdict == NULL) {
-		return NULL;
-	}
-
-	// Make sure it's a player
-	if (engine->GetPlayerUserId(pEdict) == -1) {
-		return NULL;
-	}
-
-	return gameents->EdictToBaseEntity(pEdict);
 }
