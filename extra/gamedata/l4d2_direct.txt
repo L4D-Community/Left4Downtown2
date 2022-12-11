@@ -400,12 +400,15 @@
 				"linux"		"12424"
 			}
 			
-			// Can be found in the "CTerrorPlayer::GetShovePenalty" and "CTerrorPlayer::SetShovePenalty" functions
+			// Can be found in the "CTerrorPlayer::GetShovePenalty" and "CTerrorPlayer::SetShovePenalty" functions.
+			// Unnecessary offset, use code 'GetEntProp(client, Prop_Send, "m_iShovePenalty")' instead.
+			// Offset left for backward compatibility for those plugins that were built on the old include 'l4d2_direct'.
 			"CTerrorPlayer::m_iShovePenalty"
 			{
 				"windows"	"11504"
 				"linux"		"11484"
 			}
+
 			"CTerrorPlayer::m_fNextShoveTime"
 			{
 				"windows"	"11500"

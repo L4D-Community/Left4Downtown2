@@ -558,16 +558,7 @@ stock void L4D2Direct_SetTankTickets(int client, int tickets)
  */
 stock int L4D2Direct_GetShovePenalty(int client)
 {
-	if (client < 1 || client > MaxClients) {
-		return -1;
-	}
-
-	int value;
-	if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, value)) {
-		return value;
-	}
-
-	return -1;
+	return GetEntProp(client, Prop_Send, "m_iShovePenalty", 4);
 }
 
 /**
@@ -580,11 +571,7 @@ stock int L4D2Direct_GetShovePenalty(int client)
  */
 stock void L4D2Direct_SetShovePenalty(int client, int penalty)
 {
-	if (client < 1 || client > MaxClients) {
-		return;
-	}
-
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_iShovePenalty", NumberType_Int32, penalty);
+	SetEntProp(client, Prop_Send, "m_iShovePenalty", penalty, 4);
 }
 
 /**
