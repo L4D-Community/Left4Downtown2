@@ -221,6 +221,17 @@ forward Action L4D_OnGetScriptValueString(const char[] key, const char[] default
 /**
  * @brief Called whenever CTerrorPlayer::OnEnterGhostState(CTerrorPlayer*) is invoked
  * @remarks This happens when a player enters ghost mode (or in finales auto-materialized)
+ * @remarks This forward triggers before the player enters ghost state allowing it to be blocked
+ *
+ * @param client		the client that has entered ghost mode
+ *
+ * @return				Plugin_Handled to block, Plugin_Continue otherwise
+ */
+forward Action L4D_OnEnterGhostStatePre(int client);
+
+/**
+ * @brief Called whenever CTerrorPlayer::OnEnterGhostState(CTerrorPlayer*) is invoked
+ * @remarks This happens when a player enters ghost mode (or in finales auto-materialized)
  *
  * @param client  the client that has entered ghost mode
  */

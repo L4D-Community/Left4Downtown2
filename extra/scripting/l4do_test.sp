@@ -390,9 +390,16 @@ public Action L4D_OnGetScriptValueString(const String:key[], const String:defaul
 	return Plugin_Continue;
 }
 
-public L4D_OnEnterGhostState(client)
+public Action L4D_OnEnterGhostStatePre(int client)
 {
-	DebugPrint("L4D_OnEnterGhostState(client=%N)", client);
+	DebugPrint("L4D_OnEnterGhostStatePre(client=%N)", client);
+
+	return Plugin_Continue;
+}
+
+public void L4D_OnEnterGhostState(int client)
+{
+	DebugPrint("L4D_OnEnterGhostStatePost(client=%N)", client);
 }
 
 public Action L4D_OnTryOfferingTankBot(tank_index, &bool:enterStasis)

@@ -48,7 +48,7 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnEnterGhostState->GetFunctionCount() > 0);
+			return ((g_pFwdOnEnterGhostStatePre->GetFunctionCount() > 0) || (g_pFwdOnEnterGhostState->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "CTerrorPlayer::OnEnterGhostState") from the game conf

@@ -37,11 +37,19 @@ namespace Detours
 {
 	void OnEnterGhostStateDetour::OnEnterGhostState()
 	{
-		(this->*(GetTrampoline()))();
-
 		CTerrorPlayer *pPlayer = reinterpret_cast<CTerrorPlayer *>(this);
+		int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(pPlayer));
 
-		int iClient = (pPlayer == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
+		cell_t result = Pl_Continue;
+
+		g_pFwdOnEnterGhostStatePre->PushCell(iClient);
+		g_pFwdOnEnterGhostStatePre->Execute(&result);
+
+		if (result == Pl_Handled) {
+			return;
+		}
+
+		(this->*(GetTrampoline()))();
 
 		g_pFwdOnEnterGhostState->PushCell(iClient);
 		g_pFwdOnEnterGhostState->Execute(NULL);
