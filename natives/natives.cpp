@@ -36,6 +36,19 @@
 #include "l4d2sdk/constants.h"
 #include "natives.h"
 
+// native int L4D_GetServerClassId(int iEntity);
+cell_t L4D_GetServerClassId(IPluginContext* pContext, const cell_t* params)
+{
+	int iEntity = params[1];
+
+	int iClassId = UTIL_GetServerClassId(iEntity);
+	if (iClassId == -1) {
+		return pContext->ThrowNativeError("Invalid entity passed: %d!", iEntity);
+	}
+
+	return iClassId;
+}
+
 // native Address L4D_GetPointer(PointerType ptr_type);
 cell_t L4D_GetPointer(IPluginContext *pContext, const cell_t *params)
 {
@@ -1392,5 +1405,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D2_SpawnTank",					L4D2_SpawnTank},
 	{"L4D2_SpawnWitch",					L4D2_SpawnWitch},
 	{"L4D2_SpawnWitchBride",			L4D2_SpawnWitchBride},
+	{"L4D_GetServerClassId",			L4D_GetServerClassId},
 	{NULL,								NULL}
 };

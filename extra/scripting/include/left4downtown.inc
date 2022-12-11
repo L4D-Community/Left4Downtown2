@@ -934,6 +934,14 @@ native int L4D2_SpawnWitch(const float vecOrigin[3], const float vecAngles[3]);
  */
 native int L4D2_SpawnWitchBride(const float vecOrigin[3], const float vecAngles[3]);
 
+/**
+ * @brief Returns the index of the server class to which the entity belongs
+ *
+ * @param entity	Entity index
+ * @return 			Returns the index of the server class to which the entity belongs
+ */
+native int L4D_GetServerClassId(int entity);
+
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS
 if you want to use it optionally before including this .inc file

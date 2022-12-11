@@ -188,6 +188,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_setclass", Cmd_SetClass);
 	RegConsoleCmd("sm_test_navarea", Cmd_TestNavArea);
 	RegConsoleCmd("sm_gamemode", Cmd_GetGameMode);
+	RegConsoleCmd("sm_getserverclassid", Cmd_GetServerClassId);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -351,6 +352,8 @@ public Action L4D_OnSetCampaignScores(int &scoreA, int &scoreB)
 		scoreA = GetConVarInt(cvarSetCampaignScores);
 		DebugPrint("Overrode with SetCampaignScores(A=%d, B=%d", scoreA, scoreB);
 	}
+
+	return Plugin_Continue;
 }
 
 public Action L4D_OnFirstSurvivorLeftSafeArea(int client)
@@ -650,6 +653,8 @@ public Action Command_Horde(int client, int args)
 	DebugPrint("Time remaining for next horde is: %f  Duration %f ", hordetime, hordeduration);
 	ReplyToCommand(client, "Remaining: %f Duration: %f", hordetime, hordeduration);
 #endif
+
+	return Plugin_Handled;
 }
 
 public Action Command_SpawnTimer(int client, int args)
@@ -659,6 +664,8 @@ public Action Command_SpawnTimer(int client, int args)
 	DebugPrint("Spawn Timer for player %N: %f", client, SpawnTimer);
 	ReplyToCommand(client, "Remaining: %f", SpawnTimer);
 #endif
+
+	return Plugin_Handled;
 }
 
 PrintL4D2CTimerJunk(client, const String:name[], L4D2CountdownTimer:timer)
@@ -1128,6 +1135,26 @@ public Action Cmd_SetClass(int iClient, int iArgs)
 public Action Cmd_GetGameMode(int iClient, int iArgs)
 {
 	PrintToChat(iClient, "L4D_IsCoopMode: %s", (L4D_IsCoopMode()) ? "true" : "false");
+	return Plugin_Handled;
+}
+
+public Action Cmd_GetServerClassId(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+		return Plugin_Handled
+	}
+
+	int iTarget = GetClientAimTarget(iClient, false);
+	if (iTarget < 0 || !IsValidEdict(iTarget)) {
+		PrintToChat(iClient, "You are looking at the invalid entity!");
+		return Plugin_Handled
+	}
+
+	char sEntityName[ENTITY_NAME_LENGTH];
+	GetEdictClassname(iTarget, sEntityName, sizeof(sEntityName));
+	PrintToChat(iClient, "L4D_GetServerClassId: %d (%s)", L4D_GetServerClassId(iTarget), sEntityName);
+
 	return Plugin_Handled;
 }
 

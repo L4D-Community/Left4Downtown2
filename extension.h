@@ -55,6 +55,8 @@
 #include <icommandline.h>
 #include <iclient.h>
 #include <gametrace.h>
+#include <iservernetworkable.h>
+#include <server_class.h>
 
 /**
  * @brief Sample implementation of the SDK Extension.

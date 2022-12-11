@@ -83,3 +83,28 @@ CBaseEntity *UTIL_GetCBaseEntity(int num, bool onlyPlayers)
 
 	return pUnk->GetBaseEntity();
 }
+
+int UTIL_GetServerClassId(int num)
+{
+	edict_t* pEdict = PEntityOfEntIndex(num);
+	if (!pEdict || pEdict->IsFree())
+	{
+		return -1;
+	}
+
+	IServerNetworkable* pNetworkable  = pEdict->GetNetworkable();
+	if (!pNetworkable)
+	{
+		return -1;
+	}
+
+	IHandleEntity* pHandleEnt = pNetworkable->GetEntityHandle();
+	if (!pHandleEnt)
+	{
+		return -1;
+	}
+
+	ServerClass* pClass = pNetworkable->GetServerClass();
+
+	return pClass->m_ClassID;
+}
