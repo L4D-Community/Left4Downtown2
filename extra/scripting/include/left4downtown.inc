@@ -937,10 +937,19 @@ native int L4D2_SpawnWitchBride(const float vecOrigin[3], const float vecAngles[
 /**
  * @brief Returns the index of the server class to which the entity belongs
  *
- * @param entity	Entity index
+ * @param entity	Entity entity index
  * @return 			Returns the index of the server class to which the entity belongs
  */
 native int L4D_GetServerClassId(int entity);
+
+/**
+ * @brief Calls CWeaponCSBase::GetWeaponID() or return netprop 'm_weaponID' for weapons from class 'CWeaponSpawn'
+ *
+ * @param weapon	Weapon entity index
+ * @return 			0 (WEAPON_NONE) if not found, otherwise returns 
+ * @errors			Invalid entity and if the entity does not belong to class 'CWeaponCSBase' and class 'CWeaponSpawn'
+ */
+native int L4D2_GetCurrentWeaponId(int weapon);
 
 /*
 Makes the extension required by the plugins, undefine REQUIRE_EXTENSIONS

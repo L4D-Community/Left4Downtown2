@@ -120,6 +120,15 @@
 				"linux"		"331"
 			}
 
+			/*
+			* int CWeaponCSBase::GetWeaponID() const
+			*/
+			"CWeaponCSBase::GetWeaponID"
+			{
+				"windows"	"397"
+				"linux"		"398"
+			}
+
 			"TerrorNavArea::m_spawnAttributes"
 			{
 				"linux"			"300"

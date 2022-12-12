@@ -189,6 +189,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_test_navarea", Cmd_TestNavArea);
 	RegConsoleCmd("sm_gamemode", Cmd_GetGameMode);
 	RegConsoleCmd("sm_getserverclassid", Cmd_GetServerClassId);
+	RegConsoleCmd("sm_getweaponid", Cmd_GetCurrentWeaponId);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1154,6 +1155,32 @@ public Action Cmd_GetServerClassId(int iClient, int iArgs)
 	char sEntityName[ENTITY_NAME_LENGTH];
 	GetEdictClassname(iTarget, sEntityName, sizeof(sEntityName));
 	PrintToChat(iClient, "L4D_GetServerClassId: %d (%s)", L4D_GetServerClassId(iTarget), sEntityName);
+
+	return Plugin_Handled;
+}
+
+public Action Cmd_GetCurrentWeaponId(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+		return Plugin_Handled
+	}
+
+	int iTarget = GetClientAimTarget(iClient, false);
+	if (iTarget < 0 || !IsValidEdict(iTarget)) {
+		PrintToChat(iClient, "You are looking at the invalid entity!");
+		return Plugin_Handled;
+	}
+
+	char sEntityName[ENTITY_NAME_LENGTH];
+	GetEdictClassname(iTarget, sEntityName, sizeof(sEntityName));
+
+	if (strncmp("weapon_", sEntityName, 7) != 0) {
+		PrintToChat(iClient, "You are looking at another object %s (%d), but not at the weapon!", sEntityName, iTarget);
+		return Plugin_Handled;
+	}
+
+	PrintToChat(iClient, "L4D2_GetCurrentWeaponId: %d (%s)", L4D2_GetCurrentWeaponId(iTarget), sEntityName);
 
 	return Plugin_Handled;
 }

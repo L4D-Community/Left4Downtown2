@@ -138,6 +138,21 @@ public:
 	static int sendprop_m_hOwner;
 };
 
+class CWeaponSpawn: //CBaseAnimating
+	public CBaseEntity
+{
+public:
+	int GetWeaponIDNetProp()
+	{
+		int m_weaponID = *(int*)((unsigned char*)this + sendprop_m_weaponID);
+
+		return m_weaponID;
+	}
+
+public:
+	static int sendprop_m_weaponID;
+};
+
 bool L4D2_GetOffsets(char* error, size_t maxlength);
 
 #endif // _INCLUDE_L4D2_WRAPPERS_H_

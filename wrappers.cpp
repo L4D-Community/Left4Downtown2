@@ -40,6 +40,8 @@ int CTerrorPlayer::sendprop_m_zombieClass = 0;
 
 int CBaseCombatWeapon::sendprop_m_hOwner = 0;
 
+int CWeaponSpawn::sendprop_m_weaponID = 0;
+
 bool L4D2_GetOffsets(char* error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
@@ -83,6 +85,14 @@ bool L4D2_GetOffsets(char* error, size_t maxlength)
 	}
 
 	CBaseCombatWeapon::sendprop_m_hOwner = info.actual_offset;
+
+	if (!gamehelpers->FindSendPropInfo("CWeaponSpawn", "m_weaponID", &info)) {
+		snprintf(error, maxlength, "Unable to find SendProp \"CWeaponSpawn::m_weaponID\"");
+
+		return false;
+	}
+
+	CWeaponSpawn::sendprop_m_weaponID = info.actual_offset;
 
 	return true;
 }

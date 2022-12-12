@@ -36,7 +36,57 @@
 #include "l4d2sdk/constants.h"
 #include "natives.h"
 
-// native int L4D_GetServerClassId(int iEntity);
+// native int L4D2_GetCurrentWeaponId(int weapon)
+cell_t L4D2_GetCurrentWeaponId(IPluginContext* pContext, const cell_t* params)
+{
+	static ICallWrapper* pWrapperWeaponCs = NULL;
+
+	// int CWeaponCSBase::GetWeaponID(void)
+	if (!pWrapperWeaponCs) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYVAL;
+		retInfo.size = sizeof(int);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_OFFSET("CWeaponCSBase::GetWeaponID", \
+			pWrapperWeaponCs = g_pBinTools->CreateVCall(offset, 0, 0, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built vcall wrapper CWeaponCSBase::GetWeaponID");
+	}
+
+	CBaseEntity* pWeapon = gamehelpers->ReferenceToEntity(params[1]);
+
+	if (!pWeapon) {
+		return pContext->ThrowNativeError("Invalid entity index %d for weapon", params[1]);
+	}
+
+	IServerUnknown *pUnk = (IServerUnknown*)pWeapon;
+	IServerNetworkable *pNet = pUnk->GetNetworkable();
+	SendTable *pTable = pNet->GetServerClass()->m_pTable;
+
+	if (UTIL_ContainsDataTable(pTable, "DT_WeaponSpawn")) {
+		return ((CWeaponSpawn*)pWeapon)->GetWeaponIDNetProp();
+	} 
+
+	if (UTIL_ContainsDataTable(pTable, "DT_WeaponCSBase")) {
+		unsigned char vstk[sizeof(CBaseEntity*)];
+		unsigned char* vptr = vstk;
+
+		*(CBaseEntity**)vptr = pWeapon;
+
+		cell_t iRet = 0;
+
+		L4D_DEBUG_LOG("Going to execute CWeaponCSBase::GetWeaponID");
+		pWrapperWeaponCs->Execute(vstk, /*retbuffer*/&iRet);
+		L4D_DEBUG_LOG("Invoked CWeaponCSBase::GetWeaponID");
+
+		return iRet;
+	}
+
+	return pContext->ThrowNativeError("Entity index %d is not a weapon", params[1]);
+}
+
+// native int L4D_GetServerClassId(int entity);
 cell_t L4D_GetServerClassId(IPluginContext* pContext, const cell_t* params)
 {
 	int iEntity = params[1];
@@ -1406,5 +1456,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D2_SpawnWitch",					L4D2_SpawnWitch},
 	{"L4D2_SpawnWitchBride",			L4D2_SpawnWitchBride},
 	{"L4D_GetServerClassId",			L4D_GetServerClassId},
+	{"L4D2_GetCurrentWeaponId",			L4D2_GetCurrentWeaponId},
 	{NULL,								NULL}
 };

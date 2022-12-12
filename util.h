@@ -55,4 +55,6 @@ CBaseEntity *UTIL_GetCBaseEntity(int num, bool onlyPlayers);
 
 int UTIL_GetServerClassId(int num);
 
+bool UTIL_ContainsDataTable(SendTable * pTable, const char* name);
+
 #endif //_INCLUDE_L4DOWNTOWN_TOOLS_UTIL_H_
