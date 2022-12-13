@@ -50,13 +50,7 @@ enum PointerType
 	POINTER_VERSUSMODE		= 10	// pVersusMode
 };
 
-enum
-{
-	KNOCKDOWN_HUNTER = 1,
-	KNOCKDOWN_TANK = 2,
-	KNOCKDOWN_CHARGER = 3
-};
-
+#include <l4d2constants>
 #include <l4d2timers>
 #include <l4d2weapons>
 #include <l4d2director>
@@ -790,6 +784,17 @@ native int L4D_SetHumanSpec(int bot, int client);
  * @return			True or false
  */
 native int L4D_TakeOverBot(int client);
+
+/**
+ * @brief Enter ghost/dead mode. Some state values may have different results. Unknown.
+ * @remarks 6 and 8 are commonly used by the game.
+ * @remarks Can use the "STATE_*" enums (search for them above).
+ *
+ * @param client			Client ID of the player to affect
+ *
+ * @noreturn
+ */
+native void L4D_State_Transition(int client, int state);
 
 /**
  * @brief Sets the max versus completion score for the map

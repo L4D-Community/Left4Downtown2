@@ -30,8 +30,24 @@
  */
 
 #ifndef _INCLUDE_L4D2SDK_CONSTANTS_H_
-
 #define _INCLUDE_L4D2SDK_CONSTANTS_H_
+
+ // Provided by "BHaType":
+ // For the "L4D_State_Transition" native.
+ // X -> Y (means X state will become Y state on next frame or some seconds later)
+enum TerrorPlayerState
+{
+	STATE_ACTIVE = 0,
+	STATE_WELCOME,				// -> STATE_PICKING_TEAM
+	STATE_PICKING_TEAM,
+	STATE_PICKINGCLASS,			// -> STATE_ACTIVE
+	STATE_DEATH_ANIM,			// -> STATE_DEATH_WAIT_FOR_KEY
+	STATE_DEATH_WAIT_FOR_KEY,	// -> STATE_OBSERVER_MODE
+	STATE_OBSERVER_MODE,
+	STATE_WAITING_FOR_RESCUE,
+	STATE_GHOST,
+	STATE_INTRO_CAMERA
+};
 
 // ZombieClassType from here - https://github.com/shqke/smod_stocks/blob/master/stocks/left4dead2.inc
 enum ZombieClassType

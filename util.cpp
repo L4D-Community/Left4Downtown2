@@ -92,7 +92,7 @@ int UTIL_GetServerClassId(int num)
 		return -1;
 	}
 
-	IServerNetworkable* pNetworkable  = pEdict->GetNetworkable();
+	IServerNetworkable* pNetworkable = pEdict->GetNetworkable();
 	if (!pNetworkable)
 	{
 		return -1;

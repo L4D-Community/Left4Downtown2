@@ -190,6 +190,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_gamemode", Cmd_GetGameMode);
 	RegConsoleCmd("sm_getserverclassid", Cmd_GetServerClassId);
 	RegConsoleCmd("sm_getweaponid", Cmd_GetCurrentWeaponId);
+	RegConsoleCmd("sm_state_transition", Cmd_SetStateTransition);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1011,7 +1012,7 @@ public Action Command_SetFinaleStage(int client, int args)
 public Action Cmd_ReviveMe(int client, int args)
 {
 	if (client == 0 || GetClientTeam(client) != 2 || !IsPlayerAlive(client)) {
-		PrintToChat(client, "Вы не выживший!");
+		PrintToChat(client, "This command is only available to living survivors!");
 		return Plugin_Handled;
 	}
 
@@ -1181,6 +1182,34 @@ public Action Cmd_GetCurrentWeaponId(int iClient, int iArgs)
 	}
 
 	PrintToChat(iClient, "L4D2_GetCurrentWeaponId: %d (%s)", L4D2_GetCurrentWeaponId(iTarget), sEntityName);
+
+	return Plugin_Handled;
+}
+
+public Action Cmd_SetStateTransition(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+		return Plugin_Handled
+	}
+
+	if (iArgs < 1) {
+		PrintToChat(iClient, "You did not enter which transition state should be set!");
+		return Plugin_Handled
+	}
+
+	char sArgs[16];
+	GetCmdArg(1, sArgs, sizeof(sArgs));
+	int iState = StringToInt(sArgs);
+
+	if (iState < STATE_ACTIVE || iState > STATE_INTRO_CAMERA){
+		PrintToChat(iClient, "Invalid parameter passed: %d! Values less than %d and greater than %d cannot be used!", \
+						iState, STATE_ACTIVE, STATE_INTRO_CAMERA);
+		return Plugin_Handled
+	}
+
+	L4D_State_Transition(iClient, iState);
+	PrintToChat(iClient, "L4D_State_Transition: %d", iState);
 
 	return Plugin_Handled;
 }
