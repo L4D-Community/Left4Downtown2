@@ -37,11 +37,10 @@
 #include "l4d2sdk/constants.h"
 
 extern IServerGameEnts* gameents;
-
 extern IMatchFramework* g_pMatchFramework;
 extern IMatchExtL4D* g_pMatchExtL4D;
-
 extern ConVar* mp_gamemode;
+extern CGlobalVars* gpGlobals;
 
 class CBaseEntity
 {
@@ -161,6 +160,101 @@ public:
 class CTerrorGameRules
 {
 public:
+	static bool HasConfigurableDifficultySetting()
+	{
+		if (!g_pMatchExtL4D) {
+			return CTerrorGameRules::IsCoopMode() || CTerrorGameRules::IsRealismMode();
+		}
+
+		const char* szGameMode = mp_gamemode->GetString();
+
+		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+
+		if (pkvMode != NULL) {
+			KeyValues* pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
+
+			if (pkvBaseMode != NULL) {
+				return pkvMode->GetInt("hasdifficulty", pkvBaseMode->GetInt("hasdifficulty")) != 0;
+			}
+		}
+
+		return false;
+	}
+
+	static bool IsSingleChapterMode()
+	{
+		if (!g_pMatchExtL4D) {
+			return false;
+		}
+
+		const char* szGameMode = mp_gamemode->GetString();
+
+		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+
+		if (pkvMode != NULL) {
+			KeyValues* pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
+
+			if (pkvBaseMode != NULL) {
+				return pkvMode->GetInt("singlechapter", pkvBaseMode->GetInt("singlechapter")) != 0;
+			}
+		}
+
+		return false;
+	}
+
+	static bool HasPlayerControlledZombies()
+	{
+		const char* szGameMode = mp_gamemode->GetString();
+
+		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+
+		if (pkvMode != NULL) {
+			return pkvMode->GetInt("playercontrolledzombies") > 0;
+		}
+
+		return false;
+	}
+
+	static bool IsMissionFinalMap()
+	{
+		KeyValues* pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
+		KeyValues::AutoDelete autodelete_pGameSettings(pkvGameSettings);
+
+		if (!pkvGameSettings) {
+			return true;
+		}
+
+		pkvGameSettings->SetInt("Game/chapter", pkvGameSettings->GetInt("Game/chapter") + 1);
+
+		return (g_pMatchExtL4D->GetMapInfo(pkvGameSettings) == NULL);
+	}
+
+	static KeyValues* GetMissionFirstMap(KeyValues** ppMissionInfo = NULL)
+	{
+		if (ppMissionInfo) {
+			*ppMissionInfo = NULL;
+		}
+
+		KeyValues* pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
+		KeyValues::AutoDelete autodelete_pGameSettings(pkvGameSettings);
+
+		if (pkvGameSettings == NULL) {
+			return NULL;
+		}
+
+		KeyValues* pkvMap = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, ppMissionInfo);
+
+		pkvGameSettings->SetInt("Game/chapter", 1);
+
+		KeyValues* pkvMapDest = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, NULL);
+
+		if (pkvMapDest != NULL) {
+			pkvMap = pkvMapDest;
+		}
+
+		return pkvMap;
+	}
+
 	static bool IsGenericCooperativeMode()
 	{
 		return CTerrorGameRules::IsCoopMode() || CTerrorGameRules::IsRealismMode();
@@ -206,6 +300,25 @@ public:
 		}
 
 		return false;
+	}
+};
+
+class CDirectorWapper
+{
+public:
+	static bool IsFirstMapInScenario()
+	{
+		const char* pszCurrentMapName = STRING(gpGlobals->mapname);
+
+		KeyValues* pkvMission = CTerrorGameRules::GetMissionFirstMap(NULL);
+
+		if (pkvMission == NULL) {
+			return false;
+		}
+
+		const char* pszMapName = pkvMission->GetString("map");
+
+		return IDENT_STRINGS(pszCurrentMapName, pszMapName) || V_stricmp(pszCurrentMapName, pszMapName) == 0;
 	}
 };
 

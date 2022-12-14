@@ -649,6 +649,22 @@ native int L4D_GetNearestNavArea(const float vecPos[3], float maxDist = 10000.0,
 native int L4D_GetLastKnownArea(int client);
 
 /**
+ * @brief Returns if game mode is using single chapters.
+ *
+ * @return              True if game mode uses single chapters, false otherwise.
+ */
+native bool L4D2_IsSingleChapterMode();
+
+/**
+ * @brief Returns if there is a configurable difficulty setting.
+ * @brief Returns true for Coop/Realism modes.
+ *
+ * @return				True if there is a configurable difficulty setting, false otherwise.
+ **/
+// L4D2 only.
+native bool L4D2_HasConfigurableDifficultySetting();
+
+/**
  * @brief Returns if players can control infected.
  *
  * @return			True if players can control infected, false otherwise

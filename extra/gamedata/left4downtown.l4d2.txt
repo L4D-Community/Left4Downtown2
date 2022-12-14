@@ -163,18 +163,6 @@
 			}
 
 			/*
-			* CTerrorGameRules::HasPlayerControlledZombies()
-			*/
-			"CTerrorGameRules::HasPlayerControlledZombies"
-			{
-				"library"	"server"
-				"linux"		"@_ZN16CTerrorGameRules26HasPlayerControlledZombiesEv"
-				"windows"	"\xF7\x05\x2A\x2A\x2A\x2A\x00\x10\x00\x00\x74\x2A\xB8\x2A\x2A\x2A\x2A\xEB\x2A\xA1\x2A\x2A\x2A\x2A\x8B\x40\x24\x85\xC0\x75\x2A\xB8\x2A\x2A\x2A\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x11\x50\x8B\x42\x10\xFF\xD0\x85\xC0\x74\x2A\x6A\x00\x68\x2A\x2A\x2A\x2A\x8B\xC8\xE8\x2A\x2A\x2A\x2A\x85\xC0\x7E\x2A"
-				/* F7 05 ? ? ? ? 00 10 00 00 74 ? B8 ? ? ? ? EB ? A1 ? ? ? ? 8B 40 24 85 C0 75 ? B8 ? ? ? ? 8B 0D ? ? ? ? 8B 11 50 8B 42 10 FF D0 85 C0 74 ? 6A 00 68 ? ? ? ? 8B C8 E8 ? ? ? ? 85 C0 7E ? */
-				/* Search "playercontrolledzombies". */
-			}
-
-			/*
 			*  CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDist, bool checkLOS, bool checkGround ) const
 			*  CNavMesh::GetNearestNavArea(CNavMesh *this, const Vector *, bool, float, bool, bool, bool)
 			*/
@@ -1156,32 +1144,6 @@
 			/*********************************************************************
 			****************** MISC USEFUL NATIVES *******************************
 			*********************************************************************/
-
-			/* CDirector::IsFirstMapInScenario()
-			 * Uses campaign mission file to determine if the current map
-			 * is a First map.
-			 * Called from CDirector::OnEndScenario, look near string "vs_shutting_down", up to case 7
-			*/
-			"CDirector::IsFirstMapInScenario"
-			{
-				"library"	"server"
-				"linux"		"@_ZNK9CDirector20IsFirstMapInScenarioEv"
-				"windows"	"\xA1\x2A\x2A\x2A\x2A\x8B\x40\x3C\x56\x8B\xF0"
-				/* A1 ? ? ? ? 8B 40 3C 56 8B F0 */
-			}
-
-			/* CTerrorGameRules::IsMissionFinalMap()
-			 * Uses campaign mission file to determine if the current map
-			 * is a Final(e) map.
-			 * Called from CDirectorVersusMode::EndVersusModeRound(), look near string "versus_match_finished"
-			*/
-			"CTerrorGameRules::IsMissionFinalMap"
-			{
-				"library"	"server"
-				"linux"		"@_ZN16CTerrorGameRules17IsMissionFinalMapEv"
-				"windows"	"\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x28\x56\xFF\xD2\x8B\x10\x8B\xC8\x8B\x42\x04\x6A\x00\xFF\xD0\x8B\xF0\x85\xF6\x75\x04\xB0"
-				/* 8B 0D ? ? ? ? 8B 01 8B 50 28 56 FF D2 8B 10 8B C8 8B 42 04 6A 00 FF D0 8B F0 85 F6 75 04 B0 */
-			}
 
 			/* CDirector::ResetMobTimer()
 			 * Resets the Director's natural horde timer. Normally this

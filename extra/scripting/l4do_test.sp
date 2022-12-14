@@ -184,7 +184,6 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_get_versus_completion", Cmd_GetVersusCompletion);
 	RegConsoleCmd("sm_takeover_test", Cmd_TakeOverTest);
 	RegConsoleCmd("sm_swap_teams", Cmd_SwapTeams);
-	RegConsoleCmd("sm_has_controlled_zombies", Cmd_HasPlayerControlledZombies);
 	RegConsoleCmd("sm_setclass", Cmd_SetClass);
 	RegConsoleCmd("sm_test_navarea", Cmd_TestNavArea);
 	RegConsoleCmd("sm_gamemode", Cmd_GetGameMode);
@@ -192,6 +191,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_getweaponid", Cmd_GetCurrentWeaponId);
 	RegConsoleCmd("sm_state_transition", Cmd_SetStateTransition);
 	RegConsoleCmd("sm_check_gamemode", Cmd_CheckGameMode);
+	RegConsoleCmd("sm_check_mission", Cmd_CheckMission);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1095,12 +1095,6 @@ public Action Cmd_SwapTeams(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action Cmd_HasPlayerControlledZombies(int client, int args)
-{
-	PrintToChat(client, "L4D_HasPlayerControlledZombies() %d", L4D_HasPlayerControlledZombies());
-	return Plugin_Handled;
-}
-
 public Action Cmd_SetClass(int iClient, int iArgs)
 {
 	if (iClient == 0) {
@@ -1189,52 +1183,18 @@ public Action Cmd_GetCurrentWeaponId(int iClient, int iArgs)
 
 public Action Cmd_CheckGameMode(int iClient, int iArgs)
 {
-	if (iArgs == 0) {
-		ReplyToCommand(iClient, "IsGenericCoopMode: %d, IsCoopMode: %d", L4D2_IsGenericCooperativeMode(), L4D_IsCoopMode());
-		ReplyToCommand(iClient, "IsRealismMode: %d, IsSurvivalMode: %d", L4D2_IsRealismMode(), L4D_IsSurvivalMode());
-		ReplyToCommand(iClient, "IsScavengeMode: %d, IsVersusMode: %d", L4D2_IsScavengeMode(), L4D_IsVersusMode());
+	ReplyToCommand(iClient, "IsGenericCoopMode: %d, IsCoopMode: %d", L4D2_IsGenericCooperativeMode(), L4D_IsCoopMode());
+	ReplyToCommand(iClient, "IsRealismMode: %d, IsSurvivalMode: %d", L4D2_IsRealismMode(), L4D_IsSurvivalMode());
+	ReplyToCommand(iClient, "IsScavengeMode: %d, IsVersusMode: %d", L4D2_IsScavengeMode(), L4D_IsVersusMode());
+	ReplyToCommand(iClient, "HasPlayerControlledZombies: %d, HasConfigurableDifficultySetting: %d", L4D_HasPlayerControlledZombies(), L4D2_HasConfigurableDifficultySetting());
+	ReplyToCommand(iClient, "IsSingleChapterMode: %d", L4D2_IsSingleChapterMode());
 
-		return Plugin_Handled;
-	}
+	return Plugin_Handled;
+}
 
-	char sArgs[32];
-	GetCmdArg(1, sArgs, sizeof(sArgs));
-
-	if (StrContains(sArgs, "generic") != -1) {
-		ReplyToCommand(iClient, "IsGenericCoopMode: %d", L4D2_IsGenericCooperativeMode());
-
-		return Plugin_Handled;
-	}
-
-	if (strcmp(sArgs, "coop") == 0) {
-		ReplyToCommand(iClient, "IsCoopMode: %d", L4D_IsCoopMode());
-
-		return Plugin_Handled;
-	}
-
-	if (strcmp(sArgs, "realism") == 0) {
-		ReplyToCommand(iClient, "IsRealismMode: %d", L4D2_IsRealismMode());
-
-		return Plugin_Handled;
-	}
-
-	if (strcmp(sArgs, "survival") == 0) {
-		ReplyToCommand(iClient, "IsSurvivalMode: %d", L4D_IsSurvivalMode());
-
-		return Plugin_Handled;
-	}
-
-	if (strcmp(sArgs, "scavenge") == 0) {
-		ReplyToCommand(iClient, "IsScavengeMode: %d", L4D2_IsScavengeMode());
-
-		return Plugin_Handled;
-	}
-
-	if (strcmp(sArgs, "versus") == 0) {
-		ReplyToCommand(iClient, "IsVersusMode: %d", L4D_IsVersusMode());
-
-		return Plugin_Handled;
-	}
+public Action Cmd_CheckMission(int iClient, int iArgs)
+{
+	ReplyToCommand(iClient, "IsFirstMapInScenario: %d, IsMissionFinalMap: %d", L4D_IsFirstMapInScenario(), L4D_IsMissionFinalMap());
 
 	return Plugin_Handled;
 }

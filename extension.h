@@ -46,6 +46,7 @@
  */
 
 #include "smsdk_ext.h"
+#include <string_t.h>
 #include <IBinTools.h>
 #include <ISDKTools.h>
 #include <iserver.h>
@@ -56,7 +57,6 @@
 #include <gametrace.h>
 #include <iservernetworkable.h>
 #include <server_class.h>
-
 #include <matchmaking/imatchframework.h>
 #include <matchmaking/l4d2/imatchext_l4d.h>
 
