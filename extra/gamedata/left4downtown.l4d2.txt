@@ -175,18 +175,6 @@
 			}
 
 			/*
-			* CTerrorGameRules::IsCoopMode()
-			*/
-			"CTerrorGameRules::IsCoopMode"
-			{
-				"library"	"server"
-				"linux"		"@_ZN16CTerrorGameRules10IsCoopModeEv"
-				"windows"	"\x2A\x2A\x2A\x2A\x2A\x2A\x85\x2A\x75\x2A\x32\x2A\xC3\xF7\x05\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x74\x2A\xB8\x10\x2A\x2A\x2A\xEB\x2A\xA1\xC4\x2A\x2A\x2A\x8B\x2A\x2A\x85\x2A\x75\x2A\xB8\x64\x2A\x2A\x2A\x8B\x2A\x50\x8B\x2A\x2A\xFF\x2A\x85\x2A\x74\x2A\x68\x3C"
-				/* ? ? ? ? ? ? 85 ? 75 ? 32 ? C3 F7 05 ? ? ? ? ? ? ? ? 74 ? B8 10 ? ? ? EB ? A1 C4 ? ? ? 8B ? ? 85 ? 75 ? B8 64 ? ? ? 8B ? 50 8B ? ? FF ? 85 ? 74 ? 68 3C */
-				/* Search string "coop", this function also contains the line "base" */
-			}
-
-			/*
 			*  CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDist, bool checkLOS, bool checkGround ) const
 			*  CNavMesh::GetNearestNavArea(CNavMesh *this, const Vector *, bool, float, bool, bool, bool)
 			*/

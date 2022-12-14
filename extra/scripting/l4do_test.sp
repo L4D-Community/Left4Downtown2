@@ -191,6 +191,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_getserverclassid", Cmd_GetServerClassId);
 	RegConsoleCmd("sm_getweaponid", Cmd_GetCurrentWeaponId);
 	RegConsoleCmd("sm_state_transition", Cmd_SetStateTransition);
+	RegConsoleCmd("sm_check_gamemode", Cmd_CheckGameMode);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1164,7 +1165,7 @@ public Action Cmd_GetCurrentWeaponId(int iClient, int iArgs)
 {
 	if (iClient == 0) {
 		PrintToServer("This command is not available for the server!");
-		return Plugin_Handled
+		return Plugin_Handled;
 	}
 
 	int iTarget = GetClientAimTarget(iClient, false);
@@ -1182,6 +1183,58 @@ public Action Cmd_GetCurrentWeaponId(int iClient, int iArgs)
 	}
 
 	PrintToChat(iClient, "L4D2_GetCurrentWeaponId: %d (%s)", L4D2_GetCurrentWeaponId(iTarget), sEntityName);
+
+	return Plugin_Handled;
+}
+
+public Action Cmd_CheckGameMode(int iClient, int iArgs)
+{
+	if (iArgs == 0) {
+		ReplyToCommand(iClient, "IsGenericCoopMode: %d, IsCoopMode: %d", L4D2_IsGenericCooperativeMode(), L4D_IsCoopMode());
+		ReplyToCommand(iClient, "IsRealismMode: %d, IsSurvivalMode: %d", L4D2_IsRealismMode(), L4D_IsSurvivalMode());
+		ReplyToCommand(iClient, "IsScavengeMode: %d, IsVersusMode: %d", L4D2_IsScavengeMode(), L4D_IsVersusMode());
+
+		return Plugin_Handled;
+	}
+
+	char sArgs[32];
+	GetCmdArg(1, sArgs, sizeof(sArgs));
+
+	if (StrContains(sArgs, "generic") != -1) {
+		ReplyToCommand(iClient, "IsGenericCoopMode: %d", L4D2_IsGenericCooperativeMode());
+
+		return Plugin_Handled;
+	}
+
+	if (strcmp(sArgs, "coop") == 0) {
+		ReplyToCommand(iClient, "IsCoopMode: %d", L4D_IsCoopMode());
+
+		return Plugin_Handled;
+	}
+
+	if (strcmp(sArgs, "realism") == 0) {
+		ReplyToCommand(iClient, "IsRealismMode: %d", L4D2_IsRealismMode());
+
+		return Plugin_Handled;
+	}
+
+	if (strcmp(sArgs, "survival") == 0) {
+		ReplyToCommand(iClient, "IsSurvivalMode: %d", L4D_IsSurvivalMode());
+
+		return Plugin_Handled;
+	}
+
+	if (strcmp(sArgs, "scavenge") == 0) {
+		ReplyToCommand(iClient, "IsScavengeMode: %d", L4D2_IsScavengeMode());
+
+		return Plugin_Handled;
+	}
+
+	if (strcmp(sArgs, "versus") == 0) {
+		ReplyToCommand(iClient, "IsVersusMode: %d", L4D_IsVersusMode());
+
+		return Plugin_Handled;
+	}
 
 	return Plugin_Handled;
 }

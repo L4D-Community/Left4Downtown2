@@ -38,6 +38,11 @@
 
 extern IServerGameEnts* gameents;
 
+extern IMatchFramework* g_pMatchFramework;
+extern IMatchExtL4D* g_pMatchExtL4D;
+
+extern ConVar* mp_gamemode;
+
 class CBaseEntity
 {
 public:
@@ -151,6 +156,57 @@ public:
 
 public:
 	static int sendprop_m_weaponID;
+};
+
+class CTerrorGameRules
+{
+public:
+	static bool IsGenericCooperativeMode()
+	{
+		return CTerrorGameRules::IsCoopMode() || CTerrorGameRules::IsRealismMode();
+	}
+
+	static bool IsCoopMode()
+	{
+		return IsSpecifiedMode("coop");
+	}
+
+	static bool IsRealismMode()
+	{
+		return IsSpecifiedMode("realism");
+	}
+
+	static bool IsSurvivalMode()
+	{
+		return IsSpecifiedMode("survival");
+	}
+
+	static bool IsScavengeMode()
+	{
+		return IsSpecifiedMode("scavenge");
+	}
+
+	static bool IsVersusMode()
+	{
+		return IsSpecifiedMode("versus");
+	}
+
+	static bool IsSpecifiedMode(const char* pszBaseMode)
+	{
+		if (!g_pMatchExtL4D) {
+			return false;
+		}
+
+		const char* szGameMode = mp_gamemode->GetString();
+
+		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+
+		if (pkvMode != NULL) {
+			return V_stricmp(pkvMode->GetString("base"), pszBaseMode ) == 0;
+		}
+
+		return false;
+	}
 };
 
 bool L4D2_GetOffsets(char* error, size_t maxlength);

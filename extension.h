@@ -34,9 +34,9 @@
 #define _INCLUDE_SOURCEMOD_EXTENSION_PROPER_H_
 
 #ifdef _DEBUG
-#define L4D_DEBUG_LOG(...) g_pSM->LogMessage(myself, __VA_ARGS__)
+	#define L4D_DEBUG_LOG(...) g_pSM->LogMessage(myself, __VA_ARGS__)
 #else
-#define L4D_DEBUG_LOG(...)
+	#define L4D_DEBUG_LOG(...)
 #endif
 
 
@@ -46,7 +46,6 @@
  */
 
 #include "smsdk_ext.h"
-#include "wrappers.h"
 #include <IBinTools.h>
 #include <ISDKTools.h>
 #include <iserver.h>
@@ -57,6 +56,11 @@
 #include <gametrace.h>
 #include <iservernetworkable.h>
 #include <server_class.h>
+
+#include <matchmaking/imatchframework.h>
+#include <matchmaking/l4d2/imatchext_l4d.h>
+
+#include "wrappers.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.
@@ -135,11 +139,15 @@ public:
 	 */
 	//virtual bool SDK_OnMetamodPauseChange(bool paused, char *error, size_t maxlength);
 #endif
+
 public: //IPluginsListener
 	void OnPluginLoaded(IPlugin *plugin);
 	void OnPluginUnloaded(IPlugin *plugin);
+
 public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
+
+	bool SetupFromMatchmakingLibrary(char* error, int maxlength);
 };
 
 extern IForward *g_pFwdOnSpawnSpecial;
@@ -204,14 +212,18 @@ extern ISDKTools *g_pSDKTools;
 extern IGameConfig *g_pGameConf;
 extern IGameConfig *g_pGameConfSDKTools;
 
-/* Interfaces from engine or gamedll */
 #if defined SMEXT_ENABLE_ROOTCONSOLEMENU
-extern IRootConsole *rootconsole;
+extern IRootConsole* rootconsole;
 #endif
 
+/* Interfaces from engine or gamedll */
 extern IServerGameEnts *gameents;
 extern ICvar *icvar;
 extern CGlobalVars *gpGlobals;
+extern ConVar* mp_gamemode;
+extern IMatchFramework* g_pMatchFramework;
+extern IMatchExtL4D* g_pMatchExtL4D;
+
 /* Interfaces from SourceMod */
 
 #include "compat_wrappers.h"

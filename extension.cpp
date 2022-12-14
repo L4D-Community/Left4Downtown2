@@ -38,6 +38,8 @@
 #include "util.h"
 #include "l4d2sdk/convar_public.h"
 
+#include <amtl/os/am-shared-library.h>
+
 #include "codepatch/patchmanager.h"
 #include "codepatch/autopatch.h"
 
@@ -89,6 +91,12 @@
 
 #define GAMECONFIG_FILE "left4downtown.l4d2"
 
+#if !defined(_WIN32) && SOURCE_ENGINE == SE_LEFT4DEAD2
+	#define MATCHMAKING_LIB_DS_SUFFIX "_ds_srv"
+#else
+	#define MATCHMAKING_LIB_DS_SUFFIX "_ds"
+#endif
+
 Left4Downtown g_Left4DowntownTools;		/**< Global singleton for extension's main interface */
 IGameConfig *g_pGameConf = NULL;
 IGameConfig *g_pGameConfSDKTools = NULL;
@@ -97,6 +105,9 @@ IServer *g_pServer = NULL; //ptr to CBaseServer
 ISDKTools *g_pSDKTools = NULL;
 IServerGameEnts *gameents = NULL;
 CGlobalVars *gpGlobals;
+ConVar* mp_gamemode = NULL;
+IMatchFramework* g_pMatchFramework = NULL;
+IMatchExtL4D* g_pMatchExtL4D = NULL;
 
 IForward *g_pFwdOnSpawnSpecial = NULL;
 IForward *g_pFwdOnSpawnSpecialPost = NULL;
@@ -165,6 +176,7 @@ extern sp_nativeinfo_t g_L4DoMatchNatives[];
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
 ConVar g_AddonsEclipse("l4d2_addons_eclipse", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Addons Manager(-1: use addonconfig; 0/1: override addonconfig");
 ConVar g_UnlockMelees("l4d2_unlock_melees", "0", FCVAR_SPONLY|FCVAR_NOTIFY, "1: Unlock all melees, 0: don't (set to 0 if you're experiencing crashes on modes other than versus)");
+
 PatchManager g_PatchManager;
 
 /**
@@ -177,6 +189,18 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	if (strcmp(g_pSM->GetGameFolderName(), "left4dead2") != 0)
 	{
 		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D2");
+		return false;
+	}
+
+	mp_gamemode = g_pCVar->FindVar("mp_gamemode");
+	if (mp_gamemode == NULL)
+	{
+		UTIL_Format(error, maxlength, "Cvar \"mp_gamemode\" not found");
+		return false;
+	}
+
+	if (!SetupFromMatchmakingLibrary(error, maxlength))
+	{
 		return false;
 	}
 
@@ -290,9 +314,12 @@ void Left4Downtown::SDK_OnAllLoaded()
 	//garbage characters. this is possibly causing a crash on windows servers
 	//when a player connects. so lets not read the server name :(
 	//L4D_DEBUG_LOG("Server name is %s", server->GetName());
-	if (pServer == NULL) {
+	if (pServer == NULL)
+	{
 		g_pSM->LogError(myself, "Couldn't find IServer instance!");
-	} else {
+	}
+	else
+	{
 		L4D_DEBUG_LOG("Address of IServer is %p", pServer);
 	}
 
@@ -453,6 +480,40 @@ bool Left4Downtown::SDK_OnMetamodLoad(SourceMM::ISmmAPI *ismm, char *error, size
 
 	GET_V_IFACE_ANY(GetServerFactory, gameents, IServerGameEnts, INTERFACEVERSION_SERVERGAMEENTS);
 	gpGlobals = ismm->GetCGlobals();
+
+	return true;
+}
+
+// From extension - https://github.com/shqke/imatchext
+bool Left4Downtown::SetupFromMatchmakingLibrary(char* error, int maxlength)
+{
+	char path[PLATFORM_MAX_PATH];
+	smutils->BuildPath(Path_Game, path, sizeof(path), "bin/matchmaking%s." PLATFORM_LIB_EXT, engine->IsDedicatedServer() ? MATCHMAKING_LIB_DS_SUFFIX : "");
+
+	char libErr[256];
+	ke::RefPtr<ke::SharedLib> mms_lib = ke::SharedLib::Open(path, libErr, sizeof(libErr));
+	if (!mms_lib) {
+		V_snprintf(error, maxlength, "Unable to load matchmaking library \"%s\" (error: \"%s\")", path, libErr);
+		return false;
+	}
+
+	CreateInterfaceFn matchmakingFactory = mms_lib->get<CreateInterfaceFn>(CREATEINTERFACE_PROCNAME);
+	if (matchmakingFactory == NULL) {
+		V_snprintf(error, maxlength, "Unable to retrieve matchmaking factory (file: \"%s\")", path);
+		return false;
+	}
+
+	g_pMatchFramework = static_cast<IMatchFramework*>(matchmakingFactory(IMATCHFRAMEWORK_VERSION_STRING, NULL));
+	if (g_pMatchFramework == NULL) {
+		V_snprintf(error, maxlength, "Unable to find interface \"" IMATCHFRAMEWORK_VERSION_STRING "\" (path: \"%s\")", path);
+		return false;
+	}
+
+	g_pMatchExtL4D = static_cast<IMatchExtL4D*>(matchmakingFactory(IMATCHEXT_L4D_INTERFACE, NULL));
+	if (g_pMatchExtL4D == NULL) {
+		V_snprintf(error, maxlength, "Unable to find interface \"" IMATCHEXT_L4D_INTERFACE "\" (path: \"%s\")", path);
+		return false;
+	}
 
 	return true;
 }

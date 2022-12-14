@@ -656,11 +656,49 @@ native int L4D_GetLastKnownArea(int client);
 native bool L4D_HasPlayerControlledZombies();
 
 /**
+ * @brief Returns if the current game mode is Coop/Realism mode.
+ *
+ * @return				True if the current game mode is Coop/Realism mode, false otherwise.
+ **/
+// L4D2 only.
+native bool L4D2_IsGenericCooperativeMode();
+
+/**
  * @brief Returns if the current game mode is Coop mode.
  *
  * @return				True if the current game mode is Coop mode, false otherwise.
  **/
 native bool L4D_IsCoopMode();
+
+/**
+ * @brief Returns if the current game mode is Realism mode.
+ *
+ * @return				True if the current game mode is Realism mode, false otherwise.
+ **/
+// L4D2 only.
+native bool L4D2_IsRealismMode();
+
+/**
+ * @brief Returns if the current game mode is Survival mode.
+ *
+ * @return				True if the current game mode is Survival mode, false otherwise.
+ **/
+native bool L4D_IsSurvivalMode();
+
+/**
+ * @brief Returns if the current game mode is Scavenge mode.
+ *
+ * @return				True if the current game mode is Scavenge mode, false otherwise.
+ **/
+// L4D2 only.
+native bool L4D2_IsScavengeMode();
+
+/**
+ * @brief Returns if the current game mode is Versus mode.
+ *
+ * @return				True if the current game mode is Versus mode, false otherwise.
+ **/
+native bool L4D_IsVersusMode();
 
 /**
  * @brief Revives an incapacitated survivor, also from ledge hanging

@@ -32,31 +32,40 @@
 #include "extension.h"
 #include "util.h"
 
+// native bool L4D2_IsGenericCooperativeMode();
+cell_t L4D2_IsGenericCooperativeMode(IPluginContext* pContext, const cell_t* params)
+{
+	return CTerrorGameRules::IsGenericCooperativeMode();
+}
+
 // native bool L4D_IsCoopMode();
 cell_t L4D_IsCoopMode(IPluginContext *pContext, const cell_t *params)
 {
-	static ICallWrapper *pWrapper = NULL;
+	return CTerrorGameRules::IsCoopMode();
+}
 
-	// CTerrorGameRules::IsCoopMode(void)
-	if (!pWrapper) {
-		PassInfo retInfo;
-		retInfo.flags = PASSFLAG_BYVAL;
-		retInfo.size = sizeof(bool);
-		retInfo.type = PassType_Basic;
+// native bool L4D2_IsRealismMode();
+cell_t L4D2_IsRealismMode(IPluginContext* pContext, const cell_t* params)
+{
+	return CTerrorGameRules::IsRealismMode();
+}
 
-		REGISTER_NATIVE_ADDR("CTerrorGameRules::IsCoopMode", \
-			pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+// native bool L4D_IsSurvivalMode();
+cell_t L4D_IsSurvivalMode(IPluginContext* pContext, const cell_t* params)
+{
+	return CTerrorGameRules::IsSurvivalMode();
+}
 
-		L4D_DEBUG_LOG("Built vcall wrapper CTerrorGameRules::IsCoopMode");
-	}
+// native bool L4D2_IsScavengeMode();
+cell_t L4D2_IsScavengeMode(IPluginContext* pContext, const cell_t* params)
+{
+	return CTerrorGameRules::IsScavengeMode();
+}
 
-	cell_t iRet = 0;
-
-	L4D_DEBUG_LOG("Going to execute CTerrorGameRules::IsCoopMode");
-	pWrapper->Execute(NULL, /*retbuffer*/&iRet);
-	L4D_DEBUG_LOG("Invoked CTerrorGameRules::IsCoopMode, got back = %d", iRet);
-
-	return iRet;
+// native bool L4D_IsVersusMode();
+cell_t L4D_IsVersusMode(IPluginContext* pContext, const cell_t* params)
+{
+	return CTerrorGameRules::IsVersusMode();
 }
 
 // native bool L4D_HasPlayerControlledZombies();
@@ -144,7 +153,12 @@ cell_t L4D_IsMissionFinalMap(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoMatchNatives[] =
 {
+	{"L4D2_IsGenericCooperativeMode",	L4D2_IsGenericCooperativeMode},
 	{"L4D_IsCoopMode",					L4D_IsCoopMode},
+	{"L4D2_IsRealismMode",				L4D2_IsRealismMode},
+	{"L4D_IsSurvivalMode",				L4D_IsSurvivalMode},
+	{"L4D2_IsScavengeMode",				L4D2_IsScavengeMode},
+	{"L4D_IsVersusMode",				L4D_IsVersusMode},
 	{"L4D_HasPlayerControlledZombies",	L4D_HasPlayerControlledZombies},
 	{"L4D_IsFirstMapInScenario",		L4D_IsFirstMapInScenario},
 	{"L4D_IsMissionFinalMap",			L4D_IsMissionFinalMap},
