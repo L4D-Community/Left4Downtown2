@@ -60,8 +60,6 @@
 #include <matchmaking/imatchframework.h>
 #include <matchmaking/l4d2/imatchext_l4d.h>
 
-#include "wrappers.h"
-
 /**
  * @brief Sample implementation of the SDK Extension.
  * Note: Uncomment one of the pre-defined virtual functions in order to use it.
@@ -224,8 +222,9 @@ extern ConVar* mp_gamemode;
 extern IMatchFramework* g_pMatchFramework;
 extern IMatchExtL4D* g_pMatchExtL4D;
 
-/* Interfaces from SourceMod */
+#include "wrappers.h"
 
+/* Interfaces from SourceMod */
 #include "compat_wrappers.h"
 
 #endif // _INCLUDE_SOURCEMOD_EXTENSION_PROPER_H_

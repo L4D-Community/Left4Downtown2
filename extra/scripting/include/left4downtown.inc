@@ -640,6 +640,16 @@ native Address L4D_GetPointer(PointerType ptr_type);
 native int L4D_GetNearestNavArea(const float vecPos[3], float maxDist = 10000.0, bool checkLOS = false, bool checkGround = true);
 
 /**
+ * @brief Returns the worldspace center of an entity.
+ *
+ * @param entity	The entity to use.
+ * @param vecPos	The entities worldspace center returned vector
+ *
+ * @noreturn
+ */
+native void L4D_GetEntityWorldSpaceCenter(int entity, float vecPos[3]);
+
+/**
  * @brief Returns the nav address of the last known area.
  *
  * @param client			The client to check

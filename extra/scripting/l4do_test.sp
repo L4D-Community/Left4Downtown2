@@ -192,6 +192,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_state_transition", Cmd_SetStateTransition);
 	RegConsoleCmd("sm_check_gamemode", Cmd_CheckGameMode);
 	RegConsoleCmd("sm_check_mission", Cmd_CheckMission);
+	RegConsoleCmd("sm_entity_center", Cmd_GetEntityCenter);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1195,6 +1196,32 @@ public Action Cmd_CheckGameMode(int iClient, int iArgs)
 public Action Cmd_CheckMission(int iClient, int iArgs)
 {
 	ReplyToCommand(iClient, "IsFirstMapInScenario: %d, IsMissionFinalMap: %d", L4D_IsFirstMapInScenario(), L4D_IsMissionFinalMap());
+
+	return Plugin_Handled;
+}
+
+public Action Cmd_GetEntityCenter(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+
+		return Plugin_Handled;
+	}
+
+	int iEntityTarget = GetClientAimTarget(iClient, false);
+	if (iEntityTarget < 0 || !IsValidEntity(iEntityTarget)) {
+		PrintToChat(iClient, "You are looking at the invalid entity!");
+
+		return Plugin_Handled;
+	}
+
+	char sEntityName[ENTITY_NAME_LENGTH];
+	GetEntityClassname(iEntityTarget, sEntityName, sizeof(sEntityName));
+
+	float fCenter[3];
+	L4D_GetEntityWorldSpaceCenter(iEntityTarget, fCenter);
+
+	PrintToChat(iClient, "Entity %s (%d). WorldSpaceCenter: %f %f %f ", sEntityName, iEntityTarget, fCenter[0], fCenter[1], fCenter[2]);
 
 	return Plugin_Handled;
 }

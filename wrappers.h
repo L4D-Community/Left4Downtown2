@@ -36,12 +36,6 @@
 #include "extension.h"
 #include "l4d2sdk/constants.h"
 
-extern IServerGameEnts* gameents;
-extern IMatchFramework* g_pMatchFramework;
-extern IMatchExtL4D* g_pMatchExtL4D;
-extern ConVar* mp_gamemode;
-extern CGlobalVars* gpGlobals;
-
 class CBaseEntity
 {
 public:
@@ -296,7 +290,7 @@ public:
 		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
 
 		if (pkvMode != NULL) {
-			return V_stricmp(pkvMode->GetString("base"), pszBaseMode ) == 0;
+			return V_stricmp(pkvMode->GetString("base"), pszBaseMode) == 0;
 		}
 
 		return false;

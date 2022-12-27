@@ -36,6 +36,52 @@
 #include "l4d2sdk/constants.h"
 #include "natives.h"
 
+// native void L4D_GetEntityWorldSpaceCenter(int entity, float vecPos[3])
+cell_t L4D_GetEntityWorldSpaceCenter(IPluginContext* pContext, const cell_t* params)
+{
+	static ICallWrapper* vcall_WorldSpaceCenter = NULL;
+
+	// const Vector &CBaseEntity::WorldSpaceCenter( ) const 
+	if (!vcall_WorldSpaceCenter) {
+		PassInfo retInfo;
+		retInfo.flags = PASSFLAG_BYREF;
+		retInfo.size = sizeof(Vector*);
+		retInfo.type = PassType_Basic;
+
+		REGISTER_NATIVE_OFFSET("CBaseEntity::WorldSpaceCenter", \
+			vcall_WorldSpaceCenter = g_pBinTools->CreateVCall(offset, 0, 0, /*retInfo*/&retInfo, /*paramInfo*/NULL, /*numparams*/0));
+
+		L4D_DEBUG_LOG("Built vcall wrapper CBaseEntity::WorldSpaceCenter");
+	}
+
+	CBaseEntity* pEntity = UTIL_GetCBaseEntity(params[1], false);
+	if (pEntity == NULL) {
+		return pContext->ThrowNativeError("Invalid entity index passed: %d!", params[1]);
+	}
+
+	unsigned char vstk[sizeof(CBaseEntity*)];
+	unsigned char* vptr = vstk;
+
+	*(CBaseEntity**)vptr = pEntity;
+
+	Vector* vecCenter;
+
+	L4D_DEBUG_LOG("Going to execute CBaseEntity::WorldSpaceCenter");
+	vcall_WorldSpaceCenter->Execute(vstk, &vecCenter);
+	L4D_DEBUG_LOG("Invoked CBaseEntity::WorldSpaceCenter");
+
+	cell_t* pSourceVector;
+	pContext->LocalToPhysAddr(params[2], &pSourceVector);
+
+	if (pSourceVector != pContext->GetNullRef(SP_NULL_VECTOR)) {
+		pSourceVector[0] = sp_ftoc(vecCenter->x);
+		pSourceVector[1] = sp_ftoc(vecCenter->y);
+		pSourceVector[2] = sp_ftoc(vecCenter->z);
+	}
+
+	return 1;
+}
+
 // native void L4D_State_Transition(int client, int state)
 cell_t L4D_State_Transition(IPluginContext* pContext, const cell_t* params)
 {
@@ -60,7 +106,8 @@ cell_t L4D_State_Transition(IPluginContext* pContext, const cell_t* params)
 
 	TerrorPlayerState iTerrorState = static_cast<TerrorPlayerState>(params[2]);
 	if (iTerrorState < STATE_ACTIVE || iTerrorState > STATE_INTRO_CAMERA) {
-		return pContext->ThrowNativeError("Invalid parameter passed: %d! Values less than %d and greater than %d cannot be used!", iTerrorState, STATE_ACTIVE, STATE_INTRO_CAMERA);
+		return pContext->ThrowNativeError("Invalid parameter passed: %d! Values less than %d and greater than %d cannot be used!", \
+			iTerrorState, STATE_ACTIVE, STATE_INTRO_CAMERA);
 	}
 
 	/* Build the vcall argument stack */
@@ -1501,5 +1548,6 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetServerClassId",			L4D_GetServerClassId},
 	{"L4D2_GetCurrentWeaponId",			L4D2_GetCurrentWeaponId},
 	{"L4D_State_Transition",			L4D_State_Transition},
+	{"L4D_GetEntityWorldSpaceCenter",	L4D_GetEntityWorldSpaceCenter},
 	{NULL,								NULL}
 };

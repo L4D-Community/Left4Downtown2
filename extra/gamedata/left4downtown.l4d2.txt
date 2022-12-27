@@ -121,6 +121,15 @@
 			}
 
 			/*
+			 * CBaseEntity::WorldSpaceCenter()
+			 */
+			"CBaseEntity::WorldSpaceCenter"
+			{
+				"windows"	"161"
+				"linux"		"162"
+			}
+
+			/*
 			* int CWeaponCSBase::GetWeaponID() const
 			*/
 			"CWeaponCSBase::GetWeaponID"
