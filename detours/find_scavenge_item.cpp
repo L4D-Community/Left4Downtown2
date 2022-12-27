@@ -45,9 +45,9 @@ namespace Detours
 
 		cell_t result = Pl_Continue;
 
-		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 		client = IndexOfEdict(pEntity);
-		edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(actualInvocationResult));
+		edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(actualInvocationResult));
 		item = IndexOfEdict(pEntity2);
 
 		if (!actualInvocationResult) {
@@ -62,9 +62,9 @@ namespace Detours
 			return NULL;
 		} else if (result == Pl_Changed) {
 			edict_t *pEntity3 = PEntityOfEntIndex(item);
-			return reinterpret_cast<void*>(gameents->EdictToBaseEntity(pEntity3));
+			return reinterpret_cast<void *>(gameents->EdictToBaseEntity(pEntity3));
 		}
 
-		return reinterpret_cast<void*>(actualInvocationResult);
+		return reinterpret_cast<void *>(actualInvocationResult);
 	}
 };

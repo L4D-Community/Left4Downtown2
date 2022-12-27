@@ -40,13 +40,13 @@ class CTerrorPlayer;
 namespace Detours
 {
 	class StartMeleeSwing;
-	typedef void * (StartMeleeSwing::*StartMeleeSwingFunc)(CTerrorPlayer*, int boolean);
+	typedef void* (StartMeleeSwing::*StartMeleeSwingFunc)(CTerrorPlayer *, int boolean);
 
 	class StartMeleeSwing : public DetourTemplate<StartMeleeSwingFunc, StartMeleeSwing>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnStartMeleeSwing(CTerrorPlayer*, int);
+		void *OnStartMeleeSwing(CTerrorPlayer *, int);
 
 		virtual bool OnPatch()
 		{

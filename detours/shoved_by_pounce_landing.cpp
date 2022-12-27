@@ -36,7 +36,7 @@
 
 namespace Detours
 {
-	void *ShovedByPounceLanding::OnShovedByPounceLanding(CTerrorPlayer* jockeyOrHunter)
+	void *ShovedByPounceLanding::OnShovedByPounceLanding(CTerrorPlayer *jockeyOrHunter)
 	{
 		cell_t result = Pl_Continue;
 

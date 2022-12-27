@@ -86,36 +86,36 @@ CBaseEntity *UTIL_GetCBaseEntity(int num, bool onlyPlayers)
 
 int UTIL_GetServerClassId(int num)
 {
-	edict_t* pEdict = PEntityOfEntIndex(num);
+	edict_t *pEdict = PEntityOfEntIndex(num);
 	if (!pEdict || pEdict->IsFree())
 	{
 		return -1;
 	}
 
-	IServerNetworkable* pNetworkable = pEdict->GetNetworkable();
+	IServerNetworkable *pNetworkable = pEdict->GetNetworkable();
 	if (!pNetworkable)
 	{
 		return -1;
 	}
 
-	IHandleEntity* pHandleEnt = pNetworkable->GetEntityHandle();
+	IHandleEntity *pHandleEnt = pNetworkable->GetEntityHandle();
 	if (!pHandleEnt)
 	{
 		return -1;
 	}
 
-	ServerClass* pClass = pNetworkable->GetServerClass();
+	ServerClass *pClass = pNetworkable->GetServerClass();
 
 	return pClass->m_ClassID;
 }
 
 // Taken from sourcemod
-bool UTIL_ContainsDataTable(SendTable* pTable, const char* name)
+bool UTIL_ContainsDataTable(SendTable *pTable, const char *name)
 {
-	const char* pname = pTable->GetName();
+	const char *pname = pTable->GetName();
 	int props = pTable->GetNumProps();
-	SendProp* prop;
-	SendTable* table;
+	SendProp *prop;
+	SendTable *table;
 
 	if (pname && strcmp(name, pname) == 0)
 		return true;

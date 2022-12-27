@@ -145,7 +145,7 @@ public: //IPluginsListener
 public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
 
-	bool SetupFromMatchmakingLibrary(char* error, int maxlength);
+	bool SetupFromMatchmakingLibrary(char *error, int maxlength);
 };
 
 extern IForward *g_pFwdOnSpawnSpecial;
@@ -211,16 +211,25 @@ extern IGameConfig *g_pGameConf;
 extern IGameConfig *g_pGameConfSDKTools;
 
 #if defined SMEXT_ENABLE_ROOTCONSOLEMENU
-extern IRootConsole* rootconsole;
+extern IRootConsole *rootconsole;
 #endif
 
 /* Interfaces from engine or gamedll */
 extern IServerGameEnts *gameents;
 extern ICvar *icvar;
 extern CGlobalVars *gpGlobals;
-extern ConVar* mp_gamemode;
-extern IMatchFramework* g_pMatchFramework;
-extern IMatchExtL4D* g_pMatchExtL4D;
+extern ConVar *mp_gamemode;
+extern IMatchFramework *g_pMatchFramework;
+extern IMatchExtL4D *g_pMatchExtL4D;
+
+extern sp_nativeinfo_t g_L4DoNatives[];
+extern sp_nativeinfo_t g_L4DoTimerNatives[];
+extern sp_nativeinfo_t g_L4DoWeaponNatives[];
+extern sp_nativeinfo_t g_L4DoMeleeWeaponNatives[];
+extern sp_nativeinfo_t g_L4DoDirectorNatives[];
+extern sp_nativeinfo_t g_L4DoGameRulesNatives[];
+extern sp_nativeinfo_t g_L4DoPlayerNatives[];
+extern sp_nativeinfo_t g_L4DoZombieManagerNatives[];
 
 #include "wrappers.h"
 

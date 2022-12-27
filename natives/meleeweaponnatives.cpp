@@ -50,7 +50,7 @@ enum L4D2FloatMeleeWeaponAttributes
 	L4D2FMWA_WeaponIdleTime
 };
 
-bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
+bool* BoolIdToAttr(CMeleeWeaponInfo* pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
 
@@ -63,7 +63,7 @@ bool * BoolIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 	}
 }
 
-int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
+int* IntIdToAttr(CMeleeWeaponInfo* pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
 
@@ -78,7 +78,7 @@ int * IntIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 	}
 }
 
-float * FloatIdToAttr(CMeleeWeaponInfo *pInfo, int id)
+float* FloatIdToAttr(CMeleeWeaponInfo* pInfo, int id)
 {
 	if (pInfo == NULL) return NULL;
 
@@ -96,7 +96,7 @@ float * FloatIdToAttr(CMeleeWeaponInfo *pInfo, int id)
 }
 
 /*
-CMeleeWeaponInfo * StringToId(const char *weapon)
+CMeleeWeaponInfo* StringToId(const char *weapon)
 {
 	FOR_EACH_VEC((g_pMeleeWeaponInfoStore->weaponNames), i)
 	{
@@ -109,7 +109,7 @@ CMeleeWeaponInfo * StringToId(const char *weapon)
 }
 */
 
-CMeleeWeaponInfo * IndexToId(int i)
+CMeleeWeaponInfo* IndexToId(int i)
 {
 	if (g_pMeleeWeaponInfoStore->weaponInfo.IsValidIndex(i))
 	{
@@ -133,7 +133,7 @@ cell_t L4D2_GetMeleeWeaponIndex(IPluginContext *pContext, const cell_t *params)
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore unavailable or unsupported. File a bug report.");
 	}
 
-	char * weapon = NULL;
+	char *weapon = NULL;
 	pContext->LocalToString(params[1], &weapon);
 
 	FOR_EACH_VEC( (g_pMeleeWeaponInfoStore->weaponNames), i )
@@ -143,6 +143,7 @@ cell_t L4D2_GetMeleeWeaponIndex(IPluginContext *pContext, const cell_t *params)
 			return i;
 		}
 	}
+
 	return -1;
 }
 
@@ -154,17 +155,18 @@ cell_t L4D2_GetIntMeleeAttribute(IPluginContext *pContext, const cell_t *params)
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	int * attr = IntIdToAttr(pInfo, params[2]);
+	int *attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+
 	return *attr;
 }
 
@@ -176,17 +178,18 @@ cell_t L4D2_GetFloatMeleeAttribute(IPluginContext *pContext, const cell_t *param
 		return pContext->ThrowNativeError("MeleeWeaponInfo unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	float * attr = FloatIdToAttr(pInfo, params[2]);
+	float *attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+
 	return sp_ftoc(*attr);
 }
 
@@ -198,19 +201,21 @@ cell_t L4D2_SetIntMeleeAttribute(IPluginContext *pContext, const cell_t *params)
 		return pContext->ThrowNativeError("MeleeWeaponInfo unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	int * attr = IntIdToAttr(pInfo, params[2]);
+	int *attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+
 	*attr=params[3];
-	return 0;
+
+	return 1;
 }
 
 // native L4D2_SetFloatMeleeAttribute(int id, L4D2FloatMeleeWeaponAttributes:attr, Float:value);
@@ -221,19 +226,21 @@ cell_t L4D2_SetFloatMeleeAttribute(IPluginContext *pContext, const cell_t *param
 		return pContext->ThrowNativeError("MeleeWeaponInfo unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	float * attr = FloatIdToAttr(pInfo, params[2]);
+	float *attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
-	*attr=sp_ctof(params[3]);
-	return 0;
+
+	*attr = sp_ctof(params[3]);
+
+	return 1;
 }
 
 // native bool:L4D2_GetBoolMeleeAttribute(int id, L4D2BoolMeleeWeaponAttribute:attr);
@@ -244,13 +251,13 @@ cell_t L4D2_GetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	int * attr = IntIdToAttr(pInfo, params[2]);
+	int *attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
@@ -266,19 +273,21 @@ cell_t L4D2_SetBoolMeleeAttribute(IPluginContext *pContext, const cell_t *params
 		return pContext->ThrowNativeError("MeleeWeaponInfo unavailable or unsupported. File a bug report.");
 	}
 
-	CMeleeWeaponInfo * pInfo = IndexToId(params[1]);
+	CMeleeWeaponInfo *pInfo = IndexToId(params[1]);
 	if (pInfo == NULL)
 	{
 		return pContext->ThrowNativeError("MeleeWeaponInfoStore does not contain index %i.", params[1]);
 	}
 
-	bool * attr = BoolIdToAttr(pInfo, params[2]);
+	bool *attr = BoolIdToAttr(pInfo, params[2]);
 	if (attr == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
+
 	*attr = (params[3] != 0);
-	return 0;
+
+	return 1;
 }
 
 sp_nativeinfo_t g_L4DoMeleeWeaponNatives[] =

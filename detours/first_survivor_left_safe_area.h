@@ -40,13 +40,13 @@ class CTerrorPlayer;
 namespace Detours
 {
 	class FirstSurvivorLeftSafeArea;
-	typedef void * (FirstSurvivorLeftSafeArea::*FirstSurvivorLeftSafeAreaFunc)(CTerrorPlayer*);
+	typedef void* (FirstSurvivorLeftSafeArea::*FirstSurvivorLeftSafeAreaFunc)(CTerrorPlayer *);
 
 	class FirstSurvivorLeftSafeArea : public DetourTemplate<FirstSurvivorLeftSafeAreaFunc, FirstSurvivorLeftSafeArea>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnFirstSurvivorLeftSafeArea(CTerrorPlayer*);
+		void *OnFirstSurvivorLeftSafeArea(CTerrorPlayer *);
 
 		virtual bool OnPatch()
 		{

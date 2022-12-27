@@ -47,7 +47,7 @@ namespace Detours
 			calls OnFirstSurvivorLeftSafeArea(NULL)
 		*/
 		if (p != NULL) {
-			client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
+			client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(p)));
 		}
 
 		g_pFwdOnFirstSurvivorLeftSafeArea->PushCell(client);

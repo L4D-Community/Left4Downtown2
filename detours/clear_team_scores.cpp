@@ -35,7 +35,7 @@
 
 namespace Detours
 {
-	/* CTerrorGameRules::ClearTeamScores in L4D2 has a bool parameter -XBetaAlpha		*/
+	/* CTerrorGameRules::ClearTeamScores in L4D2 has a bool parameter -XBetaAlpha */
 	void ClearTeamScores::OnClearTeamScores(CLEAR_TEAM_SCORES_ARG)
 	{
 		bool b = newCampaign;

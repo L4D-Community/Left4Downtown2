@@ -47,7 +47,7 @@ public:
 	/*
 		register a code patch
 	*/
-	void Register(ICodePatch* patch);
+	void Register(ICodePatch *patch);
 
 	/*
 		run Patch() on all registered code patches
@@ -65,7 +65,7 @@ public:
 	void UnregisterAll();
 
 private:
-	typedef SourceHook::List<ICodePatch*> PatchList;
+	typedef SourceHook::List<ICodePatch *> PatchList;
 
 	PatchList patchList;
 };

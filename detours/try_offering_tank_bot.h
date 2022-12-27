@@ -38,13 +38,13 @@
 namespace Detours
 {
 	class TryOfferingTankBot;
-	typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)(CBaseEntity*, bool);
+	typedef void (TryOfferingTankBot::*TryOfferingTankBotFunc)(CBaseEntity *, bool);
 
 	class TryOfferingTankBot : public DetourTemplate<TryOfferingTankBotFunc, TryOfferingTankBot>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis);
+		void OnTryOfferingTankBot(CBaseEntity *, bool);
 
 		virtual bool OnPatch()
 		{

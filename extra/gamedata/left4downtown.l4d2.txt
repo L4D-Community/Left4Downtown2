@@ -74,13 +74,6 @@
 
 		"Offsets"
 		{
-			/* Offset into CDirector::AreWanderersAllowed */
-			"CDirectorScavengeMode"
-			{
-				"windows"	"11"   /* mov ecx, [esi+offs] */
-				"linux"		"13"  /* mov eax, [ebx+offs] */
-			}
-
 			/* Offset from ConnectClientLobbyCheck to cmp with max players check
 			 *
 			 * string #Valve_Reject_Server_Full

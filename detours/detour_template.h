@@ -92,7 +92,7 @@ private:
 
 	static AutoForward*& GetAutoForwardPtrRef()
 	{
-		static AutoForward* autoForward = NULL;
+		static AutoForward *autoForward = NULL;
 		return autoForward;
 	}
 

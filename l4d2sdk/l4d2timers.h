@@ -57,7 +57,7 @@ public:
 	}
 
 private:
-	void * vtableptr; // Because hl2sdk's timers don't use the networkvar magic
+	void *vtableptr; // Because hl2sdk's timers don't use the networkvar magic
 	float m_timestamp;
 	float Now( void ) const;		// work-around since client header doesn't like inlined gpGlobals->curtime
 };
@@ -120,7 +120,7 @@ public:
 	}
 
 private:
-	void * vtableptr; // Because hl2sdk's timers don't use the networkvar magic
+	void *vtableptr; // Because hl2sdk's timers don't use the networkvar magic
 	float m_duration;
 	float m_timestamp;
 	float Now( void ) const;		// work-around since client header doesn't like inlined gpGlobals->curtime

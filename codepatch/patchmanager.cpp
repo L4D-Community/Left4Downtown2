@@ -36,7 +36,7 @@
 /*
 	register a code patch
 */
-void PatchManager::Register(ICodePatch* patch)
+void PatchManager::Register(ICodePatch *patch)
 {
 	patchList.push_back(patch);
 }

@@ -39,13 +39,13 @@ class CTerrorPlayer;
 namespace Detours
 {
 	class ShovedBySurvivor;
-	typedef void * (ShovedBySurvivor::*ShovedBySurvivorFunc)(CTerrorPlayer*, void *);
+	typedef void* (ShovedBySurvivor::*ShovedBySurvivorFunc)(CTerrorPlayer *, void *);
 
 	class ShovedBySurvivor : public DetourTemplate<ShovedBySurvivorFunc, ShovedBySurvivor>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnShovedBySurvivor(CTerrorPlayer*, void *vector);
+		void *OnShovedBySurvivor(CTerrorPlayer *, void *);
 
 		virtual bool OnPatch()
 		{

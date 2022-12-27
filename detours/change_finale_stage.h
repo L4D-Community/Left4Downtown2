@@ -39,13 +39,13 @@ namespace Detours
 {
 	class ChangeFinaleStage;
 
-	typedef void (ChangeFinaleStage::*ChangeFinaleStageFunc)(int, const char*);
+	typedef void (ChangeFinaleStage::*ChangeFinaleStageFunc)(int, const char *);
 
 	class ChangeFinaleStage : public DetourTemplate<ChangeFinaleStageFunc, ChangeFinaleStage>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void OnChangeFinaleStage(int, const char*);
+		void OnChangeFinaleStage(int, const char *);
 
 		virtual bool OnPatch()
 		{

@@ -39,7 +39,7 @@ namespace Detours
 	{
 		int actualInvocationResult = (this->*(GetTrampoline()))();
 
-		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 		int target = IndexOfEdict(pEntity);
 
 		g_pFwdOnRevived->PushCell(target);

@@ -32,6 +32,19 @@
 #ifndef _INCLUDE_L4D2SDK_CONSTANTS_H_
 #define _INCLUDE_L4D2SDK_CONSTANTS_H_
 
+enum ScoreType
+{
+	ScoreTypeRound = 0,
+	ScoreTypeCampaign
+};
+
+enum VersusTeam
+{
+	VersusTeam_None = 0,
+	VersusTeam_A,
+	VersusTeam_B
+};
+
  // Provided by "BHaType":
  // For the "L4D_State_Transition" native.
  // X -> Y (means X state will become Y state on next frame or some seconds later)

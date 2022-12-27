@@ -138,7 +138,7 @@ enum ScenarioRestartReason
 // Win32: 1420 bytes
 // Lin: 1420 bytes
 typedef struct _CDirector {
-	void * vptr; // 0x0
+	void *vptr; // 0x0
 	char unknown4[156]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // 160
 	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
@@ -202,7 +202,7 @@ typedef struct _CDirector {
 	char m_sCurrentMap[0x20]; // 756
 	CountdownTimer m_rescueCheckTimer; // 788 see rescue_interval cvar
 	char unknown800[52];
-	void * m_kvPopulationData; // 852 KeyValues *
+	void *m_kvPopulationData; // 852 KeyValues *
 	char unknown856[8];
 	int m_iMapNumber; // 864, should be 0 indexed into current campaign
 	int m_iSessionStartMapNumber; // 868
@@ -221,15 +221,15 @@ typedef struct _CDirector {
 	bool m_bUnknownJunk; // probably related
 	CountdownTimer TransitionTimeoutTimer; // 0x428
 	char unknown1076[308]; // 0x434
-	CDirectorTacticalServices * TacticalServicesPtr; //0x568
-	CDirectorItemManager * ItemManagerPtr; // 0x56c
-	CDirectorMusicBanks * MusicBanksPtr;
-	CDirectorSessionManager * SessionManagerPtr;
-	CDirectorScriptedEventManager * ScriptedEventManagerPtr;
-	CDirectorVersusMode * VersusModePtr;
-	CDirectorSurvivalMode * SurvivalModePtr;
-	CDirectorScavengeMode * ScavengeModePtr;
-	CDirectorChallengeMode * ChallengeModePtr;
+	CDirectorTacticalServices *TacticalServicesPtr; //0x568
+	CDirectorItemManager *ItemManagerPtr; // 0x56c
+	CDirectorMusicBanks *MusicBanksPtr;
+	CDirectorSessionManager *SessionManagerPtr;
+	CDirectorScriptedEventManager *ScriptedEventManagerPtr;
+	CDirectorVersusMode *VersusModePtr;
+	CDirectorSurvivalMode *SurvivalModePtr;
+	CDirectorScavengeMode *ScavengeModePtr;
+	CDirectorChallengeMode *ChallengeModePtr;
 } CDirector;
 
 #endif //_INCLUDE_DIRECTOR_H_

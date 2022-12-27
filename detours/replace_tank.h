@@ -40,13 +40,13 @@ class CTerrorPlayer;
 namespace Detours
 {
 	class ReplaceTank;
-	typedef void (ReplaceTank::*ReplaceTankFunc)(CTerrorPlayer*, CTerrorPlayer*);
+	typedef void (ReplaceTank::*ReplaceTankFunc)(CTerrorPlayer *, CTerrorPlayer *);
 
 	class ReplaceTank : public DetourTemplate<ReplaceTankFunc, ReplaceTank>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void OnReplaceTank(CTerrorPlayer*, CTerrorPlayer*);
+		void OnReplaceTank(CTerrorPlayer *, CTerrorPlayer *);
 
 		virtual bool OnPatch()
 		{

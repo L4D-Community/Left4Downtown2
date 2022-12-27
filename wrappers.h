@@ -36,12 +36,16 @@
 #include "extension.h"
 #include "l4d2sdk/constants.h"
 
+class CNavMesh;
+class CNavArea;
+class ZombieManager;
+
 class CBaseEntity
 {
 public:
 	CBaseEntity* GetOwnerEntity()
 	{
-		edict_t* pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle*)((byte*)(this) + sendprop_m_hOwnerEntity));
+		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + sendprop_m_hOwnerEntity));
 		if (pEdict == NULL) {
 			return NULL;
 		}
@@ -61,7 +65,7 @@ public:
 
 	bool IsPlayer()
 	{
-		edict_t* pEdict = this->edict();
+		edict_t *pEdict = this->edict();
 		if (engine->GetPlayerUserId(pEdict) != -1) {
 			return true;
 		}
@@ -79,7 +83,7 @@ class CBasePlayer:
 public:
 	L4DTeam GetTeamNumber()
 	{
-		int iTeam = *(int*)((unsigned char*)this + sendprop_m_iTeamNum);
+		int iTeam = *(int *)((unsigned char *)this + sendprop_m_iTeamNum);
 		L4DTeam m_iTeamNum = static_cast<L4DTeam>(iTeam);
 
 		return m_iTeamNum;
@@ -95,14 +99,14 @@ class CTerrorPlayer :
 public:
 	bool IsAttemptingToPounce()
 	{
-		int m_isAttemptingToPounce = *(int*)((unsigned char*)this + sendprop_m_isAttemptingToPounce);
+		int m_isAttemptingToPounce = *(int *)((unsigned char *)this + sendprop_m_isAttemptingToPounce);
 
 		return (m_isAttemptingToPounce) ? true : false;
 	}
 
 	ZombieClassType GetZombieClass()
 	{
-		int iZClass = *(int*)((unsigned char*)this + sendprop_m_zombieClass);
+		int iZClass = *(int *)((unsigned char *)this + sendprop_m_zombieClass);
 		ZombieClassType m_zombieClass = static_cast<ZombieClassType>(iZClass);
 
 		return m_zombieClass; 
@@ -119,7 +123,7 @@ class CBaseCombatWeapon: //CBaseAnimating
 public:
 	CBaseEntity* GetOwnerEntity()
 	{
-		edict_t* pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle*)((byte*)(this) + sendprop_m_hOwner));
+		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + sendprop_m_hOwner));
 		if (pEdict == NULL) {
 			return NULL;
 		}
@@ -140,9 +144,9 @@ class CWeaponSpawn: //CBaseAnimating
 	public CBaseEntity
 {
 public:
-	int GetWeaponIDNetProp()
+	int GetWeaponID()
 	{
-		int m_weaponID = *(int*)((unsigned char*)this + sendprop_m_weaponID);
+		int m_weaponID = *(int *)((unsigned char *)this + sendprop_m_weaponID);
 
 		return m_weaponID;
 	}
@@ -160,12 +164,12 @@ public:
 			return CTerrorGameRules::IsCoopMode() || CTerrorGameRules::IsRealismMode();
 		}
 
-		const char* szGameMode = mp_gamemode->GetString();
+		const char *szGameMode = mp_gamemode->GetString();
 
-		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
 
 		if (pkvMode != NULL) {
-			KeyValues* pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
+			KeyValues *pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
 
 			if (pkvBaseMode != NULL) {
 				return pkvMode->GetInt("hasdifficulty", pkvBaseMode->GetInt("hasdifficulty")) != 0;
@@ -181,12 +185,12 @@ public:
 			return false;
 		}
 
-		const char* szGameMode = mp_gamemode->GetString();
+		const char *szGameMode = mp_gamemode->GetString();
 
-		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
 
 		if (pkvMode != NULL) {
-			KeyValues* pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
+			KeyValues *pkvBaseMode = g_pMatchExtL4D->GetGameModeInfo(pkvMode->GetString("base", szGameMode));
 
 			if (pkvBaseMode != NULL) {
 				return pkvMode->GetInt("singlechapter", pkvBaseMode->GetInt("singlechapter")) != 0;
@@ -198,9 +202,9 @@ public:
 
 	static bool HasPlayerControlledZombies()
 	{
-		const char* szGameMode = mp_gamemode->GetString();
+		const char *szGameMode = mp_gamemode->GetString();
 
-		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
 
 		if (pkvMode != NULL) {
 			return pkvMode->GetInt("playercontrolledzombies") > 0;
@@ -211,7 +215,7 @@ public:
 
 	static bool IsMissionFinalMap()
 	{
-		KeyValues* pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
+		KeyValues *pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
 		KeyValues::AutoDelete autodelete_pGameSettings(pkvGameSettings);
 
 		if (!pkvGameSettings) {
@@ -223,24 +227,24 @@ public:
 		return (g_pMatchExtL4D->GetMapInfo(pkvGameSettings) == NULL);
 	}
 
-	static KeyValues* GetMissionFirstMap(KeyValues** ppMissionInfo = NULL)
+	static KeyValues* GetMissionFirstMap(KeyValues **ppMissionInfo = NULL)
 	{
 		if (ppMissionInfo) {
 			*ppMissionInfo = NULL;
 		}
 
-		KeyValues* pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
+		KeyValues *pkvGameSettings = g_pMatchFramework->GetMatchNetworkMsgController()->GetActiveServerGameDetails(NULL);
 		KeyValues::AutoDelete autodelete_pGameSettings(pkvGameSettings);
 
 		if (pkvGameSettings == NULL) {
 			return NULL;
 		}
 
-		KeyValues* pkvMap = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, ppMissionInfo);
+		KeyValues *pkvMap = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, ppMissionInfo);
 
 		pkvGameSettings->SetInt("Game/chapter", 1);
 
-		KeyValues* pkvMapDest = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, NULL);
+		KeyValues *pkvMapDest = g_pMatchExtL4D->GetMapInfo(pkvGameSettings, NULL);
 
 		if (pkvMapDest != NULL) {
 			pkvMap = pkvMapDest;
@@ -279,15 +283,15 @@ public:
 		return IsSpecifiedMode("versus");
 	}
 
-	static bool IsSpecifiedMode(const char* pszBaseMode)
+	static bool IsSpecifiedMode(const char *pszBaseMode)
 	{
 		if (!g_pMatchExtL4D) {
 			return false;
 		}
 
-		const char* szGameMode = mp_gamemode->GetString();
+		const char *szGameMode = mp_gamemode->GetString();
 
-		KeyValues* pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
+		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
 
 		if (pkvMode != NULL) {
 			return V_stricmp(pkvMode->GetString("base"), pszBaseMode) == 0;
@@ -302,20 +306,20 @@ class CDirectorWapper
 public:
 	static bool IsFirstMapInScenario()
 	{
-		const char* pszCurrentMapName = STRING(gpGlobals->mapname);
+		const char *pszCurrentMapName = STRING(gpGlobals->mapname);
 
-		KeyValues* pkvMission = CTerrorGameRules::GetMissionFirstMap(NULL);
+		KeyValues *pkvMission = CTerrorGameRules::GetMissionFirstMap(NULL);
 
 		if (pkvMission == NULL) {
 			return false;
 		}
 
-		const char* pszMapName = pkvMission->GetString("map");
+		const char *pszMapName = pkvMission->GetString("map");
 
 		return IDENT_STRINGS(pszCurrentMapName, pszMapName) || V_stricmp(pszCurrentMapName, pszMapName) == 0;
 	}
 };
 
-bool L4D2_GetOffsets(char* error, size_t maxlength);
+bool L4D2_GetOffsets(char *error, size_t maxlength);
 
 #endif // _INCLUDE_L4D2_WRAPPERS_H_

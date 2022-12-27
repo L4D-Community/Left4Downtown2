@@ -55,13 +55,14 @@ enum L4D2IntervalTimers
 	L4D2IT_ChargerDeathTimer
 };
 
-CountdownTimer * IdToCTimer(int id)
+CountdownTimer* IdToCTimer(int id)
 {
-	if (g_pDirector == NULL)
+	if (g_ppDirector == NULL)
 	{
 		return NULL;
 	}
-	CDirector * director = *g_pDirector;
+
+	CDirector *director = *g_ppDirector;
 	if (director == NULL)
 	{
 		return NULL;
@@ -96,13 +97,14 @@ CountdownTimer * IdToCTimer(int id)
 	}
 }
 
-IntervalTimer * IdToITimer(int id)
+IntervalTimer* IdToITimer(int id)
 {
-	if (g_pDirector == NULL)
+	if (g_ppDirector == NULL)
 	{
 		return NULL;
 	}
-	CDirector *director = *g_pDirector;
+
+	CDirector *director = *g_ppDirector;
 	if (director == NULL)
 	{
 		return NULL;
@@ -133,91 +135,102 @@ IntervalTimer * IdToITimer(int id)
 // native L4D2_CTimerReset(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerReset(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	myTimer->Reset();
-	return 0;
+
+	return 1;
 }
 
 // native L4D2_CTimerStart(L4D2CountdownTimer:timer, Float:duration);
 cell_t L4D2_CTimerStart(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	myTimer->Start(sp_ctof(params[2]));
-	return 0;
+
+	return 1;
 }
 
 // native L4D2_CTimerInvalidate(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerInvalidate(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	myTimer->Invalidate();
-	return 0;
+
+	return 1;
 }
 
 // native bool:L4D2_CTimerHasStarted(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerHasStarted(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return myTimer->HasStarted();
 }
 
 // native bool:L4D2_CTimerIsElapsed(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerIsElapsed(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return myTimer->IsElapsed();
 }
 
 // native Float:L4D2_CTimerGetElapsedTime(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerGetElapsedTime(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return sp_ftoc(myTimer->GetElapsedTime());
 }
 
 // native Float:L4D2_CTimerGetRemainingTime(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerGetRemainingTime(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return sp_ftoc(myTimer->GetRemainingTime());
 }
 
 // native Float:L4D2_CTimerGetCountdownDuration(L4D2CountdownTimer:timer);
 cell_t L4D2_CTimerGetCountdownDuration(IPluginContext *pContext, const cell_t *params)
 {
-	CountdownTimer * myTimer = IdToCTimer(params[1]);
+	CountdownTimer *myTimer = IdToCTimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return sp_ftoc(myTimer->GetCountdownDuration());
 }
 
@@ -228,50 +241,56 @@ cell_t L4D2_CTimerGetCountdownDuration(IPluginContext *pContext, const cell_t *p
 // native L4D2_ITimerStart(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerStart(IPluginContext *pContext, const cell_t *params)
 {
-	IntervalTimer * myTimer = IdToITimer(params[1]);
+	IntervalTimer *myTimer = IdToITimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	myTimer->Start();
-	return 0;
+
+	return 1;
 }
 
 // native L4D2_ITimerInvalidate(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerInvalidate(IPluginContext *pContext, const cell_t *params)
 {
-	IntervalTimer * myTimer = IdToITimer(params[1]);
+	IntervalTimer *myTimer = IdToITimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	myTimer->Invalidate();
-	return 0;
+
+	return 1;
 }
 
 // native bool:L4D2_ITimerHasStarted(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerHasStarted(IPluginContext *pContext, const cell_t *params)
 {
-	IntervalTimer * myTimer = IdToITimer(params[1]);
+	IntervalTimer *myTimer = IdToITimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return myTimer->HasStarted();
 }
 
 // native Float:L4D2_ITimerGetElapsedTime(L4D2IntervalTimer:timer);
 cell_t L4D2_ITimerGetElapsedTime(IPluginContext *pContext, const cell_t *params)
 {
-	IntervalTimer * myTimer = IdToITimer(params[1]);
+	IntervalTimer *myTimer = IdToITimer(params[1]);
 	if (myTimer == NULL)
 	{
 		return pContext->ThrowNativeError("Invalid timer index or timer unavailable");
 	}
+
 	return sp_ftoc(myTimer->GetElapsedTime());
 }
 
-sp_nativeinfo_t  g_L4DoTimerNatives[] =
+sp_nativeinfo_t g_L4DoTimerNatives[] =
 {
 	{"L4D2_CTimerReset",				L4D2_CTimerReset},
 	{"L4D2_CTimerStart",				L4D2_CTimerStart},

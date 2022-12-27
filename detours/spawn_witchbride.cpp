@@ -39,8 +39,8 @@ namespace Detours
 	{
 		cell_t result = Pl_Continue;
 
-		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnWitchBride->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnWitchBride->Execute(&result);
 
 		if (result == Pl_Handled) {
@@ -51,8 +51,8 @@ namespace Detours
 		int entity = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pEntity)));
 		
 		g_pFwdOnSpawnWitchBridePost->PushCell(entity);
-		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnWitchBridePost->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnWitchBridePost->Execute(NULL);
 
 		return pEntity;

@@ -35,11 +35,11 @@
 
 namespace Detours
 {
-	ActionStruct_t UseHealingItems::OnUseHealingItems(ActionSurvivorBot* pAction)
+	ActionStruct_t UseHealingItems::OnUseHealingItems(ActionSurvivorBot *pAction)
 	{
 		cell_t result = Pl_Continue;
 
-		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 		int client = IndexOfEdict(pEntity);
 
 		g_pFwdOnUseHealingItems->PushCell(client);

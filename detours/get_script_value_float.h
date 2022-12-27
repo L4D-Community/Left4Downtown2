@@ -39,13 +39,13 @@ namespace Detours
 {
 	class GetScriptValueFloat;
 
-	typedef float (GetScriptValueFloat::*GetScriptValueFloatFunc)(const char*, float);
+	typedef float (GetScriptValueFloat::*GetScriptValueFloatFunc)(const char *, float);
 
 	class GetScriptValueFloat : public DetourTemplate<GetScriptValueFloatFunc, GetScriptValueFloat>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		float OnGetScriptValueFloat(const char*, float);
+		float OnGetScriptValueFloat(const char *, float);
 
 		virtual bool OnPatch()
 		{

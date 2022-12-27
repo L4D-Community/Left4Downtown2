@@ -77,7 +77,7 @@ void AddonsDisabler::Unpatch()
 	}
 }
 
-void OnAddonsEclipseChanged( IConVar *var, const char *pOldValue, float flOldValue )
+void OnAddonsEclipseChanged(IConVar *cvar, const char *pOldValue, float flOldValue)
 {
 	if (AddonsDisabler::AddonsEclipse == g_AddonsEclipse.GetInt())
 		return;

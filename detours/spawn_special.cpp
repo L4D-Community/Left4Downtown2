@@ -35,21 +35,21 @@
 
 namespace Detours
 {
-	CTerrorPlayer *SpawnSpecial::OnSpawnSpecial(ZombieClassType zombieClassType, Vector *position, QAngle *angles)
+	CTerrorPlayer* SpawnSpecial::OnSpawnSpecial(ZombieClassType zombieClassType, Vector *position, QAngle *angles)
 	{
 		cell_t result = Pl_Continue;
 		cell_t overrideZombieClass = zombieClassType;
 		CTerrorPlayer *pPlayer = NULL;
 
 		g_pFwdOnSpawnSpecial->PushCellByRef(&overrideZombieClass);
-		g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnSpecial->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnSpecial->Execute(&result);
 
 		if (result == Pl_Handled) {
 			return NULL;
 		} else if (result == Pl_Changed) {
-			pPlayer = (this->*(GetTrampoline()))(*reinterpret_cast<ZombieClassType*>(&overrideZombieClass), position, angles);
+			pPlayer = (this->*(GetTrampoline()))(*reinterpret_cast<ZombieClassType *>(&overrideZombieClass), position, angles);
 		} else {
 			pPlayer = (this->*(GetTrampoline()))(zombieClassType, position, angles);
 		}
@@ -58,8 +58,8 @@ namespace Detours
 
 		g_pFwdOnSpawnSpecialPost->PushCell(client);
 		g_pFwdOnSpawnSpecialPost->PushCell(overrideZombieClass);
-		g_pFwdOnSpawnSpecialPost->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnSpecialPost->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnSpecialPost->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnSpecialPost->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnSpecialPost->Execute(NULL);
 
 		return pPlayer;

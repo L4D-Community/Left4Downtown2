@@ -38,8 +38,6 @@
 #include "l4d2sdk/CTerrorWeaponInfo.h"
 #include "l4d2sdk/CMeleeWeaponInfo.h"
 
-//#define THEDIRECTOR_SETNEXTMISSION_OFFSET 2
-
 inline char *ConfigValidateAddress(const char *sName)
 {
 	char *pAddr = NULL;
@@ -54,11 +52,11 @@ inline char *ConfigValidateAddress(const char *sName)
 	return pAddr;
 }
 
-extern CDirector **g_pDirector;							/* Director */
-extern void *g_pZombieManager;							/* ZombieManager */
+extern CDirector **g_ppDirector;							/* Director */
+extern ZombieManager *g_pZombieManager;							/* ZombieManager */
 extern WeaponDatabase *g_pWeaponInfoDatabase;			/* WeaponInfoDatabase */
 extern CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore;	/* CMeleeWeaponInfo */
-extern void *g_pNavMesh;								/* TerrorNavMesh */
+extern CNavMesh *g_pNavMesh;								/* TerrorNavMesh */
 
 void InitializeValveGlobals();
 

@@ -136,10 +136,10 @@
 
 namespace Detours
 {
-	void *TerrorWeaponHit::OnTerrorWeaponHit(trace_t &trace/* a1 */, const Vector &swingVector/* a2 */, bool firstTime/* a3 */)
+	void* TerrorWeaponHit::OnTerrorWeaponHit(trace_t &trace/* a1 */, const Vector &swingVector/* a2 */, bool firstTime/* a3 */)
 	{
 		//bool firstTime - It seems this bool means that the first ray of the deadstop has hit, because the deadstop has a lot of rays
-		//CBaseEntity* trace.m_pEnt - offset: trace + 76
+		//CBaseEntity *trace.m_pEnt - offset: trace + 76
 		/* there's another check being performed here to see if the current gamemode allows bashing... we don't need it */
 		if (firstTime && trace.m_pEnt)
 		{

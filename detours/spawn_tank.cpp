@@ -35,7 +35,7 @@
 
 namespace Detours
 {
-	CTerrorPlayer *SpawnTank::OnSpawnTank(Vector *position, QAngle *angles)
+	CTerrorPlayer* SpawnTank::OnSpawnTank(Vector *position, QAngle *angles)
 	{
 		cell_t result = Pl_Continue;
 
@@ -51,8 +51,8 @@ namespace Detours
 		int client = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pPlayer)));
 
 		g_pFwdOnSpawnTankPost->PushCell(client);
-		g_pFwdOnSpawnTankPost->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnTankPost->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnTankPost->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnTankPost->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnTankPost->Execute(NULL);
 
 		return pPlayer;

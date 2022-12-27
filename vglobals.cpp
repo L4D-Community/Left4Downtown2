@@ -31,19 +31,21 @@
  */
 
 #include "vglobals.h"
-#include "util.h"
 
-CDirector **g_pDirector = NULL;
-void *g_pZombieManager = NULL;
+class CNavMesh;
+class ZombieManager;
+
+CDirector **g_ppDirector = NULL;
+ZombieManager *g_pZombieManager = NULL;
 WeaponDatabase *g_pWeaponInfoDatabase = NULL;
 CMeleeWeaponInfoStore *g_pMeleeWeaponInfoStore = NULL;
-void *g_pNavMesh = NULL;
+CNavMesh *g_pNavMesh = NULL;
 
 void InitializeValveGlobals()
 {
-	g_pNavMesh = ConfigValidateAddress("TerrorNavMesh");
-	g_pZombieManager = ConfigValidateAddress("ZombieManager");
-	g_pDirector = reinterpret_cast<CDirector **>(ConfigValidateAddress("CDirector"));
+	g_pNavMesh = reinterpret_cast<CNavMesh *>(ConfigValidateAddress("TerrorNavMesh"));
+	g_pZombieManager = reinterpret_cast<ZombieManager *>(ConfigValidateAddress("ZombieManager"));
+	g_ppDirector = reinterpret_cast<CDirector **>(ConfigValidateAddress("CDirector"));
 	g_pWeaponInfoDatabase = reinterpret_cast<WeaponDatabase *>(ConfigValidateAddress("WeaponInfoDatabase"));
 	g_pMeleeWeaponInfoStore = reinterpret_cast<CMeleeWeaponInfoStore *>(ConfigValidateAddress("MeleeWeaponInfoStore"));
 

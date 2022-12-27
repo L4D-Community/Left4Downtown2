@@ -31,12 +31,10 @@
 
 #ifndef _INCLUDE_CMELEEWEAPONINFO_H_
 #define _INCLUDE_CMELEEWEAPONINFO_H_
+
 #include "utlvector.h"
 #include "utlmap.h"
 #include "wrappers.h"
-
-// I'm sorry :(
-//class CBasePlayer;
 
 class CUserCmd;
 
@@ -44,7 +42,8 @@ class CUserCmd;
 
 //typedef char[48] melee_anim_t;
 
-typedef struct CMeleeWeaponInfo_t { // 3232 bytes
+typedef struct CMeleeWeaponInfo_t 
+{ // 3232 bytes
 	void * pVtable;
 	float m_fRefireDelay;
 	char m_aViewModel[80];
@@ -81,7 +80,8 @@ typedef struct CMeleeWeaponInfo_t { // 3232 bytes
 	char src[80]; // 3152 name of the melee weapon
 } CMeleeWeaponInfo;
 
-class CMeleeWeaponInfoStore : public CAutoGameSystem // 68 bytes?!?!?
+class CMeleeWeaponInfoStore 
+	: public CAutoGameSystem // 68 bytes?!?!?
 {
 	public:
 	CUtlMap<int, CMeleeWeaponInfo *, int> weaponInfo; // 12 ?

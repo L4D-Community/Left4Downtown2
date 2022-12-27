@@ -38,7 +38,7 @@
 namespace Detours
 {
 	class TerrorWeaponHit;
-	typedef void * (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
+	typedef void* (TerrorWeaponHit::*TerrorWeaponHitFunc)(trace_t &, const Vector &, bool);
 
 	class TerrorWeaponHit : public DetourTemplate<TerrorWeaponHitFunc, TerrorWeaponHit>
 	{

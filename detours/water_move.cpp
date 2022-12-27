@@ -41,7 +41,7 @@ namespace Detours
 
 		if (inWaterMove)
 		{
-			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+			edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 			int client = IndexOfEdict(pEntity);
 
 			g_pFwdOnWaterMove->PushCell(client);

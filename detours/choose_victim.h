@@ -44,7 +44,7 @@ namespace Detours
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		CBaseEntity *BossZombiePlayerBotChooseVictimActivate(CBaseEntity *, int, CBaseEntity *);
+		CBaseEntity* BossZombiePlayerBotChooseVictimActivate(CBaseEntity *, int, CBaseEntity *);
 
 		virtual bool OnPatch()
 		{

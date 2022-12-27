@@ -31,10 +31,13 @@
 
 #ifndef _INCLUDE_CTERRORWEAPONINFO_H_
 #define _INCLUDE_CTERRORWEAPONINFO_H_
+
 #include <weapon_parse.h>
 #include "utldict.h"
 
-class CCSWeaponInfo : public FileWeaponInfo_t { // 866 bytes
+class CCSWeaponInfo 
+	: public FileWeaponInfo_t 
+{ // 866 bytes
 public:
 	float m_fMaxPlayerSpeed; // 2192
 	int m_iWeaponType;  // 2196
@@ -79,7 +82,9 @@ public:
 	bool m_bCSWeapon; // 3057
 };
 
-class CTerrorWeaponInfo : public CCSWeaponInfo {
+class CTerrorWeaponInfo : 
+	public CCSWeaponInfo
+{
 public:
 	int m_iLoadoutSlots; // 3060
 	float m_fMaxAutoAimDeflection1; // 3064
@@ -107,7 +112,7 @@ public:
 	float m_fPenetrationMaxDistance; // 3152
 	float m_fCharacterPenetrationMaxDistance; // 3156
 	float m_fGainRange; // 3160
-	CUtlDict<const char*, unsigned short> m_tCharacterViewmodelAddon; // 3164
+	CUtlDict<const char *, unsigned short> m_tCharacterViewmodelAddon; // 3164
 	char m_aViewModelDual[80]; // 3192
 	char m_aPlayerModelDual[80]; // 3272
 	char m_aAddonAttachment2[80]; // 3352 Why is this duplicated from 2413
@@ -116,6 +121,6 @@ public:
 	char m_aWorldModel[80]; // 3456
 };
 
-typedef CUtlDict< CTerrorWeaponInfo *, unsigned short > WeaponDatabase;
+typedef CUtlDict<CTerrorWeaponInfo *, unsigned short> WeaponDatabase;
 
 #endif //_INCLUDE_CTERRORWEAPONINFO_H_

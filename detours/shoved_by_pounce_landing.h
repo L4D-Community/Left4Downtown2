@@ -40,13 +40,13 @@ class CTerrorPlayer;
 namespace Detours
 {
 	class ShovedByPounceLanding;
-	typedef void * (ShovedByPounceLanding::*ShovedByPounceLandingFunc)(CTerrorPlayer*);
+	typedef void* (ShovedByPounceLanding::*ShovedByPounceLandingFunc)(CTerrorPlayer *);
 
 	class ShovedByPounceLanding : public DetourTemplate<ShovedByPounceLandingFunc, ShovedByPounceLanding>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void *OnShovedByPounceLanding(CTerrorPlayer*);
+		void *OnShovedByPounceLanding(CTerrorPlayer *);
 
 		virtual bool OnPatch()
 		{

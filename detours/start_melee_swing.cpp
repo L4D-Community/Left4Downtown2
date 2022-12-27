@@ -39,7 +39,7 @@ namespace Detours
 	{
 		cell_t result = Pl_Continue;
 
-		int client = (p == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
+		int client = (p == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(p)));
 
 		g_pFwdOnStartMeleeSwing->PushCell(client);
 		g_pFwdOnStartMeleeSwing->PushCell(boolean);

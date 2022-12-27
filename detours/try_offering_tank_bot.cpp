@@ -35,7 +35,7 @@
 
 namespace Detours
 {
-	void TryOfferingTankBot::OnTryOfferingTankBot(CBaseEntity* tank, bool enterStasis)
+	void TryOfferingTankBot::OnTryOfferingTankBot(CBaseEntity *tank, bool enterStasis)
 	{
 		cell_t result = Pl_Continue;
 

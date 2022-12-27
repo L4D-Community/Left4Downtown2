@@ -35,18 +35,18 @@
 
 namespace Detours
 {
-	void *ShovedBySurvivor::OnShovedBySurvivor(CTerrorPlayer *p, void *vector)
+	void* ShovedBySurvivor::OnShovedBySurvivor(CTerrorPlayer *p, void *vector)
 	{
 		cell_t result = Pl_Continue;
 
-		int client = (p == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(p)));
+		int client = (p == NULL) ? 0 : IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(p)));
 
-		edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		edict_t *pEntity2 = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 		int victim = IndexOfEdict(pEntity2);
 
 		g_pFwdOnShovedBySurvivor->PushCell(client);
 		g_pFwdOnShovedBySurvivor->PushCell(victim);
-		g_pFwdOnShovedBySurvivor->PushArray(reinterpret_cast<cell_t*>(vector), 3);
+		g_pFwdOnShovedBySurvivor->PushArray(reinterpret_cast<cell_t *>(vector), 3);
 		g_pFwdOnShovedBySurvivor->Execute(&result);
 
 		if (result == Pl_Handled) {

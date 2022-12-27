@@ -64,7 +64,7 @@ public:
 	static int AddonsEclipse;
 };
 
-void OnAddonsEclipseChanged( IConVar *var, const char *pOldValue, float flOldValue );
+void OnAddonsEclipseChanged(IConVar *cvar, const char *pOldValue, float flOldValue);
 
 namespace Detours
 {

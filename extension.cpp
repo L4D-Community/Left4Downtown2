@@ -105,9 +105,9 @@ IServer *g_pServer = NULL; //ptr to CBaseServer
 ISDKTools *g_pSDKTools = NULL;
 IServerGameEnts *gameents = NULL;
 CGlobalVars *gpGlobals;
-ConVar* mp_gamemode = NULL;
-IMatchFramework* g_pMatchFramework = NULL;
-IMatchExtL4D* g_pMatchExtL4D = NULL;
+ConVar *mp_gamemode = NULL;
+IMatchFramework *g_pMatchFramework = NULL;
+IMatchExtL4D *g_pMatchExtL4D = NULL;
 
 IForward *g_pFwdOnSpawnSpecial = NULL;
 IForward *g_pFwdOnSpawnSpecialPost = NULL;
@@ -166,13 +166,6 @@ bool g_bRoundEnd = false;
 ICvar *icvar = NULL;
 SMEXT_LINK(&g_Left4DowntownTools);
 
-extern sp_nativeinfo_t g_L4DoNatives[];
-extern sp_nativeinfo_t g_L4DoTimerNatives[];
-extern sp_nativeinfo_t g_L4DoWeaponNatives[];
-extern sp_nativeinfo_t g_L4DoMeleeWeaponNatives[];
-extern sp_nativeinfo_t g_L4DoDirectorNatives[];
-extern sp_nativeinfo_t g_L4DoMatchNatives[];
-
 ConVar g_Version("left4downtown_version", SMEXT_CONF_VERSION, FCVAR_SPONLY|FCVAR_NOTIFY, "Left 4 Downtown Extension Version");
 ConVar g_AddonsEclipse("l4d2_addons_eclipse", "-1", FCVAR_SPONLY|FCVAR_NOTIFY, "Addons Manager(-1: use addonconfig; 0/1: override addonconfig");
 ConVar g_UnlockMelees("l4d2_unlock_melees", "0", FCVAR_SPONLY|FCVAR_NOTIFY, "1: Unlock all melees, 0: don't (set to 0 if you're experiencing crashes on modes other than versus)");
@@ -228,13 +221,15 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 
 	sharesys->AddDependency(myself, "bintools.ext", true, true);
 	sharesys->RegisterLibrary(myself, "left4downtown2");
-
+	
 	sharesys->AddNatives(myself, g_L4DoNatives);
 	sharesys->AddNatives(myself, g_L4DoTimerNatives);
 	sharesys->AddNatives(myself, g_L4DoWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoMeleeWeaponNatives);
 	sharesys->AddNatives(myself, g_L4DoDirectorNatives);
-	sharesys->AddNatives(myself, g_L4DoMatchNatives);
+	sharesys->AddNatives(myself, g_L4DoGameRulesNatives);
+	sharesys->AddNatives(myself, g_L4DoPlayerNatives);
+	sharesys->AddNatives(myself, g_L4DoZombieManagerNatives);
 
 	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
 	g_pFwdOnSpawnSpecialPost = forwards->CreateForward("L4D_OnSpawnSpecial_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);
@@ -485,7 +480,7 @@ bool Left4Downtown::SDK_OnMetamodLoad(SourceMM::ISmmAPI *ismm, char *error, size
 }
 
 // From extension - https://github.com/shqke/imatchext
-bool Left4Downtown::SetupFromMatchmakingLibrary(char* error, int maxlength)
+bool Left4Downtown::SetupFromMatchmakingLibrary(char *error, int maxlength)
 {
 	char path[PLATFORM_MAX_PATH];
 	smutils->BuildPath(Path_Game, path, sizeof(path), "bin/matchmaking%s." PLATFORM_LIB_EXT, engine->IsDedicatedServer() ? MATCHMAKING_LIB_DS_SUFFIX : "");
@@ -503,13 +498,13 @@ bool Left4Downtown::SetupFromMatchmakingLibrary(char* error, int maxlength)
 		return false;
 	}
 
-	g_pMatchFramework = static_cast<IMatchFramework*>(matchmakingFactory(IMATCHFRAMEWORK_VERSION_STRING, NULL));
+	g_pMatchFramework = static_cast<IMatchFramework *>(matchmakingFactory(IMATCHFRAMEWORK_VERSION_STRING, NULL));
 	if (g_pMatchFramework == NULL) {
 		V_snprintf(error, maxlength, "Unable to find interface \"" IMATCHFRAMEWORK_VERSION_STRING "\" (path: \"%s\")", path);
 		return false;
 	}
 
-	g_pMatchExtL4D = static_cast<IMatchExtL4D*>(matchmakingFactory(IMATCHEXT_L4D_INTERFACE, NULL));
+	g_pMatchExtL4D = static_cast<IMatchExtL4D *>(matchmakingFactory(IMATCHEXT_L4D_INTERFACE, NULL));
 	if (g_pMatchExtL4D == NULL) {
 		V_snprintf(error, maxlength, "Unable to find interface \"" IMATCHEXT_L4D_INTERFACE "\" (path: \"%s\")", path);
 		return false;

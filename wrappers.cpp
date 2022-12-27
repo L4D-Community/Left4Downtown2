@@ -42,7 +42,7 @@ int CBaseCombatWeapon::sendprop_m_hOwner = 0;
 
 int CWeaponSpawn::sendprop_m_weaponID = 0;
 
-bool L4D2_GetOffsets(char* error, size_t maxlength)
+bool L4D2_GetOffsets(char *error, size_t maxlength)
 {
 	sm_sendprop_info_t info;
 

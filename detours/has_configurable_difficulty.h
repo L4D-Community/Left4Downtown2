@@ -53,7 +53,7 @@ namespace Detours
 		}
 
 		// get the signature name (i.e. "CTerrorGameRules::HasConfigurableDifficultySetting") from the game conf
-		virtual const char * GetSignatureName()
+		virtual const char* GetSignatureName()
 		{
 			return "CTerrorGameRules::HasConfigurableDifficultySetting";
 		}

@@ -51,6 +51,7 @@ enum PointerType
 };
 
 #include <l4d2constants>
+#include <l4d2director>
 #include <l4d2timers>
 #include <l4d2weapons>
 #include <l4d2director>
@@ -751,20 +752,6 @@ native int L4D2_GetVersusCompletionPlayer(int client);
  * @return					Client ID of the player furthest ahead
  */
 native int L4D_GetHighestFlowSurvivor();
-
-/**
- * @brief Get the current campaign scores stored in the Director
- * @remarks The campaign scores are updated after L4D_OnSetCampaignScores
- *
- * @deprecated This will set the scores to -1 for both sides on L4D2,
- *               this function is no longer supported.
- *
- * @param scoreA  score of logical team A
- * @param scoreB  score of logical team B
- * @return 		1 always
- */
-#pragma deprecated Use GetTeamScore and OnClearTeamScores instead
-native int L4D_GetCampaignScores(int &scoreA, int &scoreB);
 
 /**
  * @brief Returns if Versus team are flipped

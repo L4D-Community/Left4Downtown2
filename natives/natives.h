@@ -48,7 +48,7 @@ enum PointerType
 	POINTER_VERSUSMODE		= 10	// pVersusMode
 };
 
-inline cell_t NativeValidateAddress(void *pAddress, const char *sName, IPluginContext* pContext)
+inline cell_t NativeValidateAddress(void *pAddress, const char *sName, IPluginContext *pContext)
 {
 	if (pAddress == NULL) {
 		return pContext->ThrowNativeError("Failed to find \"%s\" address.", sName);
@@ -56,6 +56,5 @@ inline cell_t NativeValidateAddress(void *pAddress, const char *sName, IPluginCo
 
 	return reinterpret_cast<cell_t>(pAddress);
 }
-
 
 #endif //_INCLUDE_L4DOWNTOWN_NATIVES_H_

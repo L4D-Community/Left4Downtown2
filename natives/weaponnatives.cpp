@@ -32,7 +32,7 @@
 #include "extension.h"
 #include "vglobals.h"
 
-#define MAX_WEAPON_NAME_LENGTH 128
+#define MAX_WEAPON_NAME_LENGTH 64
 
 enum L4D2IntWeaponAttributes
 {
@@ -66,7 +66,7 @@ enum L4D2FloatWeaponAttributes
 	L4D2FWA_HorizontalPunch // Requires "z_gun_horiz_punch" cvar changed to "1".
 };
 
-int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
+int* IntIdToAttr(CTerrorWeaponInfo* pInfo, int id)
 {
 	if (pInfo == NULL) {
 		return NULL;
@@ -88,7 +88,7 @@ int * IntIdToAttr(CTerrorWeaponInfo *pInfo, int id)
 	}
 }
 
-float * FloatIdToAttr(CTerrorWeaponInfo *pInfo, int id)
+float* FloatIdToAttr(CTerrorWeaponInfo* pInfo, int id)
 {
 	if (pInfo == NULL) {
 		return NULL;
@@ -189,7 +189,7 @@ cell_t L4D2_GetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params
 
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 
-	int * attr = IntIdToAttr(pInfo, params[2]);
+	int *attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -222,7 +222,7 @@ cell_t L4D2_GetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *para
 
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 
-	float * attr = FloatIdToAttr(pInfo, params[2]);
+	float *attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
@@ -255,13 +255,14 @@ cell_t L4D2_SetIntWeaponAttribute(IPluginContext *pContext, const cell_t *params
 
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 
-	int * attr = IntIdToAttr(pInfo, params[2]);
+	int *attr = IntIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
 
-	*attr=params[3];
-	return 0;
+	*attr = params[3];
+
+	return 1;
 }
 
 // native Float:L4D2_SetFloatWeaponAttribute(const String:weaponName[], L4D2IntWeaponAttribute:attr, Float:value);
@@ -289,13 +290,14 @@ cell_t L4D2_SetFloatWeaponAttribute(IPluginContext *pContext, const cell_t *para
 
 	CTerrorWeaponInfo *pInfo = g_pWeaponInfoDatabase->Element(iIndex);
 
-	float * attr = FloatIdToAttr(pInfo, params[2]);
+	float *attr = FloatIdToAttr(pInfo, params[2]);
 	if (attr == NULL) {
 		return pContext->ThrowNativeError("Invalid attribute id");
 	}
 
 	*attr = sp_ctof(params[3]);
-	return 0;
+
+	return 1;
 }
 
 sp_nativeinfo_t g_L4DoWeaponNatives[] =

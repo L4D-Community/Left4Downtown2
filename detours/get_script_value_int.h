@@ -39,13 +39,13 @@ namespace Detours
 {
 	class GetScriptValueInt;
 
-	typedef int (GetScriptValueInt::*GetScriptValueIntFunc)(const char*, int);
+	typedef int (GetScriptValueInt::*GetScriptValueIntFunc)(const char *, int);
 
 	class GetScriptValueInt : public DetourTemplate<GetScriptValueIntFunc, GetScriptValueInt>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		int OnGetScriptValueInt(const char*, int);
+		int OnGetScriptValueInt(const char *, int);
 
 		virtual bool OnPatch()
 		{

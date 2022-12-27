@@ -52,17 +52,17 @@ namespace Detours
 	struct ActionStruct_t
 	{
 		int ActionState;
-		void* ActionToTake;
-		char* ActionText;
+		void *ActionToTake;
+		char *ActionText;
 	};
 
-	typedef ActionStruct_t (UseHealingItems::*UseHealingItemsFunc)(ActionSurvivorBot* pAction);
+	typedef ActionStruct_t (UseHealingItems::*UseHealingItemsFunc)(ActionSurvivorBot *pAction);
 
 	class UseHealingItems : public DetourTemplate<UseHealingItemsFunc, UseHealingItems>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		ActionStruct_t OnUseHealingItems(ActionSurvivorBot*);
+		ActionStruct_t OnUseHealingItems(ActionSurvivorBot *);
 
 		virtual bool OnPatch()
 		{

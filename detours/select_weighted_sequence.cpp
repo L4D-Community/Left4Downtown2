@@ -52,7 +52,7 @@ namespace Detours
 
 		int overrideSequence = actualSequence;
 
-		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this));
+		edict_t *pEntity = gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this));
 		int client = IndexOfEdict(pEntity);
 
 		g_pFwdOnSelectTankAttack->PushCell(client);

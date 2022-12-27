@@ -36,7 +36,7 @@
 
 namespace Detours
 {
-	void ReplaceTank::OnReplaceTank(CTerrorPlayer* tank, CTerrorPlayer* newtank)
+	void ReplaceTank::OnReplaceTank(CTerrorPlayer *tank, CTerrorPlayer *newtank)
 	{
 		(this->*(GetTrampoline()))(tank, newtank);
 

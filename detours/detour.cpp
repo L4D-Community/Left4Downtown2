@@ -89,7 +89,7 @@ void Detour::Patch()
 
 void Detour::PatchFromSignature(const char *signatureName, void *targetFunction, unsigned char *&originalFunction, unsigned char *&signature)
 {
-	if (!gameconf->GetMemSig(signatureName, (void**)&signature) || !signature)
+	if (!gameconf->GetMemSig(signatureName, (void **)&signature) || !signature)
 	{
 		g_pSM->LogError(myself, "Detour -- Could not find '%s' signature", signatureName);
 		return;
@@ -114,7 +114,7 @@ void Detour::PatchFromAddress(void *targetFunction, unsigned char *&originalFunc
 	InjectJmp(detourJmpPatch.patch, signature, targetFunction);
 	fill_nop(detourJmpPatch.patch + OP_JMP_SIZE, copiedBytes - OP_JMP_SIZE);
 
-	trampoline = (unsigned char*) spengine->AllocatePageMemory(copiedBytes + OP_JMP_SIZE);
+	trampoline = (unsigned char *) spengine->AllocatePageMemory(copiedBytes + OP_JMP_SIZE);
 	//bugfix: when copying to trampoline call/jmp edges must be fixed up
 	copy_bytes(/*src*/signature, /*dest*/trampoline, copiedBytes);
 	L4D_DEBUG_LOG("Detour -- Copied %d bytes to trampoline @ %p", copiedBytes, trampoline);
@@ -147,8 +147,8 @@ void Detour::Unpatch()
 }
 
 //insert a specific JMP instruction at the given location, save it to the buffer
-void Detour::InjectJmp(void *buffer, void* src, void* dest)
+void Detour::InjectJmp(void *buffer, void *src, void *dest)
 {
-	*(unsigned char*)buffer = OP_JMP;
-	*(long*)((unsigned char*)buffer+1) = (long)((unsigned char*)dest - ((unsigned char*)src + OP_JMP_SIZE));
+	*(unsigned char *)buffer = OP_JMP;
+	*(long *)((unsigned char *)buffer+1) = (long)((unsigned char *)dest - ((unsigned char *)src + OP_JMP_SIZE));
 }

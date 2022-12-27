@@ -35,12 +35,12 @@
 
 namespace Detours
 {
-	CBaseEntity *SpawnWitch::OnSpawnWitch(Vector *position, QAngle *angles)
+	CBaseEntity* SpawnWitch::OnSpawnWitch(Vector *position, QAngle *angles)
 	{
 		cell_t result = Pl_Continue;
 
-		g_pFwdOnSpawnWitch->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnWitch->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnWitch->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnWitch->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnWitch->Execute(&result);
 
 		if (result == Pl_Handled) {
@@ -51,8 +51,8 @@ namespace Detours
 		int entity = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(pEntity)));
 
 		g_pFwdOnSpawnWitchPost->PushCell(entity);
-		g_pFwdOnSpawnWitchPost->PushArray(reinterpret_cast<cell_t*>(position), 3);
-		g_pFwdOnSpawnWitchPost->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+		g_pFwdOnSpawnWitchPost->PushArray(reinterpret_cast<cell_t *>(position), 3);
+		g_pFwdOnSpawnWitchPost->PushArray(reinterpret_cast<cell_t *>(angles), 3);
 		g_pFwdOnSpawnWitchPost->Execute(NULL);
 
 		return pEntity;

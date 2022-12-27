@@ -39,7 +39,7 @@ namespace Detours
 	{
 		cell_t result = Pl_Continue;
 
-		int entity = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
+		int entity = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this)));
 
 		g_pFwdOnCThrowActivate->PushCell(entity);
 		g_pFwdOnCThrowActivate->Execute(&result);

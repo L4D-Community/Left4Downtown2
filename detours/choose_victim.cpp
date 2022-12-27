@@ -35,12 +35,12 @@
 
 namespace Detours
 {
-	CBaseEntity* BossZombiePlayerBotChooseVictim::BossZombiePlayerBotChooseVictimActivate(CBaseEntity* pCurTarget, int i1, CBaseEntity* pEnt)
+	CBaseEntity* BossZombiePlayerBotChooseVictim::BossZombiePlayerBotChooseVictimActivate(CBaseEntity *pCurTarget, int i1, CBaseEntity *pEnt)
 	{
 		cell_t result = Pl_Continue;
 
 		int curTarget = gamehelpers->EntityToBCompatRef(pCurTarget);
-		int specialInfected = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity*>(this)));
+		int specialInfected = IndexOfEdict(gameents->BaseEntityToEdict(reinterpret_cast<CBaseEntity *>(this)));
 
 		g_pFwdOnChooseVictim->PushCell(specialInfected);
 		g_pFwdOnChooseVictim->PushCellByRef(&curTarget);

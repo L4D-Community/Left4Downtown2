@@ -38,7 +38,7 @@
 namespace Detours
 {
 	class InfernoSpread;
-	typedef void * (InfernoSpread::*InfernoSpreadFunc)(/*const*/ Vector &);
+	typedef void* (InfernoSpread::*InfernoSpreadFunc)(/*const*/ Vector &);
 
 	class InfernoSpread : public DetourTemplate<InfernoSpreadFunc, InfernoSpread>
 	{
