@@ -146,7 +146,7 @@ cell_t L4D_GetServerClassId(IPluginContext *pContext, const cell_t *params)
 // native Address L4D_GetPointer(PointerType ptr_type);
 cell_t L4D_GetPointer(IPluginContext *pContext, const cell_t *params)
 {
-	int iPtrType = params[2];
+	int iPtrType = params[1];
 
 	switch (iPtrType) {
 		case POINTER_DIRECTOR:
