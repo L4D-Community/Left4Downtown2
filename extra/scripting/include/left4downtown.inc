@@ -737,6 +737,20 @@ native bool L4D_IsVersusMode();
 native void L4D_ReviveSurvivor(int client);
 
 /**
+ * @brief Flings a player to the ground, like they were hit by a Charger
+ *
+ * @param iTarget				Client ID of the person to affect
+ * @param iAttacker				Client ID who caused the attack, can be the same as client
+ * @param vecImpulse			Which way the player will be thrown
+ * @param iAnimEvent			What animation will be played at that moment (The game uses 2 animations: 76, 96)
+ * @param fTimeExternalView		For how long will the 3rd person mode be set
+
+ * @noreturn
+ */
+// L4D2 only.
+native void L4D2_CTerrorPlayer_Fling(int iTarget, int iAttacker, const float vecImpulse[3], int iAnimEvent = 76, float fTimeExternalView = 3.0);
+
+/**
  * @brief Retrieve a clients map flow progress percentage. Doesn't have to be Versus mode
  *
  * @param client			Client ID of the person to affect

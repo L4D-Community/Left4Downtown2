@@ -34,6 +34,80 @@
 #include "wrappers.h"
 #include "util.h"
 
+class CBaseCombatCharacter;
+
+// native void L4D2_CTerrorPlayer_Fling(int iTarget, int iAttacker, const float vecImpulse[3], int iAnimEvent = 76, float fTimeExternalView = 0.0);
+cell_t L4D2_CTerrorPlayer_Fling(IPluginContext* pContext, const cell_t* params)
+{
+	static ICallWrapper* pWrapper = NULL;
+
+	// void CTerrorPlayer::Fling( const Vector &vecImpulse, PlayerAnimEvent_t animEvent, CBaseCombatCharacter *pAirMovementCause, float fTimeExternalView )
+	if (!pWrapper) {
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::Fling", \
+			PassInfo pass[4]; \
+			pass[0].flags = PASSFLAG_BYVAL; \
+			pass[0].size = sizeof(const Vector*); \
+			pass[0].type = PassType_Basic; \
+			pass[1].flags = PASSFLAG_BYVAL; \
+			pass[1].size = sizeof(int); \
+			pass[1].type = PassType_Basic; \
+			pass[2].flags = PASSFLAG_BYVAL; \
+			pass[2].size = sizeof(CBaseCombatCharacter *); \
+			pass[2].type = PassType_Basic; \
+			pass[3].flags = PASSFLAG_BYVAL; \
+			pass[3].size = sizeof(float); \
+			pass[3].type = PassType_Basic; \
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*returnInfo*/NULL, pass, /*numparams*/4));
+	}
+
+	CTerrorPlayer* pPlayer = (CTerrorPlayer*)UTIL_GetCBaseEntity(params[1], true);
+	if (pPlayer == NULL) {
+		return pContext->ThrowNativeError("Invalid target player: %d!", params[1]);
+	}
+
+	CBaseEntity* pAirMovementCause = UTIL_GetCBaseEntity(params[2], false);
+	if (pAirMovementCause == NULL) {
+		return pContext->ThrowNativeError("Invalid attacker player: %d!", params[2]);
+	}
+
+	cell_t* vecImpulse;
+	pContext->LocalToPhysAddr(params[3], &vecImpulse);
+
+	Vector vSourceVector;
+	Vector* pSourceVector = NULL;
+
+	if (vecImpulse != pContext->GetNullRef(SP_NULL_VECTOR)) {
+		vSourceVector[0] = sp_ctof(vecImpulse[0]);
+		vSourceVector[1] = sp_ctof(vecImpulse[1]);
+		vSourceVector[2] = sp_ctof(vecImpulse[2]);
+
+		pSourceVector = &vSourceVector;
+	}
+
+	unsigned char vstk[sizeof(CTerrorPlayer *) + sizeof(const Vector *) + sizeof(int) + sizeof(CBaseCombatCharacter *) + sizeof(float)];
+	unsigned char* vptr = vstk;
+
+	*(CTerrorPlayer **)vptr = pPlayer;
+	vptr += sizeof(CTerrorPlayer *);
+
+	*(const Vector **)vptr = pSourceVector;
+	vptr += sizeof(const Vector *);
+
+	*(int *)vptr = params[4];
+	vptr += sizeof(int);
+
+	*(CBaseCombatCharacter **)vptr = (CBaseCombatCharacter *)pAirMovementCause;
+	vptr += sizeof(CBaseCombatCharacter *);
+
+	*(float *)vptr = sp_ctof(params[5]);
+
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::Fling");
+	pWrapper->Execute(vstk, NULL);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::Fling");
+
+	return 1;
+}
+
 // native float L4D_GetPlayerSpawnTime(int player);
 cell_t L4D_GetPlayerSpawnTime(IPluginContext *pContext, const cell_t *params)
 {
@@ -304,6 +378,7 @@ cell_t L4D_State_Transition(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoPlayerNatives[] =
 {
+	{"L4D2_CTerrorPlayer_Fling",		L4D2_CTerrorPlayer_Fling},
 	{"L4D_GetPlayerSpawnTime",			L4D_GetPlayerSpawnTime},
 	{"L4D_SetHumanSpec",				L4D_SetHumanSpec},
 	{"L4D_GetLastKnownArea",			L4D_GetLastKnownArea},

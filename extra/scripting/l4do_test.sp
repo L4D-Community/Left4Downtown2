@@ -193,6 +193,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_check_gamemode", Cmd_CheckGameMode);
 	RegConsoleCmd("sm_check_mission", Cmd_CheckMission);
 	RegConsoleCmd("sm_entity_center", Cmd_GetEntityCenter);
+	RegConsoleCmd("sm_fling", Cmd_FlingPlayer);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -1222,6 +1223,54 @@ public Action Cmd_GetEntityCenter(int iClient, int iArgs)
 	L4D_GetEntityWorldSpaceCenter(iEntityTarget, fCenter);
 
 	PrintToChat(iClient, "Entity %s (%d). WorldSpaceCenter: %f %f %f ", sEntityName, iEntityTarget, fCenter[0], fCenter[1], fCenter[2]);
+
+	return Plugin_Handled;
+}
+
+Action Cmd_FlingPlayer(int iClient, int iArgs)
+{
+	if (iClient == 0) {
+		PrintToServer("This command is not available for the server!");
+
+		return Plugin_Handled;
+	}
+
+	if (GetClientTeam(iClient) < 2 || !IsPlayerAlive(iClient)) {
+		PrintToServer("This command is only available to live players!");
+
+		return Plugin_Handled;
+	}
+
+	int iEntityTarget = GetClientAimTarget(iClient, true);
+	if (iEntityTarget < 0 || !IsValidEntity(iEntityTarget)) {
+		PrintToChat(iClient, "You are looking at the invalid player!");
+
+		return Plugin_Handled;
+	}
+
+	float tpos[3], spos[3];
+	float distance[3], ratio[3], addVel[3], tvec[3];
+
+	GetClientAbsOrigin(iEntityTarget, tpos);
+	GetClientAbsOrigin(iClient, spos);
+
+	distance[0] = (spos[0] - tpos[0]);
+	distance[1] = (spos[1] - tpos[1]);
+	distance[2] = (spos[2] - tpos[2]);
+
+	GetEntPropVector(iEntityTarget, Prop_Data, "m_vecVelocity", tvec);
+
+	ratio[0] = distance[0] / SquareRoot(distance[1] * distance[1] + distance[0] * distance[0]); //Ratio x/hypo
+	ratio[1] = distance[1] / SquareRoot(distance[1] * distance[1] + distance[0] * distance[0]); //Ratio y/hypo
+
+	addVel[0] = (ratio[0] * -1) * 500.0;
+	addVel[1] = (ratio[1] * -1) * 500.0;
+	addVel[2] = 500.0;
+
+	L4D2_CTerrorPlayer_Fling(iEntityTarget, iClient, addVel, 76, 3.0);
+
+	PrintToChat(iClient, "[L4D2_CTerrorPlayer_Fling] Player: %N (%d). Attacker: %N (%d), addVel: %f %f %f ", \
+								iEntityTarget, iEntityTarget, iClient, iClient, addVel[0], addVel[1], addVel[2]);
 
 	return Plugin_Handled;
 }
