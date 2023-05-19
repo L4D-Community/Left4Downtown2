@@ -40,29 +40,34 @@
 //typedef CHandle<CBaseEntity> EHANDLE;
 
 // 1128 bytes
-typedef struct _CDirectorItemManager {
+typedef struct _CDirectorItemManager
+{
 	char unknown[1128];
 } CDirectorItemManager;
 
 // 92 bytes
-typedef struct _CDirectorMusicBanks {
+typedef struct _CDirectorMusicBanks
+{
 	char unknown[92];
 } CDirectorMusicBanks;
 
 // 76 bytes
-typedef struct _CDirectorSessionManager {
+typedef struct _CDirectorSessionManager
+{
 	char unknown[76];
 } CDirectorSessionManager;
 
 // 156 bytes
 // new size 340 bytes
 // INDIVIDUAL OFFSETS HAVE NOT BEEN UPDATED/VERIFIED FOR v2125
-typedef struct _CDirectorScriptedEventManager {
+typedef struct _CDirectorScriptedEventManager
+{
 	char unknown[156];
 } CDirectorScriptedEventManager;
 
 // 92 bytes
-typedef struct _CDirectorVersusMode {
+typedef struct _CDirectorVersusMode
+{
 	void *vtableptr; // 0x00
 	bool m_bVersusRoundInProgress; // 0x04
 	bool m_bFirstMap; // 0x05 idk
@@ -84,12 +89,14 @@ typedef struct _CDirectorVersusMode {
 } CDirectorVersusMode;
 
 // 160 bytes
-typedef struct _CDirectorSurvivalMode {
+typedef struct _CDirectorSurvivalMode
+{
 	char unknown[160];
 } CDirectorSurvivalMode;
 
 // 104 bytes
-typedef struct _CDirectorScavengeMode {
+typedef struct _CDirectorScavengeMode
+{
 	bool m_bUnknown;
 	char padding[3];
 	float m_fUnknown; // 0x04
@@ -107,12 +114,14 @@ typedef struct _CDirectorScavengeMode {
 // 8 bytes
 // new size 412 bytes
 // INDIVIDUAL OFFSETS HAVE NOT BEEN UPDATED/VERIFIED FOR v2125
-typedef struct _CDirectorChallengeMode {
+typedef struct _CDirectorChallengeMode
+{
 	char unknown[8];
 } CDirectorChallengeMode;
 
 // 1 byte
-typedef struct _CDirectorTacticalServices {
+typedef struct _CDirectorTacticalServices
+{
 	char unknown; // does this even exist? blah.
 } CDirectorTacticalServices;
 
@@ -143,7 +152,8 @@ enum ScenarioRestartReason
 // Win32: 1612 bytes
 // Lin: 1612 bytes
 // After the update, all offsets have changed, the offsets indicated in the comments are incorrect (version 2.2.2.7)
-typedef struct _CDirector {
+typedef struct _CDirector
+{
 	void *vptr; // 0x0
 	char unknown4[348]; // 0x04
 	bool m_bHasSurvivorLeftSafeArea; // Offset - 352, CDirector::HasAnySurvivorLeftSafeArea
