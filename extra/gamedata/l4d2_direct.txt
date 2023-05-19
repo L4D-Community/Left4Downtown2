@@ -48,198 +48,231 @@
 			}
 
 			/* Offsets into CDirector of other CDirector class pointers */
-
+			
+			// CDirector::CDirector()
 			"CDirectorTacticalServices"
 			{
-				"windows"	"1384"
-				"linux"		"1384"
+				"windows"	"1576"
+				"linux"		"1576"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorItemManager"
 			{
-				"windows"	"1388"
-				"linux"		"1388"
+				"windows"	"1580"
+				"linux"		"1580"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorMusicBanks"
-			{
-				"windows"	"1392"
-				"linux"		"1392"
+			{		
+				"windows"	"1584"
+				"linux"		"1584"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorSessionManager"
 			{
-				"windows"	"1396"
-				"linux"		"1396"
+				"windows"	"1588"
+				"linux"		"1588"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorScriptedEventManager"
 			{
-				"windows"	"1400"
-				"linux"		"1400"
+				"windows"	"1592"
+				"linux"		"1592"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorVersusMode"
 			{
-				"windows" 	"1404"
-				"linux"		"1404"
+				"windows" 	"1596"
+				"linux"		"1596"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorSurvivalMode"
 			{
-				"windows"	"1408"
-				"linux"		"1408"
+				"windows"	"1600"
+				"linux"		"1600"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorScavengeMode"
 			{
-				"windows"	"1412"
-				"linux"		"1412"
+				"windows"	"1604"
+				"linux"		"1604"
 			}
 
+			// CDirector::CDirector()
 			"CDirectorChallengeMode"
 			{
-				"windows"	"1416"
-				"linux"		"1416"
+				"windows"	"1608"
+				"linux"		"1608"
 			}
 			
 			/* CDirector Variable Offsets */
-			
+
+			// CDirector::IsTankInPlay()
 			"CDirector::m_iTankCount"
 			{
-				"windows"	"256"
-				"linux"		"256"
+				"windows"	"448"
+				"linux"		"448"
 			}
 
+			// CDirector::IsAnySurvivorBypassingTank() clone
 			"CDirector::m_fTankFlowDistance"
 			{
-				"windows"	"260"
-				"linux"		"260"
+				"windows"	"452"
+				"linux"		"452"
 			}
 
+			// CDirector::SpawnMobs()
 			"CDirector::MobSpawnTimer"
 			{
-				"windows"	"468"
-				"linux"		"468"
+				"windows"	"660"
+				"linux"		"660"
 			}
 
+			// CDirector::UpdateSpecialSpawns()
+			// IntervalTimer
 			"CDirector::ClassDeathTimers"
 			{
-				"windows"	"500"
-				"linux"		"500"
+				"windows"	"692"
+				"linux"		"692"
 			}
 
+			// CDirector::GetSpecialInhibitSpawnTimeRemaining(int)
 			"CDirector::ClassSpawnTimers"
 			{
-				"windows"	"564"
-				"linux"		"564"
+				"windows"	"756"
+				"linux"		"756"
 			}
 
+			// CDirector::GetMobSize()
 			"CDirector::m_fMobSpawnSize"
 			{
-				"windows"	"708"
-				"linux"		"708"
+				"windows"	"900"
+				"linux"		"900"
 			}
 
+			// CDirector::OnForcedRestart()
 			"CDirector::m_bIsFirstRoundFinished"
 			{
-				"windows"	"1161"
-				"linux"		"1161"
+				"windows"	"1253"
+				"linux"		"1253"
 			}
 
+			// CDirector::OnForcedRestart()
 			"CDirector::m_bIsSecondroundFinished"
 			{
-				"windows"	"1162"
-				"linux"		"1162"
+				"windows"	"1254"
+				"linux"		"1254"
 			}
-			
+
+			// CDirector::UpdateTankSpawns()
 			"CDirector::m_iTankPassedCount"
 			{
-				"windows"	"88"
-				"linux"		"88"
+				"windows"	"280"
+				"linux"		"280"
 			}
 			
 			/* CDirectorVersusMode Variable Offsets */
-			
+
+			// CDirectorVersusMode::OnRoundStartNonVirtual()
 			"CDirectorVersusMode::m_bVersusRoundInProgress"
 			{
 				"windows"	"4"
 				"linux"		"4"
 			}
-			
-			"CDirectorVersusMode::m_bFirstMap"
+
+			// CDirector::AreTeamsFlipped()
+			"CDirectorVersusMode::m_bAreTeamsFlipped"
 			{
 				"windows"	"5"
 				"linux"		"5"
 			}
-			
+
+			// CDirectorVersusMode::OnMapLoadedNonVirtual()
 			"CDirectorVersusMode::m_bTransitioning"
 			{
 				"windows"	"6"
 				"linux"		"6"
 			}
-			
 
+			// CDirectorVersusMode::UpdateCampaignScores()
 			"CDirectorVersusMode::m_iCampaignScores"
 			{
 				"windows"	"8"
 				"linux"		"8"
 			}
-			
+
+			// versus_force_start_time
+			// CDirectorVersusMode::VersusUpdateScenarioState()
 			"CDirectorVersusMode::VersusStartTimer"
 			{
 				"windows" 	"28"
 				"linux"		"28"
 			}
 
+			// CDirectorVersusMode::UpdateVersusBossSpawning()
 			"CDirectorVersusMode::m_fTankSpawnFlowPercent"
 			{
 				"windows"	"40"
 				"linux"		"40"
 			}
-			
+
+			// CDirectorVersusMode::UpdateVersusBossSpawning()
 			"CDirectorVersusMode::m_fWitchSpawnFlowPercent"
 			{
 				"windows"	"48"
 				"linux"		"48"
 			}
 
+			// CDirectorVersusMode::UpdateVersusBossSpawning()
 			"CDirectorVersusMode::m_bTankThisRound"
 			{
 				"windows"	"56"
 				"linux"		"56"
 			}
-			
+
+			// CDirectorVersusMode::UpdateVersusBossSpawning()
 			"CDirectorVersusMode::m_bWitchThisRound"
 			{
 				"windows"	"58"
 				"linux"		"58"
 			}
 
+			// CDirectorVersusMode::GetFinaleTravelCompletionValue()
 			"CDirectorVersusMode::m_fFinaleTravelCompletionValue"
 			{
 				"windows"	"60"
 				"linux"		"60"
 			}
 
+			// CDirectorVersusMode::InFinaleMap()
 			"CDirectorVersusMode::m_bInFinaleMap"
 			{
 				"windows"	"68"
 				"linux"		"68"
 			}
 
+			// CDirectorVersusMode::UpdateMarkersReached()
 			"CDirectorVersusMode::m_iNumMarkersReached"
 			{
 				"windows"	"72"
 				"linux"		"72"
 			}
 
+			// CDirectorVersusMode::UpdateMarkersReached()
 			"CDirectorVersusMode::m_iMarkersCount"
 			{
 				"windows"	"76"
 				"linux"		"76"
 			}
 
+			// CDirectorVersusMode::UpdateNonVirtual()
 			"CDirectorVersusMode::UpdateMarkersTimer"
 			{
 				"windows"	"80"
@@ -247,37 +280,43 @@
 			}
 
 			/* CDirectorScavengeMode Offsets */
-
+			// CDirectorScavengeMode::OnScavengeRoundStarted()
 			"CDirectorScavengeMode::m_bScavengeRoundInProgress"
 			{
 				"windows"	"8"
 				"linux"		"8"
 			}
 
+			// CDirector::AreTeamsFlipped -> CTerrorGameRules::IsScavengeMode
 			"CDirectorScavengeMode::m_bAreTeamsSwapped"
 			{
 				"windows"	"10"
 				"linux"		"10"
 			}
 
+			// CDirectorScavengeMode::OnStartOvertime
 			"CDirectorScavengeMode::m_bInOvertime"
 			{
 				"windows"	"11"
 				"linux"		"11"
 			}
 
+			// CDirectorScavengeMode::OnStartOvertime()
 			"CDirectorScavengeMode::m_bInOvertime2"
 			{
 				"windows"	"12"
 				"linux"		"12"
 			}
 
+			// CDirectorScavengeMode::GetRoundSetupTimeRemaining()
 			"CDirectorScavengeMode::RoundSetupTimer"
 			{
 				"windows"	"16"
 				"linux"		"16"
 			}
-			
+
+			// cvar - scavenge_overtime_grace_time
+			// CDirectorScavengeMode::UpdateOvertimeState()
 			"CDirectorScavengeMode::OvertimeGraceTimer"
 			{
 				"windows"	"28"
@@ -285,78 +324,88 @@
 			}
 
 			/* TerrorNavMesh Offsets */
-			
+			// Can be found using the line "Current flow distance: %f / %f %% \n",
+			// we find the function 'current_flow_distance_f(const CCommand *)'.
 			"TerrorNavMesh::m_fMapMaxFlowDistance"
 			{
 				"windows"	"1528"
 				"linux"		"1524"
-				// Compared against inside of the current_flow_distance ccommand.
 			}
 			
 			/* Structure Sizes */
-			/* Look for InitGameSystems(), NavMeshFactory(), and CDirector::CDirector() to find sizes */
-			
+
+			// InitGameSystems()
 			"sizeof_CDirector"
 			{
-				"windows"	"1420"
-				"linux"		"1420"
+				"windows"	"1612"
+				"linux"		"1612"
 			}
 			
 			/* Google: sizeof empty */
+			// CDirector::CDirector()
 			"sizeof_CDirectorTacticalServices"
 			{
 				"windows"	"1"
 				"linux"		"1"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorItemManager"
 			{
 				"windows"	"1128"
 				"linux"		"1128"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorMusicBanks"
 			{
 				"windows"	"92"
 				"linux"		"92"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorSessionManager"
 			{
 				"windows"	"76"
 				"linux"		"76"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorScriptedEventManager"
 			{
 				"windows"	"340"
 				"linux"		"340"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorVersusMode"
 			{
 				"windows"	"92"
 				"linux"		"92"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorSurvivalMode"
 			{
 				"windows"	"160"
 				"linux"		"160"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorScavengeMode"
 			{
 				"windows"	"104"
 				"linux"		"104"
 			}
-			
+
+			// CDirector::CDirector()
 			"sizeof_CDirectorChallengeMode"
 			{
 				"windows"	"412"
 				"linux"		"412"
 			}
-			
+
+			// NavMeshFactory()
 			"sizeof_TerrorNavMesh"
 			{
 				"windows"	"1748"
@@ -371,19 +420,35 @@
 				"windows"	"14844"
 				"linux"		"14824"
 			}
+
+			// Can be in the "CTerrorPlayer::OnRevived" function
 			"CTerrorPlayer::m_preIncapacitatedHealthBuffer"
 			{
 				"windows"	"14848"
 				"linux"		"14828"
 			}
-			
-			// I have no idea what this variable is supposed to be so I'm skipping it!
+
+			// Deprecated, use offset "CTerrorPlayer::m_flBecomeGhostAt" instead
+			// CTerrorPlayer::SetBecomeGhostAt(float)
+			// Real name "CTerrorPlayer::m_flBecomeGhostAt"
+			//
+			// Warning: There was a mistake when creating l4d2_direct, 
+			// previously thought that this offset pointing to CountdownTimer is actually a simple float data type, 
+			// so +8 is added inside plugins or includes, then the offset becomes correct. 
+			// We will keep this behavior for compatibility, subtract 8 from the real offset.
 			"CTerrorPlayer::SpawnTimer"
 			{
-				"windows"	"11308"
-				"linux"		"11288"
+				"windows"	"11276"
+				"linux"		"11256"
 			}
-			
+
+			// CTerrorPlayer::SetBecomeGhostAt(float)
+			"CTerrorPlayer::m_flBecomeGhostAt"
+			{
+				"windows"	"11284"
+				"linux"		"11264"
+			}
+
 			// Can be found in the "CTerrorPlayer::IsInvulnerable" function
 			// CountdownTimer::Now((CTerrorPlayer *)((char *)this + 11872)); 
 			// This gives us offsets for the class CountdownTimer
@@ -409,6 +474,10 @@
 				"linux"		"11484"
 			}
 
+			// Can be found in the "CTerrorPlayer::GetNextShoveTime" and "CTerrorPlayer::SetNextShoveTime" functions.
+			// Unnecessary offset, use code 'GetEntPropFloat(client, Prop_Send, "m_flNextShoveTime")' instead.
+			// Offset left for backward compatibility for those plugins that were built on the old include 'l4d2_direct'.
+			// Real Name "CTerrorPlayer::m_flNextShoveTime"
 			"CTerrorPlayer::m_fNextShoveTime"
 			{
 				"windows"	"11500"
@@ -416,7 +485,7 @@
 			}
 			
 			/* TerrorNavArea Variable Offsets */
-			
+			// CTerrorPlayer::GetFlowDistance(FlowType)
 			"TerrorNavArea::m_flow"
 			{
 				"windows"	"332"
@@ -424,24 +493,28 @@
 			}
 			
 			/* CInferno Variable Offsets */
-			
+
+			// This offset is cmp'd against 64 at the start
+			// of CInferno::CreateFire. Look for 2 refs to "insect_swarm" in 1 func.
+			// Or CInferno::CInferno() -> m_nMaxFlames = inferno_max_flames.GetInt();
+			// Real name "CInferno::m_nMaxFlames"
 			"CInferno::m_maxFlames"
 			{
 				"windows"	"2960"
 				"linux"		"2980"
-				// This offset is cmp'd against 64 at the start
-				// of CInferno::CreateFire. Look for 2 refs to "insect_swarm" in 1 func.
 			}
 		}
 		
 		"Signatures"
 		{
 			/* Used solely to get the offset for TheDirector */
+			// Can be found using the line "game_sounds_music.txt"
 			"DirectorMusicBanks_OnRoundStart"
 			{
 				"library"  "server"
+
 				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x56\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\xE8\x2A\x2A\x2A\x2A\x84"
-				/* 55 8B EC 83 EC ? 56 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 84 */
+							/* 55 8B EC 83 EC ? 56 57 8B F9 8B 0D ? ? ? ? E8 ? ? ? ? 84 */
 			}
 			
 			/* Used solely to get the offset for TheNavMesh 
@@ -449,8 +522,9 @@
 			"CommandNavSave"
 			{
 				"library"	"server"
+
 				"windows"  "\xE8\x2A\x2A\x2A\x2A\x84\xC0\x74\x2A\x8B\x0D\x2A\x2A\x2A\x2A\x8B\x01\x8B\x50\x2A\xFF\xD2\x8B\x0D\x2A\x2A\x2A\x2A\x84\xC0"
-				/* E8 ? ? ? ? 84 C0 74 ? 8B 0D ? ? ? ? 8B 01 8B 50 ? FF D2 8B 0D ? ? ? ? 84 C0 */
+							/* E8 ? ? ? ? 84 C0 74 ? 8B 0D ? ? ? ? 8B 01 8B 50 ? FF D2 8B 0D ? ? ? ? 84 C0 */
 			}
 
 			/* Find the Director/ZombieManager singleton classes */
@@ -458,12 +532,14 @@
 			"TheDirector"
 			{
 				"library"	"server"
+
 				"linux"		"@TheDirector"
 			}
 			
 			"TheNavMesh"
 			{
 				"library"	"server"
+
 				"linux"		"@TheNavMesh"
 			}
 
@@ -472,25 +548,31 @@
 			"CNavMesh::GetNavArea"
 			{
 				"library"  "server"
+
 				"linux"    "@_ZNK8CNavMesh10GetNavAreaERK6Vectorf"
 				"windows"  "\x55\x8B\xEC\x83\xEC\x2A\x83\x79\x2A\x00\x75\x08\x33\xC0\x8B\xE5\x5D\xC2\x08"
-				/* 55 8B EC 83 EC ? 83 79 ? 00 75 08 33 C0 8B E5 5D C2 08 */
+							/* 55 8B EC 83 EC ? 83 79 ? 00 75 08 33 C0 8B E5 5D C2 08 */
 			}
 
+			// Can be found using the line "Tank offer: making a bot, and giving him to nobody\n"
 			"CDirector::TryOfferingTankBot"
 			{
 				"library"  "server"
+
 				"linux"    "@_ZN9CDirector18TryOfferingTankBotEP11CBaseEntityb"
-				"windows"  "\x55\x8B\xEC\x51\x83\x7D\x08\x00\x56\x8B\xF1\x89"
-				/* 55 8B EC 51 83 7D 08 0  56 8B F1 89 */
+				"windows"  "\x55\x8B\xEC\x51\x83\x7D\x08\x00\x56\x8B\xF1\x89\x75\xFC"
+							/* 55 8B EC 51 83 7D 08 00 56 8B F1 89 75 FC */
 			}
 
+			// Can be found using the line "Current flow distance: %f / %f %% \n",
+			// we find the function 'current_flow_distance_f(const CCommand *)', inside is our function.
 			"CTerrorPlayer::GetFlowDistance"
 			{
 				"library"  "server"
+
 				"linux"    "@_ZNK13CTerrorPlayer15GetFlowDistanceEN13TerrorNavArea8FlowTypeE"
-				"windows"  "\x55\x8B\xEC\x8B\x01\x8B\x90\x2A\x2A\x2A\x2A\xFF\xD2\x85"
-				/* 55 8B EC 8B 01 8B 90 ? ? ? ? FF D2 85 */
+				"windows"  "\x55\x8B\xEC\x8B\x01\x8B\x90\x28\x05\x00\x00"
+							/* 55 8B EC 8B 01 8B 90 28 05 00 00 */
 			}
 		}
 		

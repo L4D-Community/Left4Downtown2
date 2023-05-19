@@ -456,8 +456,11 @@ stock float L4D2Direct_GetMapMaxFlowDistance()
 
 /* CTerrorPlayer Variable access */
 
+// Fix me!!
 /**
  * Get a reference to a CountdownTimer that tracks when an SI player can next spawn.
+ * Fix me!!! Wrong code, actually we are reading simple float data type, not class CountdownTimer!!!
+ * We write and read wrong data.
  *
  * @note The duration of this timer is controlled by the cvars z_ghost_delay_min and z_ghost_delay_max.
  * @param client		Client id to get the spawn timer for
@@ -482,6 +485,7 @@ stock CountdownTimer L4D2Direct_GetSpawnTimer(int client)
 
 	return view_as<CountdownTimer>(pEntity + view_as<Address>(offs));
 }
+// Fix me!!
 
 /**
  * Get a reference to a CountdownTimer that tracks when an survivor player is invulnerable due to "godframes".
