@@ -31,8 +31,13 @@
 
 #ifndef _INCLUDE_DIRECTOR_H_
 #define _INCLUDE_DIRECTOR_H_
+
 #include "l4d2timers.h"
 #include "constants.h"
+//#include "ehandle.h"
+
+//class CBaseEntity;
+//typedef CHandle<CBaseEntity> EHANDLE;
 
 // 1128 bytes
 typedef struct _CDirectorItemManager {
@@ -135,13 +140,14 @@ enum ScenarioRestartReason
 	RESTART_MISSION_ABORTED=18,
 };
 
-// Win32: 1420 bytes
-// Lin: 1420 bytes
+// Win32: 1612 bytes
+// Lin: 1612 bytes
+// After the update, all offsets have changed, the offsets indicated in the comments are incorrect (version 2.2.2.7)
 typedef struct _CDirector {
 	void *vptr; // 0x0
-	char unknown4[156]; // 0x04
-	bool m_bHasSurvivorLeftSafeArea; // 160
-	bool m_bUknown161; // 161 set to 0in CDirector::Reset()
+	char unknown4[348]; // 0x04
+	bool m_bHasSurvivorLeftSafeArea; // Offset - 352, CDirector::HasAnySurvivorLeftSafeArea
+	bool m_bLastSurvivorLeftSafeArea; // Offset - 353, CDirector::CheckForSurvivorsLeavingSafeArea
 	char padding162[2]; // 161
 	int m_iFinaleEscapeState; // 164
 	char unknown168[4]; // 168
