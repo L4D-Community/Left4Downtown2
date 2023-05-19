@@ -40,7 +40,7 @@
 /* Basic information exposed publicly */
 #define SMEXT_CONF_NAME			"Left 4 Downtown 2"
 #define SMEXT_CONF_DESCRIPTION	"Competitive framework support extension for L4D2"
-#define SMEXT_CONF_VERSION		"0.9.2"
+#define SMEXT_CONF_VERSION		"0.9.3"
 #define SMEXT_CONF_AUTHOR		"Downtown1, ProdigySim, Visor, Accelerator, A1m`; minor contrib.: XBetaAlpha, AtomicStryker, xerox8521"
 #define SMEXT_CONF_URL			"https://github.com/L4D-Community/Left4Downtown2"
 #define SMEXT_CONF_LOGTAG		"LEFT4DOWNTOWN"
