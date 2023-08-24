@@ -272,88 +272,6 @@ cell_t L4D_GetNearestNavArea(IPluginContext *pContext, const cell_t *params)
 	return reinterpret_cast<cell_t>(pRet);
 }
 
-// native L4D_LobbyUnreserve()
-cell_t L4D_LobbyUnreserve(IPluginContext *pContext, const cell_t *params)
-{
-	const int64_t cookieUnreserved = 0;
-
-	if (g_pServer == NULL) {
-		return pContext->ThrowNativeError("CBaseServer not available");
-	}
-
-	static ICallWrapper *pWrapper = NULL;
-
-	/* CBaseServer::SetReservationCookie(
-			uint64_t reservationCookie,
-			const char *formatString,
-			va_list ap)
-
-		__cdecl on windows, __thiscall on linux
-	*/
-	if (!pWrapper) {
-#ifdef PLATFORM_WINDOWS
-		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
-			PassInfo pass[4]; \
-			pass[0].flags = PASSFLAG_BYVAL; \
-			pass[0].size = sizeof(IServer *); \
-			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYVAL; \
-			pass[1].size = sizeof(uint64_t); \
-			pass[1].type = PassType_Basic; \
-			pass[2].flags = PASSFLAG_BYVAL; \
-			pass[2].size = sizeof(char const *); \
-			pass[2].type = PassType_Basic; \
-			pass[3].flags = PASSFLAG_BYVAL; \
-			pass[3].size = sizeof(void *); \
-			pass[3].type = PassType_Basic; \
-				pWrapper = g_pBinTools->CreateCall(addr, CallConv_Cdecl, /*retInfo*/NULL, /*paramInfo*/pass, /*numparams*/4));
-#else
-		REGISTER_NATIVE_ADDR("CBaseServer::SetReservationCookie", \
-			PassInfo pass[3]; \
-			pass[0].flags = PASSFLAG_BYVAL; \
-			pass[0].size = sizeof(uint64_t); \
-			pass[0].type = PassType_Basic; \
-			pass[1].flags = PASSFLAG_BYVAL; \
-			pass[1].size = sizeof(char const *); \
-			pass[1].type = PassType_Basic; \
-			pass[2].flags = PASSFLAG_BYVAL; \
-			pass[2].size = sizeof(void *); \
-			pass[2].type = PassType_Basic; \
-				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*retInfo*/NULL, /*paramInfo*/pass, /*numparams*/3));
-#endif
-	}
-
-	/* Build the vcall argument stack */
-	unsigned char vstk[sizeof(IServer *) + sizeof(uint64_t) + sizeof(char const *) + sizeof(void *)];
-	unsigned char *vptr = vstk;
-
-	*(void **)vptr = g_pServer;
-	vptr += sizeof(IServer *);
-
-	*(uint64_t *)vptr = cookieUnreserved;
-	vptr += sizeof(uint64_t);
-
-	*(const char **)vptr = "Manually unreserved by Left 4 Downtown Extension";
-	vptr += sizeof(char *);
-
-	*(void **)vptr = NULL; // don't bother using a va_list ap :)
-
-	pWrapper->Execute(vstk, /*retbuffer*/NULL);
-
-	L4D_DEBUG_LOG("Invoked CBaseServer::SetReservationCookie(0,fmt,...)");
-
-	return 1;
-}
-
-//DEPRECATED ON L4D2 and L4D1 Linux
-// native bool:L4D_LobbyIsReserved()
-cell_t L4D_LobbyIsReserved(IPluginContext *pContext, const cell_t *params)
-{
-	g_pSM->LogError(myself, "L4D_LobbyIsReserved() has been called. It is deprecated in L4D2, consider updating the plugin using this native.");
-
-	return 1;
-}
-
 sp_nativeinfo_t g_L4DoNatives[] =
 {
 	{"L4D_GetEntityWorldSpaceCenter",	L4D_GetEntityWorldSpaceCenter},
@@ -361,7 +279,5 @@ sp_nativeinfo_t g_L4DoNatives[] =
 	{"L4D_GetServerClassId",			L4D_GetServerClassId},
 	{"L4D_GetPointer",					L4D_GetPointer},
 	{"L4D_GetNearestNavArea",			L4D_GetNearestNavArea},
-	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
-	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
 	{NULL,								NULL}
 };

@@ -823,7 +823,6 @@ native void L4D_LobbyUnreserve();
  *
  * @return     true if reserved, false if not reserved
  */
-#pragma deprecated This will always return false on L4D2 or on Linux.
 native bool L4D_LobbyIsReserved();
 
 /**

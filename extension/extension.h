@@ -59,6 +59,7 @@
 #include <server_class.h>
 #include <matchmaking/imatchframework.h>
 #include <matchmaking/l4d2/imatchext_l4d.h>
+#include "l4d2sdk/baseserver.h"
 
 /**
  * @brief Sample implementation of the SDK Extension.
@@ -205,7 +206,7 @@ extern bool g_bRoundEnd;
 extern ConVar g_UnlockMelees;
 
 extern IBinTools *g_pBinTools;
-extern IServer *g_pServer; //pointer to CBaseServer
+extern CBaseServer *g_pServer; //pointer to CBaseServer
 extern ISDKTools *g_pSDKTools;
 extern IGameConfig *g_pGameConf;
 extern IGameConfig *g_pGameConfSDKTools;
@@ -230,6 +231,7 @@ extern sp_nativeinfo_t g_L4DoDirectorNatives[];
 extern sp_nativeinfo_t g_L4DoGameRulesNatives[];
 extern sp_nativeinfo_t g_L4DoPlayerNatives[];
 extern sp_nativeinfo_t g_L4DoZombieManagerNatives[];
+extern sp_nativeinfo_t g_L4DoEngineNatives[];
 
 #include "wrappers.h"
 

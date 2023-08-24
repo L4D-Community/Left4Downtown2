@@ -101,7 +101,7 @@ Left4Downtown g_Left4DowntownTools;		/**< Global singleton for extension's main 
 IGameConfig *g_pGameConf = NULL;
 IGameConfig *g_pGameConfSDKTools = NULL;
 IBinTools *g_pBinTools = NULL;
-IServer *g_pServer = NULL; //ptr to CBaseServer
+CBaseServer *g_pServer = NULL; //ptr to CBaseServer
 ISDKTools *g_pSDKTools = NULL;
 IServerGameEnts *gameents = NULL;
 CGlobalVars *gpGlobals;
@@ -230,6 +230,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	sharesys->AddNatives(myself, g_L4DoGameRulesNatives);
 	sharesys->AddNatives(myself, g_L4DoPlayerNatives);
 	sharesys->AddNatives(myself, g_L4DoZombieManagerNatives);
+	sharesys->AddNatives(myself, g_L4DoEngineNatives);
 
 	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
 	g_pFwdOnSpawnSpecialPost = forwards->CreateForward("L4D_OnSpawnSpecial_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);
@@ -303,7 +304,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 		return;
 	}
 
-	IServer *pServer = g_pSDKTools->GetIServer();
+	CBaseServer *pServer = (CBaseServer*)g_pSDKTools->GetIServer();
 
 	//reading out server->GetName() we consistently seem to get (the same?)
 	//garbage characters. this is possibly causing a crash on windows servers

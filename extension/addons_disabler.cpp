@@ -46,14 +46,13 @@ void AddonsDisabler::Patch()
 	L4D_DEBUG_LOG("AddonsDisabler - Patching ...");
 
 	bool firstTime = (vanillaModeSig == NULL);
-	if (firstTime)
-	{
-		if (!g_pGameConf->GetMemSig("VanillaModeOffset", &vanillaModeSig) || !vanillaModeSig)
-		{
+	if (firstTime) {
+		if (!g_pGameConf->GetMemSig("VanillaModeOffset", &vanillaModeSig) || !vanillaModeSig) {
 			g_pSM->LogError(myself, "AddonsDisabler -- Could not find 'VanillaModeOffset' signature");
 			return;
 		}
 	}
+
 	patch_t vanillaModePatch;
 	vanillaModePatch.bytes = 3;
 
@@ -70,8 +69,7 @@ void AddonsDisabler::Unpatch()
 {
 	L4D_DEBUG_LOG("AddonsDisabler - Unpatching ...");
 
-	if (vanillaModeSig)
-	{
+	if (vanillaModeSig) {
 		ApplyPatch(vanillaModeSig, vanillaModeOffset, &vanillaModeSigRestore, /*restore*/NULL);
 		L4D_DEBUG_LOG("AddonsDisabler -- 'VanillaModeOffset' restored");
 	}
@@ -79,41 +77,42 @@ void AddonsDisabler::Unpatch()
 
 void OnAddonsEclipseChanged(IConVar *cvar, const char *pOldValue, float flOldValue)
 {
-	if (AddonsDisabler::AddonsEclipse == g_AddonsEclipse.GetInt())
+	if (AddonsDisabler::AddonsEclipse == g_AddonsEclipse.GetInt()) {
 		return;
+	}
 
 	AddonsDisabler::AddonsEclipse = g_AddonsEclipse.GetInt();
+
 	L4D_DEBUG_LOG("CVAR l4d2_addons_eclipse changed to %i...", AddonsDisabler::AddonsEclipse);
 
-	if (AddonsDisabler::AddonsEclipse > -1)
-	{
+	if (AddonsDisabler::AddonsEclipse > -1) {
 		L4D_DEBUG_LOG("Enabling AddonsDisabler patch");
 		AddonsDisabler::Patch();
+
+		return;
 	}
-	else
-	{
-		L4D_DEBUG_LOG("Disabling AddonsDisabler patch");
-		AddonsDisabler::Unpatch();
-	}
+
+	L4D_DEBUG_LOG("Disabling AddonsDisabler patch");
+	AddonsDisabler::Unpatch();
 }
 
 namespace Detours
 {
 	void CBaseServer::OnFillServerInfo(int SVC_ServerInfo)
 	{
-		cell_t result = Pl_Continue;
-
-		if (AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig)
-		{
+		if (AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig) {
 			int RetValue = (AddonsDisabler::AddonsEclipse == 1) ? 0 : 1; //for safety
 
 			int m_nPlayerSlot = *(int *)((unsigned char *)SVC_ServerInfo + playerSlotOffset);
 			IClient *pClient = g_pServer->GetClient(m_nPlayerSlot);
 
 			L4D_DEBUG_LOG("ADDONS DISABLER: Eligible client '%s' connected[%s]", pClient->GetClientName(), pClient->GetNetworkIDString());
-
-			g_pFwdAddonsDisabler->PushString(pClient->GetNetworkIDString());
-			g_pFwdAddonsDisabler->Execute(&result);
+			
+			cell_t result = Pl_Continue;
+			if (g_pFwdAddonsDisabler->GetFunctionCount() > 0) {
+				g_pFwdAddonsDisabler->PushString(pClient->GetNetworkIDString());
+				g_pFwdAddonsDisabler->Execute(&result);
+			}
 
 			/* uint8_t != unsigned char in terms of type */
 			uint8_t disableAddons = result == Pl_Handled ? 0 : RetValue;

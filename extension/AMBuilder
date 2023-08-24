@@ -50,6 +50,7 @@ project.sources += [
   'natives/gamerulesnatives.cpp',
   'natives/playernatives.cpp',
   'natives/zombiemanagernatives.cpp',
+  'natives/enginenatives.cpp',
   'detours/send_in_rescue_vehicle.cpp',
   'detours/change_finale_stage.cpp',
   'detours/get_script_value_string.cpp',
