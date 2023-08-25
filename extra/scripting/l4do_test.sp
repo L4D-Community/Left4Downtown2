@@ -194,6 +194,9 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_check_mission", Cmd_CheckMission);
 	RegConsoleCmd("sm_entity_center", Cmd_GetEntityCenter);
 	RegConsoleCmd("sm_fling", Cmd_FlingPlayer);
+	RegConsoleCmd("sm_test_unreserve", Cmd_TestUnreserve);
+	RegConsoleCmd("sm_check_lobby", Cmd_CheckLobby);
+	RegConsoleCmd("sm_getrealnumclients", Cmd_GetRealNumClients);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
 	cvarBlockTanks = CreateConVar("l4do_block_tanks", "0", "Disable ZombieManager::SpawnTank", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -205,6 +208,28 @@ public void OnPluginStart()
 	cvarProhibitBosses = CreateConVar("l4do_unprohibit_bosses", "0", "Override ProhibitBosses script key if non-0", FCVAR_SPONLY|FCVAR_NOTIFY);
 
 	cvarForceSpecials = CreateConVar("l4do_force_specials", "0", "Override SpawnSpecial to spawn a certain type of special if non-zero", FCVAR_SPONLY|FCVAR_NOTIFY);
+}
+
+Action Cmd_GetRealNumClients(int iClient, int iArgs)
+{
+	ReplyToCommand(iClient, "[L4D_GetRealNumClients] %d", L4D_GetRealNumClients());
+	
+	return Plugin_Handled;
+}
+
+Action Cmd_CheckLobby(int iClient, int iArgs)
+{
+	ReplyToCommand(iClient, "[L4D_LobbyIsReserved] %s", (L4D_LobbyIsReserved()) ? "true" : "false");
+	
+	return Plugin_Handled;
+}
+
+Action Cmd_TestUnreserve(int iClient, int iArgs)
+{
+	L4D_LobbyUnreserve();
+	ReplyToCommand(iClient, "[L4D_LobbyUnreserve] Remove lobby reservation");
+
+	return Plugin_Handled;
 }
 
 public Action Command_BeginRoundSetupTime(int client, int args)

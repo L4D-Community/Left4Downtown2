@@ -819,11 +819,19 @@ native void L4D_LobbyUnreserve();
  * @remarks Server is automatically unreserved if it hibernates or
  *          if all players leave.
  *
- * @deprecated This will always return false on L4D2 or on Linux.
- *
  * @return     true if reserved, false if not reserved
  */
 native bool L4D_LobbyIsReserved();
+
+/**
+ * @brief Returns current number of clients.
+ * @remarks Calls 'CBaseServer::GetNumClients' and 'CBaseServer::GetNumFakeClients' methods in game
+ * (more reliable than method 'GetClientCount' in sourcemod, or loop in plugin).
+ * in sourcemod the loop returns 0 clients when changing the map, so this method is added.
+ *
+ * @return     returns the number of clients, or -1 on error.
+ */
+native int L4D_GetRealNumClients();
 
 /**
  * @brief Gets the max versus completion score for the map

@@ -33,7 +33,7 @@
 #include "extension.h"
 #include "util.h"
 
- // native L4D_LobbyUnreserve()
+ // native void L4D_LobbyUnreserve()
 cell_t L4D_LobbyUnreserve(IPluginContext* pContext, const cell_t* params)
 {
 	const uint64 cookieUnreserved = 0;
@@ -106,7 +106,7 @@ cell_t L4D_LobbyUnreserve(IPluginContext* pContext, const cell_t* params)
 	return 1;
 }
 
-// native bool:L4D_LobbyIsReserved()
+// native bool L4D_LobbyIsReserved()
 cell_t L4D_LobbyIsReserved(IPluginContext* pContext, const cell_t* params)
 {
 	if (g_pServer == NULL) {
@@ -122,9 +122,22 @@ cell_t L4D_LobbyIsReserved(IPluginContext* pContext, const cell_t* params)
 	return (g_pServer->m_nReservationCookie != 0) ? true : false;
 }
 
+// native int L4D_GetRealNumClients()
+cell_t L4D_GetRealNumClients(IPluginContext* pContext, const cell_t* params)
+{
+	if (g_pServer == NULL) {
+		g_pSM->LogError(myself, "Failed to get pointer to CBaseServer(IServer), is SDKTools extension available?");
+
+		return -1;
+	}
+
+	return MAX(0, g_pServer->GetNumClients() - g_pServer->GetNumFakeClients());
+}
+
 sp_nativeinfo_t g_L4DoEngineNatives[] =
 {
 	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
 	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
+	{"L4D_GetRealNumClients",			L4D_GetRealNumClients},
 	{NULL,								NULL}
 };
