@@ -109,58 +109,6 @@ ConVar *mp_gamemode = NULL;
 IMatchFramework *g_pMatchFramework = NULL;
 IMatchExtL4D *g_pMatchExtL4D = NULL;
 
-IForward *g_pFwdOnSpawnSpecial = NULL;
-IForward *g_pFwdOnSpawnSpecialPost = NULL;
-IForward *g_pFwdOnSpawnTank = NULL;
-IForward *g_pFwdOnSpawnTankPost = NULL;
-IForward *g_pFwdOnSpawnWitch = NULL;
-IForward *g_pFwdOnSpawnWitchPost = NULL;
-IForward *g_pFwdOnSpawnWitchBride = NULL;
-IForward *g_pFwdOnSpawnWitchBridePost = NULL;
-IForward *g_pFwdOnClearTeamScores = NULL;
-IForward *g_pFwdOnSetCampaignScores = NULL;
-IForward *g_pFwdOnFirstSurvivorLeftSafeArea = NULL;
-IForward *g_pFwdOnGetScriptValueInt = NULL;
-IForward *g_pFwdOnGetScriptValueFloat = NULL;
-IForward *g_pFwdOnGetScriptValueString = NULL;
-IForward *g_pFwdOnTryOfferingTankBot = NULL;
-IForward *g_pFwdOnMobRushStart = NULL;
-IForward *g_pFwdOnSpawnITMob = NULL;
-IForward *g_pFwdOnSpawnMob = NULL;
-IForward *g_pFwdOnEnterGhostState = NULL;
-IForward *g_pFwdOnEnterGhostStatePre = NULL;
-IForward *g_pFwdOnShovedBySurvivor = NULL;
-IForward *g_pFwdOnGetCrouchTopSpeed = NULL;
-IForward *g_pFwdOnGetRunTopSpeed = NULL;
-IForward *g_pFwdOnGetWalkTopSpeed = NULL;
-IForward *g_pFwdOnHasConfigurableDifficulty = NULL;
-IForward *g_pFwdOnGetSurvivorSet = NULL;
-IForward *g_pFwdOnFastGetSurvivorSet = NULL;
-IForward *g_pFwdOnGetMissionVersusBossSpawning = NULL;
-IForward *g_pFwdOnCThrowActivate = NULL;
-IForward *g_pFwdOnStartMeleeSwing = NULL;
-IForward *g_pFwdOnReplaceTank = NULL;
-IForward *g_pFwdOnUseHealingItems = NULL;
-IForward *g_pFwdOnFindScavengeItem = NULL;
-IForward *g_pFwdOnSendInRescueVehicle = NULL;
-IForward *g_pFwdOnChangeFinaleStage = NULL;
-IForward *g_pFwdOnEndVersusModeRound = NULL;
-IForward *g_pFwdOnEndVersusModeRound_Post = NULL;
-IForward *g_pFwdOnSelectTankAttack = NULL;
-IForward *g_pFwdOnRevived = NULL;
-IForward *g_pFwdOnWaterMove = NULL;
-IForward *g_pFwdOnPlayerStagger = NULL;
-IForward *g_pFwdOnTerrorWeaponHit = NULL;
-IForward *g_pFwdAddonsDisabler = NULL;
-IForward *g_pFwdOnShovedByPounceLanding = NULL;
-IForward *g_pFwdOnChooseVictim = NULL;
-IForward *g_pFwdOnLedgeGrabbed = NULL;
-IForward *g_pFwdInfernoSpread = NULL;
-IForward *g_pFwdOnKnockedDown = NULL;
-IForward *g_pFwdOnKnockedDownPost = NULL;
-IForward *g_pFwdOnPlayerHit = NULL;
-IForward *g_pFwdOnPlayerHitPost = NULL;
-
 bool g_bRoundEnd = false;
 
 ICvar *icvar = NULL;
@@ -179,43 +127,36 @@ PatchManager g_PatchManager;
 bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 {
 	//only load extension for l4d2
-	if (strcmp(g_pSM->GetGameFolderName(), "left4dead2") != 0)
-	{
+	if (strcmp(g_pSM->GetGameFolderName(), "left4dead2") != 0) {
 		UTIL_Format(error, maxlength, "Cannot Load Left 4 Downtown Ext on mods other than L4D2");
 		return false;
 	}
 
 	mp_gamemode = g_pCVar->FindVar("mp_gamemode");
-	if (mp_gamemode == NULL)
-	{
+	if (mp_gamemode == NULL) {
 		UTIL_Format(error, maxlength, "Cvar \"mp_gamemode\" not found");
 		return false;
 	}
 
-	if (!SetupFromMatchmakingLibrary(error, maxlength))
-	{
+	if (!SetupFromMatchmakingLibrary(error, maxlength)) {
 		return false;
 	}
 
 	//load sigscans and offsets, etc from our gamedata file
 	char conf_error[255] = "";
-	if (!gameconfs->LoadGameConfigFile(GAMECONFIG_FILE, &g_pGameConf, conf_error, sizeof(conf_error)))
-	{
-		if (conf_error[0])
-		{
+	if (!gameconfs->LoadGameConfigFile(GAMECONFIG_FILE, &g_pGameConf, conf_error, sizeof(conf_error))) {
+		if (conf_error[0]) {
 			UTIL_Format(error, maxlength, "Could not read " GAMECONFIG_FILE ".txt: %s", conf_error);
 		}
 		return false;
 	}
 
 	//load sigscans and offsets from the sdktools gamedata file
-	if (!gameconfs->LoadGameConfigFile("sdktools.games", &g_pGameConfSDKTools, conf_error, sizeof(conf_error)))
-	{
+	if (!gameconfs->LoadGameConfigFile("sdktools.games", &g_pGameConfSDKTools, conf_error, sizeof(conf_error))) {
 		return false;
 	}
 
-	if (!L4D2_GetOffsets(error, maxlength))
-	{
+	if (!L4D2_GetOffsets(error, maxlength)) {
 		return false;
 	}
 
@@ -232,57 +173,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 	sharesys->AddNatives(myself, g_L4DoZombieManagerNatives);
 	sharesys->AddNatives(myself, g_L4DoEngineNatives);
 
-	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
-	g_pFwdOnSpawnSpecialPost = forwards->CreateForward("L4D_OnSpawnSpecial_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);
-	g_pFwdOnSpawnTank = forwards->CreateForward("L4D_OnSpawnTank", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
-	g_pFwdOnSpawnTankPost = forwards->CreateForward("L4D_OnSpawnTank_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
-	g_pFwdOnSpawnWitch = forwards->CreateForward("L4D_OnSpawnWitch", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
-	g_pFwdOnSpawnWitchPost = forwards->CreateForward("L4D_OnSpawnWitch_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
-	g_pFwdOnSpawnWitchBride = forwards->CreateForward("L4D2_OnSpawnWitchBride", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
-	g_pFwdOnSpawnWitchBridePost = forwards->CreateForward("L4D2_OnSpawnWitchBride_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
-	g_pFwdOnClearTeamScores = forwards->CreateForward("L4D_OnClearTeamScores", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnSetCampaignScores = forwards->CreateForward("L4D_OnSetCampaignScores", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_CellByRef);
-	g_pFwdOnFirstSurvivorLeftSafeArea = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
-	g_pFwdOnGetScriptValueFloat = forwards->CreateForward("L4D_OnGetScriptValueFloat", ET_Event, 2, /*types*/NULL, Param_String, Param_FloatByRef);
-	g_pFwdOnGetScriptValueString = forwards->CreateForward("L4D_OnGetScriptValueString", ET_Event, 4, /*types*/NULL, Param_String, Param_String, Param_String, Param_CellByRef);
-	g_pFwdOnTryOfferingTankBot = forwards->CreateForward("L4D_OnTryOfferingTankBot", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
-	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
-	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnEnterGhostStatePre = forwards->CreateForward("L4D_OnEnterGhostStatePre", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
-	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
-	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
-	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
-	g_pFwdOnHasConfigurableDifficulty = forwards->CreateForward("L4D_OnHasConfigurableDifficulty", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnGetSurvivorSet = forwards->CreateForward("L4D_OnGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnFastGetSurvivorSet = forwards->CreateForward("L4D_OnFastGetSurvivorSet", ET_Event, 1, /*types*/NULL, Param_CellByRef);
-	g_pFwdOnGetMissionVersusBossSpawning = forwards->CreateForward("L4D_OnGetMissionVSBossSpawning", ET_Event, 4, /*types*/NULL, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef, Param_FloatByRef);
-	g_pFwdOnCThrowActivate = forwards->CreateForward("L4D_OnCThrowActivate", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnStartMeleeSwing = forwards->CreateForward("L4D_OnStartMeleeSwing", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnReplaceTank = forwards->CreateForward("L4D_OnReplaceTank", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnUseHealingItems = forwards->CreateForward("L4D2_OnUseHealingItems", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnFindScavengeItem = forwards->CreateForward("L4D2_OnFindScavengeItem", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
-	g_pFwdOnSendInRescueVehicle = forwards->CreateForward("L4D2_OnSendInRescueVehicle", ET_Event, 0, /*types*/NULL);
-	g_pFwdOnChangeFinaleStage = forwards->CreateForward("L4D2_OnChangeFinaleStage", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_String);
-	g_pFwdOnEndVersusModeRound = forwards->CreateForward("L4D2_OnEndVersusModeRound", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnEndVersusModeRound_Post = forwards->CreateForward("L4D2_OnEndVersusModeRound_Post", ET_Ignore, 0, /*types*/NULL);
-	g_pFwdOnSelectTankAttack = forwards->CreateForward("L4D2_OnSelectTankAttack", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
-	g_pFwdOnRevived = forwards->CreateForward("L4D2_OnRevived", ET_Ignore, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnWaterMove = forwards->CreateForward("L4D2_OnWaterMove", ET_Event, 1, /*types*/NULL, Param_Cell);
-	g_pFwdOnPlayerStagger = forwards->CreateForward("L4D2_OnStagger", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnTerrorWeaponHit = forwards->CreateForward("L4D2_OnEntityShoved", ET_Event, 5, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Array, Param_Cell);
-	g_pFwdAddonsDisabler = forwards->CreateForward("L4D2_OnClientDisableAddons", ET_Event, 1, /*types*/NULL, Param_String);
-	g_pFwdOnShovedByPounceLanding = forwards->CreateForward("L4D2_OnPounceOrLeapStumble", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnChooseVictim = forwards->CreateForward("L4D2_OnChooseVictim", ET_Event, 2, /*types*/ NULL, Param_Cell, Param_CellByRef);
-	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
-	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
-	g_pFwdOnKnockedDown = forwards->CreateForward("L4D_OnKnockedDown", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnPlayerHit = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Pre", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
-	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+	CreateForwards();
 
 	plsys->AddPluginsListener(&g_Left4DowntownTools);
 	playerhelpers->RegisterCommandTargetProcessor(&g_Left4DowntownTools);
@@ -297,8 +188,7 @@ void Left4Downtown::SDK_OnAllLoaded()
 	SM_GET_LATE_IFACE(BINTOOLS, g_pBinTools);
 	SM_GET_LATE_IFACE(SDKTOOLS, g_pSDKTools);
 
-	if (!g_pBinTools || !g_pSDKTools)
-	{
+	if (!g_pBinTools || !g_pSDKTools) {
 		//L4D_DEBUG_LOG("Failed to load bintools or failed to load sdktools");
 		g_pSM->LogError(myself, "Failed to load bintools or failed to load sdktools");
 		return;
@@ -310,14 +200,11 @@ void Left4Downtown::SDK_OnAllLoaded()
 	//garbage characters. this is possibly causing a crash on windows servers
 	//when a player connects. so lets not read the server name :(
 	//L4D_DEBUG_LOG("Server name is %s", server->GetName());
-	if (pServer == NULL)
-	{
+	if (pServer == NULL) {
 		g_pSM->LogError(myself, "Couldn't find IServer instance!");
 	}
-	else
-	{
-		L4D_DEBUG_LOG("Address of IServer is %p", pServer);
-	}
+
+	L4D_DEBUG_LOG("Address of IServer is %p", pServer);
 
 	g_pServer = pServer;
 
@@ -337,7 +224,6 @@ void Left4Downtown::SDK_OnAllLoaded()
 	g_PatchManager.Register(new AutoPatch<Detours::SpawnWitchBride>());
 	g_PatchManager.Register(new AutoPatch<Detours::ClearTeamScores>());
 	g_PatchManager.Register(new AutoPatch<Detours::SetCampaignScores>());
-
 	g_PatchManager.Register(new AutoPatch<Detours::FirstSurvivorLeftSafeArea>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueInt>());
 	g_PatchManager.Register(new AutoPatch<Detours::GetScriptValueFloat>());
@@ -390,58 +276,7 @@ void Left4Downtown::SDK_OnUnload()
 
 	g_PatchManager.UnregisterAll();
 
-	forwards->ReleaseForward(g_pFwdOnSpawnSpecial);
-	forwards->ReleaseForward(g_pFwdOnSpawnSpecialPost);
-	forwards->ReleaseForward(g_pFwdOnSpawnTank);
-	forwards->ReleaseForward(g_pFwdOnSpawnTankPost);
-	forwards->ReleaseForward(g_pFwdOnSpawnWitch);
-	forwards->ReleaseForward(g_pFwdOnSpawnWitchPost);
-	forwards->ReleaseForward(g_pFwdOnSpawnWitchBride);
-	forwards->ReleaseForward(g_pFwdOnSpawnWitchBridePost);
-	forwards->ReleaseForward(g_pFwdOnClearTeamScores);
-	forwards->ReleaseForward(g_pFwdOnSetCampaignScores);
-
-	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeArea);
-	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
-	forwards->ReleaseForward(g_pFwdOnGetScriptValueFloat);
-	forwards->ReleaseForward(g_pFwdOnGetScriptValueString);
-	forwards->ReleaseForward(g_pFwdOnTryOfferingTankBot);
-	forwards->ReleaseForward(g_pFwdOnMobRushStart);
-	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
-	forwards->ReleaseForward(g_pFwdOnSpawnMob);
-	forwards->ReleaseForward(g_pFwdOnEnterGhostStatePre);
-	forwards->ReleaseForward(g_pFwdOnEnterGhostState);
-	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
-	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
-	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
-	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);
-	forwards->ReleaseForward(g_pFwdOnHasConfigurableDifficulty);
-	forwards->ReleaseForward(g_pFwdOnGetSurvivorSet);
-	forwards->ReleaseForward(g_pFwdOnFastGetSurvivorSet);
-	forwards->ReleaseForward(g_pFwdOnGetMissionVersusBossSpawning);
-	forwards->ReleaseForward(g_pFwdOnCThrowActivate);
-	forwards->ReleaseForward(g_pFwdOnStartMeleeSwing);
-	forwards->ReleaseForward(g_pFwdOnReplaceTank);
-	forwards->ReleaseForward(g_pFwdOnUseHealingItems);
-	forwards->ReleaseForward(g_pFwdOnFindScavengeItem);
-	forwards->ReleaseForward(g_pFwdOnSendInRescueVehicle);
-	forwards->ReleaseForward(g_pFwdOnChangeFinaleStage);
-	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound);
-	forwards->ReleaseForward(g_pFwdOnEndVersusModeRound_Post);
-	forwards->ReleaseForward(g_pFwdOnSelectTankAttack);
-	forwards->ReleaseForward(g_pFwdOnRevived);
-	forwards->ReleaseForward(g_pFwdOnWaterMove);
-	forwards->ReleaseForward(g_pFwdOnPlayerStagger);
-	forwards->ReleaseForward(g_pFwdOnTerrorWeaponHit);
-	forwards->ReleaseForward(g_pFwdAddonsDisabler);
-	forwards->ReleaseForward(g_pFwdOnShovedByPounceLanding);
-	forwards->ReleaseForward(g_pFwdOnChooseVictim);
-	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
-	forwards->ReleaseForward(g_pFwdInfernoSpread);
-	forwards->ReleaseForward(g_pFwdOnKnockedDown);
-	forwards->ReleaseForward(g_pFwdOnKnockedDownPost);
-	forwards->ReleaseForward(g_pFwdOnPlayerHit);
-	forwards->ReleaseForward(g_pFwdOnPlayerHitPost);
+	DestroyForwards();
 }
 
 void Left4Downtown::OnPluginLoaded(IPlugin *plugin)
@@ -521,88 +356,68 @@ bool Left4Downtown::ProcessCommandTarget(cmd_target_info_t *info)
 	unsigned int team_index = 0;
 	IGamePlayer *pPlayer, *pAdmin;
 
-	if ((info->flags & COMMAND_FILTER_NO_MULTI) == COMMAND_FILTER_NO_MULTI)
-	{
+	if ((info->flags & COMMAND_FILTER_NO_MULTI) == COMMAND_FILTER_NO_MULTI) {
 		return false;
 	}
 
-	if (info->admin)
-	{
-		if ((pAdmin = playerhelpers->GetGamePlayer(info->admin)) == NULL)
-		{
+	if (info->admin) {
+		if ((pAdmin = playerhelpers->GetGamePlayer(info->admin)) == NULL) {
 			return false;
 		}
-		if (!pAdmin->IsInGame())
-		{
+
+		if (!pAdmin->IsInGame()) {
 			return false;
 		}
-	}
-	else
-	{
+	} else {
 		pAdmin = NULL;
 	}
 
-	if (strcmp(info->pattern, "@survivors") == 0 )
-	{
+	if (strcmp(info->pattern, "@survivors") == 0 ) {
 		team_index = 2;
-	}
-	else if (strcmp(info->pattern, "@infected") == 0)
-	{
+	} else if (strcmp(info->pattern, "@infected") == 0) {
 		team_index = 3;
-	}
-	else
-	{
+	} else {
 		return false;
 	}
 
 	info->num_targets = 0;
 
 	max_clients = playerhelpers->GetMaxClients();
-	for (int i = 1;
-		 i <= max_clients && (cell_t)info->num_targets < info->max_targets;
-		 i++)
-	{
-		if ((pPlayer = playerhelpers->GetGamePlayer(i)) == NULL)
-		{
+	for (int i = 1; i <= max_clients && (cell_t)info->num_targets < info->max_targets; i++) {
+		if ((pPlayer = playerhelpers->GetGamePlayer(i)) == NULL){
 			continue;
 		}
-		if (!pPlayer->IsInGame())
-		{
+
+		if (!pPlayer->IsInGame()) {
 			continue;
 		}
-		if ((pInfo = pPlayer->GetPlayerInfo()) == NULL)
-		{
+
+		if ((pInfo = pPlayer->GetPlayerInfo()) == NULL) {
 			continue;
 		}
-		if (pInfo->GetTeamIndex() != (int)team_index)
-		{
+
+		if (pInfo->GetTeamIndex() != (int)team_index) {
 			continue;
 		}
-		if (playerhelpers->FilterCommandTarget(pAdmin, pPlayer, info->flags)
-			!= COMMAND_TARGET_VALID)
-		{
+
+		if (playerhelpers->FilterCommandTarget(pAdmin, pPlayer, info->flags) != COMMAND_TARGET_VALID) {
 			continue;
 		}
+
 		info->targets[info->num_targets] = i;
 		info->num_targets++;
 	}
 
-	if (info->num_targets == 0)
-	{
+	if (info->num_targets == 0) {
 		info->reason = COMMAND_TARGET_EMPTY_FILTER;
-	}
-	else
-	{
+	} else {
 		info->reason = COMMAND_TARGET_VALID;
 	}
 
 	info->target_name_style = COMMAND_TARGETNAME_RAW;
-	if (team_index == 2)
-	{
+	if (team_index == 2) {
 		UTIL_Format(info->target_name, info->target_name_maxlength, "Survivors");
-	}
-	else if (team_index == 3)
-	{
+	} else if (team_index == 3) {
 		UTIL_Format(info->target_name, info->target_name_maxlength, "Infected");
 	}
 

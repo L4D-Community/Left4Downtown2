@@ -147,6 +147,10 @@ public: //ICommandTargetProcessor
 	bool ProcessCommandTarget(cmd_target_info_t *info);
 
 	bool SetupFromMatchmakingLibrary(char *error, int maxlength);
+	
+public:
+	void CreateForwards();
+	void DestroyForwards();
 };
 
 extern IForward *g_pFwdOnSpawnSpecial;

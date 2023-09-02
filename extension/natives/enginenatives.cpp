@@ -131,7 +131,7 @@ cell_t L4D_GetRealNumClients(IPluginContext* pContext, const cell_t* params)
 		return -1;
 	}
 
-	return MAX(0, g_pServer->GetNumClients() - g_pServer->GetNumFakeClients());
+	return g_pServer->GetNumClients() - g_pServer->GetNumFakeClients();
 }
 
 sp_nativeinfo_t g_L4DoEngineNatives[] =

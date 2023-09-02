@@ -17,6 +17,7 @@ project.sources += [
   'vglobals.cpp',
   'util.cpp',
   'wrappers.cpp',
+  'forwards.cpp',
   'detours/detour.cpp',
   'detours/spawn_tank.cpp',
   'detours/spawn_witch.cpp',
