@@ -90,7 +90,7 @@ public: // IServer implementation
 	virtual int GetTick( void ) const = 0;
 	virtual float GetTickInterval( void ) const = 0;
 
-#if SE_LEFT4DEAD2
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
 	virtual float GetTimescale( void ) const = 0; // l4d2 only
 #endif
 
@@ -112,7 +112,7 @@ public: // IServer implementation
 	virtual const char* GetPassword( void ) const = 0;
 	virtual void SetPaused( bool paused ) = 0;
 
-#if SE_LEFT4DEAD2
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
 	virtual void SetTimescale( float flTimescale ) = 0; // l4d2 only
 #endif
 
@@ -148,7 +148,7 @@ public: // Other
 	virtual int GetChallengeNr( netadr_t &adr ) = 0;
 	virtual int GetChallengeType( netadr_t &adr ) = 0;
 
-#if SE_LEFT4DEAD2
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
 	virtual bool CheckHostVersion( netadr_t &adr, int checkVersion ) = 0; // l4d2 only
 #else
 	virtual bool CheckProtocol( netadr_t& adr, int nProtocol ) = 0; // l4d1
@@ -197,7 +197,7 @@ public: // Other
 	
 	float		m_flTickInterval; // 268, time for 1 tick in seconds (CBaseServer::GetTickInterval)
 
-#if SE_LEFT4DEAD2
+#if SOURCE_ENGINE == SE_LEFT4DEAD2
 	float		m_flTimescale; // 272, the game time scale (multiplied in conjunction with host_timescale) (CBaseServer::GetTimescale)
 #endif
 
@@ -236,7 +236,7 @@ public: // Other
 	CUtlVector<char> m_GameData; // l4d2 - 400 (20 byte), l4d1 - 396, (CBaseServer::GetGameData)
 	int			m_GameDataVersion; // l4d2 - 420, l4d1 - 416, (CBaseServer::GetGameDataVersion)
 
-#ifndef SE_LEFT4DEAD2 // l4d1
+#if SOURCE_ENGINE == SE_LEFT4DEAD // l4d1
 	bool		m_bSteamMasterHeartbeatsEnabled; // l4d1 - 420 (CBaseServer::UpdateMasterServer)
 	// 3 byte alignment
 #endif	
