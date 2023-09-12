@@ -117,7 +117,7 @@ cell_t L4D_LobbyIsReserved(IPluginContext* pContext, const cell_t* params)
 
 	L4D_DEBUG_LOG("Address of IServer is %p, m_nReservationCookie: %llx", g_pServer, g_pServer->m_nReservationCookie);
 
-	g_pSM->LogError(myself, "Address of IServer is %p, m_nReservationCookie: %llx", g_pServer, g_pServer->m_nReservationCookie);
+	//g_pSM->LogError(myself, "Address of IServer is %p, m_nReservationCookie: %llx", g_pServer, g_pServer->m_nReservationCookie);
 
 	return (g_pServer->m_nReservationCookie != 0) ? true : false;
 }
