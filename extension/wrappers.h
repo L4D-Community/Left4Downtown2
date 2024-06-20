@@ -35,6 +35,7 @@
 
 #include "extension.h"
 #include "l4d2sdk/constants.h"
+#include "includes/netprops_mngr.h"
 
 class CNavMesh;
 class CNavArea;
@@ -45,7 +46,7 @@ class CBaseEntity
 public:
 	CBaseEntity* GetOwnerEntity()
 	{
-		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + sendprop_m_hOwnerEntity));
+		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + m_hOwnerEntity.GetOffset()));
 		if (pEdict == NULL) {
 			return NULL;
 		}
@@ -74,7 +75,7 @@ public:
 	}
 
 public:
-	static int sendprop_m_hOwnerEntity;
+	static inline CNetPropMngr m_hOwnerEntity{ "CBaseEntity", "m_hOwnerEntity" };
 };
 
 class CBasePlayer:
@@ -83,14 +84,14 @@ class CBasePlayer:
 public:
 	L4DTeam GetTeamNumber()
 	{
-		int iTeam = *(int *)((unsigned char *)this + sendprop_m_iTeamNum);
-		L4DTeam m_iTeamNum = static_cast<L4DTeam>(iTeam);
+		int iTeam = *(int *)((unsigned char *)this + m_iTeamNum.GetOffset());
+		L4DTeam iTeamNum = static_cast<L4DTeam>(iTeam);
 
-		return m_iTeamNum;
+		return iTeamNum;
 	}
 
 public:
-	static int sendprop_m_iTeamNum;
+	static inline CNetPropMngr m_iTeamNum{ "CBasePlayer", "m_iTeamNum" };
 };
 
 class CTerrorPlayer :
@@ -99,22 +100,21 @@ class CTerrorPlayer :
 public:
 	bool IsAttemptingToPounce()
 	{
-		int m_isAttemptingToPounce = *(int *)((unsigned char *)this + sendprop_m_isAttemptingToPounce);
-
-		return (m_isAttemptingToPounce) ? true : false;
+		int iIsAttemptingToPounce = *(int *)((unsigned char *)this + m_isAttemptingToPounce.GetOffset());
+		return (iIsAttemptingToPounce) ? true : false;
 	}
 
 	ZombieClassType GetZombieClass()
 	{
-		int iZClass = *(int *)((unsigned char *)this + sendprop_m_zombieClass);
-		ZombieClassType m_zombieClass = static_cast<ZombieClassType>(iZClass);
+		int iZClass = *(int *)((unsigned char *)this + m_zombieClass.GetOffset());
+		ZombieClassType zombieClass = static_cast<ZombieClassType>(iZClass);
 
-		return m_zombieClass; 
+		return zombieClass;
 	}
 
 public:
-	static int sendprop_m_isAttemptingToPounce;
-	static int sendprop_m_zombieClass;
+	static inline CNetPropMngr m_isAttemptingToPounce{ "CTerrorPlayer", "m_isAttemptingToPounce" };
+	static inline CNetPropMngr m_zombieClass{ "CTerrorPlayer", "m_zombieClass" };
 };
 
 class CBaseCombatWeapon: //CBaseAnimating
@@ -123,7 +123,7 @@ class CBaseCombatWeapon: //CBaseAnimating
 public:
 	CBaseEntity* GetOwnerEntity()
 	{
-		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + sendprop_m_hOwner));
+		edict_t *pEdict = gamehelpers->GetHandleEntity(*(CBaseHandle *)((byte *)(this) + m_hOwner.GetOffset()));
 		if (pEdict == NULL) {
 			return NULL;
 		}
@@ -137,7 +137,7 @@ public:
 	}
 
 public:
-	static int sendprop_m_hOwner;
+	static inline CNetPropMngr m_hOwner{ "CBaseCombatWeapon", "m_hOwner" };
 };
 
 class CWeaponSpawn: //CBaseAnimating
@@ -146,13 +146,11 @@ class CWeaponSpawn: //CBaseAnimating
 public:
 	int GetWeaponID()
 	{
-		int m_weaponID = *(int *)((unsigned char *)this + sendprop_m_weaponID);
-
-		return m_weaponID;
+		return *(int*)((unsigned char*)this + m_weaponID.GetOffset());
 	}
 
 public:
-	static int sendprop_m_weaponID;
+	static inline CNetPropMngr m_weaponID{ "CWeaponSpawn", "m_weaponID" };
 };
 
 class CTerrorGameRules
@@ -319,7 +317,5 @@ public:
 		return IDENT_STRINGS(pszCurrentMapName, pszMapName) || V_stricmp(pszCurrentMapName, pszMapName) == 0;
 	}
 };
-
-bool L4D2_GetOffsets(char *error, size_t maxlength);
 
 #endif // _INCLUDE_L4D2_WRAPPERS_H_

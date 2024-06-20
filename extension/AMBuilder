@@ -16,7 +16,6 @@ project.sources += [
   os.path.join(Extension.sm_root, 'public', 'asm', 'asm.c'),
   'vglobals.cpp',
   'util.cpp',
-  'wrappers.cpp',
   'forwards.cpp',
   'detours/detour.cpp',
   'detours/spawn_tank.cpp',

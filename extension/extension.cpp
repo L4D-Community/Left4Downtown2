@@ -42,6 +42,7 @@
 
 #include "codepatch/patchmanager.h"
 #include "codepatch/autopatch.h"
+#include "includes/netprops_mngr.h"
 
 #include "detours/change_finale_stage.h"
 #include "detours/choose_victim.h"
@@ -156,7 +157,7 @@ bool Left4Downtown::SDK_OnLoad(char *error, size_t maxlength, bool late)
 		return false;
 	}
 
-	if (!L4D2_GetOffsets(error, maxlength)) {
+	if (!CNetPropMngr::Init(error, maxlength)) {
 		return false;
 	}
 
