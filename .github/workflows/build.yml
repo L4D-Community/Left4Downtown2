@@ -28,17 +28,17 @@ jobs:
           - "1.9"
           - "1.10"
           - "1.11"
-          - "latest"
+          #- "latest"
           
         include:
           # Use MM:Source 1.11 as base version
           - meta_version: "1.11"
             meta_branch: "1.11-dev"
             
-          - sm_version: latest
-            sm_branch: master
-            meta_version: latest
-            meta_branch: master
+          #- sm_version: latest
+            #sm_branch: master
+            #meta_version: latest
+            #meta_branch: master
           
           - sm_version: "1.9"
             sm_branch: "1.9-dev"
