@@ -134,10 +134,62 @@ cell_t L4D_GetRealNumClients(IPluginContext* pContext, const cell_t* params)
 	return g_pServer->GetNumClients() - g_pServer->GetNumFakeClients();
 }
 
+// native bool L4D_GetLobbyReservation(char[] reservation, int maxlength)
+cell_t L4D_GetLobbyReservation(IPluginContext* pContext, const cell_t* params)
+{
+	if (g_pServer == NULL) {
+		g_pSM->LogError(myself, "Failed to get pointer to CBaseServer(IServer), is SDKTools extension available?");
+		return 0;
+	}
+
+	int iSize = static_cast<size_t>(params[2]);
+	if (iSize < 20) {
+		pContext->StringToLocal(params[1], 1, "\0");
+		g_pSM->LogError(myself, "Minimum string size 20 bytes");
+		return 0;
+	}
+
+	if (g_pServer->m_nReservationCookie == 0) {
+		pContext->StringToLocal(params[1], iSize, "\0");
+		return 0;
+	}
+
+	char szBuff[128];
+	ke::SafeSprintf(szBuff, sizeof(szBuff), "%" PRIu64, g_pServer->m_nReservationCookie);
+	pContext->StringToLocal(params[1], iSize, szBuff);
+
+	return 1;
+}
+
+// native bool L4D_SetLobbyReservation(char reservation[20]);
+cell_t L4D_SetLobbyReservation(IPluginContext* pContext, const cell_t* params)
+{
+	if (g_pServer == NULL) {
+		g_pSM->LogError(myself, "Failed to get pointer to CBaseServer(IServer), is SDKTools extension available?");
+
+		return 0;
+	}
+
+	if (g_pServer->m_nReservationCookie != 0) {
+		return 0;
+	}
+
+	char* szReservationCookie;
+	pContext->LocalToString(params[1], &szReservationCookie);
+
+	uint64_t nReservationCookie = (uint64_t)strtoll(szReservationCookie, NULL, 0);
+	g_pServer->m_nReservationCookie = nReservationCookie;
+
+	return 1;
+}
+
 sp_nativeinfo_t g_L4DoEngineNatives[] =
 {
 	{"L4D_LobbyUnreserve",				L4D_LobbyUnreserve},
 	{"L4D_LobbyIsReserved",				L4D_LobbyIsReserved},
 	{"L4D_GetRealNumClients",			L4D_GetRealNumClients},
+	{"L4D_GetLobbyReservation",			L4D_GetLobbyReservation},
+	{"L4D_SetLobbyReservation",			L4D_SetLobbyReservation},
+
 	{NULL,								NULL}
 };

@@ -824,6 +824,25 @@ native void L4D_LobbyUnreserve();
 native bool L4D_LobbyIsReserved();
 
 /**
+ * @brief Returns the lobby reservation ID
+ *
+ * @param reservation	String to store the reservation ID to
+ * @param maxlength		Maximum length of the string to store to
+ *
+ * @noreturn
+ */
+native bool L4D_GetLobbyReservation(char [] reservation, int maxlength);
+
+/**
+ * @brief Sets the lobby reservation ID
+ *
+ * @param reservation	The reservation ID to set
+ *
+ * @noreturn
+ */
+native bool L4D_SetLobbyReservation(const char reservation[20]);
+
+/**
  * @brief Returns current number of clients.
  * @remarks Calls 'CBaseServer::GetNumClients' and 'CBaseServer::GetNumFakeClients' methods in game
  * (more reliable than method 'GetClientCount' in sourcemod, or loop in plugin).

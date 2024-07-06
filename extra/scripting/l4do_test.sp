@@ -196,6 +196,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_fling", Cmd_FlingPlayer);
 	RegConsoleCmd("sm_test_unreserve", Cmd_TestUnreserve);
 	RegConsoleCmd("sm_check_lobby", Cmd_CheckLobby);
+	RegConsoleCmd("sm_set_lobby", Cmd_SetLobby);
 	RegConsoleCmd("sm_getrealnumclients", Cmd_GetRealNumClients);
 
 	cvarBlockRocks = CreateConVar("l4do_block_rocks", "0", "Disable CThrow::ActivateAbility", FCVAR_SPONLY|FCVAR_NOTIFY);
@@ -221,7 +222,48 @@ Action Cmd_CheckLobby(int iClient, int iArgs)
 {
 	ReplyToCommand(iClient, "[L4D_LobbyIsReserved] %s", (L4D_LobbyIsReserved()) ? "true" : "false");
 	
+	char sLobbyCookie[20];
+	bool bGetCookie = L4D_GetLobbyReservation(sLobbyCookie, sizeof(sLobbyCookie));
+	ReplyToCommand(iClient, "[L4D_GetLobbyReservation] Result: %s, cookie: %s", (bGetCookie) ? "true" : "false", sLobbyCookie);
+
 	return Plugin_Handled;
+}
+
+Action Cmd_SetLobby(int iClient, int iArgs)
+{
+	if (!L4D_LobbyIsReserved()) {
+		ReplyToCommand(iClient, "[L4D_LobbyIsReserved] false!");
+		return Plugin_Handled;
+	}
+
+	char sLobbyCookie[20];
+	bool bGetCookie = L4D_GetLobbyReservation(sLobbyCookie, sizeof(sLobbyCookie));
+	ReplyToCommand(iClient, "[L4D_GetLobbyReservation] Result: %s, cookie: %s", (bGetCookie) ? "true" : "false", sLobbyCookie);
+	L4D_LobbyUnreserve();
+	
+	DataPack hData = null;
+	CreateDataTimer(3.0, Timer_SetLobbyDelay, hData, TIMER_FLAG_NO_MAPCHANGE);
+	hData.WriteString(sLobbyCookie);
+
+	return Plugin_Handled;
+}
+
+Action Timer_SetLobbyDelay(Handle hTimer, DataPack hData)
+{
+	hData.Reset();
+
+	if (L4D_LobbyIsReserved()) {
+		PrintToChatAll("[L4D_LobbyIsReserved] true!");
+		return Plugin_Stop;
+	}
+
+	char sLobbyCookie[20];
+	hData.ReadString(sLobbyCookie, sizeof(sLobbyCookie));
+	bool bSetCookie = L4D_SetLobbyReservation(sLobbyCookie);
+
+	PrintToChatAll("[L4D_SetLobbyReservation] Result: %s, cookie: %s", (bSetCookie) ? "true" : "false", sLobbyCookie);
+
+	return Plugin_Stop;
 }
 
 Action Cmd_TestUnreserve(int iClient, int iArgs)
