@@ -142,7 +142,7 @@ cell_t L4D_GetLobbyReservation(IPluginContext* pContext, const cell_t* params)
 		return 0;
 	}
 
-	int iSize = static_cast<size_t>(params[2]);
+	size_t iSize = static_cast<size_t>(params[2]);
 	if (iSize < 20) {
 		pContext->StringToLocal(params[1], 1, "\0");
 		g_pSM->LogError(myself, "Minimum string size 20 bytes");
