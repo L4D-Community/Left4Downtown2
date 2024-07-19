@@ -34,6 +34,7 @@
 
 IForward* g_pFwdOnSpawnSpecial = NULL;
 IForward* g_pFwdOnSpawnSpecialPost = NULL;
+IForward* g_pFwdOnSpawnSpecialPostHandled = NULL;
 IForward* g_pFwdOnSpawnTank = NULL;
 IForward* g_pFwdOnSpawnTankPost = NULL;
 IForward* g_pFwdOnSpawnWitch = NULL;
@@ -88,6 +89,8 @@ void Left4Downtown::CreateForwards()
 {
 	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
 	g_pFwdOnSpawnSpecialPost = forwards->CreateForward("L4D_OnSpawnSpecial_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);
+	g_pFwdOnSpawnSpecialPostHandled = forwards->CreateForward("L4D_OnSpawnSpecial_PostHandled", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Array, Param_Array);
+
 	g_pFwdOnSpawnTank = forwards->CreateForward("L4D_OnSpawnTank", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnTankPost = forwards->CreateForward("L4D_OnSpawnTank_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitch = forwards->CreateForward("L4D_OnSpawnWitch", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
@@ -143,6 +146,7 @@ void Left4Downtown::DestroyForwards()
 {
 	forwards->ReleaseForward(g_pFwdOnSpawnSpecial);
 	forwards->ReleaseForward(g_pFwdOnSpawnSpecialPost);
+	forwards->ReleaseForward(g_pFwdOnSpawnSpecialPostHandled);
 	forwards->ReleaseForward(g_pFwdOnSpawnTank);
 	forwards->ReleaseForward(g_pFwdOnSpawnTankPost);
 	forwards->ReleaseForward(g_pFwdOnSpawnWitch);

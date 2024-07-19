@@ -155,6 +155,7 @@ public:
 
 extern IForward *g_pFwdOnSpawnSpecial;
 extern IForward *g_pFwdOnSpawnSpecialPost;
+extern IForward *g_pFwdOnSpawnSpecialPostHandled;
 extern IForward *g_pFwdOnSpawnTank;
 extern IForward *g_pFwdOnSpawnTankPost;
 extern IForward *g_pFwdOnSpawnWitch;

@@ -47,6 +47,11 @@ namespace Detours
 		g_pFwdOnSpawnSpecial->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnSpawnSpecialPostHandled->PushCell(0);
+			g_pFwdOnSpawnSpecialPostHandled->PushCell(zombieClassType);
+			g_pFwdOnSpawnSpecialPostHandled->PushArray(reinterpret_cast<cell_t*>(position), 3);
+			g_pFwdOnSpawnSpecialPostHandled->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+			g_pFwdOnSpawnSpecialPostHandled->Execute(NULL);
 			return NULL;
 		} else if (result == Pl_Changed) {
 			pPlayer = (this->*(GetTrampoline()))(*reinterpret_cast<ZombieClassType *>(&overrideZombieClass), position, angles);

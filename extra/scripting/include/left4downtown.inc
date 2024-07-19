@@ -84,6 +84,21 @@ forward Action L4D_OnSpawnSpecial(int &zombieClass, const float vecOrigin[3], co
 forward void L4D_OnSpawnSpecial_Post(int client, int zombieClass, const float vecPos[3], const float vecAng[3]);
 
 /**
+ * @brief Called whenever ZombieManager::SpawnSpecial(ZombieClassType,Vector&,QAngle&) is invoked
+ * @remarks Only used for bot special spawns (not players)
+ * @remarks zombieClass: 1=Smoker, 2=Boomer, 3=Hunter, 4=Spitter, 5=Jockey, 6=Charger
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client		The client index who spawned. Can be 0 if spawning failed or -1 if blocked
+ * @param zombieClass	Zombie class that will be spawned
+ * @param vecPos		Vector coordinate where special will be spawned
+ * @param vecAng		QAngle where special will be facing
+ *
+ * @noreturn
+ */
+forward void L4D_OnSpawnSpecial_PostHandled(int client, int zombieClass, const float vecPos[3], const float vecAng[3]);
+
+/**
  * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
  * @remarks Not invoked if z_spawn tank is used and it gives a ghosted/dead player tank
  *
