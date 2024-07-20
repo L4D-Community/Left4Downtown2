@@ -733,6 +733,44 @@ forward void L4D_OnKnockedDown_PostHandled(int client, int reason);
 forward Action L4D2_OnChooseVictim(int specialInfected, int &curTarget);
 
 /**
+ * @brief Called whenever CTerrorPlayer::OnLeptOnSurvivor() is invoked
+ * @remarks Called when a Survivor player is about to be ridden by a Jockey
+ *
+ * @param victim			the client who's being grabbed
+ * @param attacker			the Jockey grabbing someone
+ *
+ * @return					Plugin_Handled to block, Plugin_Continue otherwise
+ */
+// L4D2 only
+forward Action L4D2_OnJockeyRide(int victim, int attacker);
+
+/**
+ * @brief Called whenever CTerrorPlayer::OnLeptOnSurvivor() is invoked
+ * @remarks Called when a Survivor player is starting to be ridden by a Jockey
+ * @remarks This forward will not trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param victim			the client who's being grabbed
+ * @param attacker			the Jockey grabbing someone
+ *
+ * @noreturn
+ */
+// L4D2 only
+forward void L4D2_OnJockeyRide_Post(int victim, int attacker);
+
+/**
+ * @brief Called whenever CTerrorPlayer::OnLeptOnSurvivor() is invoked
+ * @remarks Called when a Survivor player is starting to be ridden by a Jockey
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param victim			the client who's being grabbed
+ * @param attacker			the Jockey grabbing someone
+ *
+ * @noreturn
+ */
+// L4D2 only
+forward void L4D2_OnJockeyRide_PostHandled(int victim, int attacker);
+
+/**
  * @brief Returns the address pointer to various internal game objects
  * @remarks CTerrorGameRules (POINTER_GAMERULES) not available if the map is not loaded
  *

@@ -72,6 +72,7 @@ project.sources += [
   'detours/on_knocked_down.cpp',
   'detours/on_player_hit.cpp',
   'detours/choose_victim.cpp',
+  'detours/jockey_ride.cpp',
   'addons_disabler.cpp'
 ]
 

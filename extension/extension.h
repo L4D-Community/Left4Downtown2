@@ -224,6 +224,10 @@ extern IForward *g_pFwdOnPlayerHit;
 extern IForward *g_pFwdOnPlayerHitPost;
 extern IForward *g_pFwdOnPlayerHitPostHandled;
 
+extern IForward* g_pFwdOnLeptOnSurvivor;
+extern IForward* g_pFwdOnLeptOnSurvivorPost;
+extern IForward* g_pFwdOnLeptOnSurvivorPostHandled;
+
 extern bool g_bRoundEnd;
 
 extern ConVar g_UnlockMelees;

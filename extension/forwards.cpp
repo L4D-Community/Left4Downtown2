@@ -103,6 +103,10 @@ IForward* g_pFwdOnPlayerHit = NULL;
 IForward* g_pFwdOnPlayerHitPost = NULL;
 IForward* g_pFwdOnPlayerHitPostHandled = NULL;
 
+IForward* g_pFwdOnLeptOnSurvivor = NULL;
+IForward* g_pFwdOnLeptOnSurvivorPost = NULL;
+IForward* g_pFwdOnLeptOnSurvivorPostHandled = NULL;
+
 void Left4Downtown::CreateForwards()
 {
 	g_pFwdOnSpawnSpecial = forwards->CreateForward("L4D_OnSpawnSpecial", ET_Event, 3, /*types*/NULL, Param_CellByRef, Param_Array, Param_Array);
@@ -175,6 +179,10 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnPlayerHit = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Pre", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	g_pFwdOnPlayerHitPostHandled = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_PostHandled", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+	
+	g_pFwdOnLeptOnSurvivor = forwards->CreateForward("L4D2_OnJockeyRide", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnLeptOnSurvivorPost = forwards->CreateForward("L4D2_OnJockeyRide_Post", ET_Ignore, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnLeptOnSurvivorPostHandled = forwards->CreateForward("L4D2_OnJockeyRide_PostHandled", ET_Ignore, 2, /*types*/NULL, Param_Cell, Param_Cell);
 }
 
 void Left4Downtown::DestroyForwards()
@@ -249,4 +257,8 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnPlayerHit);
 	forwards->ReleaseForward(g_pFwdOnPlayerHitPost);
 	forwards->ReleaseForward(g_pFwdOnPlayerHitPostHandled);
+
+	forwards->ReleaseForward(g_pFwdOnLeptOnSurvivor);
+	forwards->ReleaseForward(g_pFwdOnLeptOnSurvivorPost);
+	forwards->ReleaseForward(g_pFwdOnLeptOnSurvivorPostHandled);
 }
