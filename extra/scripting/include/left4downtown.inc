@@ -285,6 +285,17 @@ forward Action L4D_OnEnterGhostStatePre(int client);
 forward void L4D_OnEnterGhostState(int client);
 
 /**
+ * @brief Called whenever CTerrorPlayer::OnEnterGhostState(CTerrorPlayer*) is invoked
+ * @remarks This happens when a player enters ghost mode (or in finales auto-materialized)
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client		the client that has entered ghost mode
+ *
+ * @noreturn
+ */
+forward void L4D_OnEnterGhostState_PostHandled(int client);
+
+/**
  * @brief Called whenever ZombieManager::ReplaceTank(CTerrorPlayer *,CTerrorPlayer *) is invoked
  * @remarks Not invoked if tank is bot
  *

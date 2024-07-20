@@ -182,6 +182,7 @@ extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnSpawnMob;
 extern IForward *g_pFwdOnEnterGhostStatePre;
 extern IForward *g_pFwdOnEnterGhostState;
+extern IForward *g_pFwdOnEnterGhostStatePostHandled;
 
 extern IForward *g_pFwdOnShovedBySurvivor;
 extern IForward *g_pFwdOnShovedBySurvivorPost;

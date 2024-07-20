@@ -59,8 +59,10 @@ IForward* g_pFwdOnTryOfferingTankBot = NULL;
 IForward* g_pFwdOnMobRushStart = NULL;
 IForward* g_pFwdOnSpawnITMob = NULL;
 IForward* g_pFwdOnSpawnMob = NULL;
+
 IForward* g_pFwdOnEnterGhostState = NULL;
 IForward* g_pFwdOnEnterGhostStatePre = NULL;
+IForward* g_pFwdOnEnterGhostStatePostHandled = NULL;
 
 IForward* g_pFwdOnShovedBySurvivor = NULL;
 IForward* g_pFwdOnShovedBySurvivorPost = NULL;
@@ -128,8 +130,10 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
+	
 	g_pFwdOnEnterGhostStatePre = forwards->CreateForward("L4D_OnEnterGhostStatePre", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnEnterGhostStatePostHandled = forwards->CreateForward("L4D_OnEnterGhostState_PostHandled", ET_Ignore, 1, /*types*/NULL, Param_Cell);
 
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 	g_pFwdOnShovedBySurvivorPost = forwards->CreateForward("L4D_OnShovedBySurvivor_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
@@ -199,8 +203,10 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
+
 	forwards->ReleaseForward(g_pFwdOnEnterGhostStatePre);
 	forwards->ReleaseForward(g_pFwdOnEnterGhostState);
+	forwards->ReleaseForward(g_pFwdOnEnterGhostStatePostHandled);
 
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivorPost);

@@ -46,6 +46,9 @@ namespace Detours
 		g_pFwdOnEnterGhostStatePre->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnEnterGhostStatePostHandled->PushCell(iClient);
+			g_pFwdOnEnterGhostStatePostHandled->Execute(NULL);
+
 			return;
 		}
 
