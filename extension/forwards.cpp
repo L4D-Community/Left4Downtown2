@@ -89,6 +89,7 @@ IForward* g_pFwdOnKnockedDown = NULL;
 IForward* g_pFwdOnKnockedDownPost = NULL;
 IForward* g_pFwdOnPlayerHit = NULL;
 IForward* g_pFwdOnPlayerHitPost = NULL;
+IForward* g_pFwdOnPlayerHitPostHandled = NULL;
 
 void Left4Downtown::CreateForwards()
 {
@@ -112,6 +113,7 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
 	g_pFwdOnGetScriptValueFloat = forwards->CreateForward("L4D_OnGetScriptValueFloat", ET_Event, 2, /*types*/NULL, Param_String, Param_FloatByRef);
 	g_pFwdOnGetScriptValueString = forwards->CreateForward("L4D_OnGetScriptValueString", ET_Event, 4, /*types*/NULL, Param_String, Param_String, Param_String, Param_CellByRef);
+	
 	g_pFwdOnTryOfferingTankBot = forwards->CreateForward("L4D_OnTryOfferingTankBot", ET_Event, 2, /*types*/NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnMobRushStart = forwards->CreateForward("L4D_OnMobRushStart", ET_Event, 0, /*types*/NULL);
 	g_pFwdOnSpawnITMob = forwards->CreateForward("L4D_OnSpawnITMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
@@ -150,7 +152,8 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	
 	g_pFwdOnPlayerHit = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Pre", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
-	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
+	g_pFwdOnPlayerHitPostHandled = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_PostHandled", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 }
 
 void Left4Downtown::DestroyForwards()
@@ -209,6 +212,8 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdInfernoSpread);
 	forwards->ReleaseForward(g_pFwdOnKnockedDown);
 	forwards->ReleaseForward(g_pFwdOnKnockedDownPost);
+
 	forwards->ReleaseForward(g_pFwdOnPlayerHit);
 	forwards->ReleaseForward(g_pFwdOnPlayerHitPost);
+	forwards->ReleaseForward(g_pFwdOnPlayerHitPostHandled);
 }

@@ -306,6 +306,19 @@ forward Action L4D_TankClaw_OnPlayerHit_Pre(int tank, int claw, int player, bool
 forward void L4D_TankClaw_OnPlayerHit_Post(int tank, int claw, int player, bool incapacitated);
 
 /**
+ * @brief Called whenever CTankClaw::OnPlayerHit(CTerrorPlayer*, bool) is invoked
+ * @remarks When a tank swings and punches a player
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param tank			tank client index
+ * @param rock			the claw entity index
+ * @param player		the player being hit
+ *
+ * @noreturn
+ */
+forward void L4D_TankClaw_OnPlayerHit_PostHandled(int tank, int claw, int player, bool incapacitated);
+
+/**
  * @brief Called whenever CDirector::TryOfferingTankBot is invoked
  * @remarks Is used for displaying the "X gets Tank" window and transferring Tank control
  *

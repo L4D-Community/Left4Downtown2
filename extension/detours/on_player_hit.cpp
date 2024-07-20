@@ -51,15 +51,21 @@ namespace Detours
 		g_pFwdOnPlayerHit->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnPlayerHitPostHandled->PushCell(iTankAttacker);
+			g_pFwdOnPlayerHitPostHandled->PushCell(iClawWeapon);
+			g_pFwdOnPlayerHitPostHandled->PushCell(iPlayerVictim);
+			g_pFwdOnPlayerHitPostHandled->PushCell(bIncapacitated);
+			g_pFwdOnPlayerHitPostHandled->Execute(NULL);
+
 			return;
 		}
 
 		(this->*(GetTrampoline()))(pVictim, bIncapacitated);
 
-		g_pFwdOnPlayerHit->PushCell(iTankAttacker);
-		g_pFwdOnPlayerHit->PushCell(iClawWeapon);
-		g_pFwdOnPlayerHit->PushCell(iPlayerVictim);
-		g_pFwdOnPlayerHit->PushCell(bIncapacitated);
-		g_pFwdOnPlayerHit->Execute(NULL);
+		g_pFwdOnPlayerHitPost->PushCell(iTankAttacker);
+		g_pFwdOnPlayerHitPost->PushCell(iClawWeapon);
+		g_pFwdOnPlayerHitPost->PushCell(iPlayerVictim);
+		g_pFwdOnPlayerHitPost->PushCell(bIncapacitated);
+		g_pFwdOnPlayerHitPost->Execute(NULL);
 	}
 };

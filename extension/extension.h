@@ -210,6 +210,7 @@ extern IForward *g_pFwdOnKnockedDown;
 extern IForward *g_pFwdOnKnockedDownPost;
 extern IForward *g_pFwdOnPlayerHit;
 extern IForward *g_pFwdOnPlayerHitPost;
+extern IForward* g_pFwdOnPlayerHitPostHandled;
 
 extern bool g_bRoundEnd;
 
