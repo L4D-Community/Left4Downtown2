@@ -49,7 +49,9 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return ((g_pFwdOnSpawnSpecial->GetFunctionCount() > 0) || (g_pFwdOnSpawnSpecialPost->GetFunctionCount() > 0));
+			return ((g_pFwdOnSpawnSpecial->GetFunctionCount() > 0) 
+				|| (g_pFwdOnSpawnSpecialPost->GetFunctionCount() > 0)
+				|| (g_pFwdOnSpawnSpecialPostHandled->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "ZombieManager::SpawnSpecial") from the game conf

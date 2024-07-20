@@ -50,7 +50,11 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return ((g_pFwdOnFirstSurvivorLeftSafeArea->GetFunctionCount() > 0) || (g_pFwdOnEndVersusModeRound->GetFunctionCount() > 0) || (g_pFwdOnEndVersusModeRound_Post->GetFunctionCount() > 0));
+			return ((g_pFwdOnFirstSurvivorLeftSafeArea->GetFunctionCount() > 0) 
+				|| (g_pFwdOnFirstSurvivorLeftSafeAreaPost->GetFunctionCount() > 0)
+				|| (g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled->GetFunctionCount() > 0)
+				|| (g_pFwdOnEndVersusModeRound->GetFunctionCount() > 0) 
+				|| (g_pFwdOnEndVersusModeRound_Post->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "CDirector::OnFirstSurvivorLeftSafeArea") from the game conf

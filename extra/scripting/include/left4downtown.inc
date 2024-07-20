@@ -195,6 +195,30 @@ forward Action L4D_OnSetCampaignScores(int &scoreA, int &scoreB);
 forward Action L4D_OnFirstSurvivorLeftSafeArea(int client);
 
 /**
+ * @brief Called whenever CDirector::OnFirstSurvivorLeftSafeArea is invoked
+ * @remarks A versus round is started when survivors leave the safe room, or force started
+ *			after 90 seconds regardless
+ * @remarks This forward will not trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client		the survivor that left the safe area first
+ *
+ * @noreturn
+ */
+forward void L4D_OnFirstSurvivorLeftSafeArea_Post(int client);
+
+/**
+ * @brief Called whenever CDirector::OnFirstSurvivorLeftSafeArea is invoked
+ * @remarks A versus round is started when survivors leave the safe room, or force started
+ *			after 90 seconds regardless
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client		the survivor that left the safe area first
+ *
+ * @noreturn
+ */
+forward void L4D_OnFirstSurvivorLeftSafeArea_PostHandled(int client);
+
+/**
  * @brief Called whenever CDirector::GetScriptValue(const char*, int) is invoked
  * @remarks A script value is map specific
  *

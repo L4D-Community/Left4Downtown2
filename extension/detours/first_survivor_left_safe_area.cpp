@@ -54,10 +54,19 @@ namespace Detours
 		g_pFwdOnFirstSurvivorLeftSafeArea->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled->PushCell(client);
+			g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled->Execute(NULL);
+
 			return NULL;
 		}
 
 		g_bRoundEnd = false;
-		return (this->*(GetTrampoline()))(p);
+
+		void* pReturn = (this->*(GetTrampoline()))(p);
+		
+		g_pFwdOnFirstSurvivorLeftSafeAreaPost->PushCell(client);
+		g_pFwdOnFirstSurvivorLeftSafeAreaPost->Execute(NULL);
+
+		return pReturn;
 	}
 };

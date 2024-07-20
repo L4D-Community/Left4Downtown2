@@ -35,6 +35,7 @@
 IForward* g_pFwdOnSpawnSpecial = NULL;
 IForward* g_pFwdOnSpawnSpecialPost = NULL;
 IForward* g_pFwdOnSpawnSpecialPostHandled = NULL;
+
 IForward* g_pFwdOnSpawnTank = NULL;
 IForward* g_pFwdOnSpawnTankPost = NULL;
 IForward* g_pFwdOnSpawnWitch = NULL;
@@ -43,7 +44,11 @@ IForward* g_pFwdOnSpawnWitchBride = NULL;
 IForward* g_pFwdOnSpawnWitchBridePost = NULL;
 IForward* g_pFwdOnClearTeamScores = NULL;
 IForward* g_pFwdOnSetCampaignScores = NULL;
+
 IForward* g_pFwdOnFirstSurvivorLeftSafeArea = NULL;
+IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPost = NULL;
+IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled = NULL;
+
 IForward* g_pFwdOnGetScriptValueInt = NULL;
 IForward* g_pFwdOnGetScriptValueFloat = NULL;
 IForward* g_pFwdOnGetScriptValueString = NULL;
@@ -99,7 +104,11 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnSpawnWitchBridePost = forwards->CreateForward("L4D2_OnSpawnWitchBride_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
 	g_pFwdOnClearTeamScores = forwards->CreateForward("L4D_OnClearTeamScores", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnSetCampaignScores = forwards->CreateForward("L4D_OnSetCampaignScores", ET_Event, 2, /*types*/NULL, Param_CellByRef, Param_CellByRef);
+	
 	g_pFwdOnFirstSurvivorLeftSafeArea = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea", ET_Event, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnFirstSurvivorLeftSafeAreaPost = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea_Post", ET_Ignore, 1, /*types*/NULL, Param_Cell);
+	g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled = forwards->CreateForward("L4D_OnFirstSurvivorLeftSafeArea_PostHandled", ET_Ignore, 1, /*types*/NULL, Param_Cell);
+
 	g_pFwdOnGetScriptValueInt = forwards->CreateForward("L4D_OnGetScriptValueInt", ET_Event, 2, /*types*/NULL, Param_String, Param_CellByRef);
 	g_pFwdOnGetScriptValueFloat = forwards->CreateForward("L4D_OnGetScriptValueFloat", ET_Event, 2, /*types*/NULL, Param_String, Param_FloatByRef);
 	g_pFwdOnGetScriptValueString = forwards->CreateForward("L4D_OnGetScriptValueString", ET_Event, 4, /*types*/NULL, Param_String, Param_String, Param_String, Param_CellByRef);
@@ -136,8 +145,10 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnChooseVictim = forwards->CreateForward("L4D2_OnChooseVictim", ET_Event, 2, /*types*/ NULL, Param_Cell, Param_CellByRef);
 	g_pFwdOnLedgeGrabbed = forwards->CreateForward("L4D_OnLedgeGrabbed", ET_Event, 1, /*types*/ NULL, Param_Cell);
 	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	
 	g_pFwdOnKnockedDown = forwards->CreateForward("L4D_OnKnockedDown", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
 	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	
 	g_pFwdOnPlayerHit = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Pre", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 }
@@ -155,7 +166,11 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnSpawnWitchBridePost);
 	forwards->ReleaseForward(g_pFwdOnClearTeamScores);
 	forwards->ReleaseForward(g_pFwdOnSetCampaignScores);
+
 	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeArea);
+	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeAreaPost);
+	forwards->ReleaseForward(g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled);
+
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueFloat);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueString);

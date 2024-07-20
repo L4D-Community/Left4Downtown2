@@ -156,6 +156,7 @@ public:
 extern IForward *g_pFwdOnSpawnSpecial;
 extern IForward *g_pFwdOnSpawnSpecialPost;
 extern IForward *g_pFwdOnSpawnSpecialPostHandled;
+
 extern IForward *g_pFwdOnSpawnTank;
 extern IForward *g_pFwdOnSpawnTankPost;
 extern IForward *g_pFwdOnSpawnWitch;
@@ -164,7 +165,11 @@ extern IForward *g_pFwdOnSpawnWitchBride;
 extern IForward *g_pFwdOnSpawnWitchBridePost;
 extern IForward *g_pFwdOnClearTeamScores;
 extern IForward *g_pFwdOnSetCampaignScores;
-extern IForward *g_pFwdOnFirstSurvivorLeftSafeArea;
+
+extern IForward* g_pFwdOnFirstSurvivorLeftSafeArea;
+extern IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPost;
+extern IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled;
+
 extern IForward *g_pFwdOnGetScriptValueInt;
 extern IForward *g_pFwdOnGetScriptValueFloat;
 extern IForward *g_pFwdOnGetScriptValueString;
