@@ -38,6 +38,8 @@ IForward* g_pFwdOnSpawnSpecialPostHandled = NULL;
 
 IForward* g_pFwdOnSpawnTank = NULL;
 IForward* g_pFwdOnSpawnTankPost = NULL;
+IForward* g_pFwdOnSpawnTankPostHandled = NULL;
+
 IForward* g_pFwdOnSpawnWitch = NULL;
 IForward* g_pFwdOnSpawnWitchPost = NULL;
 IForward* g_pFwdOnSpawnWitchBride = NULL;
@@ -52,6 +54,7 @@ IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled = NULL;
 IForward* g_pFwdOnGetScriptValueInt = NULL;
 IForward* g_pFwdOnGetScriptValueFloat = NULL;
 IForward* g_pFwdOnGetScriptValueString = NULL;
+
 IForward* g_pFwdOnTryOfferingTankBot = NULL;
 IForward* g_pFwdOnMobRushStart = NULL;
 IForward* g_pFwdOnSpawnITMob = NULL;
@@ -87,6 +90,7 @@ IForward* g_pFwdOnLedgeGrabbed = NULL;
 IForward* g_pFwdInfernoSpread = NULL;
 IForward* g_pFwdOnKnockedDown = NULL;
 IForward* g_pFwdOnKnockedDownPost = NULL;
+
 IForward* g_pFwdOnPlayerHit = NULL;
 IForward* g_pFwdOnPlayerHitPost = NULL;
 IForward* g_pFwdOnPlayerHitPostHandled = NULL;
@@ -99,6 +103,8 @@ void Left4Downtown::CreateForwards()
 
 	g_pFwdOnSpawnTank = forwards->CreateForward("L4D_OnSpawnTank", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnTankPost = forwards->CreateForward("L4D_OnSpawnTank_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
+	g_pFwdOnSpawnTankPostHandled = forwards->CreateForward("L4D_OnSpawnTank_PostHandled", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
+
 	g_pFwdOnSpawnWitch = forwards->CreateForward("L4D_OnSpawnWitch", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitchPost = forwards->CreateForward("L4D_OnSpawnWitch_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Array, Param_Array);
 	g_pFwdOnSpawnWitchBride = forwards->CreateForward("L4D2_OnSpawnWitchBride", ET_Event, 2, /*types*/NULL, Param_Array, Param_Array);
@@ -161,8 +167,11 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnSpawnSpecial);
 	forwards->ReleaseForward(g_pFwdOnSpawnSpecialPost);
 	forwards->ReleaseForward(g_pFwdOnSpawnSpecialPostHandled);
+
 	forwards->ReleaseForward(g_pFwdOnSpawnTank);
 	forwards->ReleaseForward(g_pFwdOnSpawnTankPost);
+	forwards->ReleaseForward(g_pFwdOnSpawnTankPostHandled);
+
 	forwards->ReleaseForward(g_pFwdOnSpawnWitch);
 	forwards->ReleaseForward(g_pFwdOnSpawnWitchPost);
 	forwards->ReleaseForward(g_pFwdOnSpawnWitchBride);
@@ -177,6 +186,7 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueInt);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueFloat);
 	forwards->ReleaseForward(g_pFwdOnGetScriptValueString);
+
 	forwards->ReleaseForward(g_pFwdOnTryOfferingTankBot);
 	forwards->ReleaseForward(g_pFwdOnMobRushStart);
 	forwards->ReleaseForward(g_pFwdOnSpawnITMob);

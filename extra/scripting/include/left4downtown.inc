@@ -121,6 +121,19 @@ forward Action L4D_OnSpawnTank(const float vecOrigin[3], const float vecAngles[3
 forward void L4D_OnSpawnTank_Post(int client, const float vecPos[3], const float vecAng[3]);
 
 /**
+ * @brief Called whenever ZombieManager::SpawnTank(Vector&,QAngle&) is invoked
+ * @remarks Not invoked if z_spawn tank is used and it gives a ghosted/dead player tank
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client		The client index who spawned (can be -1 if blocked in pre hook)
+ * @param vecPos		Vector coordinate where tank is spawned
+ * @param vecAng		QAngle where tank will be facing
+ *
+ * @noreturn
+ */
+forward void L4D_OnSpawnTank_PostHandled(int client, const float vecPos[3], const float vecAng[3]);
+
+/**
  * @brief Called whenever ZombieManager::SpawnWitch(Vector&,QAngle&) is invoked
  *
  * @param vector	Vector coordinate where witch is spawned

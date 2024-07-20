@@ -52,7 +52,7 @@ namespace Detours
 		{
 			return ((g_pFwdOnPlayerHit->GetFunctionCount() > 0) 
 				|| (g_pFwdOnPlayerHitPost->GetFunctionCount() > 0)
-				|| (g_pFwdOnPlayerHitPostHandled->GetFunctionCount() > 0);
+				|| (g_pFwdOnPlayerHitPostHandled->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "CTankClaw::OnPlayerHit") from the game conf

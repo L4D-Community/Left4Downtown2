@@ -48,7 +48,9 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return ((g_pFwdOnSpawnTank->GetFunctionCount() > 0) || (g_pFwdOnSpawnTankPost->GetFunctionCount() > 0));
+			return ((g_pFwdOnSpawnTank->GetFunctionCount() > 0) 
+				|| (g_pFwdOnSpawnTankPost->GetFunctionCount() > 0)
+				|| (g_pFwdOnSpawnTankPostHandled->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "ZombieManager::SpawnTank") from the game conf

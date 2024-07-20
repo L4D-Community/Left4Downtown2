@@ -47,7 +47,7 @@ namespace Detours
 		g_pFwdOnSpawnSpecial->Execute(&result);
 
 		if (result == Pl_Handled) {
-			g_pFwdOnSpawnSpecialPostHandled->PushCell(0);
+			g_pFwdOnSpawnSpecialPostHandled->PushCell(-1);
 			g_pFwdOnSpawnSpecialPostHandled->PushCell(zombieClassType);
 			g_pFwdOnSpawnSpecialPostHandled->PushArray(reinterpret_cast<cell_t*>(position), 3);
 			g_pFwdOnSpawnSpecialPostHandled->PushArray(reinterpret_cast<cell_t*>(angles), 3);

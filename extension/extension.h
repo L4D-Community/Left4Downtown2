@@ -159,6 +159,8 @@ extern IForward *g_pFwdOnSpawnSpecialPostHandled;
 
 extern IForward *g_pFwdOnSpawnTank;
 extern IForward *g_pFwdOnSpawnTankPost;
+extern IForward* g_pFwdOnSpawnTankPostHandled;
+
 extern IForward *g_pFwdOnSpawnWitch;
 extern IForward *g_pFwdOnSpawnWitchPost;
 extern IForward *g_pFwdOnSpawnWitchBride;
@@ -173,6 +175,7 @@ extern IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled;
 extern IForward *g_pFwdOnGetScriptValueInt;
 extern IForward *g_pFwdOnGetScriptValueFloat;
 extern IForward *g_pFwdOnGetScriptValueString;
+
 extern IForward *g_pFwdOnTryOfferingTankBot;
 extern IForward *g_pFwdOnMobRushStart;
 extern IForward *g_pFwdOnSpawnITMob;
@@ -208,9 +211,10 @@ extern IForward *g_pFwdOnLedgeGrabbed;
 extern IForward *g_pFwdInfernoSpread;
 extern IForward *g_pFwdOnKnockedDown;
 extern IForward *g_pFwdOnKnockedDownPost;
+
 extern IForward *g_pFwdOnPlayerHit;
 extern IForward *g_pFwdOnPlayerHitPost;
-extern IForward* g_pFwdOnPlayerHitPostHandled;
+extern IForward *g_pFwdOnPlayerHitPostHandled;
 
 extern bool g_bRoundEnd;
 

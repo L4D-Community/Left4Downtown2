@@ -44,6 +44,11 @@ namespace Detours
 		g_pFwdOnSpawnTank->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnSpawnTankPostHandled->PushCell(-1);
+			g_pFwdOnSpawnTankPostHandled->PushArray(reinterpret_cast<cell_t*>(position), 3);
+			g_pFwdOnSpawnTankPostHandled->PushArray(reinterpret_cast<cell_t*>(angles), 3);
+			g_pFwdOnSpawnTankPostHandled->Execute(NULL);
+
 			return NULL;
 		}
 
