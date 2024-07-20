@@ -61,7 +61,11 @@ IForward* g_pFwdOnSpawnITMob = NULL;
 IForward* g_pFwdOnSpawnMob = NULL;
 IForward* g_pFwdOnEnterGhostState = NULL;
 IForward* g_pFwdOnEnterGhostStatePre = NULL;
+
 IForward* g_pFwdOnShovedBySurvivor = NULL;
+IForward* g_pFwdOnShovedBySurvivorPost = NULL;
+IForward* g_pFwdOnShovedBySurvivorPostHandled = NULL;
+
 IForward* g_pFwdOnGetCrouchTopSpeed = NULL;
 IForward* g_pFwdOnGetRunTopSpeed = NULL;
 IForward* g_pFwdOnGetWalkTopSpeed = NULL;
@@ -126,7 +130,11 @@ void Left4Downtown::CreateForwards()
 	g_pFwdOnSpawnMob = forwards->CreateForward("L4D_OnSpawnMob", ET_Event, 1, /*types*/NULL, Param_CellByRef);
 	g_pFwdOnEnterGhostStatePre = forwards->CreateForward("L4D_OnEnterGhostStatePre", ET_Event, 1, /*types*/NULL, Param_Cell);
 	g_pFwdOnEnterGhostState = forwards->CreateForward("L4D_OnEnterGhostState", ET_Ignore, 1, /*types*/NULL, Param_Cell);
+
 	g_pFwdOnShovedBySurvivor = forwards->CreateForward("L4D_OnShovedBySurvivor", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	g_pFwdOnShovedBySurvivorPost = forwards->CreateForward("L4D_OnShovedBySurvivor_Post", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+	g_pFwdOnShovedBySurvivorPostHandled = forwards->CreateForward("L4D_OnShovedBySurvivor_PostHandled", ET_Ignore, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
+
 	g_pFwdOnGetCrouchTopSpeed = forwards->CreateForward("L4D_OnGetCrouchTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetRunTopSpeed = forwards->CreateForward("L4D_OnGetRunTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
 	g_pFwdOnGetWalkTopSpeed = forwards->CreateForward("L4D_OnGetWalkTopSpeed", ET_Event, 2, /*types*/NULL, Param_Cell, Param_FloatByRef);
@@ -193,7 +201,11 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnSpawnMob);
 	forwards->ReleaseForward(g_pFwdOnEnterGhostStatePre);
 	forwards->ReleaseForward(g_pFwdOnEnterGhostState);
+
 	forwards->ReleaseForward(g_pFwdOnShovedBySurvivor);
+	forwards->ReleaseForward(g_pFwdOnShovedBySurvivorPost);
+	forwards->ReleaseForward(g_pFwdOnShovedBySurvivorPostHandled);
+
 	forwards->ReleaseForward(g_pFwdOnGetCrouchTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetRunTopSpeed);
 	forwards->ReleaseForward(g_pFwdOnGetWalkTopSpeed);

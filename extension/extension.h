@@ -159,7 +159,7 @@ extern IForward *g_pFwdOnSpawnSpecialPostHandled;
 
 extern IForward *g_pFwdOnSpawnTank;
 extern IForward *g_pFwdOnSpawnTankPost;
-extern IForward* g_pFwdOnSpawnTankPostHandled;
+extern IForward *g_pFwdOnSpawnTankPostHandled;
 
 extern IForward *g_pFwdOnSpawnWitch;
 extern IForward *g_pFwdOnSpawnWitchPost;
@@ -168,9 +168,9 @@ extern IForward *g_pFwdOnSpawnWitchBridePost;
 extern IForward *g_pFwdOnClearTeamScores;
 extern IForward *g_pFwdOnSetCampaignScores;
 
-extern IForward* g_pFwdOnFirstSurvivorLeftSafeArea;
-extern IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPost;
-extern IForward* g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled;
+extern IForward *g_pFwdOnFirstSurvivorLeftSafeArea;
+extern IForward *g_pFwdOnFirstSurvivorLeftSafeAreaPost;
+extern IForward *g_pFwdOnFirstSurvivorLeftSafeAreaPostHandled;
 
 extern IForward *g_pFwdOnGetScriptValueInt;
 extern IForward *g_pFwdOnGetScriptValueFloat;
@@ -182,7 +182,11 @@ extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnSpawnMob;
 extern IForward *g_pFwdOnEnterGhostStatePre;
 extern IForward *g_pFwdOnEnterGhostState;
+
 extern IForward *g_pFwdOnShovedBySurvivor;
+extern IForward *g_pFwdOnShovedBySurvivorPost;
+extern IForward *g_pFwdOnShovedBySurvivorPostHandled;
+
 extern IForward *g_pFwdOnGetCrouchTopSpeed;
 extern IForward *g_pFwdOnGetRunTopSpeed;
 extern IForward *g_pFwdOnGetWalkTopSpeed;

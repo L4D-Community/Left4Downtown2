@@ -49,7 +49,9 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return (g_pFwdOnShovedBySurvivor->GetFunctionCount() > 0);
+			return ((g_pFwdOnShovedBySurvivor->GetFunctionCount() > 0)
+				|| (g_pFwdOnShovedBySurvivorPost->GetFunctionCount() > 0)
+				|| (g_pFwdOnShovedBySurvivorPostHandled->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "CTerrorPlayer::OnShovedBySurvivor") from the game conf

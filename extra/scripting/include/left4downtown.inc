@@ -384,6 +384,34 @@ forward Action L4D_OnSpawnMob(int &amount);
 forward Action L4D_OnShovedBySurvivor(int client, int victim, const float vecDirection[3]);
 
 /**
+ * @brief Called whenever CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer, Vector&) is invoked
+ * @remarks L4D2 only uses this on Special Infected
+ * @remarks Blocks hunter dead stop
+ * @remarks This forward will not trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client	the client that did the shoving
+ * @param victim	the client that was shoved (CAUTION retrieved from function pointer, don't meddle with it)
+ * @param vecDir	Vector Angle of Shoveforce
+ *
+ * @noreturn
+ */
+forward void L4D_OnShovedBySurvivor_Post(int client, int victim, const float vecDir[3]);
+
+/**
+ * @brief Called whenever CTerrorPlayer::OnShovedBySurvivor(CTerrorPlayer, Vector&) is invoked
+ * @remarks L4D2 only uses this on Special Infected
+ * @remarks Blocks hunter dead stop
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param client	the client that did the shoving
+ * @param victim	the client that was shoved (CAUTION retrieved from function pointer, don't meddle with it)
+ * @param vecDir	Vector Angle of Shoveforce
+ *
+ * @noreturn
+ */
+forward void L4D_OnShovedBySurvivor_PostHandled(int client, int victim, const float vecDir[3]);
+
+/**
  * @brief Called whenever CTerrorPlayer::GetCrouchTopSpeed() is invoked
  *
  * @param target	the client that its being called on (not changible)

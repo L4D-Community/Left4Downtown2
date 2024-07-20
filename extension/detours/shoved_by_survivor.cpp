@@ -50,9 +50,21 @@ namespace Detours
 		g_pFwdOnShovedBySurvivor->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnShovedBySurvivorPostHandled->PushCell(client);
+			g_pFwdOnShovedBySurvivorPostHandled->PushCell(victim);
+			g_pFwdOnShovedBySurvivorPostHandled->PushArray(reinterpret_cast<cell_t*>(vector), 3);
+			g_pFwdOnShovedBySurvivorPostHandled->Execute(NULL);
+
 			return NULL;
 		}
 
-		return (this->*(GetTrampoline()))(p, vector);
+		void *pReturn = (this->*(GetTrampoline()))(p, vector);
+		
+		g_pFwdOnShovedBySurvivorPostHandled->PushCell(client);
+		g_pFwdOnShovedBySurvivorPostHandled->PushCell(victim);
+		g_pFwdOnShovedBySurvivorPostHandled->PushArray(reinterpret_cast<cell_t*>(vector), 3);
+		g_pFwdOnShovedBySurvivorPostHandled->Execute(NULL);
+
+		return pReturn;
 	}
 };
