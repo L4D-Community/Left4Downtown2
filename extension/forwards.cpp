@@ -94,8 +94,10 @@ IForward* g_pFwdOnShovedByPounceLanding = NULL;
 IForward* g_pFwdOnChooseVictim = NULL;
 IForward* g_pFwdOnLedgeGrabbed = NULL;
 IForward* g_pFwdInfernoSpread = NULL;
+
 IForward* g_pFwdOnKnockedDown = NULL;
 IForward* g_pFwdOnKnockedDownPost = NULL;
+IForward* g_pFwdOnKnockedDownPostHandled = NULL;
 
 IForward* g_pFwdOnPlayerHit = NULL;
 IForward* g_pFwdOnPlayerHitPost = NULL;
@@ -167,8 +169,9 @@ void Left4Downtown::CreateForwards()
 	g_pFwdInfernoSpread = forwards->CreateForward("L4D2_OnSpitSpread", ET_Event, 3, /*types*/NULL, Param_Cell, Param_Cell, Param_Array);
 	
 	g_pFwdOnKnockedDown = forwards->CreateForward("L4D_OnKnockedDown", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Event, 2, /*types*/NULL, Param_Cell, Param_Cell);
-	
+	g_pFwdOnKnockedDownPost = forwards->CreateForward("L4D_OnKnockedDown_Post", ET_Ignore, 2, /*types*/NULL, Param_Cell, Param_Cell);
+	g_pFwdOnKnockedDownPostHandled = forwards->CreateForward("L4D_OnKnockedDown_PostHandled", ET_Ignore, 2, /*types*/NULL, Param_Cell, Param_Cell);
+
 	g_pFwdOnPlayerHit = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Pre", ET_Event, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	g_pFwdOnPlayerHitPost = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_Post", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 	g_pFwdOnPlayerHitPostHandled = forwards->CreateForward("L4D_TankClaw_OnPlayerHit_PostHandled", ET_Ignore, 4, /*types*/NULL, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
@@ -238,8 +241,10 @@ void Left4Downtown::DestroyForwards()
 	forwards->ReleaseForward(g_pFwdOnChooseVictim);
 	forwards->ReleaseForward(g_pFwdOnLedgeGrabbed);
 	forwards->ReleaseForward(g_pFwdInfernoSpread);
+
 	forwards->ReleaseForward(g_pFwdOnKnockedDown);
 	forwards->ReleaseForward(g_pFwdOnKnockedDownPost);
+	forwards->ReleaseForward(g_pFwdOnKnockedDownPostHandled);
 
 	forwards->ReleaseForward(g_pFwdOnPlayerHit);
 	forwards->ReleaseForward(g_pFwdOnPlayerHitPost);

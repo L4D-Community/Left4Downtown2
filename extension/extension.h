@@ -180,6 +180,7 @@ extern IForward *g_pFwdOnTryOfferingTankBot;
 extern IForward *g_pFwdOnMobRushStart;
 extern IForward *g_pFwdOnSpawnITMob;
 extern IForward *g_pFwdOnSpawnMob;
+
 extern IForward *g_pFwdOnEnterGhostStatePre;
 extern IForward *g_pFwdOnEnterGhostState;
 extern IForward *g_pFwdOnEnterGhostStatePostHandled;
@@ -214,8 +215,10 @@ extern IForward *g_pFwdOnShovedByPounceLanding;
 extern IForward *g_pFwdOnChooseVictim;
 extern IForward *g_pFwdOnLedgeGrabbed;
 extern IForward *g_pFwdInfernoSpread;
+
 extern IForward *g_pFwdOnKnockedDown;
 extern IForward *g_pFwdOnKnockedDownPost;
+extern IForward *g_pFwdOnKnockedDownPostHandled;
 
 extern IForward *g_pFwdOnPlayerHit;
 extern IForward *g_pFwdOnPlayerHitPost;

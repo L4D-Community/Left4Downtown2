@@ -46,6 +46,10 @@ namespace Detours
 		g_pFwdOnKnockedDown->Execute(&result);
 
 		if (result == Pl_Handled) {
+			g_pFwdOnKnockedDownPostHandled->PushCell(iClient);
+			g_pFwdOnKnockedDownPostHandled->PushCell(iReason);
+			g_pFwdOnKnockedDownPostHandled->Execute(NULL);
+
 			return;
 		}
 

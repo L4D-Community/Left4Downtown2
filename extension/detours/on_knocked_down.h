@@ -48,7 +48,9 @@ namespace Detours
 
 		virtual bool OnPatch()
 		{
-			return ((g_pFwdOnKnockedDown->GetFunctionCount() > 0) || (g_pFwdOnKnockedDownPost->GetFunctionCount() > 0));
+			return ((g_pFwdOnKnockedDown->GetFunctionCount() > 0) 
+				|| (g_pFwdOnKnockedDownPost->GetFunctionCount() > 0)
+				|| (g_pFwdOnKnockedDownPostHandled->GetFunctionCount() > 0));
 		}
 
 		// get the signature name (i.e. "CTerrorPlayer::OnKnockedDown") from the game conf

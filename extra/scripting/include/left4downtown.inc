@@ -709,6 +709,20 @@ forward Action L4D_OnKnockedDown(int client, int reason);
 forward void L4D_OnKnockedDown_Post(int client, int reason);
 
 /**
+ * @brief Called when CTerrorPlayer::OnKnockedDown(CTerrorPlayer*) is invoked
+ * @remarks Called when someone is about to be hit by a Tank rock or lunged by a Hunter
+ * @remarks Called multiple times when someone is about to be pounced by a Hunter
+ * @remarks You can use the "KNOCKDOWN_*" enum values for the reason
+ * @remarks This forward will ONLY trigger if the relative pre-hook forward has been blocked with Plugin_Handled
+ *
+ * @param victim		Client index of the victim
+ * @param reason		The Knockdown reason type. 1=Hunter lunge, 2=Tank rock, 3=Charger impact
+ *
+ * @noreturn
+ **/
+forward void L4D_OnKnockedDown_PostHandled(int client, int reason);
+
+/**
  * @brief Called whenever BossZombiePlayer(CTerrorPlayer *, int, CBaseEntity *) is invoked
  *
  * @param specialInfected	the SI entity index
