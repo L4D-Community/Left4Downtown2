@@ -158,10 +158,6 @@ class CTerrorGameRules
 public:
 	static bool HasConfigurableDifficultySetting()
 	{
-		if (!g_pMatchExtL4D) {
-			return CTerrorGameRules::IsCoopMode() || CTerrorGameRules::IsRealismMode();
-		}
-
 		const char *szGameMode = mp_gamemode->GetString();
 
 		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
@@ -179,10 +175,6 @@ public:
 
 	static bool IsSingleChapterMode()
 	{
-		if (!g_pMatchExtL4D) {
-			return false;
-		}
-
 		const char *szGameMode = mp_gamemode->GetString();
 
 		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
@@ -283,10 +275,6 @@ public:
 
 	static bool IsSpecifiedMode(const char *pszBaseMode)
 	{
-		if (!g_pMatchExtL4D) {
-			return false;
-		}
-
 		const char *szGameMode = mp_gamemode->GetString();
 
 		KeyValues *pkvMode = g_pMatchExtL4D->GetGameModeInfo(szGameMode);
