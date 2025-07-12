@@ -51,6 +51,7 @@ class CClientFrame;
 class CFrameSnapshot;
 class CLC_SplitPlayerConnect;
 class CNetworkStringTableContainer;
+class INetworkStringTable;
 
 enum server_state_t
 {
