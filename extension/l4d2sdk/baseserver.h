@@ -1,4 +1,5 @@
-// CBaseServer vtable for l4d1 and l4d2 games
+// CBaseServer class for l4d1 and l4d2 games
+// Header file created by - A1m`
 
 /**
  * vim: set ts=4 :
@@ -259,5 +260,6 @@ public: // Other
 	ReservationStatus_t m_ReservationStatus; // l4d2 - 440 (16 byte?), l4d1 - 440, (CBaseServer::ClearReservationStatus)
 };
 // size 456 l4d2 and l4d1
+// Header file created by - A1m`
 
 #endif // BASESERVER_H
