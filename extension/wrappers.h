@@ -82,6 +82,16 @@ class CBasePlayer:
 	public CBaseEntity
 {
 public:
+	int GetFlags()
+	{
+		return *(int *)((unsigned char *)(this) + m_fFlags.GetOffset());
+	}
+
+	bool IsBot()
+	{
+		return (GetFlags() & FL_FAKECLIENT) != 0;
+	}
+
 	L4DTeam GetTeamNumber()
 	{
 		int iTeam = *(int *)((unsigned char *)this + m_iTeamNum.GetOffset());
@@ -91,6 +101,7 @@ public:
 	}
 
 public:
+	static inline CNetPropMngr m_fFlags{ "CBasePlayer", "m_fFlags" };
 	static inline CNetPropMngr m_iTeamNum{ "CBasePlayer", "m_iTeamNum" };
 };
 

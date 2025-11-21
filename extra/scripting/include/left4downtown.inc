@@ -47,7 +47,7 @@ enum PointerType
 	POINTER_MELEEINFO		= 7,	// @g_MeleeWeaponInfoStore
 	POINTER_EVENTMANAGER	= 8,	// pScriptedEventManager
 	POINTER_SCAVENGEMODE	= 9,	// pScavengeMode
-	POINTER_VERSUSMODE		= 10	// pVersusMode
+	POINTER_VERSUSMODE		= 10,	// pVersusMode
 };
 
 #include <l4d2constants>
@@ -1031,6 +1031,28 @@ native int L4D_SetHumanSpec(int bot, int client);
  * @return			True or false
  */
 native int L4D_TakeOverBot(int client);
+
+/**
+ * @brief Takeover another special infected
+ * @remarks L4D1: Due to some bug and a workaround, when spawning you'll hear another special infected sound other than your own type
+ *
+ * @param client			Client ID of the special infected taking over
+ * @param target			Client ID of the special infected losing control
+ *
+ * @noreturn
+ */
+native void L4D_TakeOverZombieBot(int client, int target);
+
+/**
+ * @brief Replaces the player with a bot
+ * @remarks Survivors: makes the player go into spectator mode and a bot takeover, like going idle
+ * @remarks Infected: basically spawns an identical bot in your position. The client is forced into ghost mode
+ *
+ * @param client			Client ID of the player losing control
+ *
+ * @noreturn
+ */
+native void L4D_ReplaceWithBot(int client, bool forced = true);
 
 /**
  * @brief Enter ghost/dead mode. Some state values may have different results. Unknown.

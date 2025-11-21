@@ -36,6 +36,93 @@
 
 class CBaseCombatCharacter;
 
+// native void L4D_ReplaceWithBot(int client, bool forced = true);
+cell_t L4D_TakeOverBot(IPluginContext* pContext, const cell_t* params)
+{
+	static ICallWrapper* pWrapper = NULL;
+
+	// CTerrorPlayer::ReplaceWithBot(bool forced)
+	if (!pWrapper) {
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::ReplaceWithBot", \
+			PassInfo passInfo; \
+			passInfo.flags = PASSFLAG_BYVAL; \
+			passInfo.size = sizeof(bool); \
+			passInfo.type = PassType_Basic; \
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*retInfo*/NULL, /*paramInfo*/&passInfo, /*numparams*/1));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorPlayer::ReplaceWithBot");
+	}
+
+	CTerrorPlayer* pPlayer = (CTerrorPlayer*)UTIL_GetCBaseEntity(params[1], true);
+	if (pPlayer == NULL) {
+		return pContext->ThrowNativeError("Invalid target player: %d!", params[1]);
+	}
+
+	unsigned char vstk[sizeof(CTerrorPlayer*) + sizeof(bool)];
+	unsigned char* vptr = vstk;
+
+	*(CTerrorPlayer**)vptr = pPlayer;
+	vptr += sizeof(CTerrorPlayer*);
+
+	*(bool*)vptr = (params[2]) ? true : false;
+
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::ReplaceWithBot");
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::ReplaceWithBot");
+
+	return 1;
+}
+
+// native void L4D_TakeOverZombieBot(int client, int target);
+cell_t L4D_TakeOverBot(IPluginContext* pContext, const cell_t* params)
+{
+	static ICallWrapper* pWrapper = NULL;
+
+	// CTerrorPlayer::TakeOverZombieBot(CTerrorPlayer* pTarget)
+	if (!pWrapper) {
+		REGISTER_NATIVE_ADDR("CTerrorPlayer::TakeOverZombieBot", \
+			PassInfo passInfo; \
+			passInfo.flags = PASSFLAG_BYVAL; \
+			passInfo.size = sizeof(CTerrorPlayer*); \
+			passInfo.type = PassType_Basic; \
+				pWrapper = g_pBinTools->CreateCall(addr, CallConv_ThisCall, /*retInfo*/NULL, /*paramInfo*/&passInfo, /*numparams*/1));
+
+		L4D_DEBUG_LOG("Built call wrapper CTerrorPlayer::TakeOverZombieBot");
+	}
+
+	CTerrorPlayer* pBot = (CTerrorPlayer*)UTIL_GetCBaseEntity(params[1], true);
+	if (pBot == NULL) {
+		return pContext->ThrowNativeError("Invalid bot player: %d!", params[1]);
+	}
+
+	if (pBot->GetTeamNumber() != Team_Infected || !pBot->IsBot()) {
+		return pContext->ThrowNativeError("Invalid bot player: %d!", params[1]);
+	}
+
+	CTerrorPlayer* pPlayer = (CTerrorPlayer*)UTIL_GetCBaseEntity(params[2], true);
+	if (pPlayer == NULL) {
+		return pContext->ThrowNativeError("Invalid target player: %d!", params[2]);
+	}
+
+	if (pPlayer->GetTeamNumber() != Team_Infected || pPlayer->IsBot()) {
+		return pContext->ThrowNativeError("Invalid target player: %d!", params[2]);
+	}
+
+	unsigned char vstk[sizeof(CTerrorPlayer*) + sizeof(CTerrorPlayer*)];
+	unsigned char* vptr = vstk;
+
+	*(CTerrorPlayer**)vptr = pBot;
+	vptr += sizeof(CTerrorPlayer*);
+
+	*(CTerrorPlayer**)vptr = pPlayer;
+
+	L4D_DEBUG_LOG("Going to execute CTerrorPlayer::TakeOverZombieBot");
+	pWrapper->Execute(vstk, /*retbuffer*/NULL);
+	L4D_DEBUG_LOG("Invoked CTerrorPlayer::TakeOverZombieBot");
+
+	return 1;
+}
+
 // native void L4D2_CTerrorPlayer_Fling(int iTarget, int iAttacker, const float vecImpulse[3], int iAnimEvent = 76, float fTimeExternalView = 0.0);
 cell_t L4D2_CTerrorPlayer_Fling(IPluginContext* pContext, const cell_t* params)
 {
@@ -378,6 +465,8 @@ cell_t L4D_State_Transition(IPluginContext *pContext, const cell_t *params)
 
 sp_nativeinfo_t g_L4DoPlayerNatives[] =
 {
+	{"L4D_ReplaceWithBot",				L4D_ReplaceWithBot},
+	{"L4D_TakeOverZombieBot",			L4D_TakeOverZombieBot},
 	{"L4D2_CTerrorPlayer_Fling",		L4D2_CTerrorPlayer_Fling},
 	{"L4D_GetPlayerSpawnTime",			L4D_GetPlayerSpawnTime},
 	{"L4D_SetHumanSpec",				L4D_SetHumanSpec},
