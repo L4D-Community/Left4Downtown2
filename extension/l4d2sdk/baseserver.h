@@ -71,7 +71,7 @@ typedef struct
 class CBaseServer :
 	public IServer
 {
-public:
+public: // Vtable
 	
 	virtual ~CBaseServer() = 0;
 	
@@ -124,7 +124,7 @@ public: // IServer implementation
 	virtual void DisconnectClient( IClient *client, const char *reason ) = 0;
 	virtual float GetCPUUsage( void ) = 0;
 
-public: // Other
+public: // CBaseServer vtable
 
 	virtual void BroadcastPrintf( const char *fmt, ... ) = 0;
 	virtual void SetMaxClients( int number ) = 0;
@@ -166,6 +166,8 @@ public: // Other
 	virtual bool ShouldUpdateMasterServer( void ) = 0;
 	virtual void UpdateMasterServerPlayers( void ) = 0;
 	
+public: // Members
+
 	// vtable offset - 0
 	server_state_t	m_State;		// 4, some actions are only valid during load (CBaseServer::IsActive)
 	int				m_Socket;	// 8, network socket (CBaseServer::GetUDPPort)
@@ -261,6 +263,8 @@ public: // Other
 	ReservationStatus_t m_ReservationStatus; // l4d2 - 440 (16 byte?), l4d1 - 440, (CBaseServer::ClearReservationStatus)
 };
 // size 456 l4d2 and l4d1
+
+// CBaseServer class for l4d1 and l4d2 games
 // Header file created by - A1m`
 
 #endif // BASESERVER_H
