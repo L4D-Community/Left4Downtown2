@@ -37,7 +37,7 @@
 class CBaseCombatCharacter;
 
 // native void L4D_ReplaceWithBot(int client, bool forced = true);
-cell_t L4D_TakeOverBot(IPluginContext* pContext, const cell_t* params)
+cell_t L4D_ReplaceWithBot(IPluginContext* pContext, const cell_t* params)
 {
 	static ICallWrapper* pWrapper = NULL;
 
@@ -74,7 +74,7 @@ cell_t L4D_TakeOverBot(IPluginContext* pContext, const cell_t* params)
 }
 
 // native void L4D_TakeOverZombieBot(int client, int target);
-cell_t L4D_TakeOverBot(IPluginContext* pContext, const cell_t* params)
+cell_t L4D_TakeOverZombieBot(IPluginContext* pContext, const cell_t* params)
 {
 	static ICallWrapper* pWrapper = NULL;
 
