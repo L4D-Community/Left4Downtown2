@@ -36,7 +36,6 @@
 #include "iplayerinfo.h"
 #include "vglobals.h"
 #include "util.h"
-//#include "l4d2sdk/convar_public.h"
 
 #include <amtl/os/am-shared-library.h>
 

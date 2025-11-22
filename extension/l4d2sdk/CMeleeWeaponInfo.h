@@ -83,7 +83,7 @@ typedef struct CMeleeWeaponInfo_t
 class CMeleeWeaponInfoStore 
 	: public CAutoGameSystem // 68 bytes?!?!?
 {
-	public:
+public:
 	CUtlMap<int, CMeleeWeaponInfo *, int> weaponInfo; // 12 ?
 	CUtlVector<const char *> weaponNames; // 48
 };
