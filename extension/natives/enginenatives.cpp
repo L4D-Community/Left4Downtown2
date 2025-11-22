@@ -32,6 +32,7 @@
 
 #include "extension.h"
 #include "util.h"
+#include <amtl/am-string.h>
 
  // native void L4D_LobbyUnreserve()
 cell_t L4D_LobbyUnreserve(IPluginContext* pContext, const cell_t* params)
