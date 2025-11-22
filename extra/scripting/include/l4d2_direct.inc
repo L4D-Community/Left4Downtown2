@@ -577,16 +577,7 @@ stock void L4D2Direct_SetShovePenalty(int client, int penalty)
  */
 stock float L4D2Direct_GetNextShoveTime(int client)
 {
-	if (client < 1 || client > MaxClients) {
-		return 0.0;
-	}
-
-	int time;
-	if (GetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, time)) {
-		return view_as<float>(time);
-	}
-
-	return 0.0;
+	return GetEntPropFloat(client, Prop_Send, "m_flNextShoveTime");
 }
 
 /**
@@ -596,13 +587,26 @@ stock float L4D2Direct_GetNextShoveTime(int client)
  * @param time			Game time
  * @noreturn
  */
-stock void L4D2Direct_SetNextShoveTime(int client, float time)
+stock void L4D2Direct_SetNextShoveTime(int client, float time, bool updateWeaponData = false)
 {
-	if (client < 1 || client > MaxClients) {
+	float fDuration = time - GetGameTime();
+	if (fDuration <= 0.0) {
+		ThrowError("[L4D2Direct_SetNextShoveTime] The wrong time was entered: %f", time);
 		return;
 	}
 
-	SetEntityValueFromOffset(client, "CTerrorPlayer::m_fNextShoveTime", NumberType_Int32, view_as<int>(time));
+	SetEntPropFloat(client, Prop_Send, "m_flNextShoveTime", time);
+
+	if (updateWeaponData) {
+		int weapon = GetEntPropEnt(client, Prop_Data, "m_hActiveWeapon");
+
+		if (weapon != -1) {
+			SetEntPropFloat(weapon, Prop_Send, "m_attackTimer", fDuration, SETPROP_INDEX_DURATION); // duration
+			SetEntPropFloat(weapon, Prop_Send, "m_attackTimer", time, SETPROP_INDEX_TIMESTAMP); // timestamp
+
+			SetEntPropFloat(weapon, Prop_Send, "m_flNextSecondaryAttack", time);
+		}
+	}
 }
 
 /**

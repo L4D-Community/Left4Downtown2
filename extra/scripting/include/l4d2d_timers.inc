@@ -37,9 +37,14 @@
 #include <sourcemod>
 #include <l4d2d_internals>
 
+#define SETPROP_INDEX_DURATION 0 // for SetEntPropFloat
+#define SETPROP_INDEX_TIMESTAMP 1 // for SetEntPropFloat
+
 #define CTIMER_DURATION_OFFSET (view_as<Address>(4))
 #define CTIMER_TIMESTAMP_OFFSET (view_as<Address>(8))
+
 #define ITIMER_TIMESTAMP_OFFSET (view_as<Address>(4))
+
 #define SIZEOF_ITIMER 8
 #define SIZEOF_CTIMER 12
 
