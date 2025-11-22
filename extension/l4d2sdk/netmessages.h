@@ -113,4 +113,17 @@ public:
 	CUtlVector<NetMessageCvar_t> m_vecCvars;
 };
 
+// Check offsets on compile time
+#include <cstddef> 
+
+#ifdef SE_LEFT4DEAD2
+	#ifdef PLATFORM_WINDOWS
+		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 116, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
+		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
+	#else
+		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 108, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
+		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
+	#endif
+#endif
+
 #endif // NETMESSAGES_H
