@@ -129,9 +129,8 @@ public:
 		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 116, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
 		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
 	#else
-		
 		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 108, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
-		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
+		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 85, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
 	#endif
 #endif
 
