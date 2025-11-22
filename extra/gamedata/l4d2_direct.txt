@@ -428,20 +428,6 @@
 				"linux"		"14828"
 			}
 
-			// Deprecated, use offset "CTerrorPlayer::m_flBecomeGhostAt" instead
-			// CTerrorPlayer::SetBecomeGhostAt(float)
-			// Real name "CTerrorPlayer::m_flBecomeGhostAt"
-			//
-			// Warning: There was a mistake when creating l4d2_direct, 
-			// previously thought that this offset pointing to CountdownTimer is actually a simple float data type, 
-			// so +8 is added inside plugins or includes, then the offset becomes correct. 
-			// We will keep this behavior for compatibility, subtract 8 from the real offset.
-			"CTerrorPlayer::SpawnTimer"
-			{
-				"windows"	"11276"
-				"linux"		"11256"
-			}
-
 			// CTerrorPlayer::SetBecomeGhostAt(float)
 			"CTerrorPlayer::m_flBecomeGhostAt"
 			{
