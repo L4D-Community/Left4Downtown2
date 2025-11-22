@@ -32,6 +32,7 @@
 
 #include "extension.h"
 #include "addons_disabler.h"
+#include "l4d2sdk/netmessages.h"
 #include "CDetour/detourhelpers.h"
 
 static void *vanillaModeSig = NULL;
