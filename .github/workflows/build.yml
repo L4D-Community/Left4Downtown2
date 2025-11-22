@@ -22,29 +22,47 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - ubuntu-22.04
           - windows-latest
           
         sm_version:
+          - "1.9"
           - "1.10"
           - "1.11"
+          - "1.12"
           #- "latest"
           
         include:
-          # Use MM:Source 1.11 as base version
-          - meta_version: "1.11"
-            meta_branch: "1.11-dev"
+          # Use MM:Source 1.12 as base version
+          - meta_version: "1.12"
+            meta_branch: "1.12-dev"
             
           #- sm_version: latest
             #sm_branch: master
             #meta_version: latest
             #meta_branch: master
-          
+
+          - sm_version: "1.9"
+            sm_branch: "1.9-dev"
+            meta_version: "1.11"
+            meta_branch: "1.11-dev"
+
           - sm_version: "1.10"
             sm_branch: "1.10-dev"
-          
+            meta_version: "1.11"
+            meta_branch: "1.11-dev"
+
           - sm_version: "1.11"
             sm_branch: "1.11-dev"
-          
+            meta_version: "1.11"
+            meta_branch: "1.11-dev"
+
+          - sm_version: "1.12"
+            sm_branch: "1.12-dev"
+
+          - os: ubuntu-22.04
+            os_short: oldlinux
+
           - os: ubuntu-latest
             os_short: linux
           
@@ -108,7 +126,7 @@ jobs:
       - name: Setting up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: '3.14'
 
       - name: Getting ambuild
         run: |
