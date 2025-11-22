@@ -114,13 +114,22 @@ public:
 };
 
 // Check offsets on compile time
-#include <cstddef> 
+
+// Fix hl2sdk-l4d2 offsetof, added code from source-sdk-2013 (use __builtin_offsetof on GCC/Clang)
+#undef offsetof
+
+#ifdef __GNUC__
+	#define offsetof( type, var ) __builtin_offsetof( type, var )
+#else
+	#define offsetof(s,m)	(size_t)&(((s *)0)->m)
+#endif
 
 #ifdef SE_LEFT4DEAD2
 	#ifdef PLATFORM_WINDOWS
 		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 116, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
 		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
 	#else
+		
 		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 108, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
 		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 93, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
 	#endif
