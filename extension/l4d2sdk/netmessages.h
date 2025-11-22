@@ -115,6 +115,12 @@ public:
 
 // Check offsets on compile time
 
+// Ignore warning (offset of on non-standard-layout type)
+#if defined(__GNUC__) || defined(__clang__)
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Winvalid-offsetof"
+#endif
+
 // Fix hl2sdk-l4d2 offsetof, added code from source-sdk-2013 (use __builtin_offsetof on GCC/Clang)
 #undef offsetof
 
@@ -132,6 +138,10 @@ public:
 		static_assert(offsetof(SVC_ServerInfo, m_nPlayerSlot) == 108, "Check offset 'SVC_ServerInfo::m_nPlayerSlot', it seems to be incorrect.");
 		static_assert(offsetof(SVC_ServerInfo, m_bIsVanilla) == 85, "Check offset 'SVC_ServerInfo::m_bIsVanilla', it seems to be incorrect.");
 	#endif
+#endif
+
+#if defined(__GNUC__) || defined(__clang__)
+	#pragma GCC diagnostic pop
 #endif
 
 #endif // NETMESSAGES_H
