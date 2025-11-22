@@ -231,6 +231,7 @@ extern IForward* g_pFwdOnLeptOnSurvivorPostHandled;
 extern bool g_bRoundEnd;
 
 extern ConVar g_UnlockMelees;
+extern ConVar g_AddonsEclipse;
 
 extern IBinTools *g_pBinTools;
 extern CBaseServer *g_pServer; //pointer to CBaseServer

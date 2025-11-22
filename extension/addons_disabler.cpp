@@ -38,8 +38,6 @@
 static void *vanillaModeSig = NULL;
 static patch_t vanillaModeSigRestore;
 
-extern ConVar g_AddonsEclipse;
-
 int AddonsDisabler::AddonsEclipse;
 
 void AddonsDisabler::Patch()
@@ -99,13 +97,10 @@ void OnAddonsEclipseChanged(IConVar *cvar, const char *pOldValue, float flOldVal
 
 namespace Detours
 {
-	void CBaseServer::OnFillServerInfo(int SVC_ServerInfo)
+	void CBaseServer::OnFillServerInfo(SVC_ServerInfo* pServerInfo)
 	{
 		if (AddonsDisabler::AddonsEclipse != -1 && vanillaModeSig) {
-			int RetValue = (AddonsDisabler::AddonsEclipse == 1) ? 0 : 1; //for safety
-
-			int m_nPlayerSlot = *(int *)((unsigned char *)SVC_ServerInfo + playerSlotOffset);
-			IClient *pClient = g_pServer->GetClient(m_nPlayerSlot);
+			IClient *pClient = g_pServer->GetClient(pServerInfo->m_nPlayerSlot);
 
 			L4D_DEBUG_LOG("ADDONS DISABLER: Eligible client '%s' connected[%s]", pClient->GetClientName(), pClient->GetNetworkIDString());
 			
@@ -115,11 +110,10 @@ namespace Detours
 				g_pFwdAddonsDisabler->Execute(&result);
 			}
 
-			/* uint8_t != unsigned char in terms of type */
-			uint8_t disableAddons = result == Pl_Handled ? 0 : RetValue;
-			memset((unsigned char *)SVC_ServerInfo + disableClientAddonsOffset, disableAddons, sizeof(uint8_t));
+			bool bRetValue = (AddonsDisabler::AddonsEclipse == 1) ? false : true;
+			pServerInfo->m_bIsVanilla = (result >= Pl_Handled) ? false : bRetValue;
 		}
 
-		(this->*(GetTrampoline()))(SVC_ServerInfo);
+		(this->*(GetTrampoline()))(pServerInfo);
 	}
 };

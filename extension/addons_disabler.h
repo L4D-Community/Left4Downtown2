@@ -35,13 +35,9 @@
 
 // thanks to ProdigySim for finding sig and these offsets https://github.com/ProdigySim/left4dhooks/pull/1
 #ifdef PLATFORM_WINDOWS
-#define vanillaModeOffset         0
-#define playerSlotOffset          116
-#define disableClientAddonsOffset 93
+	#define vanillaModeOffset         0
 #else
-#define vanillaModeOffset         0
-#define playerSlotOffset          108
-#define disableClientAddonsOffset 85
+	#define vanillaModeOffset         0
 #endif
 
 #include "detours/detour_template.h"
@@ -70,13 +66,13 @@ namespace Detours
 {
 	class CBaseServer;
 
-	typedef void (CBaseServer::*FillServerInfo)(int a1);
+	typedef void (CBaseServer::*FillServerInfo)(SVC_ServerInfo* pServerInfo);
 
 	class CBaseServer: public DetourTemplate<FillServerInfo, CBaseServer>
 	{
 	private: //note: implementation of DetourTemplate abstracts
 
-		void OnFillServerInfo(int);
+		void OnFillServerInfo(SVC_ServerInfo* pServerInfo);
 		
 		// get the signature name (i.e. "CBaseServer::FillServerInfo") from the game conf
 		virtual const char *GetSignatureName()
@@ -91,5 +87,5 @@ namespace Detours
 		}
 	};
 };
-#endif
 
+#endif
